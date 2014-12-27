@@ -70,7 +70,7 @@ RSpec.describe Kuniri do
             "language" => "ruby",
             "source" => "../app/", 
             "output" => "./", 
-            "extract" => "uml")
+            "extract" => "uml,traceability")
     end
   end
 
