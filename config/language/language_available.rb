@@ -1,5 +1,5 @@
 module Configuration
-  class LanguageAvailable
+  class Language_Available
     public
       LANGUAGES = ["ruby", "python", "c++", "c"]
   end

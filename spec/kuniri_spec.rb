@@ -52,7 +52,7 @@ RSpec.describe Kuniri do
         Error::Configuration_file_error)
     end
     
-    it "Syntax error: wrong configuration file" do
+    it "Syntax error: wrong extract" do
       write_kuniri_file([":ruby", ":../app/", ":./", ":umg"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
         Error::Configuration_file_error)
@@ -62,15 +62,15 @@ RSpec.describe Kuniri do
       write_kuniri_file([":ruby", ":../app/", ":./", ":uml"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(
             "language" => "ruby", 
-            "source_path" => "../app/", 
+            "source" => "../app/", 
             "output" => "./", 
-            "monitor" => "uml")
+            "extract" => "uml")
       write_kuniri_file([":ruBy", ":../app/", ":./", ":uMl, traCeaBilitY"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(
             "language" => "ruby",
-            "source_path" => "../app/", 
+            "source" => "../app/", 
             "output" => "./", 
-            "monitor" => "uml")
+            "extract" => "uml")
     end
   end
 

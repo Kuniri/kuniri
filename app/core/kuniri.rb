@@ -1,4 +1,4 @@
-require_relative '../../config/language/LanguageAvailable.rb'
+#require_relative '../../config/language/LanguageAvailable.rb'
 
 # Kuniri is the main class of the system, responsible for handling: monitoring 
 # style, language type, and Settings. 
@@ -32,9 +32,30 @@ class Kuniri
 
     if configuration.has_key?("language")
       language = configuration["language"]
-      unless Configuration::LanguageAvailable::LANGUAGES.include?(language)
+      unless Configuration::Language_Available::LANGUAGES.include?(language)
         raise Error::Configuration_file_error
       end
+    end
+
+    if configuration.has_key?("source")
+      sourcePath = configuration["source"]
+      unless File.exists?(sourcePath)
+        raise Error::Configuration_file_error
+      end
+    end
+
+    if configuration.has_key?("output")
+      outputPath = configuration["output"]
+      unless File.exists?(outputPath)
+        raise Error::Configuration_file_error
+      end
+    end
+
+    if configuration.has_key?("extract")
+      extract = configuration["extract"]
+      unless Configuration::Monitor_Available::MONITORS.include?(extract)
+        raise Error::Configuration_file_error
+      end 
     end
 
     return configuration
