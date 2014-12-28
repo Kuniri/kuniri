@@ -1,4 +1,3 @@
-require_relative '../error/configuration_file_error'
 # Kuniri is the main class of the system, responsible for handling: monitoring 
 # style, language type, and Settings. 
 class Kuniri
@@ -47,9 +46,7 @@ class Kuniri
       if configuration_hash.has_key?(key)
         value = configuration_hash[key]
         value.split(',').each do |element|
-          unless yield(element) then
-            raise Error::Configuration_file_error
-          end
+          raise Error::Configuration_file_error unless yield(element)
         end
         return
       end

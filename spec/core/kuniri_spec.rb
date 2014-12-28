@@ -58,20 +58,20 @@ RSpec.describe Kuniri do
     end
 
     it "Correct return" do
-      write_kuniri_file([":ruby", ":../app/", ":./", ":uml"])
+      write_kuniri_file([":ruby", ":./", ":./", ":uml"])
       hash_config = @kuniri.read_configuration_file(".kuniri")
       expect(hash_config).to include(
             "language" => "ruby", 
-            "source" => "../app/", 
+            "source" => "./", 
             "output" => "./", 
             "extract" => "uml")
     end
   
     it "Correct return: Case sensitive language" do
-      write_kuniri_file([":ruBy", ":../app/", ":./", ":uMl, traCeaBilitY"])
+      write_kuniri_file([":ruBy", ":app/", ":./", ":uMl, traCeaBilitY"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(
             "language" => "ruby",
-            "source" => "../app/", 
+            "source" => "app/", 
             "output" => "./", 
             "extract" => "uml,traceability")
     end

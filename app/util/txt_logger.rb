@@ -2,7 +2,8 @@ require 'date'
 require_relative 'logger'
 
 module Util
-  # Create log in a txt format.
+  # Create log in a text format. This classes handling the correct way of 
+  # generate the log in a .txt format. 
   class Txt_Logger < Logger
 
     # @param path [String] Path for save the log. The default is /tmp/
@@ -10,7 +11,7 @@ module Util
       super(path)
     end
 
-    # Write a message as a txt file.
+    # Write a message as .txt file.
     # @param message [String] Massage to be write in the log file.
     def write_log(message)
       File.open(@log_path, 'a') do |file|

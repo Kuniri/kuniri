@@ -3,11 +3,11 @@ rvm:
 - 2.1.2
 before_script:
 - git clone https://github.com/rodrigosiqueira/kuniri.git
+- cd kuniri
 - gem install yard
 - gem install rspec
 script:
-- cd spec
-- rspec kuniri_spec.rb
+- rake spec
 notifications:
 on_success: change
 on_failure: always

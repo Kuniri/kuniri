@@ -3,16 +3,23 @@
 module Util
   # Abstract class responsible for define the log strategy. 
   class Logger
-    def initialize(path = "/tmp")
+    
+    # Create/open the log file, and save the path.
+    # @param path [String] Receives the path for save the log file. By default
+    #   it is saved on /tmp with the name "kuniri".
+    def initialize(path = "/tmp/kuniri")
       File.open(path, 'a')
       @log_path = path 
     end
 
     public
-      # Write log, based on the message and the path
-      # @override 
-      def write_log(message); NotImplementedError end
+      # Write log, based on the message and the path. The most important thing
+      # about this method, is related with the implementation in different 
+      # formats. Ex.: write_log can be implemented as HTML, txt, XML, etc.
+      # @param message to write in the log file. 
+      def write_log(message); raise NotImplementedError end
+
     protected
-      @log_path
+      @log_path # Saved path of the log file.
   end 
 end
