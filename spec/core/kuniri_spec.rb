@@ -1,5 +1,4 @@
-require_relative 'spec_helper'
-require_relative '../app/error/configuration_file_error'
+require_relative '../spec_helper'
 
 RSpec.describe Kuniri do
 
@@ -60,11 +59,15 @@ RSpec.describe Kuniri do
 
     it "Correct return" do
       write_kuniri_file([":ruby", ":../app/", ":./", ":uml"])
-      expect(@kuniri.read_configuration_file(".kuniri")).to include(
+      hash_config = @kuniri.read_configuration_file(".kuniri")
+      expect(hash_config).to include(
             "language" => "ruby", 
             "source" => "../app/", 
             "output" => "./", 
             "extract" => "uml")
+    end
+  
+    it "Correct return: Case sensitive language" do
       write_kuniri_file([":ruBy", ":../app/", ":./", ":uMl, traCeaBilitY"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(
             "language" => "ruby",
@@ -76,6 +79,5 @@ RSpec.describe Kuniri do
 
   after :all do
     File.delete(".kuniri")
-    @kuniri = nil
   end
 end

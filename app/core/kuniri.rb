@@ -1,3 +1,4 @@
+require_relative '../error/configuration_file_error'
 # Kuniri is the main class of the system, responsible for handling: monitoring 
 # style, language type, and Settings. 
 class Kuniri
@@ -25,8 +26,9 @@ class Kuniri
         configuration[key] = value
       end
 
-      validate_field(configuration, "language"){|language| 
-        Configuration::Language_Available::LANGUAGES.include?(language)}
+      validate_field(configuration, "language") do |language| 
+        Configuration::Language_Available::LANGUAGES.include?(language)
+      end
 
       validate_field(configuration, "source"){|sourcePath|
         File.exists?(sourcePath)}
@@ -35,7 +37,7 @@ class Kuniri
         File.exists?(outputPath)}
 
       validate_field(configuration, "extract"){|extract| 
-        Configuration::Monitor_Available::MONITORS.include?(extract)}
+        Configuration::Monitor_Available::MONITORS.include?(extract.downcase)}
 
       return configuration
     end
@@ -45,7 +47,7 @@ class Kuniri
       if configuration_hash.has_key?(key)
         value = configuration_hash[key]
         value.split(',').each do |element|
-          unless yield element.downcase
+          unless yield(element) then
             raise Error::Configuration_file_error
           end
         end
