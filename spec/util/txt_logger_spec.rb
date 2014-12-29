@@ -1,10 +1,10 @@
 require_relative '../spec_helper'
 
-RSpec.describe Util::Txt_Logger do
+RSpec.describe Util::TxtLogger do
   context "Write txt log" do
 
     before :all do
-      @txt = Util::Txt_Logger.new("kuniri_log.txt")
+      @txt = Util::TxtLogger.new("kuniri_log.txt")
       @txt.write_log("Text file log")
     end
 

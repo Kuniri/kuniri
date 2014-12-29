@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-RSpec.describe Kuniri do
+RSpec.describe Kuniri::Kuniri do
 
   def write_kuniri_file(parameter)
     File.open(".kuniri", 'w') do |file|
@@ -18,7 +18,7 @@ RSpec.describe Kuniri do
       file.write("output:xpto/2" + "\n")
       file.write("extract:uml,traceability" + "\n")
     end
-    @kuniri = Kuniri.new 
+    @kuniri = Kuniri::Kuniri.new 
   end
 
   context "#read_configuration_file" do

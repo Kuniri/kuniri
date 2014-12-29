@@ -2,7 +2,7 @@ require_relative 'logger'
 
 module Util
   # Handling HTML log. 
-  class Html_Logger < Logger
+  class HtmlLogger < Logger
 
     # @param path [String] Receives the path to save the log.
     def initialize(path = "/tmp")

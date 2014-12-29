@@ -1,10 +1,10 @@
 require_relative '../spec_helper'
 
-RSpec.describe Util::Html_Logger do
+RSpec.describe Util::HtmlLogger do
   context "Write html log" do 
     
     before :all do
-      @html = Util::Html_Logger.new("log.html")
+      @html = Util::HtmlLogger.new("log.html")
       @html.write_log("HTML log")
     end
 

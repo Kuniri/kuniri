@@ -4,7 +4,7 @@ require_relative 'logger'
 module Util
   # Create log in a text format. This classes handling the correct way of 
   # generate the log in a .txt format. 
-  class Txt_Logger < Logger
+  class TxtLogger < Logger
 
     # @param path [String] Path for save the log. The default is /tmp/
     def initialize(path = "/tmp")
