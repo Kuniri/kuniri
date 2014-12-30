@@ -4,12 +4,13 @@ module Kuniri
   class Kuniri
 
     public
-      # Read the configuration file and return a list with the configurations. In 
-      # this method it is checked the configuration file syntax.
-      # @param path [String] Path to ".kuniri" file, it means, the configurations.
+      # Read the configuration file and return a list with the configurations. 
+      # In this method it is checked the configuration file syntax.
+      # @param path [String] Path to ".kuniri" file, it means, the 
+      # configurations.
       # @return [Hash] Return a Hash with the configurations read in ".kuniri", 
       #     othewise, raise an exception.
-      # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake.
+      # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
       def read_configuration_file(path = "./kuniri")
         
@@ -37,7 +38,8 @@ module Kuniri
           File.exists?(outputPath)}
 
         validate_field(configuration, "extract"){|extract| 
-          Configuration::Monitor_Available::MONITORS.include?(extract.downcase)}
+          Configuration::Monitor_Available::MONITORS.include?(
+            extract.downcase)}
 
         return configuration
       end

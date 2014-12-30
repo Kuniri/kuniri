@@ -17,24 +17,35 @@ RSpec.describe Languages::RubySyntax do
     end 
 
     it "Verify the correctness of the comment extracted" do
-      firstCommentString = " RubySupportTest is used only for execute basic tests for check ruby syntax."
+      firstCommentString = " RubySupportTest is used only for execute basic" 
+      firstCommentString += " tests for check ruby syntax."
       comments = @rubySyntax.comment_extract(@sourceLines)
-      expect(comments[0]).to eq(firstCommentString)
+      expect(comments[1]).to eq(firstCommentString)
     end
 
     it "Multiple line comment" do
-      multipleLineString =  "get_something is a method created for test the something...\n"
-      multipleLineString += "The important thing here, is use of multiple line.\n"
+      multipleLineString =  "get_something is a method created for test the" 
+      multipleLineString += " something...\n"
+      multipleLineString += "The important thing here, is use of multiple"
+      multipleLineString += " line.\n"
       comments = @rubySyntax.comment_extract(@sourceLines)
       expect(comments[5]).to eq(multipleLineString)
     end
   end
 
-  #context "#class_extract" do
-  #end
+  context "#class_extract" do
+    it "Class name" do
+      classList = @rubySyntax.class_extract(@sourceLines)
+      expect(classList.shift).to eq("RubySupportTest")
+    end
+  end
 
-  #context "#method_extract" do
-  #end
+  context "#method_extract" do
+    it "Method name" do
+      methodName = @rubySyntax.method_extract(@sourceLines)
+      expect(methodName.shift).to eq("get_something")
+    end
+  end
 
   after :all do
     @sourceLines = nil

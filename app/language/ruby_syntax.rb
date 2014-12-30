@@ -10,6 +10,9 @@ module Languages
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
       def comment_extract(source)
+        string.to_enum(:scan,/(#|=begin)/i).map do |matched,|
+          all_comments_location[$`.size, matched]
+        end
         raise NotImplementedError
       end
 
