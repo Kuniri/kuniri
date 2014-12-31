@@ -3,17 +3,21 @@ require_relative 'language'
 module Languages
   # Handling the ruby syntax for extract information. 
   class RubySyntax < Languages::Language
-    def initialize
-    end
 
-    public
+    public   
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
-      def comment_extract(source)
-        string.to_enum(:scan,/(#|=begin)/i).map do |matched,|
-          all_comments_location[$`.size, matched]
+      def comment_extract
+        all_comments = Array.new
+        #@source.to_enum(:scan,/(#|=begin)/i).map do |matched,|
+        #  all_comments_location[$`.size] = matched
+        #end
+        #Find a simple Ruby comment with '#'
+        @source.scan(/#(.*)/).each do |comments|
+          all_comments.push(comments)
         end
-        raise NotImplementedError
+
+        return all_comments
       end
 
       # Extract all the method/function from the source.
@@ -38,6 +42,6 @@ module Languages
       # @param source [String]
       def global_variable_extract(source)
         raise NotImplementedError
-      end   
+      end
   end
 end

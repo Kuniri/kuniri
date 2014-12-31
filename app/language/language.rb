@@ -3,7 +3,12 @@ module Languages
   # @abstract Abstract class for handling different types of language.
   class Language
     public
-
+      # Set the source code to by analysed.
+      # @param source [String] Set the source string.
+      def set_source(source)
+        @source = source
+      end
+ 
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
       def comment_extract(source)
@@ -36,5 +41,6 @@ module Languages
 
     protected
       @languageType
+      @source
   end
 end
