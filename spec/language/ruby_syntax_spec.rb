@@ -27,7 +27,7 @@ RSpec.describe Languages::RubySyntax do
       multipleLineString += "The important thing here, is use of multiple"
       multipleLineString += " line.\n"
       comments = @rubySyntax.comment_extract
-      expect(comments[5]).to eq(multipleLineString)
+      expect(comments[6]).to eq(multipleLineString)
     end
   end
 

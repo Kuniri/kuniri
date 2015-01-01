@@ -16,7 +16,7 @@ class RubySupportTest
     return "this is something"
   end
 
-  # Here we go agai...
+  # Here we go again...
   def show_value(value)
     puts value
   end
