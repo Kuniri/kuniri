@@ -17,7 +17,7 @@ module Languages
           all_comments.push(comments)
         end
         #Find multiple line comment.
-        @source.scan(/(=begin)[\r\n|\r|\n]+([^=]+)(=end)/).each do |comment|
+        @source.scan(/[^ \t](=begin[.\n]*)(((?!\1).[\n]?)*)([^ \t]=end)/).each do |comment|
           all_comments.push(comment) if (comment != "=begin") or (comment != "=end")
         end
 
