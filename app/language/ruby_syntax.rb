@@ -26,25 +26,29 @@ module Languages
 
       # Extract all the method/function from the source.
       # @param source [String]
-      def method_extract(source)
+      def method_extract
         raise NotImplementedError
       end
 
       # Extract all the class declared in the source.
       # @param source [String]
-      def class_extract(source)
+      def class_extract
+        all_class_name = Array.new
+        @source.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/).each do |nameClass|
+          all_class_name.push(nameClass)
+        end
+        return all_class_name
+      end
+
+      #
+      # @param source [String]
+      def attribute_extract
         raise NotImplementedError
       end
 
       #
       # @param source [String]
-      def attribute_extract(source)
-        raise NotImplementedError
-      end
-
-      #
-      # @param source [String]
-      def global_variable_extract(source)
+      def global_variable_extract
         raise NotImplementedError
       end
   end
