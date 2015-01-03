@@ -9,18 +9,14 @@ module Languages
       # @param source [String] Source code to analys.
       def comment_extract
         all_comments = Array.new
-        #@source.to_enum(:scan,/(#|=begin)/i).map do |matched,|
-        #  all_comments_location[$`.size] = matched
-        #end
         #Find a simple Ruby comment with '#'
         @source.scan(/#(.*)/).each do |comments|
-          all_comments.push(comments)
+          all_comments.push(comments[0])
         end
         #Find multiple line comment.
-        @source.scan(/[^ \t](=begin[.\n]*)(((?!\1).[\n]?)*)([^ \t]=end)/).each do |comment|
-          all_comments.push(comment) if (comment != "=begin") or (comment != "=end")
+        @source.scan(/^=begin(.*?)^=end/m).each do |comment|
+          all_comments.push(comment[0].lstrip)
         end
-
         return all_comments
       end
 
