@@ -23,7 +23,11 @@ module Languages
       # Extract all the method/function from the source.
       # @param source [String]
       def method_extract
-        raise NotImplementedError
+        all_methods = Array.new
+        @source.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/).each do |method|
+          all_methods.push(method[0])
+        end
+        return all_methods
       end
 
       # Extract all the class declared in the source.
@@ -31,7 +35,7 @@ module Languages
       def class_extract
         all_class_name = Array.new
         @source.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/).each do |nameClass|
-          all_class_name.push(nameClass)
+          all_class_name.push(nameClass[0])
         end
         return all_class_name
       end

@@ -34,14 +34,14 @@ RSpec.describe Languages::RubySyntax do
   context "#class_extract" do
     it "Class name" do
       classList = @rubySyntax.class_extract
-      expect(classList.shift).to eq(["RubySupportTest"])
+      expect(classList.shift).to eq("RubySupportTest")
     end
   end
 
   context "#method_extract" do
     it "Method name" do
       methodName = @rubySyntax.method_extract
-      expect(methodName.shift).to eq("get_something")
+      expect(methodName.shift).to eq("initialize")
     end
   end
 
