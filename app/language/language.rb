@@ -8,6 +8,14 @@ module Languages
       def set_source(source)
         @source = source
       end
+
+      # Based on the source, extract the informations inside of it. For example
+      # in this is step the algorithm try to find classes, and methods. This 
+      # method, work like a hook for give more flexibility to implements any 
+      # needed steps.
+      def analyse_source
+        raise NotImplementedError
+      end
  
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.

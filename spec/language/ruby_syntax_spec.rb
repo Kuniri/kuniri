@@ -3,6 +3,7 @@ require_relative '../spec_helper'
 RSpec.describe Languages::RubySyntax do
 
   before :all do
+    # VAI TER QUE MUDAR!!!
     file = File.open("spec/language/ruby_support_test.rb", "rb")
     @rubySyntax = Languages::RubySyntax.new
     @rubySyntax.set_source(file.read)

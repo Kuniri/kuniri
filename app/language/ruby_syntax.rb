@@ -1,10 +1,32 @@
 require_relative 'language'
+require_relative 'ruby_syntax_support'
+require_relative 'class_container'
 
 module Languages
+  
   # Handling the ruby syntax for extract information. 
   class RubySyntax < Languages::Language
+    
+    public
+      # Should I initialize it?
+      @rubySyntaxSupport
+      @currentClass
+      attr_read :visibility
+      @source
 
-    public   
+      # TODO: TAKE CARE HERE!!! POTENTIAL EXCEPTION CAN RAISED HERE!
+      def initialize(path)
+        @rubySyntaxSupport = RubySyntaxSupport.new
+        @currentClass = ClassContainer.new
+        @visibility = "public"
+        self.analyse_source(path)
+      end
+  
+      def analyse_source(path)
+        self.analyse_first_step(path)
+        #self.analyse_second_step
+      end
+ 
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
       def comment_extract
@@ -20,36 +42,76 @@ module Languages
         return all_comments
       end
 
-      # Extract all the method/function from the source.
+      # Extract all method from the source.
       # @param source [String]
       def method_extract
-        all_methods = Array.new
-        @source.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/).each do |method|
-          all_methods.push(method[0])
-        end
-        return all_methods
+        return @currentClass.methods
       end
 
       # Extract all the class declared in the source.
       # @param source [String]
       def class_extract
-        all_class_name = Array.new
-        @source.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/).each do |nameClass|
-          all_class_name.push(nameClass[0])
-        end
-        return all_class_name
+        return @currentClass
       end
 
-      #
       # @param source [String]
       def attribute_extract
-        raise NotImplementedError
+        return @currentClass.attributes
       end
 
       #
       # @param source [String]
       def global_variable_extract
         raise NotImplementedError
+      end 
+
+    private
+      def analyse_first_step(path)
+        @source = File.open(path, "rb")
+        
+        @source.each do |line|  
+          tokenType = @rubySyntaxSupport.get_token_type(line)
+          case tokenType
+            when Languages::CLASS_TOKEN then
+              self.save_class(line)
+              self.increment_token
+            when Languages::ATTRIBUTE_TOKEN then
+              self.save_attribute(line)
+            when Languages::METHOD_TOKEN then
+              self.save_method(line)
+              self.increment_token
+            when Languages::END_TOKEN then
+              self.decrement_token(line)
+            when Languages::VISIBILITY_TOKEN then
+              self.update_visibility(tokenType)
+            end
+          end
+        end
+      end
+
+      def save_class(line)
+        # Regex in the line
+        @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+        #if @rubySyntaxSupport.has_inheritance?
+        #  @class.inheritance = @rubySyntaxSupport.get_inheritance(line)
+        #end
+      end
+      
+      def save_attribute(line)
+        attribute = @rubySyntaxSupport.get_attribute(line)
+        attribute.set_visibility(@visibility)
+        @currentClass.set_attribute(attribute)
+      end
+
+      def save_method(line)
+        method = @rubySyntaxSupport.get_method(line)
+        method.set_visibility(@visibility)
+        @currentClass.set_method(method)
+      end
+      
+      def update_visibility(line)
+        visibility = @rubySyntaxSupport.get_visibiliy(line)
+        @visibility = visibility
       end
   end
 end
