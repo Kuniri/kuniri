@@ -1,3 +1,5 @@
+require_relative 'method_container'
+
 #TODO: COMMENTS
 module Languages
 
@@ -31,6 +33,10 @@ module Languages
       return self.regex_match(line, /\bclass\b\b[ |\t]+\s*(.*)\b/)
     end
 
+    def get_class_name(line)
+      return line.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/)[0][0]
+    end
+
     def has_attribute?(line)
       #TODO
       return self.regex_match(line, /@|attr_/)
@@ -38,6 +44,14 @@ module Languages
 
     def has_method?(line)
       return self.regex_match(line, /\bdef\b\b[ |\t]+\s*(.*)\b/)
+    end
+
+    def get_method(line)
+      method = MethodContainer.new
+      methodName = line.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/)[0]
+      #method.parameters = ... something for extract the parameters ...
+      method.name = methodName
+      return method
     end
 
     def has_end?(line)
@@ -49,6 +63,11 @@ module Languages
       #TODO
       return self.regex_match(line, /private|public|protected/
     end
+
+    def get_visibiliy(line)
+      #TODO
+      return line.scan(/private|public|protected/)[0] 
+    end 
 
     def get_token_type(line)
       if has_class?(line)

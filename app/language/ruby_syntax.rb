@@ -1,6 +1,7 @@
 require_relative 'language'
 require_relative 'ruby_syntax_support'
 require_relative 'class_container'
+require_relative 'method_container'
 
 module Languages
   
@@ -104,9 +105,10 @@ module Languages
       end
 
       def save_method(line)
+        # get_method MUST TO RETURN A METHOD OBJECT
         method = @rubySyntaxSupport.get_method(line)
-        method.set_visibility(@visibility)
-        @currentClass.set_method(method)
+        method.visibility = @visibility
+        @currentClass.methods.push(method)
       end
       
       def update_visibility(line)
