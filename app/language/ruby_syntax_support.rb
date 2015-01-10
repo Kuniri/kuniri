@@ -1,4 +1,5 @@
 require_relative 'method_container'
+require_relative 'attribute_container'
 
 #TODO: COMMENTS
 module Languages
@@ -7,7 +8,8 @@ module Languages
   ATTRIBUTE_TOKEN = 2
   METHOD_TOKEN = 3
   VISIBILITY_TOKEN = 4
-  
+  END_TOKEN = 5
+ 
   #TODO: COMMENTS
   class RubySyntaxSupport
     attr_reader :token
@@ -18,19 +20,20 @@ module Languages
     end
      
     def increment_token
-      @token++
+      @token = @token + 1
     end
 
     def decrement_token
       if @token >= 0
-        @token--
+        @token = @token - 1
       else
-        raise
+        #TODO: Handle it soon!
+        puts @token
       end
     end
 
     def has_class?(line)
-      return self.regex_match(line, /\bclass\b\b[ |\t]+\s*(.*)\b/)
+      return regex_match(line, /\bclass\b\b[ |\t]+\s*(.*)\b/)
     end
 
     def get_class_name(line)
@@ -39,11 +42,17 @@ module Languages
 
     def has_attribute?(line)
       #TODO
-      return self.regex_match(line, /@|attr_/)
+      return regex_match(line,/(@|attr_accessor|attr_read|attr_write)([^:].*)/)
+    end
+
+    def get_attribute(line)
+      attribute = AttributeContainer.new
+      attribute.name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0][0]
+      return attribute
     end
 
     def has_method?(line)
-      return self.regex_match(line, /\bdef\b\b[ |\t]+\s*(.*)\b/)
+      return regex_match(line, /\bdef\b\b[ |\t]+\s*(.*)\b/)
     end
 
     def get_method(line)
@@ -56,12 +65,12 @@ module Languages
 
     def has_end?(line)
       #TODO
-      return self.regex_match(line, /.../)
+      return regex_match(line, /.../)
     end
 
     def has_visibility?(line)
       #TODO
-      return self.regex_match(line, /private|public|protected/
+      return regex_match(line, /private|public|protected/)
     end
 
     def get_visibiliy(line)
@@ -94,7 +103,7 @@ module Languages
 
   private
     def regex_match(value, regex)
-      if value ~= regex
+      if value =~ regex
         return true
       end
       return false

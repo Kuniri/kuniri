@@ -12,7 +12,7 @@ module Languages
       # Should I initialize it?
       @rubySyntaxSupport
       @currentClass
-      attr_read :visibility
+      attr_reader :visibility
       @source
 
       # TODO: TAKE CARE HERE!!! POTENTIAL EXCEPTION CAN RAISED HERE!
@@ -20,11 +20,11 @@ module Languages
         @rubySyntaxSupport = RubySyntaxSupport.new
         @currentClass = ClassContainer.new
         @visibility = "public"
-        self.analyse_source(path)
+        analyse_source(path)
       end
   
       def analyse_source(path)
-        self.analyse_first_step(path)
+        analyse_first_step(path)
         #self.analyse_second_step
       end
  
@@ -69,46 +69,46 @@ module Languages
     private
       def analyse_first_step(path)
         @source = File.open(path, "rb")
-        
         @source.each do |line|  
           tokenType = @rubySyntaxSupport.get_token_type(line)
           case tokenType
-            when Languages::CLASS_TOKEN then
-              self.save_class(line)
-              self.increment_token
-            when Languages::ATTRIBUTE_TOKEN then
-              self.save_attribute(line)
-            when Languages::METHOD_TOKEN then
-              self.save_method(line)
-              self.increment_token
-            when Languages::END_TOKEN then
-              self.decrement_token(line)
-            when Languages::VISIBILITY_TOKEN then
-              self.update_visibility(tokenType)
-            end
+          when Languages::CLASS_TOKEN
+            save_class(line)
+            @rubySyntaxSupport.increment_token
+          when Languages::ATTRIBUTE_TOKEN
+            save_attribute(line)
+          when Languages::METHOD_TOKEN
+            save_method(line)
+            @rubySyntaxSupport.increment_token
+          when Languages::END_TOKEN
+            @rubySyntaxSupport.decrement_token
+          when Languages::VISIBILITY_TOKEN
+            update_visibility(tokenType)
+          else
+            next
           end
         end
       end
 
       def save_class(line)
         # Regex in the line
-        @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+        @currentClass.className = @rubySyntaxSupport.get_class_name(line)
         #if @rubySyntaxSupport.has_inheritance?
         #  @class.inheritance = @rubySyntaxSupport.get_inheritance(line)
         #end
       end
-      
+
       def save_attribute(line)
         attribute = @rubySyntaxSupport.get_attribute(line)
-        attribute.set_visibility(@visibility)
-        @currentClass.set_attribute(attribute)
+        attribute.visibility = @visibility
+        @currentClass.add_attribute(attribute)
       end
 
       def save_method(line)
         # get_method MUST TO RETURN A METHOD OBJECT
         method = @rubySyntaxSupport.get_method(line)
         method.visibility = @visibility
-        @currentClass.methods.push(method)
+        @currentClass.add_method(method)
       end
       
       def update_visibility(line)

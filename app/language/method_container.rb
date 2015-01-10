@@ -2,10 +2,10 @@
 module Languages
 
   class MethodContainer
-    attr_reader :name
+    attr_accessor :name
     attr_reader :parameters
-    attr_reader :returnType
-    attr_reader :visibility
+    attr_accessor :returnType
+    attr_accessor :visibility
 
     def add_parameter(value)
       @parameters.push(value)
