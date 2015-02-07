@@ -1,16 +1,19 @@
 require_relative 'method_data'
 require_relative 'attribute_data'
 
-#TODO: COMMENTS
 module Languages
 
+  # Token types used to identify keywords
   CLASS_TOKEN = 1
   ATTRIBUTE_TOKEN = 2
   DEF_TOKEN = 3
   VISIBILITY_TOKEN = 4
   END_TOKEN = 5
- 
-  #TODO: COMMENTS
+  IF_TOKEN = 6
+  WHILE_TOKEN = 7
+  DO_TOKEN = 8
+
+  # This class implements useful methods for help to handling Ruby syntax.
   class RubySyntaxSupport
     attr_reader :token
     @class_token
@@ -18,7 +21,7 @@ module Languages
     def initialize
       @token = @class_token = 0
     end
-     
+
     def increment_token
       @token = @token + 1
     end
@@ -31,79 +34,78 @@ module Languages
       end
     end
 
-    def has_class?(line)
-      return regex_match(line, /\bclass\b\b[ |\t]+\s*(.*)\b/)
-    end
-
+    # Verify if line has the keyword and return it, otherwise return nil
+    # @param line String to apply the regex
+    # @return Return nil if anything is find, or the class name
     def get_class_name(line)
-      return line.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/)[0][0]
-    end
+      className = line.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/)[0]
+      if not className
+        return nil
+      end
 
-    def has_attribute?(line)
-      #TODO
-      return regex_match(line,/(@|attr_accessor|attr_read|attr_write)([^:].*)/)
+      return className
     end
 
     def get_attribute(line)
-      name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0][0]
+      name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0]
+      if not name
+        return nil
+      end
+
       attribute = AttributeData.new(name)
       return attribute
     end
 
-    def has_method?(line)
-      return regex_match(line, /\bdef\b\b[ |\t]+\s*(.*)\b/)
-    end
-
     def get_method(line)
       methodName = line.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/)[0]
+      if not methodName
+        return nil
+      end
+
       method = MethodData.new(methodName)
       return method
     end
 
     def has_end?(line)
-      #TODO
-      return regex_match(line, /end/)
-    end
+      if line =~ /end/
+        return true
+      end
 
-    def has_visibility?(line)
-      #TODO
-      return regex_match(line, /private|public|protected/)
+      return false
     end
 
     def get_visibiliy(line)
-      return line.scan(/private|public|protected/)[0]
-    end 
+      visibilityName = line.scan(/private|public|protected/)[0]
+      if not visibilityName
+        return nil
+      end
+
+      return visibilityName
+    end
 
     def get_token_type(line)
-      if has_class?(line)
+      if get_class_name(line)
         increment_token
         @class_token = token
         return CLASS_TOKEN
       end
-      
+
       # Has class token?
       if has_token_class?
-        if has_attribute?(line)
+        if get_attribute(line)
           return ATTRIBUTE_TOKEN
-        elsif has_method?(line)
+        elsif get_method(line)
           return DEF_TOKEN
         elsif has_end?(line)
           decrement_token
           return END_TOKEN
-        elsif has_visibility?(line)
+        elsif get_visibiliy(line)
           return VISIBILITY_TOKEN
         end
       end
-      #elsif has_def? ... it means global function
     end
 
   private
-    def regex_match(value, regex)
-      if value =~ regex
-        return true
-      end
-      return false
-    end
 
     def has_token_class?
       if @class_token > 0

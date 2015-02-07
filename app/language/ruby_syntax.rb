@@ -60,14 +60,6 @@ module Languages
         raise NotImplementedError
       end
 
-      ##### REMOVE #####
-      def debug_column
-        puts @class_token
-        puts @token
-        puts @currentClass
-        puts visibility
-      end 
-
     private
 
       @class_token

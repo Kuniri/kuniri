@@ -13,7 +13,6 @@ module Kuniri
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
       def read_configuration_file(path = "./kuniri")
-        
         unless File.exists?(path)
           raise Error::Configuration_file_error
         end
