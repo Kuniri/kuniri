@@ -1,12 +1,12 @@
-require_relative 'method_container'
-require_relative 'attribute_container'
+require_relative 'method_data'
+require_relative 'attribute_data'
 
 #TODO: COMMENTS
 module Languages
 
   CLASS_TOKEN = 1
   ATTRIBUTE_TOKEN = 2
-  METHOD_TOKEN = 3
+  DEF_TOKEN = 3
   VISIBILITY_TOKEN = 4
   END_TOKEN = 5
  
@@ -28,7 +28,6 @@ module Languages
         @token = @token - 1
       else
         #TODO: Handle it soon!
-        puts @token
       end
     end
 
@@ -46,8 +45,8 @@ module Languages
     end
 
     def get_attribute(line)
-      attribute = AttributeContainer.new
-      attribute.name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0][0]
+      name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0][0]
+      attribute = AttributeData.new(name)
       return attribute
     end
 
@@ -56,16 +55,14 @@ module Languages
     end
 
     def get_method(line)
-      method = MethodContainer.new
       methodName = line.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/)[0]
-      #method.parameters = ... something for extract the parameters ...
-      method.name = methodName
+      method = MethodData.new(methodName)
       return method
     end
 
     def has_end?(line)
       #TODO
-      return regex_match(line, /.../)
+      return regex_match(line, /end/)
     end
 
     def has_visibility?(line)
@@ -74,8 +71,7 @@ module Languages
     end
 
     def get_visibiliy(line)
-      #TODO
-      return line.scan(/private|public|protected/)[0] 
+      return line.scan(/private|public|protected/)[0]
     end 
 
     def get_token_type(line)
@@ -84,13 +80,13 @@ module Languages
         @class_token = token
         return CLASS_TOKEN
       end
-
+      
       # Has class token?
-      if has_token_class? 
+      if has_token_class?
         if has_attribute?(line)
           return ATTRIBUTE_TOKEN
         elsif has_method?(line)
-          return METHOD_TOKEN
+          return DEF_TOKEN
         elsif has_end?(line)
           decrement_token
           return END_TOKEN

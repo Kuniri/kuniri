@@ -1,26 +1,21 @@
 require_relative 'language'
 require_relative 'ruby_syntax_support'
-require_relative 'class_container'
-require_relative 'method_container'
+require_relative 'class_data'
 
 module Languages
-  
+
   # Handling the ruby syntax for extract information. 
   class RubySyntax < Languages::Language
-    
-    public
-      # Should I initialize it?
-      @rubySyntaxSupport
-      @currentClass
-      attr_reader :visibility
-      @source
 
-      # TODO: TAKE CARE HERE!!! POTENTIAL EXCEPTION CAN RAISED HERE!
-      def initialize(path)
-        @rubySyntaxSupport = RubySyntaxSupport.new
-        @currentClass = ClassContainer.new
+    public
+
+      def initialize
+        @rubySyntaxSupport = Languages::RubySyntaxSupport.new
+        #You have to make it more generic, for the case of many class.
+        @currentClass = Languages::ClassData.new
         @visibility = "public"
-        analyse_source(path)
+        @class_token = 0
+        @token = 0
       end
   
       def analyse_source(path)
@@ -60,60 +55,92 @@ module Languages
         return @currentClass.attributes
       end
 
-      #
       # @param source [String]
       def global_variable_extract
         raise NotImplementedError
+      end
+
+      ##### REMOVE #####
+      def debug_column
+        puts @class_token
+        puts @token
+        puts @currentClass
+        puts visibility
       end 
 
     private
+
+      @class_token
+      @token
+      @rubySyntaxSupport
+      @currentClass
+      attr_accessor :visibility
+      @source
+
       def analyse_first_step(path)
         @source = File.open(path, "rb")
         @source.each do |line|  
           tokenType = @rubySyntaxSupport.get_token_type(line)
-          case tokenType
-          when Languages::CLASS_TOKEN
-            save_class(line)
-            @rubySyntaxSupport.increment_token
-          when Languages::ATTRIBUTE_TOKEN
-            save_attribute(line)
-          when Languages::METHOD_TOKEN
-            save_method(line)
-            @rubySyntaxSupport.increment_token
-          when Languages::END_TOKEN
-            @rubySyntaxSupport.decrement_token
-          when Languages::VISIBILITY_TOKEN
-            update_visibility(tokenType)
+          if tokenType == Languages::CLASS_TOKEN || @class_token > 0
+            handle_class(line)
           else
-            next
+            handle_nonclass(line)
           end
         end
       end
 
+      def handle_class(line)
+        tokenType = @rubySyntaxSupport.get_token_type(line)
+        case tokenType
+          when Languages::CLASS_TOKEN
+            save_class(line)
+            @class_token = @class_token + 1
+            @token = @token + 1
+            puts "> CLASS TOKEN"
+          when Languages::ATTRIBUTE_TOKEN
+            save_attribute(line)
+            puts "= ATTRIBUTE TOKEN"
+          when Languages::DEF_TOKEN
+            save_method(line)
+            @token = @token + 1
+            puts "+ Method token"
+          when Languages::END_TOKEN
+            @token = @token - 1
+          when Languages::VISIBILITY_TOKEN
+            update_visibility(line)
+            puts "- VISIBILITY"
+          else
+            return
+          end
+      end
+
+      def handle_nonclass(line)
+        return line
+      end
+
       def save_class(line)
         # Regex in the line
-        @currentClass.className = @rubySyntaxSupport.get_class_name(line)
-        #if @rubySyntaxSupport.has_inheritance?
-        #  @class.inheritance = @rubySyntaxSupport.get_inheritance(line)
-        #end
+        @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+        # Get inherintance
       end
 
       def save_attribute(line)
-        attribute = @rubySyntaxSupport.get_attribute(line)
-        attribute.visibility = @visibility
+        attribute_name = @rubySyntaxSupport.get_attribute(line)
+        attribute = Languages::AttributeData.new(attribute_name)
         @currentClass.add_attribute(attribute)
+        @currentClass.visibility = @visibility
       end
 
       def save_method(line)
         # get_method MUST TO RETURN A METHOD OBJECT
-        method = @rubySyntaxSupport.get_method(line)
-        method.visibility = @visibility
+        method_name = @rubySyntaxSupport.get_method(line)
+        method = Languages::MethodData.new(method_name)
         @currentClass.add_method(method)
+        @currentClass.visibility = @visibility
       end
-      
+ 
       def update_visibility(line)
-        visibility = @rubySyntaxSupport.get_visibiliy(line)
-        @visibility = visibility
+        @visibility = @rubySyntaxSupport.get_visibiliy(line)
       end
   end
 end
