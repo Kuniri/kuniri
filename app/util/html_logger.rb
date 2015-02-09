@@ -15,6 +15,6 @@ module Util
         file.write("<p>" + Time.now.strftime("%d/%m/%Y %H:%M:%S") + "</p>\n")
         file.write("       <i>HTML log</i>\n")
       end
-    end    
+    end
   end
 end

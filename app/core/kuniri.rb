@@ -1,14 +1,15 @@
 # Kuniri is the main class of the system, responsible for handling: monitoring 
-# style, language type, and Settings. 
-module Kuniri  
+# style, language type, and Settings.
+module Kuniri
+
   class Kuniri
 
     public
-      # Read the configuration file and return a list with the configurations. 
+      # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
-      # @param path [String] Path to ".kuniri" file, it means, the 
+      # @param path [String] Path to ".kuniri" file, it means, the
       # configurations.
-      # @return [Hash] Return a Hash with the configurations read in ".kuniri", 
+      # @return [Hash] Return a Hash with the configurations read in ".kuniri",
       #     othewise, raise an exception.
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
@@ -26,7 +27,7 @@ module Kuniri
           configuration[key] = value
         end
 
-        validate_field(configuration, "language") do |language| 
+        validate_field(configuration, "language") do |language|
           Configuration::Language_Available::LANGUAGES.include?(language)
         end
 
@@ -36,7 +37,7 @@ module Kuniri
         validate_field(configuration, "output"){|outputPath|
           File.exists?(outputPath)}
 
-        validate_field(configuration, "extract"){|extract| 
+        validate_field(configuration, "extract"){|extract|
           Configuration::Monitor_Available::MONITORS.include?(
             extract.downcase)}
 
@@ -44,13 +45,13 @@ module Kuniri
       end
 
     private
+
       def validate_field(configuration_hash, key)
         if configuration_hash.has_key?(key)
           value = configuration_hash[key]
           value.split(',').each do |element|
             raise Error::Configuration_file_error unless yield(element)
           end
-          return
         end
 
         raise Error::Configuration_file_error

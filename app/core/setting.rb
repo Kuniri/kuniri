@@ -12,7 +12,7 @@ class Setting
   # Get the line, and split it by ':'.
   # @param world [String] Line read from the file, and with the syntax.
   # @return [String] Return a string after ':'
-  def getSecondPart (world)
+  def get_second_part(world)
     divided = line.split(/:/)[1]
       if divided == nil or divided.size > 3
         #raise "Sintax error"
@@ -23,23 +23,23 @@ class Setting
 
   private
 
-  def setWiki(line)
-    wikiTmp = getSecondPart(line)
+  def set_wiki(line)
+    wikiTmp = get_second_part(line)
     self.wiki = wikiTmp
   end
 
-  def setSource(line)
-    sourceTmp = getSecondPart(line)
+  def set_source(line)
+    sourceTmp = get_second_part(line)
     self.source = sourceTmp
   end
 
-  def setOutput(line)
-    outputTmp = getSecondPart(line)
+  def set_output(line)
+    outputTmp = get_second_part(line)
     self.output = outputTmp
   end
 
-  def setExtract(line)
-    extractTmp = getSecondPart(line)
+  def set_extract(line)
+    extractTmp = get_second_part(line)
     self.extract = extractTmp
   end
 end

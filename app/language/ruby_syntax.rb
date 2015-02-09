@@ -4,7 +4,7 @@ require_relative 'class_data'
 
 module Languages
 
-  # Handling the ruby syntax for extract information. 
+  # Handling the ruby syntax for extract information.
   class RubySyntax < Languages::Language
 
     public

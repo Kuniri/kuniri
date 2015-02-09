@@ -21,7 +21,7 @@ RSpec.describe Util::HtmlLogger do
       end
       expect(message).to eq ("       <i>HTML log</i>\n")
     end
-    
+
     after :all do
       File.delete("log.html")
       @html = nil

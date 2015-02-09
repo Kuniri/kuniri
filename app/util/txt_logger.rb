@@ -20,5 +20,6 @@ module Util
         file.write("message: " + message + "\n")
       end
     end
+
   end
 end 

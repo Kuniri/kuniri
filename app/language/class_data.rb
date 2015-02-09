@@ -5,7 +5,7 @@ require_relative 'constructor_data'
 
 module Languages
 
-  # Handling class information 
+  # Handling class information
   class ClassData < BasicData
 
     public

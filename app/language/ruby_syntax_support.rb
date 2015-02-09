@@ -15,6 +15,7 @@ module Languages
 
   # This class implements useful methods for help to handling Ruby syntax.
   class RubySyntaxSupport
+
     attr_reader :token
     @class_token
 
@@ -42,7 +43,6 @@ module Languages
       if not className
         return nil
       end
-
       return className
     end
 
@@ -51,7 +51,6 @@ module Languages
       if not name
         return nil
       end
-
       attribute = AttributeData.new(name)
       return attribute
     end

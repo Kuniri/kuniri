@@ -2,6 +2,7 @@
 module Languages
   # @abstract Abstract class for handling different types of language.
   class Language
+
     public
       # Set the source code to by analysed.
       # @param source [String] Set the source string.
@@ -10,8 +11,8 @@ module Languages
       end
 
       # Based on the source, extract the informations inside of it. For example
-      # in this is step the algorithm try to find classes, and methods. This 
-      # method, work like a hook for give more flexibility to implements any 
+      # in this is step the algorithm try to find classes, and methods. This
+      # method, work like a hook for give more flexibility to implements any
       # needed steps.
       def analyse_source
         raise NotImplementedError
@@ -48,6 +49,7 @@ module Languages
       end
 
     protected
+
       @languageType
       @source
   end
