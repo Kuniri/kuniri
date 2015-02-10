@@ -13,6 +13,7 @@ module Languages
         @rubySyntaxSupport = Languages::RubySyntaxSupport.new
         #You have to make it more generic, for the case of many class.
         @currentClass = Languages::ClassData.new
+        @classes = []
         @visibility = "public"
         @class_token = 0
         @token = 0
@@ -65,6 +66,7 @@ module Languages
       @class_token
       @token
       @rubySyntaxSupport
+      @classes
       @currentClass
       attr_accessor :visibility
       @source
@@ -74,15 +76,14 @@ module Languages
         @source.each do |line|  
           tokenType = @rubySyntaxSupport.get_token_type(line)
           if tokenType == Languages::CLASS_TOKEN || @class_token > 0
-            handle_class(line)
+            handle_class(tokenType, line)
           else
             handle_nonclass(line)
           end
         end
       end
 
-      def handle_class(line)
-        tokenType = @rubySyntaxSupport.get_token_type(line)
+      def handle_class(tokenType, line)
         case tokenType
           when Languages::CLASS_TOKEN
             save_class(line)
@@ -113,6 +114,7 @@ module Languages
       def save_class(line)
         # Regex in the line
         @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+        @classes.push(@currentClass)
         # Get inherintance
       end
 

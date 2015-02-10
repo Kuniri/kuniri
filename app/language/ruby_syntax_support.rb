@@ -49,25 +49,6 @@ module Languages
   # This class implements useful methods for help to handling Ruby syntax.
   class RubySyntaxSupport
 
-    attr_reader :token
-    @class_token
-
-    def initialize
-      @token = @class_token = 0
-    end
-
-    def increment_token
-      @token = @token + 1
-    end
-
-    def decrement_token
-      if @token >= 0
-        @token = @token - 1
-      else
-        #TODO: Handle it soon!
-      end
-    end
-
     # Verify if line has the keyword and return it, otherwise return nil
     # @param line String to apply the regex
     # @return Return nil if anything is find, or the class name
@@ -80,12 +61,11 @@ module Languages
     end
 
     def get_attribute(line)
-      name = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0]
+      nameAttr = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0]
       if not name
         return nil
       end
-      attribute = AttributeData.new(name)
-      return attribute
+      return nameAttr
     end
 
     def get_method(line)
@@ -93,16 +73,67 @@ module Languages
       if not methodName
         return nil
       end
+      return methodName
+    end
 
-      method = MethodData.new(methodName)
-      return method
+    def get_begin(line)
+      # TODO: IMPROVE THE REGEX
+      beginToken = line.scan(/begin/)
+      if not beginToken
+        return nil
+      end
+      return beginToken
+    end
+
+    def get_case(line)
+      # TODO: IMPROVE THE REGEX
+      caseToken = line.scan(/case/)
+      if not caseToken
+        return nil
+      end
+      return caseToken
+    end
+
+    def get_do(line)
+      # TODO: IMPROVE THE REGEX
+      doToken = line.scan(/do/)
+      if not doToken
+        return nil
+      end
+      return doToken
+    end
+
+    def get_if(line)
+      # TODO: IMPROVE THE REGEX
+      ifToken = line.scan(/if/)
+      if not ifToken
+        return nil
+      end
+      return ifToken
+    end
+
+    def get_module(line)
+      # TODO: IMPROVE THE REGEX
+      moduleToken = line.scan(/module/)
+      if not moduleToken
+        return nil
+      end
+      return moduleToken
+    end
+
+    def get_unless(line)
+      # TODO: IMPROVE THE REGEX
+      unlessToken = line.scan(/unless/)
+      if not unlessToken
+        return nil
+      end
+      return unlessToken
     end
 
     def has_end?(line)
       if line =~ /end/
         return true
       end
-
       return false
     end
 
@@ -111,60 +142,42 @@ module Languages
       if not visibilityName
         return nil
       end
-
       return visibilityName
     end
 
-    def get_token_type(line)
-      if get_class_name(line)
-        increment_token
-        @class_token = token
-        return CLASS_TOKEN
-      end
-
-      # Has class token?
-      if has_token_class?
+    def get_token_type(line, class_token=false)
+      # Special token for class
+      if class_token
         if get_attribute(line)
-          return ATTRIBUTE_TOKEN
-        elsif get_method(line)
-          # FINISH WITH "END": INCREMENT
-          return DEF_TOKEN
-        elsif has_end?(line)
-          decrement_token
-          return END_TOKEN
+          return ATTRIBUTE_TOKEN 
         elsif get_visibiliy(line)
           return VISIBILITY_TOKEN
-        elsif get_begin(line)
-          # FINISH WITH "END": INCREMENT
-          return BEGIN_TOKEN
-        elsif get_case(line)
-          # FINISH WITH "END": INCREMENT
-          return CASE_TOKEN
-        elsif get_do(line)
-          # FINISH WITH "END": INCREMENT
-          return DO_TOKEN
-        elsif get_if(line)
-          # FINISH WITH "END": INCREMENT
-          return IF_TOKEN
-        elsif get_module(line)
-          # FINISH WITH "END": INCREMENT
-          return MODULE_TOKEN
-        elsif get_unless(line)
-          #  FINISH WITH "END": INCREMENT
-          return UNLESS_TOKEN
         end
       end
-    end
 
-  private
-
-    def has_token_class?
-      if @class_token > 0
-        return true
+      # All of these reserved words are close with "end"
+      if get_class_name(line)
+        return CLASS_TOKEN
+      elsif has_end?(line)
+        return END_TOKEN
+      elsif get_begin(line)
+        return BEGIN_TOKEN
+      elsif get_method(line)
+        return DEF_TOKEN
+      elsif get_case(line)
+        return CASE_TOKEN
+      elsif get_do(line)
+        return DO_TOKEN
+      elsif get_if(line)
+        return IF_TOKEN
+      elsif get_module(line)
+        return MODULE_TOKEN
+      elsif get_unless(line)
+        return UNLESS_TOKEN
       end
-      return false
-    end
 
+      # Other reserved words
+    end
   #end of class 
   end
 #end of module
