@@ -49,85 +49,66 @@ module Languages
   # This class implements useful methods for help to handling Ruby syntax.
   class RubySyntaxSupport
 
+    def apply_regex(line, regex)
+      result = line.scan(regex)[0]
+      if not result
+        return nil
+      end
+      return result
+    end
+
     # Verify if line has the keyword and return it, otherwise return nil
     # @param line String to apply the regex
     # @return Return nil if anything is find, or the class name
     def get_class_name(line)
-      className = line.scan(/\bclass\b\b[ |\t]+\s*(.*)\b/)[0]
-      if not className
-        return nil
-      end
-      return className
+      regexExpression = /\bclass\b\b[ |\t]+\s*(.*)\b/
+      return apply_regex(line, regexExpression)
     end
 
     def get_attribute(line)
-      nameAttr = line.scan(/(@|attr_accessor|attr_read|attr_write)([^:].*)/)[0]
-      if not name
-        return nil
-      end
-      return nameAttr
+      regexExpression = /(@|attr_accessor|attr_read|attr_write)([^:].*)/
+      return apply_regex(line, regexExpression)
     end
 
     def get_method(line)
-      methodName = line.scan(/\bdef\b\b[ |\t]+\s*(.*)\b/)[0]
-      if not methodName
-        return nil
-      end
-      return methodName
+      regexExpression = /\bdef\b\b[ |\t]+\s*(.*)\b/
+      return apply_regex(line, regexExpression)
     end
 
     def get_begin(line)
       # TODO: IMPROVE THE REGEX
-      beginToken = line.scan(/begin/)
-      if not beginToken
-        return nil
-      end
-      return beginToken
+      regexExpression = /begin/
+      return apply_regex(line, regexExpression)
     end
 
     def get_case(line)
       # TODO: IMPROVE THE REGEX
-      caseToken = line.scan(/case/)
-      if not caseToken
-        return nil
-      end
-      return caseToken
+      regexExpression = /case/
+      return apply_regex(line, regexExpression)
     end
 
     def get_do(line)
       # TODO: IMPROVE THE REGEX
-      doToken = line.scan(/do/)
-      if not doToken
-        return nil
-      end
-      return doToken
+      regexExpression = /do/
+      return apply_regex(line, regexExpression)
     end
 
     def get_if(line)
       # TODO: IMPROVE THE REGEX
-      ifToken = line.scan(/if/)
-      if not ifToken
-        return nil
-      end
-      return ifToken
+      regexExpression = /if/
+      return apply_regex(line, regexExpression)
     end
 
     def get_module(line)
       # TODO: IMPROVE THE REGEX
-      moduleToken = line.scan(/module/)
-      if not moduleToken
-        return nil
-      end
-      return moduleToken
+      regexExpression = /module/
+      return apply_regex(line, regexExpression)
     end
 
     def get_unless(line)
       # TODO: IMPROVE THE REGEX
-      unlessToken = line.scan(/unless/)
-      if not unlessToken
-        return nil
-      end
-      return unlessToken
+      regexExpression = /unless/
+      return apply_regex(line, regexExpression)
     end
 
     def has_end?(line)
@@ -138,11 +119,8 @@ module Languages
     end
 
     def get_visibiliy(line)
-      visibilityName = line.scan(/private|public|protected/)[0]
-      if not visibilityName
-        return nil
-      end
-      return visibilityName
+      regexExpression = /private|public|protected/
+      return apply_regex(line, regexExpression)
     end
 
     def get_token_type(line, class_token=false)
