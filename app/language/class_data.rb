@@ -42,6 +42,16 @@ module Languages
         @constructors.push(constructor)
         return
       end
+
+      def dumpClassData
+        @methods.each do |i|
+          puts i.name
+          puts i.visibility
+        end
+        puts "Methods: #{@methods.size()}"
+        puts "Attributes: #{@attributes.size()}"
+        puts "constructors: #{@constructors.size()}"
+      end
  
     private
       @attributes

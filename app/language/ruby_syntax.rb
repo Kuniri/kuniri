@@ -61,6 +61,11 @@ module Languages
         raise NotImplementedError
       end
 
+      def dumpData
+        puts "="*30
+        puts @currentClass.dumpClassData
+      end
+
     private
 
       @class_token
@@ -76,6 +81,7 @@ module Languages
         @source.each do |line|  
           tokenType = @rubySyntaxSupport.get_token_type(line)
           if tokenType == Languages::CLASS_TOKEN || @class_token > 0
+            tokenType = @rubySyntaxSupport.get_token_type(line, true)
             handle_class(tokenType, line)
           else
             handle_nonclass(line)
@@ -89,14 +95,11 @@ module Languages
             save_class(line)
             @class_token = @class_token + 1
             @token = @token + 1
-            puts "> CLASS TOKEN"
           when Languages::ATTRIBUTE_TOKEN
             save_attribute(line)
-            puts "= ATTRIBUTE TOKEN"
           when Languages::DEF_TOKEN
             save_method(line)
             @token = @token + 1
-            puts "+ Method token"
           when Languages::END_TOKEN
             @token = @token - 1
           when Languages::VISIBILITY_TOKEN
@@ -121,16 +124,15 @@ module Languages
       def save_attribute(line)
         attribute_name = @rubySyntaxSupport.get_attribute(line)
         attribute = Languages::AttributeData.new(attribute_name)
+        attribute.visibility = @visibility
         @currentClass.add_attribute(attribute)
-        @currentClass.visibility = @visibility
       end
 
       def save_method(line)
-        # get_method MUST TO RETURN A METHOD OBJECT
         method_name = @rubySyntaxSupport.get_method(line)
         method = Languages::MethodData.new(method_name)
+        method.visibility = @visibility
         @currentClass.add_method(method)
-        @currentClass.visibility = @visibility
       end
  
       def update_visibility(line)

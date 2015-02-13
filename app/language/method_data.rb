@@ -8,7 +8,7 @@ module Languages
     public
 
       def initialize(method_name)
-        name = method_name
+        @name = method_name
         @parameters = []
       end
 

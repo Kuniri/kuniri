@@ -61,7 +61,7 @@ module Languages
     # @param line String to apply the regex
     # @return Return nil if anything is find, or the class name
     def get_class_name(line)
-      regexExpression = /\bclass\b\b[ |\t]+\s*(.*)\b/
+      regexExpression = /^\s*class\b[ |\t]+\s*(.*)\b/
       return apply_regex(line, regexExpression)
     end
 
@@ -71,7 +71,7 @@ module Languages
     end
 
     def get_method(line)
-      regexExpression = /\bdef\b\b[ |\t]+\s*(.*)\b/
+      regexExpression = /^\s*def\b\s*(\w*)\b/
       return apply_regex(line, regexExpression)
     end
 
