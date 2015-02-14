@@ -65,9 +65,21 @@ module Languages
       return apply_regex(line, regexExpression)
     end
 
+    # Verify if a line has an attribute. If it has attribute, first the 
+    # function capture all lines and remove "@" or ":" and whitespace, finally
+    # it splits the string by "," and return an array. Otherwise it returns 
+    # nil.
+    # @param line to inpect for find attribute.
+    # @return Return nil if not find attribute or an array with the attribute.
     def get_attribute(line)
-      regexExpression = /(@|attr_accessor|attr_read|attr_write)([^:].*)/
-      return apply_regex(line, regexExpression)
+      regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
+      variables = apply_regex(line, regexExp)
+      if not variables
+        return nil
+      end
+      variables = variables.join("")
+      variables.gsub!(/\s+|:|@/,"")
+      return variables.split(",")
     end
 
     def get_method(line)

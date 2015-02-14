@@ -44,10 +44,18 @@ module Languages
       end
 
       def dumpClassData
+        puts "-" * 40
+        puts "> METHOD"
         @methods.each do |i|
-          puts i.name
-          puts i.visibility
+          puts "#{i.visibility} -> #{i.name}"
         end
+        puts "*" * 40
+        puts "> ATTRIBUTE"
+        @attributes.each do |i|
+          puts "#{i.visibility} -> #{i.name}"
+        end
+        puts "_" * 40
+        puts "> COUNT:"
         puts "Methods: #{@methods.size()}"
         puts "Attributes: #{@attributes.size()}"
         puts "constructors: #{@constructors.size()}"

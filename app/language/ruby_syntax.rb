@@ -17,6 +17,7 @@ module Languages
         @visibility = "public"
         @class_token = 0
         @token = 0
+        @attributeList = []
       end
   
       def analyse_source(path)
@@ -75,6 +76,7 @@ module Languages
       @currentClass
       attr_accessor :visibility
       @source
+      @attributeList
 
       def analyse_first_step(path)
         @source = File.open(path, "rb")
@@ -104,7 +106,6 @@ module Languages
             @token = @token - 1
           when Languages::VISIBILITY_TOKEN
             update_visibility(line)
-            puts "- VISIBILITY"
           else
             return
           end
@@ -122,8 +123,12 @@ module Languages
       end
 
       def save_attribute(line)
-        attribute_name = @rubySyntaxSupport.get_attribute(line)
-        attribute = Languages::AttributeData.new(attribute_name)
+        attributeName = @rubySyntaxSupport.get_attribute(line)
+        if @attributeList.include?(attributeName)
+          return
+        end
+        @attributeList.push(attributeName)
+        attribute = Languages::AttributeData.new(attributeName)
         attribute.visibility = @visibility
         @currentClass.add_attribute(attribute)
       end
