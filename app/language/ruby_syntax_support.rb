@@ -65,6 +65,10 @@ module Languages
       return apply_regex(line, regexExpression)
     end
 
+    def handle_string(line)
+      return line.gsub!(/\s+|:|@|=/,"")
+    end
+
     # Verify if a line has an attribute. If it has attribute, first the 
     # function capture all lines and remove "@" or ":" and whitespace, finally
     # it splits the string by "," and return an array. Otherwise it returns 
@@ -73,13 +77,34 @@ module Languages
     # @return Return nil if not find attribute or an array with the attribute.
     def get_attribute(line)
       regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
-      variables = apply_regex(line, regexExp)
-      if not variables
+      result = apply_regex(line, regexExp)
+      unless result
         return nil
       end
-      variables = variables.join("")
-      variables.gsub!(/\s+|:|@/,"")
-      return variables.split(",")
+      # Split string by comma
+      result = result.join("")
+      result = result.split(",")
+      listOfAttributes = []
+      result.each do |variable|
+        if variable =~ /=/
+          if variable.scan(/=/).count > 1
+            next
+          end
+          variable = variable.scan(/.*=/)
+          if variable =~ /\./
+            return nil
+          end
+          variable = handle_string(variable.join(""))
+          listOfAttributes.push(variable)
+          next
+        elsif variable =~ /\./
+          return nil
+        else
+          variable = handle_string(variable)
+          listOfAttributes.push(variable)
+        end
+      end
+      return listOfAttributes.join("")
     end
 
     def get_method(line)
