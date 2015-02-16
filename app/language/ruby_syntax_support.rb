@@ -81,14 +81,16 @@ module Languages
       unless result
         return nil
       end
-      # Split string by comma
-      result = result.join("")
-      result = result.split(",")
       listOfAttributes = []
-      result.each do |variable|
-        if variable =~ /=/
+      # Has comma? Split string by comma
+      result = result.join("")
+      result.gsub!(/\(.*\)/,"")
+      puts result
+      if result.scan(/,/).count >= 1
+        result = result.split(",")
+        result.each do |variable|
           if variable.scan(/=/).count > 1
-            next
+            return nil
           end
           variable = variable.scan(/.*=/)
           if variable =~ /\./
@@ -96,15 +98,35 @@ module Languages
           end
           variable = handle_string(variable.join(""))
           listOfAttributes.push(variable)
-          next
-        elsif variable =~ /\./
-          return nil
-        else
-          variable = handle_string(variable)
+        end
+      # Has sequence of "="?
+      elsif result.scan(/=/).count > 1
+        result = result.split("=")
+        result.each do |variable|
+          if variable =~ /\./
+            return nil
+          end
+          variable = handle_string(variable.join(""))
           listOfAttributes.push(variable)
         end
+      # Normal case
+      else
+        if result =~ /=/
+          result = result.scan(/.*=/)
+          result = result.join("")
+          if result =~ /\./
+            return nil
+          end
+        end
+        if result =~ /\./
+          return nil
+        end
+        if result =~ /\s+|:|@|=/
+          result = handle_string(result)
+        end
+        listOfAttributes.push(result)
       end
-      return listOfAttributes.join("")
+      return listOfAttributes
     end
 
     def get_method(line)
