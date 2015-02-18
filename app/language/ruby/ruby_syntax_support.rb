@@ -1,7 +1,7 @@
 #reference: 
 # http://www.java2s.com/Code/Ruby/Language-Basics/Rubysreservedwords.htm
-require_relative 'method_data'
-require_relative 'attribute_data'
+require_relative '../method_data'
+require_relative '../attribute_data'
 
 module Languages
 
@@ -85,7 +85,6 @@ module Languages
       # Has comma? Split string by comma
       result = result.join("")
       result.gsub!(/\(.*\)/,"")
-      puts result
       if result.scan(/,/).count >= 1
         result = result.split(",")
         result.each do |variable|

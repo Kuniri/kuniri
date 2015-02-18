@@ -1,6 +1,6 @@
-require_relative 'language'
+require_relative '../language'
 require_relative 'ruby_syntax_support'
-require_relative 'class_data'
+require_relative '../class_data'
 
 module Languages
 
@@ -67,8 +67,10 @@ module Languages
       end
 
       def dumpData
-        puts "="*30
+        puts "=" * 30
         puts @currentClass.dumpClassData
+        puts "_" * 30
+        puts @token
       end
 
     private
