@@ -1,6 +1,7 @@
 require_relative '../language'
 require_relative 'ruby_syntax_support'
 require_relative '../class_data'
+require_relative 'token_ruby.rb'
 
 module Languages
 
@@ -88,7 +89,7 @@ module Languages
         @source = File.open(path, "rb")
         @source.each do |line|
           tokenType = @rubySyntaxSupport.get_token_type(line)
-          if tokenType == Languages::CLASS_TOKEN || @class_token > 0
+          if tokenType == Languages::Ruby::CLASS_TOKEN || @class_token > 0
             tokenType = @rubySyntaxSupport.get_token_type(line, true)
             handle_class(tokenType, line)
           else
@@ -99,18 +100,18 @@ module Languages
 
       def handle_class(tokenType, line)
         case tokenType
-          when Languages::CLASS_TOKEN
+          when Languages::Ruby::CLASS_TOKEN
             save_class(line)
             @class_token = @class_token + 1
             @token = @token + 1
-          when Languages::ATTRIBUTE_TOKEN
+          when Languages::Ruby::ATTRIBUTE_TOKEN
             save_attribute(line)
-          when Languages::DEF_TOKEN
+          when Languages::Ruby::DEF_TOKEN
             save_method(line)
             @token = @token + 1
-          when Languages::END_TOKEN
+          when Languages::Ruby::END_TOKEN
             @token = @token - 1
-          when Languages::VISIBILITY_TOKEN
+          when Languages::Ruby::VISIBILITY_TOKEN
             update_visibility(line)
           else
             return
@@ -130,7 +131,7 @@ module Languages
 
       def save_attribute(line)
         attributeName = @rubySyntaxSupport.get_attribute(line)
-        if @attributeList.include?(attributeName)
+        return if @attributeList.include?(attributeName)
           return
         end
         @attributeList.push(attributeName)
