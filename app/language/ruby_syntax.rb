@@ -19,12 +19,12 @@ module Languages
         @token = 0
         @attributeList = []
       end
-  
+
       def analyse_source(path)
         analyse_first_step(path)
         #self.analyse_second_step
       end
- 
+
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
       def comment_extract
@@ -80,7 +80,7 @@ module Languages
 
       def analyse_first_step(path)
         @source = File.open(path, "rb")
-        @source.each do |line|  
+        @source.each do |line|
           tokenType = @rubySyntaxSupport.get_token_type(line)
           if tokenType == Languages::CLASS_TOKEN || @class_token > 0
             tokenType = @rubySyntaxSupport.get_token_type(line, true)
@@ -139,7 +139,7 @@ module Languages
         method.visibility = @visibility
         @currentClass.add_method(method)
       end
- 
+
       def update_visibility(line)
         @visibility = @rubySyntaxSupport.get_visibiliy(line)
       end

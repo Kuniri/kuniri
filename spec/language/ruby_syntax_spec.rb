@@ -7,7 +7,7 @@ RSpec.describe Languages::RubySyntax do
     file = File.open("spec/language/ruby_support_test.rb", "rb")
     @rubySyntax = Languages::RubySyntax.new
     @rubySyntax.set_source(file.read)
-    
+
     file = File.open("spec/language/rubyBasicSyntaxTest.txt", "rb")
     @rubySyntax2 = Languages::RubySyntax.new
     @rubySyntax2.set_source(file.read)
@@ -26,12 +26,12 @@ RSpec.describe Languages::RubySyntax do
       expect(comment.shift).to eq(first)
 
       second = " The basic ideia is verify if kuniri extract the necessary "
-      second += "code in the"
+      second += "code in the "
       expect(comment.shift).to eq(second)
 
       third = "correct way."
       expect(comment.shift).to eq(third)
- 
+
       fourth = "Test xpto class"
       expect(comment.shift).to eq(fourth)
 
@@ -50,10 +50,10 @@ RSpec.describe Languages::RubySyntax do
       nine = "function 3"
       expect(comment.shift).to eq(nine)
 
-      fourth = "1: Right!"
+      fourth = "1: Right!\n"
       expect(comment.shift).to eq(fourth)
 
-      sixth = "2: Right!"
+      sixth = "2: Right!\n"
       expect(comment.shift).to eq(sixth)
     end
 

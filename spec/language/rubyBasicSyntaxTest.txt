@@ -28,15 +28,15 @@ class Class4MethodTest
 	def initialize
 	# construct
 	end
-	
+
 	def firstMethodRight
 	#Code...
 	end
-	
+
 	def secondMethodRight(one, two, three)
 	#... code ...
 	end
-	
+
 	wrongMethod
 	end
 end
@@ -60,7 +60,7 @@ class ClassTestAttribute
 	private
 	@firstParameterPrivate
 	@secondParameterPrivate
-	
+
 	public
 	@thirdParameter = Array.new
 end
