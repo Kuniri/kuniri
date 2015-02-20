@@ -43,6 +43,18 @@ module Languages
         return
       end
 
+      def get_methods
+        @methods
+      end
+
+      def get_attributes
+        @attributes
+      end
+
+      def get_constructors
+        @constructors
+      end
+
       def dumpClassData
         puts "-" * 40
         puts "> METHOD"
@@ -60,8 +72,9 @@ module Languages
         puts "Attributes: #{@attributes.size()}"
         puts "constructors: #{@constructors.size()}"
       end
- 
+
     private
+
       @attributes
       @methods
       @constructors

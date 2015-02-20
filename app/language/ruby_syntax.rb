@@ -10,6 +10,10 @@ module Languages
     public
 
       def initialize
+        clear_data
+      end
+
+      def clear_data
         @rubySyntaxSupport = Languages::RubySyntaxSupport.new
         #You have to make it more generic, for the case of many class.
         @currentClass = Languages::ClassData.new
@@ -43,7 +47,7 @@ module Languages
       # Extract all method from the source.
       # @param source [String]
       def method_extract
-        return @currentClass.methods
+        return @currentClass.get_methods
       end
 
       # Extract all the class declared in the source.
