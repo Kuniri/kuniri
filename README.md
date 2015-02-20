@@ -40,7 +40,17 @@ and traceability.
  * yardoc
 
 ----
-# Install 
+# Install
+
+Kuniri can be installed with
+```
+rake install
+```
+
+After installing you can check the commands with
+```
+kuniri -h
+```
 
 ----
 # Author
