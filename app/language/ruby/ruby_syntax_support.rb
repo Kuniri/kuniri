@@ -1,6 +1,7 @@
 require_relative 'attribute_ruby.rb'
 require_relative 'method_ruby.rb'
 require_relative 'token_ruby.rb'
+require_relative 'class_ruby.rb'
 require_relative '../method_data'
 require_relative '../attribute_data'
 
@@ -12,6 +13,7 @@ module Languages
     def initialize
       @attributeRuby = Languages::Ruby::AttributeRuby.new
       @methodRuby = Languages::Ruby::MethodRuby.new
+      @classRuby = Languages::Ruby::ClassRuby.new
     end
 
     def apply_regex(line, regex)
@@ -21,20 +23,10 @@ module Languages
       return result
     end
 
-    # Verify if line has the keyword and return it, otherwise return nil
-    # @param line String to apply the regex
-    # @return Return nil if anything is find, or the class name
     def get_class_name(line)
-      regexExpression = /^\s*class\b[ |\t]+\s*(.*)\b/
-      return apply_regex(line, regexExpression)
+      return @classRuby.get_class(line)
     end
 
-    # Verify if a line has an attribute. If it has attribute, first the 
-    # function capture all lines and remove "@" or ":" and whitespace, finally
-    # it splits the string by "," and return an array. Otherwise it returns 
-    # nil.
-    # @param line to inpect for find attribute.
-    # @return Return nil if not find attribute or an array with the attribute.
     def get_attribute(line)
       return @attributeRuby.get_attribute(line)
     end
