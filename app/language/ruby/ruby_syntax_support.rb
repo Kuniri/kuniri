@@ -84,7 +84,7 @@ module Languages
     def get_token_type(line, class_token=false)
       # Special token for class
       if class_token
-        if get_attribute(line)
+        if @attributeRuby.get_attribute(line)
           return Ruby::ATTRIBUTE_TOKEN 
         elsif get_visibiliy(line)
           return Ruby::VISIBILITY_TOKEN
@@ -92,13 +92,13 @@ module Languages
       end
 
       # All of these reserved words are close with "end"
-      if get_class_name(line)
+      if @classRuby.get_class(line)
         return Ruby::CLASS_TOKEN
       elsif has_end?(line)
         return Ruby::END_TOKEN
       elsif get_begin(line)
         return Ruby::BEGIN_TOKEN
-      elsif get_method(line)
+      elsif @methodRuby.get_method(line)
         return Ruby::DEF_TOKEN
       elsif get_case(line)
         return Ruby::CASE_TOKEN

@@ -2,8 +2,9 @@ require 'date'
 require_relative 'logger'
 
 module Util
-  # Create log in a text format. This classes handling the correct way of 
-  # generate the log in a .txt format. 
+
+  # Create log in a text format. This classes handling the correct way of
+  # generate the log in a .txt format.
   class TxtLogger < Logger
 
     # @param path [String] Path for save the log. The default is /tmp/
@@ -21,5 +22,8 @@ module Util
       end
     end
 
+  # Class
   end
+
+# Util
 end 

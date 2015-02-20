@@ -1,6 +1,7 @@
 # Util provides classes, functions and constants which can be used for the 
 # entire system.
 module Util
+
   # Abstract class responsible for define the log strategy.
   class Logger
 
@@ -24,5 +25,8 @@ module Util
 
       @log_path # Saved path of the log file.
 
-  end 
+  # Class
+  end
+
+# Util
 end

@@ -5,6 +5,7 @@ module Kuniri
   class Kuniri
 
     public
+
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
       # @param path [String] Path to ".kuniri" file, it means, the
@@ -14,9 +15,7 @@ module Kuniri
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
       def read_configuration_file(path = "./kuniri")
-        unless File.exists?(path)
-          raise Error::Configuration_file_error
-        end
+        raise Error::Configuration_file_error unless File.exists?(path)
 
         configuration = Hash.new
         File.open(path).each_line do |line|
@@ -62,5 +61,9 @@ module Kuniri
         text.gsub!(/\s/, '')
         return text
       end
+
+  # Class
   end
+
+# Kuniri
 end

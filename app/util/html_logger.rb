@@ -1,6 +1,7 @@
 require_relative 'logger'
 
 module Util
+
   # Handling HTML log. 
   class HtmlLogger < Logger
 
@@ -16,5 +17,9 @@ module Util
         file.write("       <i>HTML log</i>\n")
       end
     end
+
+  # Class
   end
+
+# Util
 end

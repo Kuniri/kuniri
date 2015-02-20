@@ -23,23 +23,23 @@ class Setting
 
   private
 
-  def set_wiki(line)
-    wikiTmp = get_second_part(line)
-    self.wiki = wikiTmp
-  end
+    def set_wiki(line)
+      wikiTmp = get_second_part(line)
+      self.wiki = wikiTmp
+    end
 
-  def set_source(line)
-    sourceTmp = get_second_part(line)
-    self.source = sourceTmp
-  end
+    def set_source(line)
+      sourceTmp = get_second_part(line)
+      self.source = sourceTmp
+    end
 
-  def set_output(line)
-    outputTmp = get_second_part(line)
-    self.output = outputTmp
-  end
+    def set_output(line)
+      outputTmp = get_second_part(line)
+      self.output = outputTmp
+    end
 
-  def set_extract(line)
-    extractTmp = get_second_part(line)
-    self.extract = extractTmp
-  end
+    def set_extract(line)
+      extractTmp = get_second_part(line)
+      self.extract = extractTmp
+    end
 end
