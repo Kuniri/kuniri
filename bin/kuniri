@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'kuniri'
+
+puts "Kuniri Version " + Kuniri::VERSION
+
