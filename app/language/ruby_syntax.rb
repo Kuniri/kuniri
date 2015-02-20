@@ -58,7 +58,7 @@ module Languages
 
       # @param source [String]
       def attribute_extract
-        return @currentClass.attributes
+        return @currentClass.get_attributes
       end
 
       # @param source [String]

@@ -76,7 +76,7 @@ module Languages
     # @param line to inpect for find attribute.
     # @return Return nil if not find attribute or an array with the attribute.
     def get_attribute(line)
-      regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
+      regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(\w*)/
       result = apply_regex(line, regexExp)
       unless result
         return nil
