@@ -1,7 +1,7 @@
-require_relative '../language'
 require_relative 'ruby_syntax_support'
-require_relative '../class_data'
 require_relative 'token_ruby.rb'
+require_relative '../language'
+require_relative '../class_data'
 
 module Languages
 
@@ -113,6 +113,18 @@ module Languages
             @token = @token - 1
           when Languages::Ruby::VISIBILITY_TOKEN
             update_visibility(line)
+          when Languages::Ruby::BEGIN_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::CASE_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::DO_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::IF_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::MODULE_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::UNLESS_TOKEN
+            @token = @token + 1
           else
             return
           end
@@ -131,7 +143,7 @@ module Languages
 
       def save_attribute(line)
         attributeName = @rubySyntaxSupport.get_attribute(line)
-        return if @attributeList.include?(attributeName)
+        if @attributeList.include?(attributeName)
           return
         end
         @attributeList.push(attributeName)

@@ -1,11 +1,13 @@
 module Languages
 
-  # @abstract Attribute Abstract class for handling attribute.  
+  # @abstract Attribute Abstract class for handling attribute.
   class Attribute
 
-    # Verify if a line has an attribute. If it has attribute, first the 
+    public
+
+    # Verify if a line has an attribute. If it has attribute, first the
     # function capture all lines and remove "@" or ":" and whitespace, finally
-    # it splits the string by "," and return an array. Otherwise it returns 
+    # it splits the string by "," and return an array. Otherwise it returns
     # nil.
     # @param line to inpect for find attribute.
     # @return Return nil if not find attribute or an array with the attribute.
@@ -17,7 +19,7 @@ module Languages
 
       # Detect if line has attribute.
       # @param pLine Line with potential attribute.
-      # @return 
+      # @return
       def detect_attribute(pLine)
         raise NotImplementedError
       end
@@ -44,7 +46,9 @@ module Languages
       def handle_line_declaration(pString)
         raise NotImplementedError
       end
+
   # Class
   end
+
 # Language
 end

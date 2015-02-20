@@ -1,9 +1,8 @@
-#reference: 
-# http://www.java2s.com/Code/Ruby/Language-Basics/Rubysreservedwords.htm
+require_relative 'attribute_ruby.rb'
+require_relative 'method_ruby.rb'
+require_relative 'token_ruby.rb'
 require_relative '../method_data'
 require_relative '../attribute_data'
-require_relative 'attribute_ruby.rb'
-require_relative 'token_ruby.rb'
 
 module Languages
 
@@ -12,13 +11,13 @@ module Languages
 
     def initialize
       @attributeRuby = Languages::Ruby::AttributeRuby.new
+      @methodRuby = Languages::Ruby::MethodRuby.new
     end
 
     def apply_regex(line, regex)
       result = line.scan(regex)[0]
-      if not result
-        return nil
-      end
+
+      return nil unless result
       return result
     end
 
@@ -28,10 +27,6 @@ module Languages
     def get_class_name(line)
       regexExpression = /^\s*class\b[ |\t]+\s*(.*)\b/
       return apply_regex(line, regexExpression)
-    end
-
-    def handle_string(line)
-      return line.gsub!(/\s+|:|@|=/,"")
     end
 
     # Verify if a line has an attribute. If it has attribute, first the 
@@ -45,8 +40,7 @@ module Languages
     end
 
     def get_method(line)
-      regexExpression = /^\s*def\b\s*(\w*)\b/
-      return apply_regex(line, regexExpression)
+      return @methodRuby.get_method(line)
     end
 
     def get_begin(line)
@@ -86,9 +80,7 @@ module Languages
     end
 
     def has_end?(line)
-      if line =~ /end/
-        return true
-      end
+      return true if line =~ /end/
       return false
     end
 
@@ -130,7 +122,9 @@ module Languages
 
       # Other reserved words
     end
-  #end of class 
+
+  #end of class
   end
+
 #end of module
 end
