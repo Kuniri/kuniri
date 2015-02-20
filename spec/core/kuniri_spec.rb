@@ -50,7 +50,7 @@ RSpec.describe Kuniri::Kuniri do
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
         Error::Configuration_file_error)
     end
-    
+
     it "Syntax error: wrong extract" do
       write_kuniri_file([":ruby", ":../app/", ":./", ":umg"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
@@ -66,7 +66,7 @@ RSpec.describe Kuniri::Kuniri do
             "output" => "./", 
             "extract" => "uml")
     end
-  
+
     it "Correct return: Case sensitive language" do
       write_kuniri_file([":ruBy", ":app/", ":./", ":uMl, traCeaBilitY"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(

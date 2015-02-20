@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+gemspec
+
 group :development do
   gem 'rspec', '~> 3.1.0'
   gem 'guard-rspec', '~> 4.2.10'

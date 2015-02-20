@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'kuniri'
+require 'optparse'
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+  opts.version = Kuniri::VERSION
+
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+  end
+
+  opts.on("--version", "Show Kuniri version") do |v|
+    puts opts.ver
+    exit
+  end
+
+end.parse!
+
+p options
+p ARGV
