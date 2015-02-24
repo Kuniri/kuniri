@@ -2,8 +2,8 @@ require_relative 'attribute_ruby.rb'
 require_relative 'method_ruby.rb'
 require_relative 'token_ruby.rb'
 require_relative 'class_ruby.rb'
-require_relative '../method_data'
-require_relative '../attribute_data'
+require_relative '../container_data/method_data'
+require_relative '../container_data/attribute_data'
 
 module Languages
 

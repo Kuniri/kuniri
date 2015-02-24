@@ -1,5 +1,5 @@
-require_relative '../attribute.rb'
-require_relative '../attribute_data.rb'
+require_relative '../abstract_container/attribute.rb'
+require_relative '../container_data/attribute_data.rb'
 
 module Languages
   # @module Ruby Handling Ruby attributes

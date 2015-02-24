@@ -1,4 +1,4 @@
-require_relative '../method.rb'
+require_relative '../abstract_container/method.rb'
 
 module Languages
 
