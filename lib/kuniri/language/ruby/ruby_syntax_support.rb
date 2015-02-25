@@ -28,7 +28,14 @@ module Languages
     end
 
     def get_attribute(line)
-      return @attributeRuby.get_attribute(line)
+      # TODO: THE CORRECT IS ONLY:return @attributeRuby.get_attribute(line)
+      listAttribute =  @attributeRuby.get_attribute(line)
+      listReturn = []
+      listAttribute.each do |element|
+        listReturn.push(element.name)
+      end
+
+      return listReturn
     end
 
     def get_method(line)

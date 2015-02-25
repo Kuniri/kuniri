@@ -8,113 +8,112 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     @multiResult = ["value1", "value2", "value3", "value4"]
   end
 
-  context "# Attribute handling" do
-    it "Simple attribute with @" do
-      captured = @rubyAttr.get_attribute("@value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("       @value")[0].name
-      expect(@rubyAttr.get_attribute(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("    @value  ")[0].name
-      expect(@rubyAttr.get_attribute(captured).to eq(@singleResult)
+  context "When is a single attribute with @" do
+    it "Simple case with @" do
+      captured = @rubyAttr.get_attribute("@value")[0]
+      expect(captured.name).to eq(@singleResult)
     end
 
-    it "Simple attribute with attr_" do
-      captured = @rubyAttr.get_attribute("attr_write :value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("attr_read :value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("attr_accessor :value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("    attr_write :value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("  attr_write :value")[0].name
-      expect(captured).to eq(@singleResult)
-
-      captured = @rubyAttr.get_attribute("  attr_read :value  ")[0].name
-      expect(captured).to eq(@result)
+    it "Whitespace before" do
+      captured = @rubyAttr.get_attribute("       @value")[0]
+      expect(captured.name).to eq(@singleResult)
     end
 
-    it "Multiple declaration in line with @ and separated by comma" do
-      #TODO: DISCOVER HOW TO TEST LIST OF ELEMENTS
-      # Spaces in the begin and in the end.
-      input = "@value1, @value2, @value3, @value4"
-      listResult = []
+    it "Between whitespace" do
+      captured = @rubyAttr.get_attribute("    @value  ")[0]
+      expect(captured.name).to eq(@singleResult)
+    end
+  end
 
-      capturedList = @rubyAttr.get_attribute(input)
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end 
-      expect(capturedList).to eq(@multiResult)
-
-      #TODO: DISCOVER THE CORRECT WAY TO INSERT A FUNCTION
-      capturedList = @rubyAttr.get_attribute("     " + input)
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(captured).to eq(@multiResult)
-
-      capturedList = @rubyAttr.get_attribute(input + "     ")
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(captured).to eq(@multiResult)
-
-      capturedList = @rubyAttr.get_attribute("  " + input + " ")
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(captured).to eq(@multiResult)
-
-      # Spaces between comma
-      capturedList = @rubyAttr.get_attribute(input.gsub(/,/, ", "))
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(listResult).to eq(@multiResult)
-
-      capturedList = @rubyAttr.get_attribute(input.gsub(/,/, " , "))
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(capturedList).to eq(@multiResult)
-
-      capturedList = @rubyAttr.get_attribute(input.gsub(/,/, "   ,   "))
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(capturedList).to eq(@multiResult)
-
-      # Attributes with assignments
-      input = "@value1 = 3, @value2 = 1, @value3, @value=4"
-      capturedList = @rubyAttr.get_attribute(input)
-      capturedList.each do |element|
-        listResult.append(element.name)
-      end
-      expect(capturedList).to eq(@multiResult)
-
+  context "When is a single attribute with attr_e" do
+    it "With attr_write" do
+      captured = @rubyAttr.get_attribute("attr_write :value")[0]
+      expect(captured.name).to eq(@singleResult)
     end
 
-    it "Multiple declaration in line, separated by equal" do
-      input = "@value1 = @value2 = @value3"
+    it "With attr_read" do
+      captured = @rubyAttr.get_attribute("attr_read :value")[0]
+      expect(captured.name).to eq(@singleResult)
+    end
 
-      # TODO: DISCOVER HOW TO SHARE TEST, BECAUSE THIS TEST WILL BE SIMILAR TO
-      #   TO THE TESTS ABOVE
+    it "With attr_accessor" do
+      captured = @rubyAttr.get_attribute("attr_accessor :value")[0]
+      expect(captured.name).to eq(@singleResult)
+    end
+
+    it "With whitespace before attr_write" do
+      captured = @rubyAttr.get_attribute("    attr_write :value")[0]
+      expect(captured.name).to eq(@singleResult)
+    end
+
+    it "With whitespace before attr_write" do
+      captured = @rubyAttr.get_attribute("  attr_write :value")[0]
+      expect(captured.name).to eq(@singleResult)
+    end
+
+    it "With whitespace before and after attr_read" do
+      captured = @rubyAttr.get_attribute("  attr_read :value  ")[0]
+      expect(captured.name).to eq(@result)
+    end
+  end
+
+  RSpec.shared_examples "Multiple declaration" do |input, description|
+
+    it ": #{description}" do
       listResult = []
       capturedList = @rubyAttr.get_attribute(input)
       capturedList.each do |element|
-        listResult.append(element.name)
-      end 
-      expect(capturedList).to eq(@multiResult)
+        listResult.push(element.name)
+      end
+      expect(listResult).to match_array(@multiResult)
     end
 
-    it "Attribute assignment" do
-    end
+  end
+
+  context "When multiple declarations with comma" do
+    input = "@value1, @value2, @value3, @value4"
+    message = "Use only one space."
+    include_examples "Multiple declaration", input, message
+
+    message = "Whitespace in the beginning."
+    include_examples "Multiple declaration", "     " + input, message
+
+    message = "Whitespace in the end."
+    include_examples "Multiple declaration", input + "     ", message
+
+    message = "Whitespace in the beginning and in the end."
+    include_examples "Multiple declaration", "  " + input + " ", message
+
+    message = "White space after comma."
+    include_examples "Multiple declaration", input.gsub(/,/, ", "), message
+
+    message = "Whitespace before and after comma."
+    include_examples "Multiple declaration", input.gsub(/,/, " , "), message
+
+    message = "Many whitespace before and after comma."
+    include_examples "Multiple declaration", input.gsub(/,/, "   ,   "), message
+
+    input = "@value1 = 3, @value2 = 1, @value3, @value=4"
+    message = "Assignment."
+    include_examples "Multiple declaration", input, message
+  end
+
+  context "# Multiple declaration (equal)" do
+    input = "@value1 = @value2 = @value3 = @value4"
+    message = "Separated by equal."
+    include_examples "Multiple declaration", input, message
+
+    message = "Whitespace in the beginning."
+    include_examples "Multiple declaration", "      " + input, message
+
+    message = "Whitespace in the end."
+    include_examples "Multiple declaration", input + "          "
+
+    message = "Whitespace in before and after the input."
+    include_examples "Multiple declaration", "       " + input + "   ", message
+
+    message = "Whitespace between equal."
+    include_examples "Multiple declaration", input.gsub(/=/, "   =  "), message
   end
 
   after :all do

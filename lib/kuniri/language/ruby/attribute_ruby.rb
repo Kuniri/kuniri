@@ -56,13 +56,15 @@ module Languages
         listOfAttributes = []
         pString = pString.split(",")
         pString.each do |variable|
+          # TODO: BUG!!! FIXME FAST! 
           return nil if variable.scan(/=/).count > 1
 
           variable = variable.scan(/.*=/)
           return nil if variable =~ /\./
 
           variable = prepare_final_string(variable.join(""))
-          listOfAttributes.push(variable)
+          attribute = Languages::AttributeData.new(variable)
+          listOfAttributes.push(attribute)
         end
 
         return listOfAttributes
@@ -74,8 +76,9 @@ module Languages
         pString.each do |variable|
           return nil if variable =~ /\./
 
-          variable = prepare_final_string(variable.join(""))
-          listOfAttributes.push(variable)
+          variable = prepare_final_string(variable)
+          attribute = Languages::AttributeData.new(variable)
+          listOfAttributes.push(attribute)
         end
 
         return listOfAttributes
@@ -92,8 +95,8 @@ module Languages
         return nil if pString =~ /\./
 
         pString = prepare_final_string(pString) if pString =~ /\s+|:|@|=/
-
-        listOfAttributes.push(pString)
+        attribute = Languages::AttributeData.new(pString)
+        listOfAttributes.push(attribute)
 
         return listOfAttributes
       end
