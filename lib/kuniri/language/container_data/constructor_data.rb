@@ -6,8 +6,11 @@ module Languages
   class ConstructorData < Languages::BasicData
 
     def initialize
-      name = "initialize"
+      @name = "initialize"
     end
 
+  # Class
   end
+
+# Module
 end

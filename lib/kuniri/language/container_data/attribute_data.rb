@@ -1,7 +1,8 @@
 require_relative 'basic_data'
 
 module Languages
-  # Class responsable for handling attributes.
+
+  # Handling attributes data.
   class AttributeData < Languages::BasicData
 
     public
@@ -14,6 +15,8 @@ module Languages
     private
 
       @type
-
+  # Class
   end
+
+# Module
 end

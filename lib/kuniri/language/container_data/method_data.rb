@@ -20,5 +20,8 @@ module Languages
 
       @parameters
 
+  # Class
   end
+
+# Module
 end

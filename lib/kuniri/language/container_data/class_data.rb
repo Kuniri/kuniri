@@ -17,30 +17,21 @@ module Languages
       end
 
       def add_attribute(attribute)
-        if not attribute.is_a?(Languages::AttributeData)
-          return
-        end
+        return if not attribute.is_a?(Languages::AttributeData)
 
         @attributes.push(attribute)
-        return
       end
 
       def add_method(method)
-        if not method.is_a?(Languages::MethodData)
-          return
-        end
+        return if not method.is_a?(Languages::MethodData)
 
         @methods.push(method)
-        return
       end
 
       def add_constructor(constructor)
-        if not constructor.is_a?(Languages::ConstructorData)
-          return
-        end
+        return if not constructor.is_a?(Languages::ConstructorData)
 
         @constructors.push(constructor)
-        return
       end
 
       def get_methods
@@ -79,6 +70,9 @@ module Languages
       @methods
       @constructors
 
+  # Class
   end
+
+# Module
 end
 
