@@ -14,6 +14,7 @@ module Languages
         @attributes = []
         @methods = []
         @constructors = []
+        @visibility = "public"
       end
 
       def add_attribute(attribute)
