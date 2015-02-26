@@ -4,7 +4,7 @@ RSpec.describe Languages::RubySyntax do
 
   before :all do
     # It must to be changed!!!
-    file = File.open("spec/language/ruby_support_test.rb", "rb")
+    file = File.open("spec/language/ruby/ruby_support_test.rb", "rb")
     @rubySyntax = Languages::RubySyntax.new
     @rubySyntax.set_source(file.read)
 
