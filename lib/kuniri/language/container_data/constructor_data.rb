@@ -5,9 +5,25 @@ module Languages
   # Handling constructor information.
   class ConstructorData < Languages::BasicData
 
-    def initialize
-      @name = "initialize"
-    end
+    public
+
+      # TODO
+      def initialize(pName)
+        @name = pName
+        @attribute = []
+      end
+
+      def add_attribute(pAttribute)
+        #TODO
+      end
+
+      def get_attributes
+        #TODO
+      end
+
+    private
+
+      @attribute
 
   # Class
   end

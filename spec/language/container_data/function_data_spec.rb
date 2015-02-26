@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-RSpec.delete Languages::FunctionData do
+RSpec.describe Languages::FunctionData do
 
   before :all do
     @functionData = Languages::FunctionData.new
