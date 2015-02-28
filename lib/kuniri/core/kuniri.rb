@@ -1,3 +1,7 @@
+require_relative '../error/configuration_file_error'
+require_relative 'language/language_available'
+require_relative 'monitor/monitor_available'
+
 # Kuniri is the main class of the system, responsible for handling: monitoring 
 # style, language type, and Settings.
 module Kuniri
@@ -8,19 +12,19 @@ module Kuniri
 
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
-      # @param path [String] Path to ".kuniri" file, it means, the
-      # configurations.
+      # @param path [String] Path to ".kuniri" file, it means, the 
+      #         configurations.
       # @return [Hash] Return a Hash with the configurations read in ".kuniri",
-      #     othewise, raise an exception.
+      #     otherwise, raise an exception.
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
       def read_configuration_file(path = "./kuniri")
-        raise Error::Configuration_file_error unless File.exists?(path)
+        raise Error::ConfigurationFileError unless File.exists?(path)
 
         configuration = Hash.new
         File.open(path).each_line do |line|
           parts = line.split(':').size
-          raise Error::Configuration_file_error unless (parts == 2)
+          raise Error::ConfigurationFileError unless (parts == 2)
           key = handling_basic_syntax(line, 0)
           value = handling_basic_syntax(line, 1)
           configuration[key] = value
@@ -49,11 +53,9 @@ module Kuniri
         if configuration_hash.has_key?(key)
           value = configuration_hash[key]
           value.split(',').each do |element|
-            raise Error::Configuration_file_error unless yield(element)
+            raise Error::ConfigurationFileError unless yield(element)
           end
         end
-
-        raise Error::Configuration_file_error
       end
 
       def handling_basic_syntax(line, index)

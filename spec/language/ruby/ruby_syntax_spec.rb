@@ -8,7 +8,7 @@ RSpec.describe Languages::RubySyntax do
     @rubySyntax = Languages::RubySyntax.new
     @rubySyntax.set_source(file.read)
 
-    file = File.open("spec/language/rubyBasicSyntaxTest.txt", "rb")
+    file = File.open("spec/language/ruby/rubyBasicSyntaxTest.txt", "rb")
     @rubySyntax2 = Languages::RubySyntax.new
     @rubySyntax2.set_source(file.read)
   end

@@ -18,7 +18,7 @@ module Languages
           listOfAttributes = []
 
           # Has comma? Split string by comma
-          result = remove_unecessary_information(result)
+          result = remove_unnecessary_information(result)
 
           # Separated by comma, equal or the common case
           if result.scan(/,/).count >= 1
@@ -38,7 +38,7 @@ module Languages
       def detect_attribute(pLine)
         regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
         return nil unless pLine =~ regexExp
-        return (pLine.scan(regexExp)[0]).join("")
+        return pLine.scan(regexExp)[0].join("")
       end
 
       # Override

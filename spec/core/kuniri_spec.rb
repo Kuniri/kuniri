@@ -12,7 +12,7 @@ RSpec.describe Kuniri::Kuniri do
   end
 
   before :all do
-    File.open(".kuniri", 'a') do |file|
+    File.open(".kuniri", 'w') do |file|
       file.write("language:ruby" + "\n")
       file.write("source:xpto" + "\n")
       file.write("output:xpto/2" + "\n")
@@ -24,37 +24,37 @@ RSpec.describe Kuniri::Kuniri do
   context "#read_configuration_file" do
     it "Wrong path" do
       expect{@kuniri.read_configuration_file("wrong/path")}.to raise_error(
-        Error::Configuration_file_error)
+        Error::ConfigurationFileError)
     end
 
     it "Syntax error: not use ':'" do
       write_kuniri_file(["=ruby", ":../app/", ":./", ">uml"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
-        Error::Configuration_file_error)
+        Error::ConfigurationFileError)
     end
 
     it "Syntax error: not valid language" do
       write_kuniri_file([":k", ":../app/", ":./", ":uml"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
-        Error::Configuration_file_error)
+        Error::ConfigurationFileError)
     end
 
     it "Syntax error: wrong source directory" do
       write_kuniri_file([":ruby", ":xpto/", ":./", ":uml"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
-        Error::Configuration_file_error)
+        Error::ConfigurationFileError)
     end
 
     it "Syntax error: wrong output directory" do
       write_kuniri_file([":ruby", ":../app/", ":xpto/", ":uml"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
-        Error::Configuration_file_error)
+        Error::ConfigurationFileError)
     end
 
     it "Syntax error: wrong extract" do
       write_kuniri_file([":ruby", ":../app/", ":./", ":umg"])
       expect{@kuniri.read_configuration_file(".kuniri")}.to raise_error(
-        Error::Configuration_file_error)
+          Error::ConfigurationFileError)
     end
 
     it "Correct return" do
@@ -68,10 +68,10 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Correct return: Case sensitive language" do
-      write_kuniri_file([":ruBy", ":app/", ":./", ":uMl, traCeaBilitY"])
+      write_kuniri_file([":ruBy", ":lib/", ":./", ":uMl, traCeaBilitY"])
       expect(@kuniri.read_configuration_file(".kuniri")).to include(
             "language" => "ruby",
-            "source" => "app/", 
+            "source" => "lib/", 
             "output" => "./", 
             "extract" => "uml,traceability")
     end
