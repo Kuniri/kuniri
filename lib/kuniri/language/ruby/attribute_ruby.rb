@@ -11,7 +11,6 @@ module Languages
       public
 
         def get_attribute(line)
-          # Detect attribute
           result = detect_attribute(line)
           return nil unless result
 

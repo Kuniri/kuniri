@@ -7,23 +7,22 @@ module Languages
 
     public
 
-      # TODO
       def initialize(pName)
         @name = pName
-        @attribute = []
+        @attributes = []
       end
 
       def add_attribute(pAttribute)
-        #TODO
+        @attributes.push(pAttribute)
       end
 
       def get_attributes
-        #TODO
+        return @attributes
       end
 
     private
 
-      @attribute
+      @attributes
 
   # Class
   end

@@ -19,7 +19,15 @@ module Languages
         raise NotImplementedError
       end
 
-      def get_inharitance
+      def get_inheritance(pString)
+        raise NotImplementedError
+      end
+
+      def remove_unnecessary_information(pString)
+        raise NotImplementedError
+      end
+
+      def prepare_final_string(pString)
         raise NotImplementedError
       end
 

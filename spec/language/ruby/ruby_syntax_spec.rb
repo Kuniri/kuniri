@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 RSpec.describe Languages::RubySyntax do
 
-  before :all do
+  before :each do
     # It must to be changed!!!
     file = File.open("spec/language/ruby/ruby_support_test.rb", "rb")
     @rubySyntax = Languages::RubySyntax.new
@@ -74,35 +74,36 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
-  context "#class_extract" do
-    it "Class name" do
-      classList = @rubySyntax.class_extract
-      expect(classList.shift).to eq("RubySupportTest")
+#  context "#class_extract" do
+#    it "Class name" do
+#      classList = @rubySyntax.class_extract
+#      expect(classList.name).to eq("RubySupportTest")
+#
+#      classList2 = @rubySyntax2.class_extract
+#      expect(classList2.name).to eq("Class1GetRight")
+#      expect(classList2.name).to eq("Class2GetRight")
+#      expect(classList2.name).to eq("Class3GetRight")
+#      expect(classList2.name).to eq("Class4MethodTest")
+#    end
+#  end
 
-      classList2 = @rubySyntax2.class_extract
-      expect(classList2.shift).to eq("Class1GetRight")
-      expect(classList2.shift).to eq("Class2GetRight")
-      expect(classList2.shift).to eq("Class3GetRight")
-      expect(classList2.shift).to eq("Class4MethodTest")
-    end
-  end
+#  context "#method_extract" do
+#    it "Method name" do
+#      methodName = @rubySyntax.method_extract
+#      first = methodName.shift
+#      expect(first.name).to eq("initialize")
+#
+#      methodName2 = @rubySyntax.method_extract
+#      expect(methodName2.shift.name).to eq("firstMethodRight")
+#      methodParameter = methodName2.shift.name
+#      expect(methodParameter.name).to eq("secondMethodRight")
+#      expect(methodParameter.parameter[0]).to eq("one")
+#      expect(methodParameter.parameter[1]).to eq("two")
+#      expect(methodParameter.parameter[2]).to eq("three")
+#    end
+#  end
 
-  context "#method_extract" do
-    it "Method name" do
-      methodName = @rubySyntax.method_extract
-      expect(methodName.shift).to eq("initialize")
-
-      methodName2 = @rubySyntax.method_extract
-      expect(methodName2.shift.name).to eq("firstMethodRight")
-      methodParameter = methodName2.shift.name
-      expect(methodParameter.name).to eq("secondMethodRight")
-      expect(methodParameter.parameter[0]).to eq("one")
-      expect(methodParameter.parameter[1]).to eq("two")
-      expect(methodParameter.parameter[2]).to eq("three")
-    end
-  end
-
-  after :all do
+  after :each do
     @sourceLines = nil
   end
 end

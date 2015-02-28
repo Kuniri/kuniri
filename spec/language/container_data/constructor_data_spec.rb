@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 RSpec.describe Languages::ConstructorData do
 
   before :each do
-    @constructorData = Languages::ConstructorData.new
+    @constructorData = Languages::ConstructorData.new("initialize")
   end
 
   context "When constructor without parameters" do

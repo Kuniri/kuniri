@@ -10,7 +10,10 @@ module Languages
 
     public
 
+      attr_accessor :inheritances
+
       def initialize
+        @inheritances = [] 
         @attributes = []
         @methods = []
         @constructors = []
