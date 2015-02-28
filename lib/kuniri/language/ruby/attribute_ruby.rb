@@ -18,16 +18,13 @@ module Languages
           listOfAttributes = []
 
           # Has comma? Split string by comma
-          result = result.join("")
           result = remove_unecessary_information(result)
 
-          # Separed by comma
+          # Separated by comma, equal or the common case
           if result.scan(/,/).count >= 1
             listOfAttributes = handle_multiple_declaration_with_comma(result)
-          # Has sequence of "="?
           elsif result.scan(/=/).count > 1
             listOfAttributes = handle_multiple_declaration_with_equal(result)
-          # Normal case
           else
             listOfAttributes = handle_line_declaration(result)
           end
@@ -37,32 +34,39 @@ module Languages
 
     protected
 
+      # Override
       def detect_attribute(pLine)
         regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
         return nil unless pLine =~ regexExp
-        return pLine.scan(regexExp)[0]
+        return (pLine.scan(regexExp)[0]).join("")
       end
 
-      def remove_unecessary_information(pString)
+      # Override
+      def remove_unnecessary_information(pString)
         return pString.gsub!(/\(.*\)/,"") if pString =~ /\(.*\)/
         return pString
       end
 
-      def prepare_final_string(line)
-        return line.gsub!(/\s+|:|@|=/,"")
+      # Override
+      def prepare_final_string(pString)
+        if pString =~ /\s+|:|@|=/
+          return pString.gsub!(/\s+|:|@|=/,"")
+        end
+        return pString
       end
 
+      # Override
       def handle_multiple_declaration_with_comma(pString)
         listOfAttributes = []
         pString = pString.split(",")
         pString.each do |variable|
-          # TODO: BUG!!! FIXME FAST! 
           return nil if variable.scan(/=/).count > 1
 
-          variable = variable.scan(/.*=/)
+          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
+
           return nil if variable =~ /\./
 
-          variable = prepare_final_string(variable.join(""))
+          variable = prepare_final_string(variable)
           attribute = Languages::AttributeData.new(variable)
           listOfAttributes.push(attribute)
         end
@@ -70,6 +74,7 @@ module Languages
         return listOfAttributes
       end
 
+      # Override
       def handle_multiple_declaration_with_equal(pString)
         listOfAttributes = []
         pString = pString.split("=")
@@ -84,17 +89,17 @@ module Languages
         return listOfAttributes
       end
 
+      # Override
       def handle_line_declaration(pString)
         listOfAttributes = []
         if pString =~ /=/
-          pString = pString.scan(/.*=/)
-          pString = pString.join("")
+          pString = pString.scan(/.*=/).join("")
           return nil if pString =~ /\./
         end
 
         return nil if pString =~ /\./
 
-        pString = prepare_final_string(pString) if pString =~ /\s+|:|@|=/
+        pString = prepare_final_string(pString)
         attribute = Languages::AttributeData.new(pString)
         listOfAttributes.push(attribute)
 

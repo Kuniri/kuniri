@@ -53,7 +53,7 @@ RSpec.describe Languages::Ruby::AttributeRuby do
 
     it "With whitespace before and after attr_read" do
       captured = @rubyAttr.get_attribute("  attr_read :value  ")[0]
-      expect(captured.name).to eq(@result)
+      expect(captured.name).to eq(@singleResult)
     end
   end
 
@@ -93,10 +93,14 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     message = "Many whitespace before and after comma."
     include_examples "Multiple declaration", input.gsub(/,/, "   ,   "), message
 
-    input = "@value1 = 3, @value2 = 1, @value3, @value=4"
+    input = "@value1 = 3, @value2 = 1, @value3 = 324, @value4=28"
     message = "Assignment."
     include_examples "Multiple declaration", input, message
-  end
+
+    input = "@value1 = 3, @value2 = 1, @value3, @value4=28"
+    message = "Partial Assignment."
+    include_examples "Multiple declaration", input, message
+ end
 
   context "# Multiple declaration (equal)" do
     input = "@value1 = @value2 = @value3 = @value4"
