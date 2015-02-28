@@ -7,6 +7,8 @@ module Languages
 
     public
 
+      attr_reader :parameters
+
       def initialize(method_name)
         @name = method_name
         @parameters = []
@@ -15,10 +17,6 @@ module Languages
       def add_parameters(value)
         @parameters.push(value)
       end
-
-    private
-
-      @parameters
 
   # Class
   end

@@ -22,6 +22,14 @@ module Languages
         raise NotImplementedError
       end
 
+      def remove_unnecessary_information(pLine)
+        raise NotImplementedError
+      end
+
+      def handling_default_parameter(pLine)
+        raise NotImplementedError
+      end
+
       # Handling parameters.
       # @param pLine String to try to find the parameters.
       # @return Return a list with all the parameter, othewise return nil
