@@ -35,7 +35,10 @@ module Languages
         end
 
         def remove_unnecessary_information(pLine)
-          raise NotImplementedError
+          if pLine =~ /\s+|\(|\)/
+            return pLine.gsub(/\s+|\(|\)/,"")
+          end
+          return pLine
         end
 
         def handling_default_parameter(pLine)
@@ -67,7 +70,7 @@ module Languages
           return nil unless pLine =~ /\(.+\)/
 
           partialParameters = pLine.scan(/\((.+)\)/).join("")
-          partialParameters.gsub!(/\s+/, "") if partialParameters =~ /\s+/
+          partialParameters = remove_unnecessary_information(partialParameters)
 
           if partialParameters =~ /=/
             return handling_default_parameter(partialParameters)

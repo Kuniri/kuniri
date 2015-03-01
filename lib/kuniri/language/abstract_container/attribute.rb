@@ -5,16 +5,18 @@ module Languages
 
     public
 
-    # Verify if a line has an attribute. If it has attribute, first the
-    # function capture all lines and removes specific language declaration
-    # (for instance, in ruby it is:  "@" or ":" and whitespace), finally
-    # it splits the string by an special character and return an AttributeData
-    # array. Otherwise it return nil.
-    # @param line to inspect for find attribute.
-    # @return Return nil if not find attribute or an array with the attribute.
-    def get_attribute(pLine)
-      raise NotImplementedError
-    end
+      # Verify if a line has an attribute. If it has attribute, first the
+      # function capture all lines and removes specific language declaration
+      # (for instance, in ruby it is:  "@" or ":" and whitespace), finally
+      # it splits the string by an special character and return an 
+      # AttributeData
+      # array. Otherwise it return nil.
+      # @param line to inspect for find attribute.
+      # @return Return nil if not find attribute or an array with the 
+      #         attribute.
+      def get_attribute(pLine)
+        raise NotImplementedError
+      end
 
     protected
 

@@ -10,6 +10,22 @@ module Kuniri
 
     public
 
+      def initialize
+        @configurationInfo = {}
+        @filesProject = []
+      end
+
+      # Start Kuniri tasks based on configuration file. After read 
+      # configuration file, find all files in source directory.
+      # @param pPath [String] Path of configuration file. Default is the 
+      #         current directory
+      def startKuniri(pPath = ".kuniri")
+        @configurationInfo = read_configuration_file(pPath)
+        get_project_file(@configurationInfo["source"])
+        # @parser = Parser.new(@filesProject)
+        # @parser.analyse_source()
+      end
+
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
       # @param path [String] Path to ".kuniri" file, it means, the 
@@ -18,11 +34,11 @@ module Kuniri
       #     otherwise, raise an exception.
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
-      def read_configuration_file(path = "./kuniri")
+      def read_configuration_file(path = ".kuniri")
         raise Error::ConfigurationFileError unless File.exists?(path)
 
         configuration = Hash.new
-        File.open(path).each_line do |line|
+        File.open(path, mode="r").each_line do |line|
           parts = line.split(':').size
           raise Error::ConfigurationFileError unless (parts == 2)
           key = handling_basic_syntax(line, 0)
@@ -49,6 +65,9 @@ module Kuniri
 
     private
 
+      @configurationInfo
+      @filesProject
+
       def validate_field(configuration_hash, key)
         if configuration_hash.has_key?(key)
           value = configuration_hash[key]
@@ -62,6 +81,13 @@ module Kuniri
         text = line.split(':')[index].downcase
         text.gsub!(/\s/, '')
         return text
+      end
+
+      def get_project_file(pPath="./", pLanguage="**.rb")
+        # TODO: It will be better if it raise exception
+        return nil unless File.exists?(pPath)
+
+        @filesProject = Dir[File.join(pPath, "**", pLanguage)]
       end
 
   # Class
