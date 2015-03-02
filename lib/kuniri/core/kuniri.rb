@@ -1,4 +1,5 @@
 require_relative '../error/configuration_file_error'
+require_relative '../parser/parser'
 require_relative 'language/language_available'
 require_relative 'monitor/monitor_available'
 
@@ -12,18 +13,18 @@ module Kuniri
 
       def initialize
         @configurationInfo = {}
-        @filesProject = []
+        @filesPathProject = []
       end
 
       # Start Kuniri tasks based on configuration file. After read 
       # configuration file, find all files in source directory.
       # @param pPath [String] Path of configuration file. Default is the 
       #         current directory
-      def startKuniri(pPath = ".kuniri")
+      def run_analysis(pPath = ".kuniri")
         @configurationInfo = read_configuration_file(pPath)
-        get_project_file(@configurationInfo["source"])
-        # @parser = Parser.new(@filesProject)
-        # @parser.analyse_source()
+        @filesPathProject = get_project_file(@configurationInfo["source"])
+        @parser = Parser::Parser.new(@filesPathProject)
+        @parser.start_parser()
       end
 
       # Read the configuration file and return a list with the configurations.
@@ -63,10 +64,15 @@ module Kuniri
         return configuration
       end
 
+      def get_parser
+        return @parser
+      end
+
     private
 
       @configurationInfo
       @filesProject
+      @parser
 
       def validate_field(configuration_hash, key)
         if configuration_hash.has_key?(key)

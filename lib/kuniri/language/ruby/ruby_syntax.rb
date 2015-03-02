@@ -153,8 +153,7 @@ module Languages
       end
 
       def save_method(line)
-        method_name = @rubySyntaxSupport.get_method(line)
-        method = Languages::MethodData.new(method_name)
+        method = @rubySyntaxSupport.get_method(line)
         method.visibility = @visibility
         @currentClass.add_method(method)
       end

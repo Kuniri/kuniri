@@ -18,6 +18,10 @@ OptionParser.new do |opts|
     exit
   end
 
+  opts.on("-p", "Parse project") do |v|
+    puts "PARSER..."
+  end
+
 end.parse!
 
 p options
