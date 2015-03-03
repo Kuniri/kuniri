@@ -8,15 +8,17 @@ module Parser
   #TODO: CREATE FACTORY
       public
 
+        attr_accessor :language
+
         def initialize(pFilesPath)
           @filesPath = pFilesPath
           @fileLanguage = []
         end
 
-        def start_parser()
+        def start_parser
+          # TODO: handle the case of filePAth is empty
           @filesPath.each do |file|
             # TODO: Do not create object in this way, use factory.
-            puts file
             language = Languages::RubySyntax.new
             language.analyse_source(file)
             @fileLanguage.push(language)
@@ -27,13 +29,9 @@ module Parser
           return @fileLanguage
         end
 
-        def set_language()
-        end
-
       private
 
         @filesPath
-        @language
         @fileLanguage
 
   # class

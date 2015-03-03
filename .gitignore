@@ -38,3 +38,6 @@ build/
 
 #YARD Documentation
 doc/
+
+# Others
+*.bak
