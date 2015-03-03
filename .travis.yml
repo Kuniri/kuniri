@@ -9,5 +9,10 @@ before_script:
 script:
 - rake spec
 notifications:
-on_success: change
-on_failure: always
+  email:
+    - rodrigosiqueiramelo@gmail.com
+  on_success: change
+  on_failure: always
+branches:
+  only:
+  - master
