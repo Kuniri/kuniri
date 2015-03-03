@@ -8,7 +8,7 @@ module Util
   class TxtLogger < Logger
 
     # @param path [String] Path for save the log. The default is /tmp/
-    def initialize(path = "/tmp")
+    def initialize(path = "/tmp/kuniri.log")
       super(path)
     end
 
