@@ -15,6 +15,7 @@ module Languages
     private
 
       @type
+
   # Class
   end
 

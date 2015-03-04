@@ -1,4 +1,5 @@
 require_relative '../language/ruby/ruby_syntax'
+require_relative '../util/html_logger'
 
 # Module responsible for keeping the parser handler
 module Parser
@@ -13,10 +14,12 @@ module Parser
         def initialize(pFilesPath)
           @filesPath = pFilesPath
           @fileLanguage = []
+          @log = Util::HtmlLogger.new
         end
 
         def start_parser
           # TODO: handle the case of filePAth is empty
+          @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
             # TODO: Do not create object in this way, use factory.
             language = Languages::RubySyntax.new
@@ -33,6 +36,7 @@ module Parser
 
         @filesPath
         @fileLanguage
+        @log
 
   # class
   end

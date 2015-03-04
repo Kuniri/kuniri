@@ -1,5 +1,6 @@
 require_relative '../abstract_container/attribute.rb'
 require_relative '../container_data/attribute_data.rb'
+require_relative '../../util/html_logger'
 
 module Languages
   # @module Ruby Handling Ruby attributes
@@ -10,9 +11,15 @@ module Languages
 
       public
 
+        def initialize
+          @log = Util::HtmlLogger.new
+        end
+
         def get_attribute(line)
           result = detect_attribute(line)
           return nil unless result
+
+          @log.write_log("Info: Prepare to get attribute.")
 
           listOfAttributes = []
 
@@ -22,10 +29,13 @@ module Languages
           # Separated by comma, equal or the common case
           if result.scan(/,/).count >= 1
             listOfAttributes = handle_multiple_declaration_with_comma(result)
+            @log.write_log("Debug: Declared with comma: #{listOfAttributes}")
           elsif result.scan(/=/).count > 1
             listOfAttributes = handle_multiple_declaration_with_equal(result)
+            @log.write_log("Debug: separed by comma: #{listOfAttributes}")
           else
             listOfAttributes = handle_line_declaration(result)
+            @log.write_log("Debug: One line declaration #{listOfAttributes}")
           end
 
           return listOfAttributes
@@ -104,6 +114,10 @@ module Languages
 
         return listOfAttributes
       end
+
+    private
+
+      @log
 
     #Class
     end

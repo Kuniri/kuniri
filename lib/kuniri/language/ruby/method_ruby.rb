@@ -1,5 +1,6 @@
 require_relative '../abstract_container/method.rb'
 require_relative '../container_data/method_data.rb'
+require_relative '../../util/html_logger'
 
 module Languages
 
@@ -10,9 +11,15 @@ module Languages
 
       public
 
+        def initialize
+          @log = Util::HtmlLogger.new
+        end
+
         def get_method(pLine)
           result = detect_method(pLine)
           return nil unless result
+
+          @log.write_log("Info: get method")
 
           methodRuby = Languages::MethodData.new(result)
 
@@ -22,6 +29,9 @@ module Languages
               methodRuby.add_parameters(parameter)
             end
           end
+
+          @log.write_log("Debug: Method: #{methodRuby.name}, Parameter:
+                         #{methodRuby.parameters}")
 
           return methodRuby
         end
@@ -80,6 +90,8 @@ module Languages
         end
 
       private
+
+        @log
 
         def split_string_by_comma(pString)
           return pString.split(",") if pString =~ /,/

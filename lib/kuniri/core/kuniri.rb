@@ -1,5 +1,6 @@
 require_relative '../error/configuration_file_error'
 require_relative '../parser/parser'
+require_relative '../util/logger'
 require_relative 'language/language_available'
 require_relative 'monitor/monitor_available'
 
@@ -14,6 +15,9 @@ module Kuniri
       def initialize
         @configurationInfo = {}
         @filesPathProject = []
+        # TODO: create factory for build object
+        @log = Util::HtmlLogger.new
+        @log.write_log("info: Kuniri object successfully created.")
       end
 
       # Start Kuniri tasks based on configuration file. After read 
@@ -21,8 +25,13 @@ module Kuniri
       # @param pPath [String] Path of configuration file. Default is the 
       #         current directory
       def run_analysis(pPath = ".kuniri")
+        @log.write_log("info: Start to run analysis.")
         @configurationInfo = read_configuration_file(pPath)
+
+        @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
         @filesPathProject = get_project_file(@configurationInfo["source"])
+
+        @log.write_log("debug: files: #{@filesPathProject.to_s}")
         @parser = Parser::Parser.new(@filesPathProject)
         @parser.start_parser()
       end
@@ -38,6 +47,8 @@ module Kuniri
       def read_configuration_file(path = ".kuniri")
         raise Error::ConfigurationFileError unless File.exists?(path)
 
+        @log.write_log("Debug: Reading cofiguration file in: #{path}")
+
         configuration = Hash.new
         File.open(path, mode="r").each_line do |line|
           parts = line.split(':').size
@@ -46,6 +57,8 @@ module Kuniri
           value = handling_basic_syntax(line, 1)
           configuration[key] = value
         end
+
+        @log.write_log("First reading configuration file: #{configuration}")
 
         validate_field(configuration, "language") do |language|
           Configuration::Language_Available::LANGUAGES.include?(language)
@@ -61,6 +74,8 @@ module Kuniri
           Configuration::Monitor_Available::MONITORS.include?(
             extract.downcase)}
 
+        @log.write_log("Debug: Configuration: #{configuration}")
+
         return configuration
       end
 
@@ -73,6 +88,7 @@ module Kuniri
       @configurationInfo
       @filesProject
       @parser
+      @log
 
       def validate_field(configuration_hash, key)
         if configuration_hash.has_key?(key)
@@ -92,6 +108,8 @@ module Kuniri
       def get_project_file(pPath="./", pLanguage="**.rb")
         # TODO: It will be better if it raise exception
         return nil unless File.exists?(pPath)
+
+        @log.write_log("Info: Reading all files.")
 
         @filesProject = Dir[File.join(pPath, "**", pLanguage)]
       end

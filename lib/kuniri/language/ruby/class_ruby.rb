@@ -1,5 +1,6 @@
 require_relative '../abstract_container/class.rb'
 require_relative '../container_data/class_data.rb'
+require_relative '../../util/html_logger'
 
 module Languages
 
@@ -9,9 +10,15 @@ module Languages
 
       public
 
+        def initialize
+          @log = Util::HtmlLogger.new
+        end
+
         def get_class(pLine)
           result = detect_class(pLine)
           return nil unless result
+
+          @log.write_log("Info: Detect class")
 
           classCaptured = Languages::ClassData.new
 
@@ -20,6 +27,8 @@ module Languages
 
           result = prepare_final_string(result)
           classCaptured.name = result
+
+          @log.write_log("Debug: Class: #{classCaptured.name}")
 
           return classCaptured
         end
@@ -52,6 +61,10 @@ module Languages
         end
         return pString
       end
+
+    private
+
+      @log
 
     # class
     end

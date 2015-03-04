@@ -44,5 +44,9 @@ module Languages
     UNTIL_TOKEN      ||= 37 # Executes code block while conditional statement is false.
     WHEN_TOKEN       ||= 38 # Starts a clause (one or more) under case.
     YIELD_TOKEN      ||= 39 # Executes the block passed to the method.
+
+    # Module
   end
+
+# Language
 end
