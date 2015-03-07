@@ -25,8 +25,10 @@ module Languages
         @attributeList = []
       end
 
-      def analyse_source(path)
-        analyse_first_step(path)
+      def analyse_source(pPath)
+        @name = File.basename(pPath, ".*")
+        @path = File.dirname(pPath)
+        analyse_first_step(pPath)
         #self.analyse_second_step
       end
 

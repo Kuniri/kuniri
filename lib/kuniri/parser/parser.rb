@@ -10,6 +10,7 @@ module Parser
       public
 
         attr_accessor :language
+        attr_reader :fileLanguage
 
         def initialize(pFilesPath)
           @filesPath = pFilesPath
@@ -28,14 +29,9 @@ module Parser
           end
         end
 
-        def get_object_files
-          return @fileLanguage
-        end
-
       private
 
         @filesPath
-        @fileLanguage
         @log
 
   # class

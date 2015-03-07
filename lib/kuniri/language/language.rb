@@ -4,6 +4,10 @@ module Languages
   class Language
 
     public
+
+      attr_reader :name
+      attr_reader :path
+
       # Set the source code to by analysed.
       # @param source [String] Set the source string.
       def set_source(source)
@@ -46,6 +50,14 @@ module Languages
       # @param source [String]
       def global_variable_extract
         raise NotImplementedError
+      end
+
+      def get_name
+        return @name
+      end
+
+      def get_path
+        return @path
       end
 
     protected

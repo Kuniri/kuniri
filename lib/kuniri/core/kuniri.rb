@@ -1,6 +1,7 @@
 require_relative '../error/configuration_file_error'
 require_relative '../parser/parser'
 require_relative '../util/logger'
+require_relative '../navigate/code_navigate'
 require_relative 'language/language_available'
 require_relative 'monitor/monitor_available'
 
@@ -15,6 +16,8 @@ module Kuniri
       def initialize
         @configurationInfo = {}
         @filesPathProject = []
+        @parserFiles = []
+        @parser = nil
         # TODO: create factory for build object
         @log = Util::HtmlLogger.new
         @log.write_log("info: Kuniri object successfully created.")
@@ -79,8 +82,14 @@ module Kuniri
         return configuration
       end
 
-      def get_parser
-        return @parser
+      def start_navigation_mode
+        unless @parser
+          puts "Please, run parse first :("
+          return
+        end
+        files = @parser.fileLanguage 
+        navigate = Navigate::CodeNavigate.new(files)
+        navigate.navigate_mode
       end
 
     private
@@ -88,6 +97,7 @@ module Kuniri
       @configurationInfo
       @filesProject
       @parser
+      @parserFiles
       @log
 
       def validate_field(configuration_hash, key)
