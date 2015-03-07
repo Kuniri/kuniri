@@ -67,19 +67,29 @@ module Navigate
             if languageObject.get_name == pInput
               @currentStage = languageObject
               @languageClass = true
+              puts languageObject
+              puts languageObject.name
               puts ("enter into: #{pInput}")
               return
-            end 
+            end
           end
           puts ("#{pInput} looks wrong...")
           return
-        else
-          puts "Sorry dude, :( \n not implemented yet..."
         end
 
-        #if pInput =~ /../
-        #  ... up one level again... 
-        #end
+        if pInput =~ /../
+          if @languageClass
+            @currentStage = @filesToNavigate
+            @languageClass = false
+          end
+        end
+      end
+
+      def handling_ls_command(pInput)
+        if pInput =~ /-a|-m|-c/
+          return pInput.scan(/-a|-m|-c/).join("")
+        end
+        return pInput
       end
 
       def ls_command(pInput)
@@ -91,7 +101,19 @@ module Navigate
             count = count + 1
           end
         else
-          puts "I'm inside of the language class..."
+          pInput = handling_ls_command(pInput)
+          puts "#{pInput}"
+          if pInput == "-a"
+            attributeList = @currentStage.attribute_extract
+            attributeList.each do |attribute|
+              puts "\t#{attribute.name}"
+            end
+          elsif pInput == "-m"
+            methodList = @currentStage.method_extract
+            methodList.each do |method|
+              puts "\t#{method.name}"
+            end
+          end
         end
 
       end

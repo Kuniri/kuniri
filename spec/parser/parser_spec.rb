@@ -9,12 +9,12 @@ RSpec.describe Parser::Parser do
 
   context "When start, find all the ruby files" do
     it "Always get a list" do
-      expect(@parser.get_object_files).to eq([])
+      expect(@parser.fileLanguage).to eq([])
     end
 
     it "Total of files to parse" do
       @parser.start_parser
-      expect(@parser.get_object_files.size).to eq(@filesProject.size)
+      expect(@parser.fileLanguage.size).to eq(@filesProject.size)
     end
   end
 
