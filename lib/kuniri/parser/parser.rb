@@ -1,4 +1,4 @@
-require_relative '../language/ruby/ruby_syntax'
+require_relative '../language/language_factory'
 require_relative '../util/html_logger'
 
 # Module responsible for keeping the parser handler
@@ -6,16 +6,18 @@ module Parser
 
   # Keep the relationship between languages and project
   class Parser
-  #TODO: CREATE FACTORY
+
       public
 
         attr_accessor :language
         attr_reader :fileLanguage
 
-        def initialize(pFilesPath)
+        def initialize(pFilesPath, pLanguage = "ruby")
           @filesPath = pFilesPath
           @fileLanguage = []
           @log = Util::HtmlLogger.new
+          @factory = Languages::LanguageFactory.new
+          @language = pLanguage
         end
 
         def start_parser
@@ -23,7 +25,7 @@ module Parser
           @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
             # TODO: Do not create object in this way, use factory.
-            language = Languages::RubySyntax.new
+            language = @factory.get_language(@language)
             language.analyse_source(file)
             @fileLanguage.push(language)
           end
@@ -33,6 +35,7 @@ module Parser
 
         @filesPath
         @log
+        @factory
 
   # class
   end
