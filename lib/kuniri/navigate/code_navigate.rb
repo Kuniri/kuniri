@@ -1,3 +1,6 @@
+require_relative 'ls_command'
+require_relative 'cd_command'
+
 # Module responsible for handling the code navigation.
 module Navigate
 
@@ -8,9 +11,11 @@ module Navigate
 
       # @param [list] Receives a list with object files.
       def initialize(pFiles = [])
-        @filesToNavigate = pFiles
-        @currentStage = pFiles
-        @languageClass = false
+        @location = "File List > "
+        @locationStack = pFiles
+        @depth = 0
+        @lsCommand = Navigate::LsCommand.new
+        @cdCommand = Navigate::CdCommand.new
       end
 
       # Navigate under the previously parsed code. You can use commands similar
@@ -18,7 +23,7 @@ module Navigate
       def navigate_mode
 
         while true
-          print ">: "
+          print @location
           input = gets
           input = handling_row_input(input)
 
@@ -26,9 +31,10 @@ module Navigate
             exit_command(input)
             break
           elsif input =~ /cd/
-            cd_command(input)
+            @depth, @location, @locationStack = 
+                @cdCommand.execute(input, @depth, @locationStack, @location)
           elsif input =~ /ls/
-            ls_command(input)
+            @lsCommand.execute(input, @depth, @locationStack)
           else
             next
           end
@@ -39,9 +45,9 @@ module Navigate
 
     private
 
-      @filesToNavigate
-      @currentStage
-      @languageClass
+      @location
+      @locationStack
+      @depth
 
       def handling_row_input(pInput)
         pInput.lstrip!
@@ -62,64 +68,42 @@ module Navigate
       def cd_command(pInput)
         pInput = handling_cd_input(pInput)
         # Top level
-        unless @languageClass
-          @currentStage.each do |languageObject|
-            if languageObject.get_name == pInput
-              @currentStage = languageObject
-              @languageClass = true
-              puts languageObject
-              puts languageObject.name
-              puts ("enter into: #{pInput}")
-              return
-            end
+        if pInput =~ /\.\./
+          if @depth > 0
+            @locationStack.pop
+            @depth = @depth - 1
+            @location = @location.gsub(/>.*>/,"")
+            @location = @location + "> "
+            @location.gsub!(/\s+/, " ")
           end
-          puts ("#{pInput} looks wrong...")
           return
         end
 
-        if pInput =~ /../
-          if @languageClass
-            @currentStage = @filesToNavigate
-            @languageClass = false
-          end
-        end
-      end
-
-      def handling_ls_command(pInput)
-        if pInput =~ /-a|-m|-c/
-          return pInput.scan(/-a|-m|-c/).join("")
-        end
-        return pInput
-      end
-
-      def ls_command(pInput)
-        count = 0
-
-        unless @languageClass
-          @currentStage.each do |file|
-            puts "\t[#{count}] #{file.get_name}"
-            count = count + 1
+        # First level
+        if @depth == 0
+          current = @locationStack
+          current.each do |element|
+            if element.is_a?Languages::Language
+              if element.get_name == pInput
+                @locationStack.push(element)
+                @location = @location + " #{pInput} > "
+                @depth = @depth + 1
+                return
+              end
+            end
           end
         else
-          pInput = handling_ls_command(pInput)
-          puts "#{pInput}"
-          if pInput == "-a"
-            attributeList = @currentStage.attribute_extract
-            attributeList.each do |attribute|
-              puts "\t#{attribute.name}"
-            end
-          elsif pInput == "-m"
-            methodList = @currentStage.method_extract
-            methodList.each do |method|
-              puts "\t#{method.name}"
-            end
-          end
+          # TODO: Future implementation, for going more deeply inside the 
+          # structures. It means, going inside method or attribute list, ...
+          puts "Sorry dude, you achieve the limit =("
         end
 
+        puts ("No such file")
+        return
       end
 
       def exit_command(pInput)
-        puts "exit"
+        puts "Bye bye kuniri =)"
       end
 
   # Class

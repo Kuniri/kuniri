@@ -1,1 +1,1 @@
---markup markdown graph --protected app/**/*.rb config/**/*.rb - README.md
+--markup markdown graph --protected lib/**/*.rb - README.md

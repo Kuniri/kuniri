@@ -2,6 +2,7 @@
 
 require 'kuniri'
 require 'optparse'
+require_relative '../lib/kuniri/core/kuniri'
 
 options = {}
 
@@ -16,6 +17,13 @@ OptionParser.new do |opts|
   opts.on("--version", "Show Kuniri version") do |v|
     puts opts.ver
     exit
+  end
+
+  opts.on("-i", "Iterative mode") do |v|
+    puts "Iterative mode..."
+    kuniri = Kuniri::Kuniri.new
+    kuniri.run_analysis
+    kuniri.start_navigation_mode
   end
 
   opts.on("-p", "Parse project") do |v|
