@@ -54,6 +54,45 @@ kuniri -h
 ```
 
 ----
+# How to use
+If you want to use kuniri in your project, first you have to create ".kuniri"
+file. The example below show the basic syntax:
+
+```
+language:ruby
+source:lib/
+output:bin/
+extract:uml
+```
+
+Finally, you can navigate under your project with the command:
+
+```
+kuniri -i
+```
+
+-i means "iterative mode". After you entered into iterative mode you can type:
+
+```
+ls
+```
+This command will show all the files already parsed. After you take a look in
+all the files, you can "enter" in some of the files for get more details:
+
+```
+cd <nameOfTheFile>
+```
+
+Inside of the file, you can take a look at the method or attributes with:
+
+```
+ls -a
+ls -m
+```
+
+-a means "attribute" and -m "method", when you are inside of the file.
+
+----
 # Author
 
 * Rodrigo Siqueira de Melo

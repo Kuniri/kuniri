@@ -79,7 +79,7 @@ module Languages
     end
 
     def has_end?(line)
-      return true if line =~ /end/
+      return true if line =~ /^\s+end|^end/
       return false
     end
 
