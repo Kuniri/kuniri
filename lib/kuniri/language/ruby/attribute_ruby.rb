@@ -13,6 +13,7 @@ module Languages
 
         def initialize
           @log = Util::HtmlLogger.new
+          @attributeList = []
         end
 
         def get_attribute(line)
@@ -118,9 +119,11 @@ module Languages
     private
 
       @log
+      @attributeList
 
     #Class
     end
+
   # Ruby
   end
 #Language

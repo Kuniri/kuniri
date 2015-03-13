@@ -16,7 +16,7 @@ module Languages
 
       def clear_data
         @rubySyntaxSupport = Languages::RubySyntaxSupport.new
-        #You have to make it more generic, for the case of many class.
+        #You have to make it more generic, for the situation of many class.
         @currentClass = Languages::ClassData.new
         @classes = []
         @visibility = "public"
@@ -95,7 +95,7 @@ module Languages
             tokenType = @rubySyntaxSupport.get_token_type(line, true)
             handle_class(tokenType, line)
           else
-            handle_nonclass(line)
+            handle_nonclass(tokenType, line)
           end
         end
       end
@@ -106,44 +106,43 @@ module Languages
             save_class(line)
             @class_token = @class_token + 1
             @token = @token + 1
-            puts "CLASS_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::ATTRIBUTE_TOKEN
             save_attribute(line)
-            puts "ATTRIBUTE_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::DEF_TOKEN
             save_method(line)
             @token = @token + 1
-            puts "DEF_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
-            puts "END_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::VISIBILITY_TOKEN
             update_visibility(line)
-            puts "VISIBILITY_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::BEGIN_TOKEN
             @token = @token + 1
-            puts "BEGIN_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::CASE_TOKEN
             @token = @token + 1
-            puts "CASE_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::DO_TOKEN
             @token = @token + 1
-            puts "DO_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::IF_TOKEN
             @token = @token + 1
-            puts "IF_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::MODULE_TOKEN
             @token = @token + 1
-            puts "MODULE_TOKEN: #{@token} --- line: #{line}"
           when Languages::Ruby::UNLESS_TOKEN
             @token = @token + 1
-            puts "UNLESS_TOKEN: #{@token} --- line: #{line}"
           else
             return
           end
       end
 
-      def handle_nonclass(line)
+      def handle_nonclass(tokenType, line)
+        case tokenType
+          when Languages::Ruby::MODULE_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::DEF_TOKEN
+            @token = @token + 1
+          when Languages::Ruby::END_TOKEN
+            @token = @token - 1
+          else
+            return
+        end
         return line
       end
 
@@ -156,9 +155,8 @@ module Languages
 
       def save_attribute(line)
         attributeName = @rubySyntaxSupport.get_attribute(line)
-        if @attributeList.include?(attributeName)
-          return
-        end
+        return if @attributeList.include?(attributeName)
+
         @attributeList.push(attributeName)
         attribute = Languages::AttributeData.new(attributeName)
         attribute.visibility = @visibility

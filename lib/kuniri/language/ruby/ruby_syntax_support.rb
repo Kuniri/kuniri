@@ -43,38 +43,32 @@ module Languages
     end
 
     def get_begin(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /begin/
+      regexExpression = /^\s+begin|^begin/
       return apply_regex(line, regexExpression)
     end
 
     def get_case(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /case/
+      regexExpression = /^\s+case|^case/
       return apply_regex(line, regexExpression)
     end
 
     def get_do(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /do/
+      regexExpression = /\s+do\s+|^do\s+|\s+do/
       return apply_regex(line, regexExpression)
     end
 
     def get_if(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /if/
+      regexExpression = /^\s+if|^if/
       return apply_regex(line, regexExpression)
     end
 
     def get_module(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /module/
+      regexExpression = /^\s+module|^module/
       return apply_regex(line, regexExpression)
     end
 
     def get_unless(line)
-      # TODO: IMPROVE THE REGEX
-      regexExpression = /unless/
+      regexExpression = /^\s+unless|^unless/
       return apply_regex(line, regexExpression)
     end
 

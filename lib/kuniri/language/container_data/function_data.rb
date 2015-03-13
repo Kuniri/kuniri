@@ -7,16 +7,16 @@ module Languages
 
     public
 
+      attr_reader :parameters
+
       def initialize(pFunctionName)
         @name = pFunctionName
       end
 
-      def add_attribute
-        #TODO
+      def add_parameters(pValue)
+        # TODO: You have to fix it. 
+        @parameters.push(pValue)
       end
-
-    private
-
 
   # class
   end
