@@ -16,15 +16,15 @@ RSpec.describe Languages::ConstructorData do
 
   context "When constructor has parameter" do
     it "Add 1 attributes." do
-      @constructorData.add_attribute("value1")
-      attributes = @constructorData.get_attributes
+      @constructorData.add_parameters("value1")
+      attributes = @constructorData.parameters
       expect(attributes).to match_array(["value1"])
     end
 
     it "Add 2 attributes." do
-      @constructorData.add_attribute("value1")
-      @constructorData.add_attribute("value2")
-      attributes = @constructorData.get_attributes
+      @constructorData.add_parameters("value1")
+      @constructorData.add_parameters("value2")
+      attributes = @constructorData.parameters
       expect(attributes).to match_array(["value1", "value2"])
     end
   end

@@ -1,28 +1,21 @@
-require_relative 'basic_data'
+require_relative 'function'
 
 module Languages
 
   # Handling constructor information.
-  class ConstructorData < Languages::BasicData
+  class ConstructorData < Languages::Function
 
     public
 
-      def initialize(pName)
-        @name = pName
-        @attributes = []
+      attr_reader :belong_to_class
+
+      def initialize(pConstructorName)
+        super(pConstructorName)
       end
 
-      def add_attribute(pAttribute)
-        @attributes.push(pAttribute)
+      def belongs_to(pClass)
+        @belong_to_class = pClass
       end
-
-      def get_attributes
-        return @attributes
-      end
-
-    private
-
-      @attributes
 
   # Class
   end

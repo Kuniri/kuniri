@@ -1,23 +1,17 @@
-require_relative 'basic_data'
+require_relative 'function'
 
 module Languages
 
   # Handle function data
-  class FunctionData < Languages::BasicData
+  class FunctionData < Languages::Function
 
     public
 
       attr_reader :parameters
 
       def initialize(pFunctionName)
-        @name = pFunctionName
-        @parameters = []
+        super(pFunctionName)
         @visibility = "global"
-      end
-
-      def add_parameters(pValue)
-        # TODO: You have to fix it. 
-        @parameters.push(pValue)
       end
 
   # class

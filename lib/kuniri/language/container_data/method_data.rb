@@ -1,21 +1,21 @@
-require_relative 'basic_data'
+require_relative 'function'
 
 module Languages
 
   # Handling method informations
-  class MethodData < Languages::BasicData
+  class MethodData < Languages::Function
 
     public
 
       attr_reader :parameters
+      attr_reader :belongs_to_class
 
-      def initialize(method_name)
-        @name = method_name
-        @parameters = []
+      def initialize(pMethod_name)
+        super(pMethod_name)
       end
 
-      def add_parameters(value)
-        @parameters.push(value)
+      def belongs_to(pClass)
+        @belongs_to_class = pClass
       end
 
   # Class

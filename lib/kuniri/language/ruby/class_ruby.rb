@@ -6,7 +6,7 @@ module Languages
 
   module Ruby
 
-    class ClassRuby < Class
+    class ClassRuby < Languages::Class
 
       public
 
