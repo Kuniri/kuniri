@@ -52,6 +52,12 @@ module Languages
         raise NotImplementedError
       end
 
+      # Take all the extern requirements
+      # @return Return an array with all the requirements.
+      def extern_requirement_extract
+        raise NotImplementedError
+      end
+
       def get_name
         return @name
       end

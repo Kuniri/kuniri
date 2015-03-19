@@ -2,6 +2,7 @@ require_relative 'attribute_ruby.rb'
 require_relative 'method_ruby.rb'
 require_relative 'token_ruby.rb'
 require_relative 'class_ruby.rb'
+require_relative 'extern_requirement_ruby'
 require_relative '../container_data/method_data'
 require_relative '../container_data/attribute_data'
 
@@ -14,6 +15,7 @@ module Languages
       @attributeRuby = Languages::Ruby::AttributeRuby.new
       @methodRuby = Languages::Ruby::MethodRuby.new
       @classRuby = Languages::Ruby::ClassRuby.new
+      @externRequirement = Languages::Ruby::ExternRequirementRuby.new
     end
 
     def apply_regex(line, regex)
@@ -40,6 +42,10 @@ module Languages
 
     def get_method(line)
       return @methodRuby.get_method(line)
+    end
+
+    def get_extern_requirement(pLine)
+      return @externRequirement.get_requirement(pLine)
     end
 
     def get_begin(line)
@@ -114,6 +120,10 @@ module Languages
       end
 
       # Other reserved words
+      if @externRequirement.get_requirement(line)
+        return Ruby::REQUIRE_TOKEN
+      #elsif ...
+      end
     end
 
   #end of class

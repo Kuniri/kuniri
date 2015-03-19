@@ -1,5 +1,5 @@
 require_relative 'ruby_syntax_support'
-require_relative 'token_ruby.rb'
+require_relative 'token_ruby'
 require_relative '../language'
 require_relative '../container_data/class_data'
 
@@ -23,6 +23,7 @@ module Languages
         @class_token = 0
         @token = 0
         @attributeList = []
+        @externRequirements = []
       end
 
       def analyse_source(pPath)
@@ -69,10 +70,16 @@ module Languages
         raise NotImplementedError
       end
 
+      def extern_requirement_extract
+        return @externRequirements
+      end
+
       def dumpData
         puts "=" * 30
         puts @currentClass.dumpClassData
         puts "_" * 30
+        puts extern_requirement_extract
+        puts "-" * 30
         puts @token
       end
 
@@ -86,6 +93,7 @@ module Languages
       attr_accessor :visibility
       @source
       @attributeList
+      @externRequirements
 
       def analyse_first_step(path)
         @source = File.open(path, "rb")
@@ -138,12 +146,20 @@ module Languages
             @token = @token + 1
           when Languages::Ruby::DEF_TOKEN
             @token = @token + 1
+          when Languages::Ruby::REQUIRE_TOKEN
+            save_requirement(line)
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
           else
             return
         end
         return line
+      end
+
+      def save_requirement(pLine)
+        #TODO: Add the requirment to the list.
+        requirementName = @rubySyntaxSupport.get_extern_requirement(pLine)
+        @externRequirements.push(requirementName)
       end
 
       def save_class(line)

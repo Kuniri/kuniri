@@ -19,7 +19,7 @@ module Languages
     BEGIN_DOWN_TOKEN ||= 12 # Begins a code block or group of statements (end).
     BREAK_TOKEN      ||= 13 # Terminates a while or until loop or a method.
     CASE_TOKEN       ||= 14 # Compares an expression with a matching when clause (end).
-  # LOST NUMBER 15, ADD NEW KEYWORD HERE.
+    REQUIRE_TOKEN    ||= 15 # Extern requirement
     DEFINED_TOKEN    ||= 16 # Determines: variable, method, super method, or block.
     ELSE_TOKEN       ||= 17 # Executes if previous conditional.
     ELSIF_TOKEN      ||= 18 # Executes if previous conditional, in if or elsif.

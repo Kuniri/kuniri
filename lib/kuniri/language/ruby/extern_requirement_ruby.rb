@@ -6,22 +6,31 @@ module Languages
 
   module Ruby
 
+    # @class ExternRequirement Handling extern requirements.
     class ExternRequirementRuby < Languages::ExternRequirement
 
       public
 
         def get_requirement(pLine)
-          raise NotImplementedError
+          detectExpression = detect_extern_requirement(pLine)
+          return nil unless detectExpression
+
+          detectExpression = remove_unnecessary_information(detectExpression)
+          return detectExpression
         end
 
       protected
 
         def detect_extern_requirement(pLine)
-          raise NotImplementedError
+          regexExpression = /(?:require_relative|require)\s*['|"](.*)['|"]/
+          return nil unless pLine =~ regexExpression
+          return pLine.scan(regexExpression).join("")
         end
 
         def remove_unnecessary_information(pLine)
-          raise NotImplementedError
+          regexClean = /\s*|"|'/
+          return pLine.gsub!(regexClean, "") if pLine =~ regexClean
+          return pLine
         end
 
     # Class
