@@ -5,14 +5,14 @@ require_relative '../container_data/class_data'
 
 module Languages
 
+  def remove_me(a, b)
+    puts "xpto"
+  end
+
   # Handling the ruby syntax for extract information.
   class RubySyntax < Languages::Language
 
     public
-
-      def initialize
-        clear_data
-      end
 
       def clear_data
         @rubySyntaxSupport = Languages::RubySyntaxSupport.new
@@ -24,6 +24,7 @@ module Languages
         @token = 0
         @attributeList = []
         @externRequirements = []
+        @functionList = []
       end
 
       def analyse_source(pPath)
@@ -80,6 +81,8 @@ module Languages
         puts "_" * 30
         puts extern_requirement_extract
         puts "-" * 30
+        puts @functionList
+        puts "-" * 30
         puts @token
       end
 
@@ -90,6 +93,7 @@ module Languages
       @rubySyntaxSupport
       @classes
       @currentClass
+      @functionList
       attr_accessor :visibility
       @source
       @attributeList
@@ -145,6 +149,7 @@ module Languages
           when Languages::Ruby::MODULE_TOKEN
             @token = @token + 1
           when Languages::Ruby::DEF_TOKEN
+            save_function(line)
             @token = @token + 1
           when Languages::Ruby::REQUIRE_TOKEN
             save_requirement(line)
@@ -154,6 +159,11 @@ module Languages
             return
         end
         return line
+      end
+
+      def save_function(pLine)
+        function = @rubySyntaxSupport.get_function(pLine)
+        @functionList.push(function)
       end
 
       def save_requirement(pLine)

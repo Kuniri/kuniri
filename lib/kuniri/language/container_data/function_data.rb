@@ -1,9 +1,9 @@
-require_relative 'function'
+require_relative 'function_abstract'
 
 module Languages
 
   # Handle function data
-  class FunctionData < Languages::Function
+  class FunctionData < Languages::FunctionAbstract
 
     public
 

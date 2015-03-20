@@ -4,7 +4,7 @@ module Languages
 
   # @abstract Function Abstract class responsible to abstract the behavior.
   # Handle function data
-  class Function < Languages::BasicData
+  class FunctionAbstract < Languages::BasicData
 
     public
 

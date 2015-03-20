@@ -1,5 +1,5 @@
-require_relative '../abstract_container/method'
-require_relative '../container_data/method_data'
+require_relative '../abstract_container/function_global'
+require_relative '../container_data/function_data'
 require_relative '../../util/html_logger'
 
 module Languages
@@ -7,7 +7,7 @@ module Languages
   module Ruby
 
     # Handling ruby method
-    class MethodRuby < Languages::Method
+    class FunctionGlobalRuby < Languages::FunctionGlobal
 
       public
 
@@ -16,24 +16,24 @@ module Languages
         end
 
         def get_function(pLine)
-          result = detect_method(pLine)
+          result = detect_function(pLine)
           return nil unless result
 
-          @log.write_log("Info: get method")
+          @log.write_log("Info: get global function")
 
-          methodRuby = Languages::MethodData.new(result)
+          functionRuby = Languages::FunctionData.new(result)
 
           parameters = handling_parameter(pLine)
           if parameters
             parameters.each do |parameter|
-              methodRuby.add_parameters(parameter)
+              functionRuby.add_parameters(parameter)
             end
           end
 
-          @log.write_log("Debug: Method: #{methodRuby.name}, Parameter:
-                         #{methodRuby.parameters}")
+          @log.write_log("Debug: Method: #{functionRuby.name}, Parameter:
+                         #{functionRuby.parameters}")
 
-          return methodRuby
+          return functionRuby
         end
 
       protected

@@ -1,9 +1,9 @@
-require_relative 'function'
+require_relative 'function_abstract'
 
 module Languages
 
   # Handling constructor information.
-  class ConstructorData < Languages::Function
+  class ConstructorData < Languages::FunctionAbstract
 
     public
 

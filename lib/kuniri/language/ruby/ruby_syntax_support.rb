@@ -3,6 +3,7 @@ require_relative 'method_ruby.rb'
 require_relative 'token_ruby.rb'
 require_relative 'class_ruby.rb'
 require_relative 'extern_requirement_ruby'
+require_relative 'function_global_ruby'
 require_relative '../container_data/method_data'
 require_relative '../container_data/attribute_data'
 
@@ -16,6 +17,7 @@ module Languages
       @methodRuby = Languages::Ruby::MethodRuby.new
       @classRuby = Languages::Ruby::ClassRuby.new
       @externRequirement = Languages::Ruby::ExternRequirementRuby.new
+      @functionGlobalRuby = Languages::Ruby::FunctionGlobalRuby.new
     end
 
     def apply_regex(line, regex)
@@ -38,6 +40,10 @@ module Languages
       end
 
       return listReturn
+    end
+
+    def get_function(pLine)
+      return @functionGlobalRuby.get_function(pLine)
     end
 
     def get_method(line)
