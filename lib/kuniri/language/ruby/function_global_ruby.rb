@@ -1,4 +1,4 @@
-require_relative '../abstract_container/function_global'
+require_relative '../abstract_container/function'
 require_relative '../container_data/function_data'
 require_relative '../../util/html_logger'
 
@@ -7,7 +7,7 @@ module Languages
   module Ruby
 
     # Handling ruby method
-    class FunctionGlobalRuby < Languages::FunctionGlobal
+    class FunctionGlobalRuby < Languages::Function
 
       public
 

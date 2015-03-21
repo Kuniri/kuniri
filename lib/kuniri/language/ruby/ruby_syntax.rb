@@ -5,14 +5,14 @@ require_relative '../container_data/class_data'
 
 module Languages
 
-  def remove_me(a, b)
-    puts "xpto"
-  end
-
   # Handling the ruby syntax for extract information.
   class RubySyntax < Languages::Language
 
     public
+
+      def initialize
+        clear_data
+      end
 
       def clear_data
         @rubySyntaxSupport = Languages::RubySyntaxSupport.new

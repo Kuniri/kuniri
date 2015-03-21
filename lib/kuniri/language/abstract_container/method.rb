@@ -1,9 +1,9 @@
-require_relative 'function'
+require_relative 'function_behavior'
 
 module Languages
 
   # @abstract Method Abstract class for handling method
-  class Method < Languages::Function
+  class Method < Languages::FunctionBehavior
 
     public
 
