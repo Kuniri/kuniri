@@ -56,6 +56,11 @@ module Languages
         @methods.each do |i|
           puts "#{i.visibility} -> #{i.name}"
         end
+        puts "-"  * 40
+        puts "> INITIALIZE"
+        @constructors.each do |i|
+          puts "#{i.visibility} -> #{i.name}"
+        end
         puts "*" * 40
         puts "> ATTRIBUTE"
         @attributes.each do |i|

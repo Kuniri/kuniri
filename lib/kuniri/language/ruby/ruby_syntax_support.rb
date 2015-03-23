@@ -1,11 +1,13 @@
-require_relative 'attribute_ruby.rb'
-require_relative 'method_ruby.rb'
-require_relative 'token_ruby.rb'
-require_relative 'class_ruby.rb'
+require_relative 'attribute_ruby'
+require_relative 'method_ruby'
+require_relative 'token_ruby'
+require_relative 'class_ruby'
+require_relative 'constructor_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'function_global_ruby'
 require_relative '../container_data/method_data'
 require_relative '../container_data/attribute_data'
+require_relative '../container_data/constructor_data'
 
 module Languages
 
@@ -18,6 +20,7 @@ module Languages
       @classRuby = Languages::Ruby::ClassRuby.new
       @externRequirement = Languages::Ruby::ExternRequirementRuby.new
       @functionGlobalRuby = Languages::Ruby::FunctionGlobalRuby.new
+      @constructorRuby = Languages::Ruby::ConstructorRuby.new
     end
 
     def apply_regex(line, regex)
@@ -48,6 +51,10 @@ module Languages
 
     def get_method(line)
       return @methodRuby.get_method(line)
+    end
+
+    def get_constructor(line)
+      return @constructorRuby.get_constructor(line)
     end
 
     def get_extern_requirement(pLine)

@@ -121,6 +121,7 @@ module Languages
           when Languages::Ruby::ATTRIBUTE_TOKEN
             save_attribute(line)
           when Languages::Ruby::DEF_TOKEN
+            save_constructor(line) if line =~ /initialize/
             save_method(line)
             @token = @token + 1
           when Languages::Ruby::END_TOKEN
@@ -193,6 +194,12 @@ module Languages
         method = @rubySyntaxSupport.get_method(line)
         method.visibility = @visibility
         @currentClass.add_method(method)
+      end
+
+      def save_constructor(line)
+        constructor = @rubySyntaxSupport.get_constructor(line)
+        constructor.visibility = @visibility
+        @currentClass.add_constructor(constructor)
       end
 
       def update_visibility(line)
