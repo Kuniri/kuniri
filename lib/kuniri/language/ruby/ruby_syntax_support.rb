@@ -5,9 +5,9 @@ require_relative 'class_ruby'
 require_relative 'constructor_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'function_global_ruby'
-require_relative '../container_data/method_data'
-require_relative '../container_data/attribute_data'
-require_relative '../container_data/constructor_data'
+require_relative '../container_data/structured_and_oo/method_data'
+require_relative '../container_data/structured_and_oo/attribute_data'
+require_relative '../container_data/structured_and_oo/constructor_data'
 
 module Languages
 

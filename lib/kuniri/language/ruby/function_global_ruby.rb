@@ -1,5 +1,5 @@
-require_relative '../abstract_container/function'
-require_relative '../container_data/function_data'
+require_relative '../abstract_container/structured_and_oo/function'
+require_relative '../container_data/structured_and_oo/function_data'
 require_relative '../../util/html_logger'
 
 module Languages

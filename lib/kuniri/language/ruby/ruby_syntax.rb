@@ -1,7 +1,7 @@
 require_relative 'ruby_syntax_support'
 require_relative 'token_ruby'
 require_relative '../language'
-require_relative '../container_data/class_data'
+require_relative '../container_data/structured_and_oo/class_data'
 
 module Languages
 
