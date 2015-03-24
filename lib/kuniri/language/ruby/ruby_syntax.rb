@@ -112,18 +112,37 @@ module Languages
         end
       end
 
+      def increase_token
+        @token = @token + 1
+      end
+
       def handle_class(tokenType, line)
         case tokenType
           when Languages::Ruby::CLASS_TOKEN
-            save_class(line)
+            @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+            @classes.push(@currentClass)
+            # Get inherintance
             @class_token = @class_token + 1
-            @token = @token + 1
+            increase_token
           when Languages::Ruby::ATTRIBUTE_TOKEN
-            save_attribute(line)
+            attributeName = @rubySyntaxSupport.get_attribute(line)
+            return if @attributeList.include?(attributeName)
+
+            @attributeList.push(attributeName)
+            attribute = Languages::AttributeData.new(attributeName)
+            attribute.visibility = @visibility
+            @currentClass.add_attribute(attribute)
           when Languages::Ruby::DEF_TOKEN
-            save_constructor(line) if line =~ /initialize/
-            save_method(line)
-            @token = @token + 1
+            if line =~ /initialize/
+              constructor = @rubySyntaxSupport.get_constructor(line)
+              constructor.visibility = @visibility
+              @currentClass.add_constructor(constructor)
+            else
+              method = @rubySyntaxSupport.get_method(line)
+              method.visibility = @visibility
+              @currentClass.add_method(method)
+            end
+            increase_token
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
           when Languages::Ruby::VISIBILITY_TOKEN
@@ -148,58 +167,20 @@ module Languages
       def handle_nonclass(tokenType, line)
         case tokenType
           when Languages::Ruby::MODULE_TOKEN
-            @token = @token + 1
+            increase_token
           when Languages::Ruby::DEF_TOKEN
-            save_function(line)
-            @token = @token + 1
+            function = @rubySyntaxSupport.get_function(line)
+            @functionList.push(function)
+            increase_token
           when Languages::Ruby::REQUIRE_TOKEN
-            save_requirement(line)
+            requirementName = @rubySyntaxSupport.get_extern_requirement(line)
+            @externRequirements.push(requirementName)
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
           else
             return
         end
         return line
-      end
-
-      def save_function(pLine)
-        function = @rubySyntaxSupport.get_function(pLine)
-        @functionList.push(function)
-      end
-
-      def save_requirement(pLine)
-        #TODO: Add the requirment to the list.
-        requirementName = @rubySyntaxSupport.get_extern_requirement(pLine)
-        @externRequirements.push(requirementName)
-      end
-
-      def save_class(line)
-        # Regex in the line
-        @currentClass.name = @rubySyntaxSupport.get_class_name(line)
-        @classes.push(@currentClass)
-        # Get inherintance
-      end
-
-      def save_attribute(line)
-        attributeName = @rubySyntaxSupport.get_attribute(line)
-        return if @attributeList.include?(attributeName)
-
-        @attributeList.push(attributeName)
-        attribute = Languages::AttributeData.new(attributeName)
-        attribute.visibility = @visibility
-        @currentClass.add_attribute(attribute)
-      end
-
-      def save_method(line)
-        method = @rubySyntaxSupport.get_method(line)
-        method.visibility = @visibility
-        @currentClass.add_method(method)
-      end
-
-      def save_constructor(line)
-        constructor = @rubySyntaxSupport.get_constructor(line)
-        constructor.visibility = @visibility
-        @currentClass.add_constructor(constructor)
       end
 
       def update_visibility(line)
