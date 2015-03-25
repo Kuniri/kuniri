@@ -125,13 +125,21 @@ module Languages
             @class_token = @class_token + 1
             increase_token
           when Languages::Ruby::ATTRIBUTE_TOKEN
-            attributeName = @rubySyntaxSupport.get_attribute(pLine)
+            # TODO: Fix it!! Ugly!
+            attributes = @rubySyntaxSupport.get_attribute(pLine)
+            attributeName = []
+            attributes.each do |attribute|
+              currentAttribute = attributes.pop
+              attributeName.push(currentAttribute.name)
+            end
             return if @attributeList.include?(attributeName)
 
             @attributeList.push(attributeName)
-            attribute = Languages::AttributeData.new(attributeName)
-            attribute.visibility = @visibility
-            @currentClass.add_attribute(attribute)
+            attributeName.each do |elementName|
+              attribute = Languages::AttributeData.new(elementName)
+              attribute.visibility = @visibility
+              @currentClass.add_attribute(attribute)
+            end
           when Languages::Ruby::DEF_TOKEN
             if pLine =~ /initialize/
               constructor = @rubySyntaxSupport.get_constructor(pLine)

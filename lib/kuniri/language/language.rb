@@ -1,5 +1,6 @@
 # Module that keeps the language syntax.
 module Languages
+
   # @abstract Abstract class for handling different types of language.
   class Language
 
