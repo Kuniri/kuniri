@@ -100,17 +100,17 @@ module Kuniri
       @parserFiles
       @log
 
-      def validate_field(configuration_hash, key)
-        if configuration_hash.has_key?(key)
-          value = configuration_hash[key]
+      def validate_field(pConfiguration_hash, pKey)
+        if pConfiguration_hash.has_key?(pKey)
+          value = pConfiguration_hash[pKey]
           value.split(',').each do |element|
             raise Error::ConfigurationFileError unless yield(element)
           end
         end
       end
 
-      def handling_basic_syntax(line, index)
-        text = line.split(':')[index].downcase
+      def handling_basic_syntax(pLine, pIndex)
+        text = pLine.split(':')[pIndex].downcase
         text.gsub!(/\s/, '')
         return text
       end

@@ -8,9 +8,9 @@ module Util
     # Create/open the log file, and save the path.
     # @param path [String] Receives the path for save the log file. By default
     #   it is saved on /tmp with the name "kuniri".
-    def initialize(path = "/tmp/kuniri.log")
-      File.open(path, 'a')
-      @log_path = path
+    def initialize(pPath = "/tmp/kuniri.log")
+      File.open(pPath, 'a')
+      @log_path = pPath
     end
 
     public
@@ -19,7 +19,7 @@ module Util
       # about this method, is related with the implementation in different
       # formats. Ex.: write_log can be implemented as HTML, txt, XML, etc.
       # @param message to write in the log file.
-      def write_log(message)
+      def write_log(pMessage)
         raise NotImplementedError
       end
 

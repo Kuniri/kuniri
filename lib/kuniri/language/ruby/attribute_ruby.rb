@@ -16,8 +16,8 @@ module Languages
           @attributeList = []
         end
 
-        def get_attribute(line)
-          result = detect_attribute(line)
+        def get_attribute(pLine)
+          result = detect_attribute(pLine)
           return nil unless result
 
           @log.write_log("Info: Prepare to get attribute.")

@@ -23,20 +23,20 @@ module Languages
       @constructorRuby = Languages::Ruby::ConstructorRuby.new
     end
 
-    def apply_regex(line, regex)
-      result = line.scan(regex)[0]
+    def apply_regex(pLine, pRegex)
+      result = pLine.scan(pRegex)[0]
 
       return nil unless result
       return result
     end
 
-    def get_class_name(line)
-      return @classRuby.get_class(line)
+    def get_class_name(pLine)
+      return @classRuby.get_class(pLine)
     end
 
-    def get_attribute(line)
+    def get_attribute(pLine)
       # TODO: THE CORRECT IS ONLY:return @attributeRuby.get_attribute(line)
-      listAttribute =  @attributeRuby.get_attribute(line)
+      listAttribute =  @attributeRuby.get_attribute(pLine)
       listReturn = []
       listAttribute.each do |element|
         listReturn.push(element.name)
@@ -49,91 +49,91 @@ module Languages
       return @functionGlobalRuby.get_function(pLine)
     end
 
-    def get_method(line)
-      return @methodRuby.get_method(line)
+    def get_method(pLine)
+      return @methodRuby.get_method(pLine)
     end
 
-    def get_constructor(line)
-      return @constructorRuby.get_constructor(line)
+    def get_constructor(pLine)
+      return @constructorRuby.get_constructor(pLine)
     end
 
     def get_extern_requirement(pLine)
       return @externRequirement.get_requirement(pLine)
     end
 
-    def get_begin(line)
+    def get_begin(pLine)
       regexExpression = /^\s+begin|^begin/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_case(line)
+    def get_case(pLine)
       regexExpression = /^\s+case|^case/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_do(line)
+    def get_do(pLine)
       regexExpression = /\s+do\s+|^do\s+|\s+do/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_if(line)
+    def get_if(pLine)
       regexExpression = /^\s+if|^if/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_module(line)
+    def get_module(pLine)
       regexExpression = /^\s+module|^module/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_unless(line)
+    def get_unless(pLine)
       regexExpression = /^\s+unless|^unless/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def has_end?(line)
-      return true if line =~ /^\s+end|^end/
+    def has_end?(pLine)
+      return true if pLine =~ /^\s+end|^end/
       return false
     end
 
-    def get_visibiliy(line)
+    def get_visibiliy(pLine)
       regexExpression = /private|public|protected/
-      return apply_regex(line, regexExpression)
+      return apply_regex(pLine, regexExpression)
     end
 
-    def get_token_type(line, class_token=false)
+    def get_token_type(pLine, pClass_token=false)
       # Special token for class
-      if class_token
-        if @attributeRuby.get_attribute(line)
+      if pClass_token
+        if @attributeRuby.get_attribute(pLine)
           return Ruby::ATTRIBUTE_TOKEN 
-        elsif get_visibiliy(line)
+        elsif get_visibiliy(pLine)
           return Ruby::VISIBILITY_TOKEN
         end
       end
 
       # All of these reserved words are close with "end"
-      if @classRuby.get_class(line)
+      if @classRuby.get_class(pLine)
         return Ruby::CLASS_TOKEN
-      elsif has_end?(line)
+      elsif has_end?(pLine)
         return Ruby::END_TOKEN
-      elsif get_begin(line)
+      elsif get_begin(pLine)
         return Ruby::BEGIN_TOKEN
-      elsif @methodRuby.get_method(line)
+      elsif @methodRuby.get_method(pLine)
         return Ruby::DEF_TOKEN
-      elsif get_case(line)
+      elsif get_case(pLine)
         return Ruby::CASE_TOKEN
-      elsif get_do(line)
+      elsif get_do(pLine)
         return Ruby::DO_TOKEN
-      elsif get_if(line)
+      elsif get_if(pLine)
         return Ruby::IF_TOKEN
-      elsif get_module(line)
+      elsif get_module(pLine)
         return Ruby::MODULE_TOKEN
-      elsif get_unless(line)
+      elsif get_unless(pLine)
         return Ruby::UNLESS_TOKEN
       end
 
       # Other reserved words
-      if @externRequirement.get_requirement(line)
+      if @externRequirement.get_requirement(pLine)
         return Ruby::REQUIRE_TOKEN
       #elsif ...
       end

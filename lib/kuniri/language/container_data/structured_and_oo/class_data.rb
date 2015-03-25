@@ -6,7 +6,7 @@ require_relative 'constructor_data'
 module Languages
 
   # Handling class information
-  class ClassData < BasicData
+  class ClassData < Languages::BasicData
 
     public
 
@@ -20,22 +20,22 @@ module Languages
         @visibility = "public"
       end
 
-      def add_attribute(attribute)
-        return if not attribute.is_a?(Languages::AttributeData)
+      def add_attribute(pAttribute)
+        return if not pAttribute.is_a?(Languages::AttributeData)
 
-        @attributes.push(attribute)
+        @attributes.push(pAttribute)
       end
 
-      def add_method(method)
-        return if not method.is_a?(Languages::MethodData)
+      def add_method(pMethod)
+        return if not pMethod.is_a?(Languages::MethodData)
 
-        @methods.push(method)
+        @methods.push(pMethod)
       end
 
-      def add_constructor(constructor)
-        return if not constructor.is_a?(Languages::ConstructorData)
+      def add_constructor(pConstructor)
+        return if not pConstructor.is_a?(Languages::ConstructorData)
 
-        @constructors.push(constructor)
+        @constructors.push(pConstructor)
       end
 
       def get_methods

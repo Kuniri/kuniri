@@ -7,8 +7,8 @@ module Languages
 
     public
 
-      def initialize (attribute_name)
-        @name = attribute_name
+      def initialize (pAttribute_name)
+        @name = pAttribute_name
         @visibility = "public"
       end
 

@@ -10,8 +10,8 @@ module Languages
 
       # Set the source code to by analysed.
       # @param source [String] Set the source string.
-      def set_source(source)
-        @source = source
+      def set_source(pSource)
+        @source = pSource
       end
 
       # Based on the source, extract the informations inside of it. For example
@@ -70,5 +70,9 @@ module Languages
 
       @languageType
       @source
+
+  # End class
   end
+
+# End module
 end

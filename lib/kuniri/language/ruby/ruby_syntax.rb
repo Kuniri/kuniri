@@ -99,8 +99,8 @@ module Languages
       @attributeList
       @externRequirements
 
-      def analyse_first_step(path)
-        @source = File.open(path, "rb")
+      def analyse_first_step(pPath)
+        @source = File.open(pPath, "rb")
         @source.each do |line|
           tokenType = @rubySyntaxSupport.get_token_type(line)
           if tokenType == Languages::Ruby::CLASS_TOKEN || @class_token > 0
@@ -116,16 +116,16 @@ module Languages
         @token = @token + 1
       end
 
-      def handle_class(tokenType, line)
-        case tokenType
+      def handle_class(pTokenType, pLine)
+        case pTokenType
           when Languages::Ruby::CLASS_TOKEN
-            @currentClass.name = @rubySyntaxSupport.get_class_name(line)
+            @currentClass.name = @rubySyntaxSupport.get_class_name(pLine)
             @classes.push(@currentClass)
             # Get inherintance
             @class_token = @class_token + 1
             increase_token
           when Languages::Ruby::ATTRIBUTE_TOKEN
-            attributeName = @rubySyntaxSupport.get_attribute(line)
+            attributeName = @rubySyntaxSupport.get_attribute(pLine)
             return if @attributeList.include?(attributeName)
 
             @attributeList.push(attributeName)
@@ -133,12 +133,12 @@ module Languages
             attribute.visibility = @visibility
             @currentClass.add_attribute(attribute)
           when Languages::Ruby::DEF_TOKEN
-            if line =~ /initialize/
-              constructor = @rubySyntaxSupport.get_constructor(line)
+            if pLine =~ /initialize/
+              constructor = @rubySyntaxSupport.get_constructor(pLine)
               constructor.visibility = @visibility
               @currentClass.add_constructor(constructor)
             else
-              method = @rubySyntaxSupport.get_method(line)
+              method = @rubySyntaxSupport.get_method(pLine)
               method.visibility = @visibility
               @currentClass.add_method(method)
             end
@@ -146,7 +146,7 @@ module Languages
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
           when Languages::Ruby::VISIBILITY_TOKEN
-            update_visibility(line)
+            update_visibility(pLine)
           when Languages::Ruby::BEGIN_TOKEN
             @token = @token + 1
           when Languages::Ruby::CASE_TOKEN
@@ -164,27 +164,27 @@ module Languages
           end
       end
 
-      def handle_nonclass(tokenType, line)
-        case tokenType
+      def handle_nonclass(pTokenType, pLine)
+        case pTokenType
           when Languages::Ruby::MODULE_TOKEN
             increase_token
           when Languages::Ruby::DEF_TOKEN
-            function = @rubySyntaxSupport.get_function(line)
+            function = @rubySyntaxSupport.get_function(pLine)
             @functionList.push(function)
             increase_token
           when Languages::Ruby::REQUIRE_TOKEN
-            requirementName = @rubySyntaxSupport.get_extern_requirement(line)
+            requirementName = @rubySyntaxSupport.get_extern_requirement(pLine)
             @externRequirements.push(requirementName)
           when Languages::Ruby::END_TOKEN
             @token = @token - 1
           else
             return
         end
-        return line
+        return pLine
       end
 
-      def update_visibility(line)
-        @visibility = @rubySyntaxSupport.get_visibiliy(line)
+      def update_visibility(pLine)
+        @visibility = @rubySyntaxSupport.get_visibiliy(pLine)
       end
 
   # Class
