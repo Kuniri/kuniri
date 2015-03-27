@@ -33,6 +33,11 @@ module Kuniri
 
         @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
         @filesPathProject = get_project_file(@configurationInfo["source"])
+        unless @filesPathProject
+          puts "Problem on source path: #{@configurationInfo["source"]}"
+          @log.write_log("Prolblem when tried to access source folder.")
+          return -1
+        end
 
         @log.write_log("debug: files: #{@filesPathProject.to_s}")
         @parser = Parser::Parser.new(@filesPathProject)
@@ -47,18 +52,14 @@ module Kuniri
       #     otherwise, raise an exception.
       # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
       # @raise [type] Raised in the case of the path is wrong.
-      def read_configuration_file(path = ".kuniri")
-        raise Error::ConfigurationFileError unless File.exists?(path)
+      def read_configuration_file(pPath = ".kuniri")
+        configuration = {}
 
-        @log.write_log("Debug: Reading cofiguration file in: #{path}")
-
-        configuration = Hash.new
-        File.open(path, mode="r").each_line do |line|
-          parts = line.split(':').size
-          raise Error::ConfigurationFileError unless (parts == 2)
-          key = handling_basic_syntax(line, 0)
-          value = handling_basic_syntax(line, 1)
-          configuration[key] = value
+        unless File.exists?(pPath)
+          @log.write_log("Info: Not provide configuration file. Get default")
+          configuration = default_configuration
+        else
+          configuration = parser_configuration_file(pPath)
         end
 
         @log.write_log("First reading configuration file: #{configuration}")
@@ -79,6 +80,33 @@ module Kuniri
 
         @log.write_log("Debug: Configuration: #{configuration}")
 
+        return configuration
+      end
+
+      def default_configuration
+        configuration = {"language" => "ruby",
+                          "source" => "./",
+                          "output" => "bin/",
+                          "extract" => "uml"}
+        return configuration
+      end
+
+      def parser_configuration_file(pPath)
+        configuration = {}
+
+        @log.write_log("Debug: Reading cofiguration file in: #{pPath}")
+        File.open(pPath, mode="r").each_line do |line|
+          parts = line.split(':').size
+          unless (parts == 2)
+            puts "Syntax error, please verify your configuration file"
+            puts "Syntax error: #{line}"
+            @log.write_log("Syntax error on configuration file.")
+            abort
+          end
+          key = handling_basic_syntax(line, 0)
+          value = handling_basic_syntax(line, 1)
+          configuration[key] = value
+        end
         return configuration
       end
 
@@ -116,7 +144,6 @@ module Kuniri
       end
 
       def get_project_file(pPath="./", pLanguage="**.rb")
-        # TODO: It will be better if it raise exception
         return nil unless File.exists?(pPath)
 
         @log.write_log("Info: Reading all files.")
