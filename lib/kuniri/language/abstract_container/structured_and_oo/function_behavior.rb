@@ -8,11 +8,13 @@ module Languages
       # ...
       # @param pLine String with potencial function.
       # @return Return function data, or nil if line doesn't have method.
-      def get_function(pLine)
+      def get_function(pLine, type = 'globalFunction')
         raise NotImplementedError
       end
 
     protected
+
+      @type
 
       # Detect function in line
       # @param pLine Line string with the potential method inside.

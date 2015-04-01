@@ -119,36 +119,14 @@ module Languages
       def handle_class(pTokenType, pLine)
         case pTokenType
           when Languages::Ruby::CLASS_TOKEN
-            @currentClass.name = @rubySyntaxSupport.get_class_name(pLine)
-            @classes.push(@currentClass)
-            # Get inherintance
-            @class_token = @class_token + 1
-            increase_token
+            save_class(pLine)
           when Languages::Ruby::ATTRIBUTE_TOKEN
-            # TODO: Fix it!! Ugly!
-            attributes = @rubySyntaxSupport.get_attribute(pLine)
-            attributeName = []
-            attributes.each do |attribute|
-              currentAttribute = attributes.pop
-              attributeName.push(currentAttribute.name)
-            end
-            return if @attributeList.include?(attributeName)
-
-            @attributeList.push(attributeName)
-            attributeName.each do |elementName|
-              attribute = Languages::AttributeData.new(elementName)
-              attribute.visibility = @visibility
-              @currentClass.add_attribute(attribute)
-            end
+            save_attribute(pLine)
           when Languages::Ruby::DEF_TOKEN
             if pLine =~ /initialize/
-              constructor = @rubySyntaxSupport.get_constructor(pLine)
-              constructor.visibility = @visibility
-              @currentClass.add_constructor(constructor)
+              save_constructor(pLine)
             else
-              method = @rubySyntaxSupport.get_method(pLine)
-              method.visibility = @visibility
-              @currentClass.add_method(method)
+              save_method(pLine)
             end
             increase_token
           when Languages::Ruby::END_TOKEN
@@ -193,6 +171,44 @@ module Languages
 
       def update_visibility(pLine)
         @visibility = @rubySyntaxSupport.get_visibiliy(pLine)
+      end
+
+      def save_class(pLine)
+        @currentClass.name = @rubySyntaxSupport.get_class_name(pLine)
+        @classes.push(@currentClass)
+        # Get inherintance
+        @class_token = @class_token + 1
+        increase_token
+      end
+
+      def save_attribute(pLine)
+        # TODO: Fix it!! Ugly!
+        attributes = @rubySyntaxSupport.get_attribute(pLine)
+        attributeName = []
+        attributes.each do |attribute|
+          currentAttribute = attributes.pop
+          attributeName.push(currentAttribute.name)
+        end
+        return if @attributeList.include?(attributeName)
+
+        @attributeList.push(attributeName)
+        attributeName.each do |elementName|
+          attribute = Languages::AttributeData.new(elementName)
+          attribute.visibility = @visibility
+          @currentClass.add_attribute(attribute)
+        end
+      end
+
+      def save_constructor(pLine)
+        constructor = @rubySyntaxSupport.get_constructor(pLine)
+        constructor.visibility = @visibility
+        @currentClass.add_constructor(constructor)
+      end
+
+      def save_method(pLine)
+        method = @rubySyntaxSupport.get_method(pLine)
+        method.visibility = @visibility
+        @currentClass.add_method(method)
       end
 
   # Class

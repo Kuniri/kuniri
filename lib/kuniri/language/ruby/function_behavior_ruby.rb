@@ -1,39 +1,38 @@
-require_relative '../abstract_container/structured_and_oo/constructor'
-require_relative '../container_data/structured_and_oo/constructor_data'
-require_relative '../../util/html_logger'
+require_relative '../abstract_container/structured_and_oo/function_behavior'
 
 module Languages
 
   module Ruby
 
-    # Handling ruby constructor
-    class ConstructorRuby < Languages::Constructor
+    # Handling ruby method
+    class FunctionBehaviorRuby < Languages::FunctionBehavior
 
       public
 
         def initialize
           @log = Util::HtmlLogger.new
         end
+      
 
-        def get_function(pLine)
+        def get_function(pLine, type = 'globalFunction')
           result = detect_function(pLine)
           return nil unless result
 
-          @log.write_log("Info: get constructor")
+          @log.write_log("Info: get method")
 
-          constructorRuby = Languages::ConstructorData.new(result)
+          functionRuby = Languages::MethodData.new(result)
 
           parameters = handling_parameter(pLine)
           if parameters
             parameters.each do |parameter|
-              constructorRuby.add_parameters(parameter)
+              functionRuby.add_parameters(parameter)
             end
           end
 
-          @log.write_log("Debug: Method: #{constructorRuby.name}, Parameter:
-                         #{constructorRuby.parameters}")
+          @log.write_log("Debug: Method: #{functionRuby.name}, Parameter:
+                         #{functionRuby.parameters}")
 
-          return constructorRuby
+          return functionRuby
         end
 
       protected

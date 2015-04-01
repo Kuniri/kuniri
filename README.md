@@ -8,12 +8,16 @@
 ----
 # What is Kuniri?
 
-> The main objective of Kuniri is providing a way to dynamically generate 
-diagrams and traceability based on the code. Kuniri will inspect the source 
-code, extract the necessary information to generate diagrams and provide the 
-traceability. This file is similar to XML file, and follows a strong pattern. 
-This feature gives flexibility for other tools read the file and generate the 
-diagram. It means, that Kuniri is NOT a graphic tool it is extract tool. 
+> Briefely, the main object of Kuniri is: parse any kind of language to a
+common model file. Initialily, the main objective of Kuniri was providing a way 
+to dynamically generate diagrams and traceability based on code. However the
+parse proved much more useful for many other kind of application, because of
+this the focus changed to create the parse.
+
+>Kuniri will inspect the source code, extract information to generate
+diagrams and provide the traceability. This file is similar to XML file, and
+follows a strong pattern. This feature gives flexibility for other tools read
+the file and process anything they want.
 
 > Additionally, Kuniri was designed to grow to three main directions: support 
 for different languages, provide ways to monitoring the source, and provide 

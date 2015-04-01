@@ -1,10 +1,8 @@
 require_relative 'attribute_ruby'
-require_relative 'method_ruby'
 require_relative 'token_ruby'
 require_relative 'class_ruby'
-require_relative 'constructor_ruby'
 require_relative 'extern_requirement_ruby'
-require_relative 'function_global_ruby'
+require_relative 'function_behavior_ruby'
 require_relative '../container_data/structured_and_oo/method_data'
 require_relative '../container_data/structured_and_oo/attribute_data'
 require_relative '../container_data/structured_and_oo/constructor_data'
@@ -16,11 +14,9 @@ module Languages
 
     def initialize
       @attributeRuby = Languages::Ruby::AttributeRuby.new
-      @methodRuby = Languages::Ruby::MethodRuby.new
       @classRuby = Languages::Ruby::ClassRuby.new
       @externRequirement = Languages::Ruby::ExternRequirementRuby.new
-      @functionGlobalRuby = Languages::Ruby::FunctionGlobalRuby.new
-      @constructorRuby = Languages::Ruby::ConstructorRuby.new
+      @functionBehavior = Languages::Ruby::FunctionBehaviorRuby.new
     end
 
     def apply_regex(pLine, pRegex)
@@ -39,15 +35,15 @@ module Languages
     end
 
     def get_function(pLine)
-      return @functionGlobalRuby.get_function(pLine)
+      return @functionBehavior.get_function(pLine, "globalFunction")
     end
 
     def get_method(pLine)
-      return @methodRuby.get_method(pLine)
+      return @functionBehavior.get_function(pLine, "method")
     end
 
     def get_constructor(pLine)
-      return @constructorRuby.get_constructor(pLine)
+      return @functionBehavior.get_function(pLine, "constructor")
     end
 
     def get_extern_requirement(pLine)
@@ -111,7 +107,7 @@ module Languages
         return Ruby::END_TOKEN
       elsif get_begin(pLine)
         return Ruby::BEGIN_TOKEN
-      elsif @methodRuby.get_method(pLine)
+      elsif @functionBehavior.get_function(pLine)
         return Ruby::DEF_TOKEN
       elsif get_case(pLine)
         return Ruby::CASE_TOKEN
