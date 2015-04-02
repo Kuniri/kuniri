@@ -76,9 +76,9 @@ module Languages
         end
 
         def handling_parameter(pLine)
-          return nil unless pLine =~ /\(.+\)/
+          return nil unless pLine =~ /[\(|\s].+[\)|\s]/ 
 
-          partialParameters = pLine.scan(/\((.+)\)/).join("")
+          partialParameters = pLine.scan(/[\(|\s].+[\)|\s]/).join("")
           partialParameters = remove_unnecessary_information(partialParameters)
 
           if partialParameters =~ /=/
