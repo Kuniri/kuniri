@@ -1,4 +1,5 @@
 require_relative '../abstract_container/structured_and_oo/function_behavior'
+require_relative '../../core/setting'
 
 module Languages
 
@@ -10,7 +11,7 @@ module Languages
       public
 
         def initialize
-          @log = Util::HtmlLogger.new
+          @log = @settings = Kuniri::Setting.create.log
         end
       
 

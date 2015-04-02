@@ -1,6 +1,7 @@
 require_relative '../abstract_container/structured_and_oo/attribute.rb'
 require_relative '../container_data/structured_and_oo/attribute_data.rb'
 require_relative '../../util/html_logger'
+require_relative '../../core/setting'
 
 module Languages
   # @module Ruby Handling Ruby attributes
@@ -12,7 +13,7 @@ module Languages
       public
 
         def initialize
-          @log = Util::HtmlLogger.new
+          @log = @settings = Kuniri::Setting.create.log
           @attributeList = []
         end
 

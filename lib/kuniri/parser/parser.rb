@@ -1,5 +1,6 @@
 require_relative '../language/language_factory'
 require_relative '../util/html_logger'
+require_relative '../util/html_logger'
 
 # Module responsible for keeping the parser handler
 module Parser
@@ -15,7 +16,7 @@ module Parser
         def initialize(pFilesPath, pLanguage = "ruby")
           @filesPath = pFilesPath
           @fileLanguage = []
-          @log = Util::HtmlLogger.new
+          @log = @settings = Kuniri::Setting.create.log
           @factory = Languages::LanguageFactory.new
           @language = pLanguage
         end
