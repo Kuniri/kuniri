@@ -26,11 +26,7 @@ module Kuniri
         @@settings = new unless @@settings
         return @@settings
       end
-
-    private
-
-      @@settings = nil
-
+ 
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
       # @param path [String] Path to ".kuniri" file, it means, the 
@@ -76,10 +72,14 @@ module Kuniri
         return configuration
       end
 
+    private
+
+      @@settings = nil
+
       def default_configuration
         configuration = {"language" => "ruby",
                           "source" => "./",
-                          "output" => "bin/",
+                          "output" => "./",
                           "extract" => "uml",
                           "log" => "html"}
         return configuration
@@ -93,7 +93,7 @@ module Kuniri
           parts = line.split(':').size
           unless (parts == 2)
             # @log.write_log("Syntax error on configuration file.")
-            abort
+            raise Error::ConfigurationFileError
           end
           key = handling_basic_syntax(line, 0)
           value = handling_basic_syntax(line, 1)

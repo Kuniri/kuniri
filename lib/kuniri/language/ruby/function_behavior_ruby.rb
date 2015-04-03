@@ -13,7 +13,6 @@ module Languages
         def initialize
           @log = @settings = Kuniri::Setting.create.log
         end
-      
 
         def get_function(pLine, type = 'globalFunction')
           result = detect_function(pLine)
@@ -44,13 +43,6 @@ module Languages
           return pLine.scan(regexExpression)[0].join("")
         end
 
-        def remove_unnecessary_information(pLine)
-          if pLine =~ /\s+|\(|\)/
-            return pLine.gsub(/\s+|\(|\)/,"")
-          end
-          return pLine
-        end
-
         def handling_default_parameter(pLine)
           return pLine unless pLine =~ /=/
 
@@ -76,22 +68,34 @@ module Languages
 
         end
 
+        def remove_unnecessary_information(pLine)
+          return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
+          return pLine
+        end
+
         def handling_parameter(pLine)
-          return nil unless pLine =~ /[\(|\s].+[\)|\s]/ 
-
-          partialParameters = pLine.scan(/[\(|\s].+[\)|\s]/).join("")
-          partialParameters = remove_unnecessary_information(partialParameters)
-
-          if partialParameters =~ /=/
-            return handling_default_parameter(partialParameters)
+          # Handling with parenthesis and without it.
+          if pLine =~ /\(.+\)/
+            partial = get_parameters(pLine, /\(.+\)/)
+          elsif pLine =~ /def\s+\w+[\s]+(.+)/
+            partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
+          else
+            return nil
           end
 
-          return split_string_by_comma(partialParameters)
+          return handling_default_parameter(partial) if partial =~ /=/
+          return split_string_by_comma(partial)
         end
 
       private
 
         @log
+
+        def get_parameters(pLine, pRegex)
+          partialParameters = pLine.scan(pRegex).join("")
+          partialParameters = remove_unnecessary_information(partialParameters)
+          return partialParameters
+        end
 
         def split_string_by_comma(pString)
           return pString.split(",") if pString =~ /,/
