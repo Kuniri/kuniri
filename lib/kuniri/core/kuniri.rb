@@ -15,13 +15,17 @@ module Kuniri
 
     public
 
-      def initialize
+      def initialize(pPath = ".kuniri")
         @configurationInfo = {}
         @filesPathProject = []
         @parserFiles = []
         @parser = nil
+
         @settings = Setting.create
+        @settings.initializate_settings(pPath)
         @log = @settings.log
+        @configurationInfo = @settings.configurationInfo
+
         @log.write_log("info: Kuniri object successfully created.")
       end
 
@@ -29,11 +33,10 @@ module Kuniri
       # configuration file, find all files in source directory.
       # @param pPath [String] Path of configuration file. Default is the 
       #         current directory
-      def run_analysis(pPath = ".kuniri")
+      def run_analysis()
         @log.write_log("info: Start to run analysis.")
-        @configurationInfo = @settings.configurationInfo
-
         @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
+
         @filesPathProject = get_project_file(@configurationInfo["source"])
         unless @filesPathProject
           puts "Problem on source path: #{@configurationInfo["source"]}"
@@ -49,7 +52,7 @@ module Kuniri
       def start_navigation_mode
         unless @parser
           puts "Please, run parse first :("
-          return
+          return -1
         end
         files = @parser.fileLanguage 
         navigate = Navigate::CodeNavigate.new(files)

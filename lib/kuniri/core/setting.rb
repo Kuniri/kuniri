@@ -17,14 +17,24 @@ module Kuniri
       attr_reader :configurationInfo
       attr_reader :log
 
-      def initialize(pFilePath = ".kuniri")
-        @configurationInfo = read_configuration_file(pFilePath)
-        initialize_object
+      def initialize
+        initializate_settings
       end
 
       def Setting.create
         @@settings = new unless @@settings
         return @@settings
+      end
+
+      def initializate_settings(pFilePath = ".kuniri")
+        begin
+          @configurationInfo = read_configuration_file(pFilePath)
+          initialize_object
+        rescue Error::ConfigurationFileError
+          puts "You have a syntax problem on your configuration file."
+          abort
+        end
+
       end
  
       # Read the configuration file and return a list with the configurations.

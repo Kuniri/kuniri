@@ -1,5 +1,6 @@
 require_relative 'language'
 require_relative 'ruby/ruby_syntax'
+require_relative '../error/language_error'
 
 module Languages
 
@@ -15,19 +16,21 @@ module Languages
       if pType == "ruby"
         return Languages::RubySyntax.new
       elsif pType == "python"
-        #return Languages::PythonSyntax.new
+        raise Error::LanguageError
       elsif pType == "vhdl"
-        #return Languages::VhdlSyntax.new
+        raise Error::LanguageError
       elsif pType == "c"
-        #return Languages::CSyntax.new
+        raise Error::LanguageError
       elsif pType == "cplusplus"
-        #return Languages::CplusPlusSyntax.new
+        raise Error::LanguageError
       elsif pType == "java"
-        #return Languages::JavaSyntax.new
+        raise Error::LanguageError
       elsif pType == "assemblyarm"
-        #return Languages::AssemblyArm.new
+        raise Error::LanguageError
+      elsif pType == "php"
+        raise Error::LanguageError
       else
-        raise
+        raise Error::LanguageError
       end
     end
 

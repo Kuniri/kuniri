@@ -27,7 +27,7 @@ module Languages
       end
 
       def add_global_variable(pVariable)
-        return if not pVariable.is_a?(Languages::GlobalVariableData)
+        return if not pVariable.is_a?(Languages::VariableGlobalData)
 
         @global_variables.push(pVariable)
       end
@@ -35,7 +35,7 @@ module Languages
       def add_extern_requirement(pOutside)
         return if not pOutside.is_a?(Languages::ExternRequirementData)
 
-        @extern_requirement.push(pOutside)
+        @extern_requirements.push(pOutside)
       end
 
       def add_class(pClass)
