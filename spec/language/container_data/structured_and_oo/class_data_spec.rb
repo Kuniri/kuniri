@@ -94,10 +94,20 @@ RSpec.describe Languages::ClassData do
     include_examples "Add method", ["method1", "method2"], message
   end
 
-#  context "When add constructor" do
-#    it "Add constructors" do
-#    end
-#  end
+  context "When add constructor" do
+    it "Add constructors" do
+      constructorAdd = Languages::ConstructorData.new("constructor")
+      @classData.add_constructor(constructorAdd)
+      constructors = @classData.get_constructors
+      expect(constructors[0].name == "constructor").to be true
+    end
+
+    it "Try to add non-constructor" do
+      @classData.add_constructor("xpto")
+        expect(@classData.get_constructors).to match_array([])
+    end
+
+  end
 
   after :each do
     @classData = nil
