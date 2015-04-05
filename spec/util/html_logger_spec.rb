@@ -19,7 +19,7 @@ RSpec.describe Util::HtmlLogger do
           message = line
         end
       end
-      expect(message).to eq ("       <i>HTML log</i>\n")
+      expect(message).to eq ("\t<i>HTML log</i>\n")
     end
 
     after :all do
