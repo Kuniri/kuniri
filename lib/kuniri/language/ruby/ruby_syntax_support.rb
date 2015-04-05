@@ -61,7 +61,7 @@ module Languages
     end
 
     def get_do(pLine)
-      regexExpression = /\s+do\s+|^do\s+|\s+do/
+      regexExpression = /\s+do\s+|^do\s+|\s+do|^do/
       return apply_regex(pLine, regexExpression)
     end
 

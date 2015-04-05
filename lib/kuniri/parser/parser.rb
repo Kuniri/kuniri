@@ -25,7 +25,6 @@ module Parser
           # TODO: handle the case of filePAth is empty
           @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
-            # TODO: Do not create object in this way, use factory.
             language = @factory.get_language(@language)
             language.analyse_source(file)
             @fileLanguage.push(language)
