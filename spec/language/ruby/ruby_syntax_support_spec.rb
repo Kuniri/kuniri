@@ -162,6 +162,95 @@ RSpec.describe Languages::RubySyntaxSupport do
     end
   end
 
+  context "When has end" do
+    it "Match end" do
+      result = @supportTest.has_end?("   end")
+      expect(result).to be true
+    end
+
+    it "No match end" do
+      result = @supportTest.has_end?("  noend")
+      expect(result).to be false
+    end
+  end
+
+  context "Match visibility" do
+    it "Match visibility" do
+      result = @supportTest.get_visibiliy("private")
+      expect(result).to eq("private")
+    end
+
+    it "No match visibility" do
+      result = @supportTest.get_visibiliy("noprivate")
+      expect(result).to eq(nil)
+    end
+  end
+
+  context "Find token inside class." do
+    it "Get attribute" do
+      result= @supportTest.get_token_type("@attr" ,true)
+      expect(result).to eq(Languages::Ruby::ATTRIBUTE_TOKEN)
+    end
+
+    it "Find visibility inside class." do
+      result = @supportTest.get_token_type("private", true)
+      expect(result).to eq(Languages::Ruby::VISIBILITY_TOKEN)
+    end
+  end
+
+  context "Find token inside code." do
+    it "Find class." do
+      result = @supportTest.get_token_type("  class Xpto\n")
+      expect(result).to eq(Languages::Ruby::CLASS_TOKEN)
+    end
+
+    it "Find end token." do
+      result = @supportTest.get_token_type("  end")
+      expect(result).to eq(Languages::Ruby::END_TOKEN)
+    end
+
+    it "Find begin token." do
+      result = @supportTest.get_token_type(" begin")
+      expect(result).to eq(Languages::Ruby::BEGIN_TOKEN)
+    end
+
+    it "Find def token." do
+      result = @supportTest.get_token_type(" def xpto")
+      expect(result).to eq(Languages::Ruby::DEF_TOKEN)
+    end
+
+    it "Find case token." do
+      result = @supportTest.get_token_type("  case")
+      expect(result).to eq(Languages::Ruby::CASE_TOKEN)
+    end
+
+    it "Find do token." do
+      result = @supportTest.get_token_type("  do")
+      expect(result).to eq(Languages::Ruby::DO_TOKEN)
+    end
+
+    it "Find if token." do
+      result = @supportTest.get_token_type("   if 2 > 3")
+      expect(result).to eq(Languages::Ruby::IF_TOKEN)
+    end
+
+    it "Find module token." do
+      result = @supportTest.get_token_type(" module xpto")
+      expect(result).to eq(Languages::Ruby::MODULE_TOKEN)
+    end
+
+    it "Find unless token." do
+      result = @supportTest.get_token_type(" unless 3 > 2")
+      expect(result).to eq(Languages::Ruby::UNLESS_TOKEN)
+    end
+
+    it "Find require token." do
+      result = @supportTest.get_token_type(" require_relative 'xpto'")
+      expect(result).to eq(Languages::Ruby::REQUIRE_TOKEN)
+    end
+
+  end
+
   after :all do
     @supportTest = nil
   end

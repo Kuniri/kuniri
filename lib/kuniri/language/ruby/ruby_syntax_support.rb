@@ -86,7 +86,8 @@ module Languages
     end
 
     def get_visibiliy(pLine)
-      regexExpression = /private|public|protected/
+      regexExpression = 
+              /^\sprivate|^private|^\spublic|^public|^\sprotected|^protected/
       return apply_regex(pLine, regexExpression)
     end
 
