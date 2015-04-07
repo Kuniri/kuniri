@@ -48,6 +48,25 @@ RSpec.describe Languages::Language do
     end
   end
 
+  context "When try to call extern_requirement_extract" do
+    it "Try to call extern_requirement_extract" do
+      expect{@abstractLanguage.extern_requirement_extract}.to raise_error(
+        NotImplementedError)
+    end
+  end
+
+  context "When try to call get_name" do
+    it "Try to call get_name" do
+      expect(@abstractLanguage.get_name).to eq(nil)
+    end
+  end
+
+  context "When try to call get_path" do
+    it "Try to call get_path" do
+      expect(@abstractLanguage.get_path).to eq(nil)
+    end
+  end
+
   after :all do
     @abstractLanguage = nil
   end
