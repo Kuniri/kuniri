@@ -4,16 +4,20 @@ module Navigate
 
     public
 
-      def execute(pInput, pDepth, pLocationStack)
+      def initialize(pCodeNavigation)
+        @codeNavigation = pCodeNavigation
+      end
+
+      def execute(pInput)
         count = 0
 
-        unless pDepth > 0
-          pLocationStack.each do |file|
+        unless @codeNavigation.depth > 0
+          @codeNavigation.locationStack.each do |file|
             puts "[#{count}] #{file.get_name}"
             count = count + 1
           end
         else
-          current = pLocationStack.last
+          current = @codeNavigation.locationStack.last
           pInput = handling_ls_command(pInput)
           if pInput == "-a"
             attributeList = current.attribute_extract

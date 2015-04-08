@@ -4,34 +4,26 @@ module Navigate
 
     public
 
-      def execute(pInput, pDepth, pLocationStack, pLocation)
+      def initialize(pCodeNavigation)
+        @codeNavigation = pCodeNavigation
+      end
+
+      def execute(pInput)
         pInput = handling_cd_input(pInput)
         puts pInput
         # Top level
         if pInput =~ /\.\./
-          if pDepth > 0
-            pLocationStack.pop
-            pDepth = pDepth - 1
-            pLocation = pLocation.gsub(/>.*>/,"")
-            pLocation = pLocation + "> "
-            pLocation.gsub!(/\s+/, " ")
+          if @codeNavigation.depth > 0
+            @codeNavigation.locationStack.pop
+            @codeNavigation.depth = @codeNavigation.depth - 1
+            handling_string(@codeNavigation.locationString)
           end
-          return pDepth, pLocation, pLocationStack
         end
 
         # First level
-        if pDepth == 0
-          current = pLocationStack
-          current.each do |element|
-            if element.is_a?Languages::Language
-              if element.get_name == pInput
-                pLocationStack.push(element)
-                pLocation = pLocation + " #{pInput} > "
-                pDepth = pDepth + 1
-                return pDepth, pLocation, pLocationStack
-              end
-            end
-          end
+        if @codeNavigation.depth == 0
+          first_level(pInput)
+          return
         else
           # TODO: Future implementation, for going more deeply inside the 
           # structures. It means, going inside method or attribute list, ...
@@ -39,7 +31,6 @@ module Navigate
         end
 
         puts ("No such file")
-        return pDepth, pLocation, pLocationStack
       end
 
     private
@@ -51,6 +42,28 @@ module Navigate
           return pInput
         end
         return pInput
+      end
+
+      def handling_string(pLocation)
+        pLocation = pLocation.gsub(/>.*>/,"")
+        pLocation = pLocation + "> "
+        pLocation.gsub!(/\s+/, " ")
+        @codeNavigation.locationString = pLocation
+      end
+
+      def first_level(pInput)
+        current = @codeNavigation.locationStack
+        current.each do |element|
+          if element.is_a?Languages::Language
+            if element.get_name == pInput
+              @codeNavigation.locationStack.push(element)
+              @codeNavigation.locationString = 
+                              @codeNavigation.locationString + " #{pInput} > "
+              @codeNavigation.depth = @codeNavigation.depth + 1
+              return
+            end
+          end
+        end
       end
 
   # Class

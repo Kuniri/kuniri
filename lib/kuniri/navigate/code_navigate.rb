@@ -9,13 +9,17 @@ module Navigate
 
     public
 
+      attr_accessor :locationStack
+      attr_accessor :depth
+      attr_accessor :locationString
+
       # @param [list] Receives a list with object files.
       def initialize(pFiles = [])
-        @location = "File List > "
+        @locationString = "File List > "
         @locationStack = pFiles
         @depth = 0
-        @lsCommand = Navigate::LsCommand.new
-        @cdCommand = Navigate::CdCommand.new
+        @lsCommand = Navigate::LsCommand.new(self)
+        @cdCommand = Navigate::CdCommand.new(self)
       end
 
       # Navigate under the previously parsed code. You can use commands similar
@@ -23,18 +27,17 @@ module Navigate
       def navigate_mode
 
         while true
-          print @location
+          print @locationString
           input = gets
           input = handling_row_input(input)
 
-          if input =~ /exit/
-            exit_command(input)
+          if input =~ /^\s+exit|^exit/
+            puts "Bye bye kuniri =)"
             break
           elsif input =~ /cd/
-            @depth, @location, @locationStack = 
-                @cdCommand.execute(input, @depth, @locationStack, @location)
+            @cdCommand.execute(input)
           elsif input =~ /ls/
-            @lsCommand.execute(input, @depth, @locationStack)
+            @lsCommand.execute(input)
           else
             next
           end
@@ -44,10 +47,6 @@ module Navigate
       end
 
     private
-
-      @location
-      @locationStack
-      @depth
 
       def handling_row_input(pInput)
         pInput.lstrip!
@@ -63,47 +62,6 @@ module Navigate
           return pInput
         end
         return pInput
-      end
-
-      def cd_command(pInput)
-        pInput = handling_cd_input(pInput)
-        # Top level
-        if pInput =~ /\.\./
-          if @depth > 0
-            @locationStack.pop
-            @depth = @depth - 1
-            @location = @location.gsub(/>.*>/,"")
-            @location = @location + "> "
-            @location.gsub!(/\s+/, " ")
-          end
-          return
-        end
-
-        # First level
-        if @depth == 0
-          current = @locationStack
-          current.each do |element|
-            if element.is_a?Languages::Language
-              if element.get_name == pInput
-                @locationStack.push(element)
-                @location = @location + " #{pInput} > "
-                @depth = @depth + 1
-                return
-              end
-            end
-          end
-        else
-          # TODO: Future implementation, for going more deeply inside the 
-          # structures. It means, going inside method or attribute list, ...
-          puts "Sorry dude, you achieve the limit =("
-        end
-
-        puts ("No such file")
-        return
-      end
-
-      def exit_command(pInput)
-        puts "Bye bye kuniri =)"
       end
 
   # Class
