@@ -14,7 +14,7 @@ RSpec.describe Util::Logger do
   end 
 
   after :all do
-    File.delete("log.html")
+    @abstractLogger = nil
   end
 
 end
