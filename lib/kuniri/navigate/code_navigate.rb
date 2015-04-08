@@ -55,15 +55,6 @@ module Navigate
         return pInput
       end
 
-      def handling_cd_input(pInput)
-        if pInput =~ /cd(.*)/
-          prepare = pInput.scan(/cd(.*)/)
-          pInput = prepare.join("").gsub(/\s+/, "")
-          return pInput
-        end
-        return pInput
-      end
-
   # Class
   end
 
