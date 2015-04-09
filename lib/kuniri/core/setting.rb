@@ -8,7 +8,7 @@ require_relative '../error/configuration_file_error'
 
 module Kuniri
 
-  # Class Setting that read and handle .kuniri file
+  # Class Setting that read and handling .kuniri file.
   class Setting
 
     public

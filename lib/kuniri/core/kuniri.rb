@@ -7,14 +7,18 @@ require_relative 'configuration/monitor_available'
 require_relative 'configuration/log_available'
 require_relative 'setting'
 
-# Kuniri is the main class of the system, responsible for handling: monitoring 
-# style, language type, and Settings.
+# Kuniri module connect all the elements and use it in the proper sequence.
 module Kuniri
 
+  # @class Kuniri
+  # @brief Kuniri class have the reference for all files and settings.
+  #     Basically this class launch the application.
   class Kuniri
 
     public
 
+      # @param pPath Receives the path of configuration file. If any element
+      #         is given, it tries to find in the current folder.
       def initialize(pPath = ".kuniri")
         @configurationInfo = {}
         @filesPathProject = []
@@ -49,6 +53,9 @@ module Kuniri
         @parser.start_parser()
       end
 
+      # If the parser was already ran, entry in the navigation mode. This mode
+      # is similar to bash terminal, however instead of see the folder
+      # directory you can see the code.
       def start_navigation_mode
         unless @parser
           puts "Please, run parse first :("
@@ -61,12 +68,14 @@ module Kuniri
 
     private
 
-      @configurationInfo
-      @filesProject
-      @parser
-      @parserFiles
-      @log
+      @configurationInfo # !@attribute Hash with configuration description
+      @filesProject      # !@attribute Array with object reference of all files
+      @parser            # !@attribute Execute the parser based on settings.
+      @parserFiles       # !@attribute Final output from parser.
+      @log               # !@attribute Log reference.
 
+      # !@param pPath Relative path of the project.
+      # !@param pLanguage Language extension for make the parser.
       def get_project_file(pPath="./", pLanguage="**.rb")
         return nil unless File.exists?(pPath)
 
