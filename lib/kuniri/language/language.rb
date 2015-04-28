@@ -71,6 +71,15 @@ module Languages
 
       @languageType
       @source
+      @attributeState
+      @classState
+      @constructorState
+      @functionState
+      @idleState
+      @includeState
+      @methodState
+      @moduleState
+      @variableState
 
   # End class
   end
