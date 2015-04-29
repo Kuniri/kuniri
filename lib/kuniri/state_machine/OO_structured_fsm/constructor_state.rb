@@ -1,10 +1,10 @@
-require_relative '../language/language'
+require_relative 'oo_structured_state.rb'
 
-module OOStruturedState
+module StateMachine
 
   module OOStructuredFSM
 
-    class ConstructorState < OOStruturedState
+    class ConstructorState < OOStructuredState
 
       @language
 
@@ -15,9 +15,12 @@ module OOStruturedState
       def constructor_capture
         @language.set_state(@language.get_class_state)
       end
-      
+    
+    # End class
     end
 
+  # End OOStructuredFSM
   end
 
+# End StateMachine
 end

@@ -5,7 +5,7 @@ module StateMachine
   module OOStructuredFSM
 
     # @abstract State machine for oriented object and structured paradigm.
-    class OOStruturedState
+    class OOStructuredState
 
       # Handling class state, i.e, this state is enable when any class is match
       def class_capture
@@ -53,8 +53,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+    # End class
     end
 
+  # End OOStructuredState
   end
 
+# End StateMachine
 end

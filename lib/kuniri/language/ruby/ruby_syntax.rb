@@ -11,6 +11,7 @@ module Languages
     public
 
       def initialize
+        super.initialize
         clear_data
       end
 

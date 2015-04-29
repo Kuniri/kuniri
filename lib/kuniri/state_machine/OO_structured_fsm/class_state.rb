@@ -1,10 +1,10 @@
-require_relative '../language/language'
+require_relative 'oo_structured_state.rb'
 
-module OOStruturedState
+module StateMachine
 
   module OOStructuredFSM
 
-    class ClassState < OOStruturedState
+    class ClassState < OOStructuredState
 
       @language
 
