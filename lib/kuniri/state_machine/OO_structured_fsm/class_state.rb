@@ -13,27 +13,30 @@ module StateMachine
       end
 
       def method_capture
-        @language.set_state(@language.get_method_state)
+        @language.set_state(@language.methodState)
       end
 
       def constructor_capture
-        @language.set_state(@language.get_constructor_state)
+        @language.set_state(@language.constructorState)
       end
 
       def attribute_capture
-        @language.set_state(@language.get_attribute_state)
+        @language.set_state(@language.attributeState)
       end
 
       def module_capture
-        @language.set_state(@language.get_module_state)
+        @language.set_state(@language.moduleState)
       end
 
-      def idle
-        @language.set_state(@language.get_idle_state)
+      def idle_capture
+        @language.set_state(@language.idleState)
       end 
 
+    # End class
     end
 
+  # End OOStructuredFSM
   end
 
+# 
 end

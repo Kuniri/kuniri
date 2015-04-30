@@ -31,21 +31,27 @@ module Languages
       attr_reader :moduleState
       attr_reader :variableState
 
-      def initialize
+      # @param pReference Reference of child class.
+      # This method initialize all the needed states of state machine.
+      # @note: Never forget to call this method before start parser.
+      def initialize_state_machine(pReference)
         @attributeState =
-          StateMachine::OOStructuredFSM::AttributeState.new(self)
+          StateMachine::OOStructuredFSM::AttributeState.new(pReference)
         @classState =
-          StateMachine::OOStructuredFSM::ClassState.new(self)
+          StateMachine::OOStructuredFSM::ClassState.new(pReference)
         @constructorState =
-          StateMachine::OOStructuredFSM::ConstructorState.new(self)
+          StateMachine::OOStructuredFSM::ConstructorState.new(pReference)
         @functionState =
-          StateMachine::OOStructuredFSM::FunctionState.new(self)
-        @idleState = StateMachine::OOStructuredFSM::IdleState.new(self)
-        @includeState = StateMachine::OOStructuredFSM::IncludeState.new(self)
-        @methodState = StateMachine::OOStructuredFSM::MethodState.new(self)
-        @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
+          StateMachine::OOStructuredFSM::FunctionState.new(pReference)
+        @idleState = StateMachine::OOStructuredFSM::IdleState.new(pReference)
+        @includeState =
+          StateMachine::OOStructuredFSM::IncludeState.new(pReference)
+        @methodState =
+          StateMachine::OOStructuredFSM::MethodState.new(pReference)
+        @moduleState =
+          StateMachine::OOStructuredFSM::ModuleState.new(pReference)
         @variableState =
-          StateMachine::OOStructuredFSM::VariableState.new(self)
+          StateMachine::OOStructuredFSM::VariableState.new(pReference)
         @state = @idleState
       end
 
@@ -149,8 +155,9 @@ module Languages
       end
 
       # Idle state, waiting for action! =D
-      def idle
-        @state.idle
+      def idle_capture
+        # Nothing?
+        @state = @idle
       end
 
       def set_state (pState)

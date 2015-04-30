@@ -13,7 +13,7 @@ module StateMachine
         @language = pLanguage
       end
 
-      def idle
+      def idle_capture
         @language.set_state(@language.idleState)
       end
 

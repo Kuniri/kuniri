@@ -49,7 +49,7 @@ module StateMachine
       end
 
       # Idle state, waiting for action! =D
-      def idle
+      def idle_capture
         raise NotImplementedError
       end
 
