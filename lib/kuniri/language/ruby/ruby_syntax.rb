@@ -11,7 +11,7 @@ module Languages
     public
 
       def initialize
-        initialize_state_machine(self)
+        super
         clear_data
       end
 

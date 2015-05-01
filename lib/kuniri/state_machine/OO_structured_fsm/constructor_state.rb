@@ -12,8 +12,8 @@ module StateMachine
         @language = pLanguage
       end
 
-      def constructor_capture
-        @language.set_state(@language.get_class_state)
+      def class_capture
+        @language.set_state(@language.classState)
       end
     
     # End class

@@ -34,24 +34,18 @@ module Languages
       # @param pReference Reference of child class.
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.
-      def initialize_state_machine(pReference)
+      def initialize
         @attributeState =
-          StateMachine::OOStructuredFSM::AttributeState.new(pReference)
-        @classState =
-          StateMachine::OOStructuredFSM::ClassState.new(pReference)
+          StateMachine::OOStructuredFSM::AttributeState.new(self)
+        @classState = StateMachine::OOStructuredFSM::ClassState.new(self)
         @constructorState =
-          StateMachine::OOStructuredFSM::ConstructorState.new(pReference)
-        @functionState =
-          StateMachine::OOStructuredFSM::FunctionState.new(pReference)
-        @idleState = StateMachine::OOStructuredFSM::IdleState.new(pReference)
-        @includeState =
-          StateMachine::OOStructuredFSM::IncludeState.new(pReference)
-        @methodState =
-          StateMachine::OOStructuredFSM::MethodState.new(pReference)
-        @moduleState =
-          StateMachine::OOStructuredFSM::ModuleState.new(pReference)
-        @variableState =
-          StateMachine::OOStructuredFSM::VariableState.new(pReference)
+          StateMachine::OOStructuredFSM::ConstructorState.new(self)
+        @functionState = StateMachine::OOStructuredFSM::FunctionState.new(self)
+        @idleState = StateMachine::OOStructuredFSM::IdleState.new(self)
+        @includeState = StateMachine::OOStructuredFSM::IncludeState.new(self)
+        @methodState = StateMachine::OOStructuredFSM::MethodState.new(self)
+        @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
+        @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
         @state = @idleState
       end
 
@@ -156,8 +150,7 @@ module Languages
 
       # Idle state, waiting for action! =D
       def idle_capture
-        # Nothing?
-        @state = @idle
+        @state.idle_capture
       end
 
       def set_state (pState)
