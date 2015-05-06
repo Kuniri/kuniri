@@ -113,6 +113,38 @@ module Languages
         end
       end
 
+      def handle_state(pLine)
+        # Special token for class
+        if @attributeRuby.get_attribute(pLine)
+          @state.attribute_capture
+        elsif get_visibiliy(pLine)
+            # capture visibility
+        elsif @classRuby.get_class(pLine)
+          @state.class_capture
+        elsif has_end?(pLine)
+            # return Ruby::END_TOKEN
+            #...
+        elsif get_begin(pLine)
+          return Ruby::BEGIN_TOKEN
+        elsif @functionBehavior.get_function(pLine)
+          return Ruby::DEF_TOKEN
+        elsif get_case(pLine)
+          return Ruby::CASE_TOKEN
+        elsif get_do(pLine)
+          return Ruby::DO_TOKEN
+        elsif get_if(pLine)
+          return Ruby::IF_TOKEN
+        elsif get_module(pLine)
+          @state.module_capture
+        elsif get_unless(pLine)
+          return Ruby::UNLESS_TOKEN
+        elsif @externRequirement.get_requirement(pLine)
+          @state.include_capture
+        #elsif ...
+        end
+      end
+
+
       def increase_token
         @token = @token + 1
       end
