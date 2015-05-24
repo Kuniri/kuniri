@@ -15,8 +15,13 @@ module Languages
           return nil unless detectExpression
 
           detectExpression = remove_unnecessary_information(detectExpression)
+          # @requirement = detectExpression
           return detectExpression
         end
+
+        #def get_requirement
+        #  return detectExpression
+        #end
 
       protected
 

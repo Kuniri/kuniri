@@ -7,6 +7,10 @@ module StateMachine
     # @abstract State machine for oriented object and structured paradigm.
     class OOStructuredState
 
+      def handle_line(pLine)
+        raise NotImplementedError
+      end
+
       # Handling class state, i.e, this state is enable when any class is match
       def class_capture
         raise NotImplementedError

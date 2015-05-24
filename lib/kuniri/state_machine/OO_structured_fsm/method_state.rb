@@ -12,6 +12,12 @@ module StateMachine
         @language = pLanguage
       end
 
+      def handle_line(pLine)
+        if @language.classHandler.get_class(pLine)
+          class_capture
+        end
+      end
+
       def class_capture
         @language.set_state(@language.classState)
       end

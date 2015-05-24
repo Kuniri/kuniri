@@ -31,6 +31,12 @@ module Languages
       attr_reader :moduleState
       attr_reader :variableState
 
+      attr_reader :externRequirementHandler
+      attr_reader :variableHandler
+      attr_reader :functionHandler
+      attr_reader :moduleHandler
+      attr_reader :classHandler
+
       # @param pReference Reference of child class.
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.
@@ -105,6 +111,11 @@ module Languages
 
       def get_path
         return @path
+      end
+
+      # Handling line
+      def handle_line(pLine)
+        @state.handle_line
       end
 
       # Handling class state, i.e, this state is enable when any class is match

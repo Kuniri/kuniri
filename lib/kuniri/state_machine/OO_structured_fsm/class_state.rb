@@ -12,6 +12,20 @@ module StateMachine
         @language = pLanguage
       end
 
+      def handle_line(pLine)
+        if @language.methodHandler.get_method(pLine)
+          method_capture
+        elsif @language.constructorHandler.get_constructor(pLine)
+          constructor_capture
+        elsif @language.attributeHandler.get_attribute(pLine)
+          attribute_capture
+        elsif @language.moduleHandler.get_module(pLine)
+          module_capture
+        elsif @language.idleHandler.get_idle(pLine)
+          idle_capture
+        end
+      end
+
       def method_capture
         @language.set_state(@language.methodState)
       end

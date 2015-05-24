@@ -12,6 +12,11 @@ module Languages
 
       def initialize
         super
+        @externRequirementHandler = Languages::ExternRequirementRuby.new
+        #@variableHandler
+        #@functionHandler
+        #@moduleHandler
+        @classHandler = Languages::ClassRuby.new
         clear_data
       end
 
@@ -103,47 +108,10 @@ module Languages
       def analyse_first_step(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
-          tokenType = @rubySyntaxSupport.get_token_type(line)
-          if tokenType == Languages::Ruby::CLASS_TOKEN || @class_token > 0
-            tokenType = @rubySyntaxSupport.get_token_type(line, true)
-            handle_class(tokenType, line)
-          else
-            handle_nonclass(tokenType, line)
-          end
+          # Special token for class
+          @state.handle_line(line)
         end
       end
-
-      def handle_state(pLine)
-        # Special token for class
-        if @attributeRuby.get_attribute(pLine)
-          @state.attribute_capture
-        elsif get_visibiliy(pLine)
-            # capture visibility
-        elsif @classRuby.get_class(pLine)
-          @state.class_capture
-        elsif has_end?(pLine)
-            # return Ruby::END_TOKEN
-            #...
-        elsif get_begin(pLine)
-          return Ruby::BEGIN_TOKEN
-        elsif @functionBehavior.get_function(pLine)
-          return Ruby::DEF_TOKEN
-        elsif get_case(pLine)
-          return Ruby::CASE_TOKEN
-        elsif get_do(pLine)
-          return Ruby::DO_TOKEN
-        elsif get_if(pLine)
-          return Ruby::IF_TOKEN
-        elsif get_module(pLine)
-          @state.module_capture
-        elsif get_unless(pLine)
-          return Ruby::UNLESS_TOKEN
-        elsif @externRequirement.get_requirement(pLine)
-          @state.include_capture
-        #elsif ...
-        end
-      end
-
 
       def increase_token
         @token = @token + 1
