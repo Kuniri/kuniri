@@ -2,6 +2,7 @@ require_relative 'ruby_syntax_support'
 require_relative 'token_ruby'
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
+require_relative 'extern_requirement_ruby'
 
 module Languages
 
@@ -12,11 +13,11 @@ module Languages
 
       def initialize
         super
-        @externRequirementHandler = Languages::ExternRequirementRuby.new
+        @externRequirementHandler = Languages::Ruby::ExternRequirementRuby.new
         #@variableHandler
         #@functionHandler
         #@moduleHandler
-        @classHandler = Languages::ClassRuby.new
+        @classHandler = Languages::Ruby::ClassRuby.new
         clear_data
       end
 
@@ -110,6 +111,7 @@ module Languages
         @source.each do |line|
           # Special token for class
           @state.handle_line(line)
+          @state.execute
         end
       end
 

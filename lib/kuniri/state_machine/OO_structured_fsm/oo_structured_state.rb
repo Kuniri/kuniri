@@ -57,6 +57,10 @@ module StateMachine
         raise NotImplementedError
       end
 
+      def execute(pLine)
+        raise NotImplementedError
+      end
+
     # End class
     end
 

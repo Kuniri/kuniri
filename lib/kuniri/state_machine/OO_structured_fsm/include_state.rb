@@ -13,17 +13,23 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        # TODO: REMOVE: PRECISO PENSAR MELHOR NESTES CASOS QUE O ESTADO É 
-        # PASSAGEIRO.
-        if @language.idleHandler.get_idle(pLine)
-          idle_capture
+        idle_capture
+        # TODO: HANDLING MULTIPLE LINE COMMENT.
+        #if @language.idleHandler.get_idle(pLine)
+        #  idle_capture
         #else
-        # TODO: CONTINUA NO ESTDO.
-        end
+        # TODO: SAME STATE.
+        #end
       end
 
       def idle_capture
         @language.set_state(@language.idleState)
+      end
+
+      def execute(pLine)
+        requirement = @language.externRequirementHandler.get_requirement(pLine)
+        # handle_line(pLine)
+        # TODO: YOU HAVE TO HANDLING THE CASE OF REQUIRE WITH MULTIPLE LINES.
       end
 
     # End class

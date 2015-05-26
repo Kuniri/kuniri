@@ -37,6 +37,8 @@ module Languages
       attr_reader :moduleHandler
       attr_reader :classHandler
 
+      attr_accessor :fileElements
+
       # @param pReference Reference of child class.
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.

@@ -16,7 +16,9 @@ module Languages
 
           detectExpression = remove_unnecessary_information(detectExpression)
           # @requirement = detectExpression
-          return detectExpression
+          externReference = ExternRequirementData.new
+          externReference.name = detectExpression
+          return externReference
         end
 
         #def get_requirement
