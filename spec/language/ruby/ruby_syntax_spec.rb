@@ -3,107 +3,75 @@ require_relative '../../spec_helper'
 RSpec.describe Languages::RubySyntax do
 
   before :each do
-    # It must to be changed!!!
-    file = File.open("spec/language/ruby/ruby_support_test.rb", "rb")
-    @rubySyntax = Languages::RubySyntax.new
-    @rubySyntax.set_source(file.read)
-
-    file = File.open("spec/language/ruby/rubyBasicSyntaxTest.txt", "rb")
-    @rubySyntax2 = Languages::RubySyntax.new
-    @rubySyntax2.set_source(file.read)
+    @syntax = Languages::RubySyntax.new
   end
 
-  context "#comment_extract" do
-    it "Total of comments" do
-      totalComments = @rubySyntax.comment_extract.size
-      expect(@rubySyntax.comment_extract.size).to eq(7)
+  context "Extern requirement detections." do
+
+    it "Correct state transition (require_relative)." do
+      path = "spec/samples/rubySyntaxParts/extern/requireRelative.rb"
+
+      expect(@syntax.state)
+          .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.state)
+          .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
 
-    it "Comment systax: Correctness" do
-      first = "This file configures a basic test of"
-      first += " ruby syntax. It is no intend to work."
-      comment = @rubySyntax2.comment_extract
-      expect(comment.shift).to eq(first)
+    it "Correct data capture (require_relative)." do
+      path = "spec/samples/rubySyntaxParts/extern/requireRelative.rb"
 
-      second = " The basic ideia is verify if kuniri extract the necessary "
-      second += "code in the "
-      expect(comment.shift).to eq(second)
-
-      third = "correct way."
-      expect(comment.shift).to eq(third)
-
-      fourth = "Test xpto class"
-      expect(comment.shift).to eq(fourth)
-
-      fifth = "something"
-      expect(comment.shift).to eq(fifth)
-
-      sixth = " construct"
-      expect(comment.shift).to eq(sixth)
-
-      seventh = "Code..."
-      expect(comment.shift).to eq(seventh)
-
-      eighth = "... code ..."
-      expect(comment.shift).to eq(eighth)
-
-      nine = "function 3"
-      expect(comment.shift).to eq(nine)
-
-      fourth = "1: Right!\n"
-      expect(comment.shift).to eq(fourth)
-
-      sixth = "2: Right!\n"
-      expect(comment.shift).to eq(sixth)
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].extern_requirements[0].name).to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].name).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[2].name)
+        .to eq ("three")
+      expect(@syntax.fileElements[0].extern_requirements[3].name)
+        .to eq ("four")
+      expect(@syntax.fileElements[0].extern_requirements[4].name)
+        .to eq ("five")
+      expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements.size).to eq (9)
     end
 
-    it "Verify the correctness of the comment extracted" do
-      firstCommentString = " RubySupportTest is used only for execute basic"
-      firstCommentString += " tests for check ruby syntax."
-      comments = @rubySyntax.comment_extract
-      expect(comments[1]).to eq(firstCommentString)
+    it "Correct state transition (require)." do
+      path = "spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb"
+
+      expect(@syntax.state)
+          .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+          .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
 
-    it "Multiple line comment" do
-      multipleLineString =  "get_something is a method created for test the"
-      multipleLineString += " something...\n"
-      multipleLineString += " The important thing here, is use of multiple"
-      multipleLineString += " line.\n"
-      comments = @rubySyntax.comment_extract
-      expect(comments[6]).to eq(multipleLineString)
+    it "Correct data capture (require)." do
+      path = "spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].extern_requirements[0].name).to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].name).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[2].name)
+        .to eq ("three")
+      expect(@syntax.fileElements[0].extern_requirements[3].name)
+        .to eq ("four")
+      expect(@syntax.fileElements[0].extern_requirements[4].name)
+        .to eq ("five")
+      expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[6].name)
+        .to eq ("seven")
+      expect(@syntax.fileElements[0].extern_requirements[7].name)
+        .to eq ("eight")
+      expect(@syntax.fileElements[0].extern_requirements[8].name)
+        .to eq ("nine")
+      expect(@syntax.fileElements[0].extern_requirements.size).to eq (9)
     end
+
   end
-
-#  context "#class_extract" do
-#    it "Class name" do
-#      classList = @rubySyntax.class_extract
-#      expect(classList.name).to eq("RubySupportTest")
-#
-#      classList2 = @rubySyntax2.class_extract
-#      expect(classList2.name).to eq("Class1GetRight")
-#      expect(classList2.name).to eq("Class2GetRight")
-#      expect(classList2.name).to eq("Class3GetRight")
-#      expect(classList2.name).to eq("Class4MethodTest")
-#    end
-#  end
-
-#  context "#method_extract" do
-#    it "Method name" do
-#      methodName = @rubySyntax.method_extract
-#      first = methodName.shift
-#      expect(first.name).to eq("initialize")
-#
-#      methodName2 = @rubySyntax.method_extract
-#      expect(methodName2.shift.name).to eq("firstMethodRight")
-#      methodParameter = methodName2.shift.name
-#      expect(methodParameter.name).to eq("secondMethodRight")
-#      expect(methodParameter.parameter[0]).to eq("one")
-#      expect(methodParameter.parameter[1]).to eq("two")
-#      expect(methodParameter.parameter[2]).to eq("three")
-#    end
-#  end
 
   after :each do
-    @sourceLines = nil
+    @syntax = nil
   end
+
 end

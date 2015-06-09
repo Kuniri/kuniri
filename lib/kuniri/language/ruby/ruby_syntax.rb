@@ -2,6 +2,7 @@ require_relative 'ruby_syntax_support'
 require_relative 'token_ruby'
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
+require_relative '../container_data/structured_and_oo/file_element'
 require_relative 'extern_requirement_ruby'
 
 module Languages
@@ -110,6 +111,7 @@ module Languages
         fileElement = Languages::FileElement.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
+          next if line.gsub(/\s+/,"").size == 0
           # Special token for class
           @state.handle_line(line)
           fileElement = @state.execute(fileElement, line)
