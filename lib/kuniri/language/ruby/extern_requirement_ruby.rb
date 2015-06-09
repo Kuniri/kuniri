@@ -16,8 +16,8 @@ module Languages
 
           detectExpression = remove_unnecessary_information(detectExpression)
           # @requirement = detectExpression
-          externReference = ExternRequirementData.new
-          externReference.name = detectExpression
+          name = File.basename(detectExpression, ".*")
+          externReference = ExternRequirementData.new(name)
           return externReference
         end
 

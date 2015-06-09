@@ -30,8 +30,6 @@ module StateMachine
       end
 
       def include_capture
-        # TODO: REMOVER: QUANDO ENTRAR NESTE MÉTODO ELE DEVE SALVAR O INCLUDE
-        # FEITO.
         @language.set_state(@language.includeState)
       end
 

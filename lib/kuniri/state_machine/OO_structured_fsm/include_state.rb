@@ -26,10 +26,12 @@ module StateMachine
         @language.set_state(@language.idleState)
       end
 
-      def execute(pLine)
+      def execute(pElementFile, pLine)
         requirement = @language.externRequirementHandler.get_requirement(pLine)
-        # handle_line(pLine)
-        # TODO: YOU HAVE TO HANDLING THE CASE OF REQUIRE WITH MULTIPLE LINES.
+        pElementFile.add_extern_requirement(requirement)
+        # TODO: You have to handler the return state.
+        idle_capture
+        return pElementFile
       end
 
     # End class

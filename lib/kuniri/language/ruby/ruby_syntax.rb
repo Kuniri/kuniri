@@ -107,12 +107,14 @@ module Languages
       @externRequirements
 
       def analyse_first_step(pPath)
+        fileElement = Languages::FileElement.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           # Special token for class
           @state.handle_line(line)
-          @state.execute
+          fileElement = @state.execute(fileElement, line)
         end
+        @fileElements.push(fileElement)
       end
 
       def increase_token

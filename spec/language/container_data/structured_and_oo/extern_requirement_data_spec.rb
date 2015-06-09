@@ -6,6 +6,12 @@ RSpec.describe Languages::ExternRequirementData do
     @externRequirement = Languages::ExternRequirementData.new("xpto")
   end
 
+  context "Using constructor to create data container." do
+    it "Create container" do
+      expect(@externRequirement.name).to eq("xpto")
+    end
+  end
+
   context "When set path" do
     it "Set path." do
       @externRequirement.setPath("xpto")

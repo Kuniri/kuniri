@@ -55,6 +55,8 @@ module Languages
         @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
         @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
         @state = @idleState
+
+        @fileElements = []
       end
 
       # Set the source code to by analysed.
