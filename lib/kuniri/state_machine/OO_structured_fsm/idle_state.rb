@@ -16,9 +16,9 @@ module StateMachine
 
         if @language.externRequirementHandler.get_requirement(pLine)
           include_capture
+        elsif @language.variableHandler.get_variable(pLine)
+          variable_capture
         # TODO: Uncomment the lines below, after finish to implement it.
-        #elsif @language.variableHandler.get_variable(pLine)
-        #  variable_capture
         #elsif @language.functionHandler.get_function(pLine)
         #  function_capture
         #elsif @language.moduleHandler.get_module(pLine)

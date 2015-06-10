@@ -15,7 +15,7 @@ module Languages
       def initialize
         super
         @externRequirementHandler = Languages::Ruby::ExternRequirementRuby.new
-        #@variableHandler
+        #@variableHandler = Languages::Ruby::VariableRuby.new
         #@functionHandler
         #@moduleHandler
         @classHandler = Languages::Ruby::ClassRuby.new

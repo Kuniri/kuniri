@@ -14,9 +14,7 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.idleHandler.get_idle(pLine)
-          idle_capture
-        end
+        idle_capture
       end
 
       def idle_capture
