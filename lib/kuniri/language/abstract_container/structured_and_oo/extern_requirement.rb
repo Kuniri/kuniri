@@ -9,7 +9,7 @@ module Languages
     public
 
       # @param pLine Line to analyse.
-      # @return Return the requirement name.
+      # @return Return the requirement data object, or nil.
       # Get requirement name
       def get_requirement(pLine)
         raise NotImplementedError
