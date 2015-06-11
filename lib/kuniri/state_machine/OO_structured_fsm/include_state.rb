@@ -28,7 +28,9 @@ module StateMachine
 
       def execute(pElementFile, pLine)
         requirement = @language.externRequirementHandler.get_requirement(pLine)
-        pElementFile.add_extern_requirement(requirement)
+        if requirement 
+         pElementFile.add_extern_requirement(requirement)
+        end
         # TODO: You have to handler the return state.
         idle_capture
         return pElementFile

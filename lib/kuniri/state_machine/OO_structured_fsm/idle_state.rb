@@ -47,8 +47,12 @@ module StateMachine
       end
 
       def class_capture
-        # @fileElement.add(@language.classHandler.get_class)
         @language.set_state(@language.classState)
+      end
+
+      def execute(pElementFile, pLine)
+        # Having nothing to do
+        return pElementFile
       end
 
     # End class

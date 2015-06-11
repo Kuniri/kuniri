@@ -21,14 +21,12 @@ module Languages
           return externReference
         end
 
-        #def get_requirement
-        #  return detectExpression
-        #end
-
       protected
 
         def detect_extern_requirement(pLine)
           regexExpression = /(?:require_relative|require)\s*['|"](.*)['|"]/
+          # TODO: CREATE HERE SOME CHECK OF DOUBLE QUOTES, FOR AVOID: "...'
+          # return nil if pLine.count(""") != 2 or pLine.count("'") != 2
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
