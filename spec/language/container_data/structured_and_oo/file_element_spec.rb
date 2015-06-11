@@ -6,8 +6,8 @@ RSpec.describe Languages::FileElement do
     @fileElement = Languages::FileElement.new ("test")
     @globalFunction1 = Languages::FunctionData.new("xpto")
     @globalFunction2 = Languages::FunctionData.new("second")
-    @globalVariable1 = Languages::VariableGlobalData.new("var1")
-    @globalVariable2 = Languages::VariableGlobalData.new("var2")
+    @globalVariable1 = [Languages::VariableGlobalData.new("var1")]
+    @globalVariable2 = [Languages::VariableGlobalData.new("var2")]
     @externFile1 = Languages::ExternRequirementData.new ("/dir/1")
     @externFile2 = Languages::ExternRequirementData.new ("/dir/2")
     @class1 = Languages::ClassData.new
@@ -55,7 +55,7 @@ RSpec.describe Languages::FileElement do
     end
 
     it "Add non global variable." do
-      @fileElement.add_global_variable("xpto")
+      @fileElement.add_global_variable(["xpto"])
       expect(@fileElement.global_variables).to match_array([])
     end
 
