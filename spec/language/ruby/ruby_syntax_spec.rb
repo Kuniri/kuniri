@@ -33,7 +33,7 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].extern_requirements[4].name)
         .to eq ("five")
       expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
-      expect(@syntax.fileElements[0].extern_requirements.size).to eq (9)
+      expect(@syntax.fileElements[0].extern_requirements.size).to eq (6)
     end
 
     it "Correct state transition (require)." do

@@ -4,6 +4,7 @@ require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
 require_relative '../container_data/structured_and_oo/file_element'
 require_relative 'extern_requirement_ruby'
+require_relative 'variable_global_ruby'
 
 module Languages
 
@@ -15,7 +16,7 @@ module Languages
       def initialize
         super
         @externRequirementHandler = Languages::Ruby::ExternRequirementRuby.new
-        #@variableHandler = Languages::Ruby::VariableRuby.new
+        @variableHandler = Languages::Ruby::VariableGlobalRuby.new
         #@functionHandler
         #@moduleHandler
         @classHandler = Languages::Ruby::ClassRuby.new

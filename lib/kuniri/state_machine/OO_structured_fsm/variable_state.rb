@@ -21,6 +21,16 @@ module StateMachine
         @language.set_state(@language.idleState)
       end
 
+      def execute(pElementFile, pLine)
+        variableList = @language.variableHandler.get_variable(pLine)
+        if variableList
+          pElementFile.add_global_variable(variableList)
+        end
+        # TODO: You have to handler the return state.
+        idle_capture
+        return pElementFile
+      end
+
     # End class
     end
 
