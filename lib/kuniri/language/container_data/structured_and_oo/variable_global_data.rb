@@ -6,14 +6,13 @@ module Languages
 
     public
 
+      attr_accessor :value
+      attr_accessor :type
+
       def initialize(pName)
         @name = pName
         @visibility = "global"
       end
-
-    private
-
-      @type
 
   # Class
   end

@@ -70,6 +70,31 @@ RSpec.describe Languages::RubySyntax do
 
   end
 
+  context "Global variable declarations." do
+    it "Correct state transition" do
+      path = "spec/samples/rubySyntaxParts/variable/simpleVariable.rb"
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (global variable)." do
+      path = "spec/samples/rubySyntaxParts/variable/simpleVariable.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].global_variables[0].name).to eq("one")
+      expect(@syntax.fileElements[0].global_variables[1].name).to eq("two")
+      expect(@syntax.fileElements[0].global_variables[2].name).to eq("three")
+      expect(@syntax.fileElements[0].global_variables[3].name).to eq("four")
+      expect(@syntax.fileElements[0].global_variables[4].name).to eq("five")
+      expect(@syntax.fileElements[0].global_variables[5].name).to eq("six")
+      expect(@syntax.fileElements[0].global_variables[6].name).to eq("seven")
+      expect(@syntax.fileElements[0].global_variables[7].name).to eq("eight")
+    end
+  end
+
   after :each do
     @syntax = nil
   end
