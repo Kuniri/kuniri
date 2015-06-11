@@ -32,6 +32,22 @@ module Languages
           raise NotImplementedError
         end
 
+        def prepare_final_string(line)
+          raise NotImplementedError
+        end
+
+        def handle_multiple_declaration_with_comma(pString)
+          raise NotImplementedError
+        end
+
+        def handle_multiple_declaration_with_equal(pString)
+          raise NotImplementedError
+        end
+
+        def handle_line_declaration(pString)
+          raise NotImplementedError
+        end
+
   # class
   end
 

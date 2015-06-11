@@ -10,38 +10,38 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
     it "Capture simple variable." do
       variable = @variableRuby.get_variable("one = 1")
-      expect(variable.name).to eq("one")
-      expect(variable.value).to eq("1")
+      expect(variable[0].name).to eq("one")
+      #expect(variable[0].value).to eq("1")
 
       variable = @variableRuby.get_variable("  two = 2")
-      expect(variable.name).to eq("two")
-      expect(variable.value).to eq("2")
+      expect(variable[0].name).to eq("two")
+      #expect(variable[0].value).to eq("2")
 
       variable = @variableRuby.get_variable("three = 'three_value'")
-      expect(variable.name).to eq("three")
-      expect(variable.value).to eq("three_value")
+      expect(variable[0].name).to eq("three")
+      #expect(variable[0].value).to eq("three_value")
 
       variable = @variableRuby.get_variable("four = []")
-      expect(variable.name).to eq("four")
-      expect(variable.value).to eq("[]")
+      expect(variable[0].name).to eq("four")
+      #expect(variable[0].value).to eq("[]")
     end
 
     it "Capture simple variable with one @" do
       variable = @variableRuby.get_variable("@one")
-      expect(variable.name).to eq("one")
+      expect(variable[0].name).to eq("one")
 
       variable = @variableRuby.get_variable("@four = 'four_value'")
-      expect(variable.name).to eq("four")
-      expect(variable.value).to eq("four_value")
+      expect(variable[0].name).to eq("four")
+      #expect(variable[0].value).to eq("four_value")
 
       variable = @variableRuby.get_variable("   @five = 5")
-      expect(variable.name).to eq("five")
-      expect(variable.value).to eq("5")
+      expect(variable[0].name).to eq("five")
+      #expect(variable[0].value).to eq("5")
     end
 
     it "Capture simple variable with two @@" do
       variable = @variableRuby.get_variable("@@three")
-      expect(variable.name).to eq("three")
+      expect(variable[0].name).to eq("three")
     end
 
   end
@@ -54,65 +54,67 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       capturedList.each do |element|
         listResult.push(element.name)
       end
-      expect(listResult).to match_array(@arrayComp)
+      expect(listResult).to match_array(arrayComp)
     end
-
   end
 
   context "Complex variable declaration (more then one per line)." do
+    lineParse = "one = 1, two = 2, three = 'three'"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line WITH = and WITHOUT @."
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-    it "Multiple simple variable in one line, separated by comma." do
-      lineParse = "one = 1, two = 2, three = 'three'"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names."
-      include_examples "Compare array", lineParse, arrayCompare, message
+    lineParse = "     one   =  1,   two=2, three    =     'three'   "
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line WITH = and WITHOUT @. (Not nice)"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-      lineParse = "     one   =  1,   two=2, three    =     'three'   "
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names."
-      include_examples "Compare array", lineParse, arrayCompare, message
-    end
+    lineParse = "@one, @two, @three"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line ONLY WITH , and @."
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-    it "Multiple variable in one line, separated by comma and using @" do
-      lineParse = "@one = 1, @two = 2, @three = 'three'"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names (with @). Nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
+    lineParse = "       @one    , @two     ,       @three  "
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line ONLY WITH , and @. (Not nice)"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-      lineParse = "     @one = 1, @two =2     ,@three   =   'three'"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names. Not nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
+    lineParse = "@one = 1, @two = 2, @three = 'three'"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line WITH = and @."
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-    end
+    lineParse = "     @one = 1, @two =2     ,@three   =   'three'"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line WITH = and @. (Not nice)"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-    it "Multiple declaration with assignment, simple case." do
+    lineParse = " @one, @two = 3,@three "
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable in line WITH = and @. (Mixed)"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-      lineParse = "one = two = three = 47"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names. Nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
+    #it "Multiple declaration with assignment, simple case." do
+    lineParse = "one = two = three = 47"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable ONLY WITH ="
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-      lineParse = "one                  =two     =    three =   47"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names. Not nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
- 
-    end
+    lineParse = "one                  =two     =    three =   47"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable ONLY WITH =. (Not nice)"
+    include_examples "Compare array", lineParse, arrayCompare, message
+    #end
 
-    it "Multiple declaration with assignment, and with @" do
+    lineParse = "@one = @two = @three = 59"
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable WITH = and @"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
-      lineParse = "@one = @two = @three = 59"
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names. Nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
-
-      lineParse = "     @one                =   @two =  @three =   89 "
-      arrayCompare = ["one", "two", "three"]
-      message = "Check names. Not nice code."
-      include_examples "Compare array", lineParse, arrayCompare, message
- 
-    end
+    lineParse = "     @one                =   @two =  @three =   89 "
+    arrayCompare = ["one", "two", "three"]
+    message = " -> Multiple variable WITH = and @. (Not nice)"
+    include_examples "Compare array", lineParse, arrayCompare, message
 
   end
 
