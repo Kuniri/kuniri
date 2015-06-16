@@ -9,13 +9,13 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
   context "Correct flow." do
 
     it "Idle to Include" do
-      @rubyTest.include_capture
+      @rubyTest.state.include_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IncludeState)
     end
 
     it "Include to idle" do
-      @rubyTest.include_capture
+      @rubyTest.state.include_capture
       @rubyTest.idle_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
@@ -26,7 +26,7 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
   context "Incorrect flow." do
 
     it "Include to variable" do
-      @rubyTest.include_capture
+      @rubyTest.state.include_capture
       expect{@rubyTest.variable_capture}
         .to raise_error(NotImplementedError)
     end
@@ -36,7 +36,7 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
   context "Correct flow, and correct data extration." do
 
     it "Include state, and capture require." do
-      @rubyTest.include_capture
+      @rubyTest.state.include_capture
       fileElement = Languages::FileElement.new("test_spec")
       @rubyTest.state.execute(fileElement, "require_relative 'test_file.rb'")
       expect(@rubyTest.state)
@@ -44,7 +44,7 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
     end
 
     it "Include state, and returned value" do
-      @rubyTest.include_capture
+      @rubyTest.state.include_capture
       fileElement = Languages::FileElement.new("test_spec")
       fileElement = @rubyTest.state.execute(fileElement,
                                             "require_relative 'test.rb'")
