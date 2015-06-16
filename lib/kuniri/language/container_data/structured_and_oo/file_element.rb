@@ -7,6 +7,8 @@ module Languages
  
   class FileElement < Languages::BasicData
 
+    public
+
       attr_reader :global_functions
       attr_reader :global_variables
       attr_reader :extern_requirements

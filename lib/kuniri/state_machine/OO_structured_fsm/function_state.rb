@@ -12,6 +12,11 @@ module StateMachine
         @language = pLanguage
       end
 
+      def handle_line(pLine)
+        # TODO: Handle it!
+        # idle_capture
+      end
+
       def idle_capture
         @language.set_state(@language.idleState)
       end
@@ -31,6 +36,7 @@ module StateMachine
           module_capture
         else
           idle_capture
+        end
         return pElementFile
       end
 

@@ -34,6 +34,8 @@ module Languages
           # Check basic case of non variable. Ex.: value x
           pLine.gsub!(/^\s*/, "")
           pLine.gsub!(/\s*$/, "")
+          return nil if pLine =~ /end/
+          return nil if pLine =~ /^def\s+/
           return pLine if pLine.split(",").size > 1
           return pLine if pLine.split("=").size > 1
 

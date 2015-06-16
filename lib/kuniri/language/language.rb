@@ -56,6 +56,7 @@ module Languages
         @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
         @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
         @state = @idleState
+        @previousState = @state
 
         @fileElements = []
       end

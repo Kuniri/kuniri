@@ -1,5 +1,6 @@
 require_relative '../abstract_container/structured_and_oo/function_behavior'
 require_relative '../../core/setting'
+require_relative '../container_data/structured_and_oo/function_data'
 
 module Languages
 
@@ -20,7 +21,7 @@ module Languages
 
           @log.write_log("Info: get method")
 
-          functionRuby = Languages::MethodData.new(result)
+          functionRuby = Languages::FunctionData.new(result)
 
           parameters = handling_parameter(pLine)
           if parameters
