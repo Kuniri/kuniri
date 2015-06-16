@@ -20,6 +20,20 @@ module StateMachine
         @language.set_state(@language.moduleState)
       end
 
+      def execute(pElementFile, pLine)
+        function = @language.functionHandler.get_function(pLine)
+        if function
+         pElementFile.add_global_function(function)
+        end
+        # TODO: You have to handler the return state.
+        # YOU HAVE TO HANDLER OTHER STATES INSIDE FUNCTION.
+        if (@previousState.is_a? StateMachine::OOStructuredFSM::ModuleState)
+          module_capture
+        else
+          idle_capture
+        return pElementFile
+      end
+
     # End class
     end
 

@@ -17,7 +17,7 @@ module Languages
         super
         @externRequirementHandler = Languages::Ruby::ExternRequirementRuby.new
         @variableHandler = Languages::Ruby::VariableGlobalRuby.new
-        #@functionHandler
+        @functionHandler = Languages::Ruby::FunctionBehaviorRuby.new
         #@moduleHandler
         @classHandler = Languages::Ruby::ClassRuby.new
         clear_data

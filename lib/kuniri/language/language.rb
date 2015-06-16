@@ -22,6 +22,7 @@ module Languages
 
       attr_reader :attributeState
       attr_reader :state
+      attr_reader :previousState
       attr_reader :classState
       attr_reader :constructorState
       attr_reader :functionState
@@ -169,6 +170,7 @@ module Languages
       end
 
       def set_state (pState)
+        @previousState = @state
         @state = pState
       end
 
