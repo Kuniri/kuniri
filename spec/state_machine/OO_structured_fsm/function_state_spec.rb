@@ -7,30 +7,31 @@ RSpec.describe StateMachine::OOStructuredFSM::FunctionState do
   end
 
   context "Correct flow." do
+
     it "Idle to function." do
-      @rubyTest.function_capture
+      @rubyTest.state.function_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::FunctionState)
     end
 
     it "Function to module." do
-      @rubyTest.function_capture
+      @rubyTest.state.function_capture
       @rubyTest.module_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::ModuleState)
     end
 
     it "Function, module, to idle." do
-      @rubyTest.function_capture
-      @rubyTest.module_capture
-      @rubyTest.idle_capture
+      @rubyTest.state.function_capture
+      @rubyTest.state.module_capture
+      @rubyTest.state.idle_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
 
     it "Module to function" do
-      @rubyTest.module_capture
-      @rubyTest.function_capture
+      @rubyTest.state.module_capture
+      @rubyTest.state.function_capture
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::FunctionState)
     end
@@ -38,10 +39,14 @@ RSpec.describe StateMachine::OOStructuredFSM::FunctionState do
 
   context "Incorrect flow." do
     it "Function to variable" do
-      @rubyTest.function_capture
+      @rubyTest.state.function_capture
       expect{@rubyTest.variable_capture}
         .to raise_error(NotImplementedError)
     end
+  end
+
+  context "Flow based of file." do
+
   end
 
   after :each do

@@ -95,6 +95,37 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Global function" do
+    it "Correct state transition function." do
+      path = "spec/samples/rubySyntaxParts/function/simpleFunction.rb"
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (global function)" do
+      path = "spec/samples/rubySyntaxParts/function/simpleFunction.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].global_functions[0].name)
+        .to eq("simpleFunction1")
+      expect(@syntax.fileElements[0].global_functions[1].name)
+        .to eq("simpleFunction2")
+      expect(@syntax.fileElements[0].global_functions[2].name)
+        .to eq("simpleFunction3")
+      expect(@syntax.fileElements[0].global_functions[3].name)
+        .to eq("simpleFunction4")
+      expect(@syntax.fileElements[0].global_functions[4].name)
+        .to eq("simpleFunction5")
+      expect(@syntax.fileElements[0].global_functions[5].name)
+        .to eq("simpleFunction6")
+      expect(@syntax.fileElements[0].global_functions[6].name)
+        .to eq("simpleFunction7")
+    end
+  end
+
   after :each do
     @syntax = nil
   end
