@@ -1,4 +1,5 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
+require_relative 'module_state'
 
 module StateMachine
 
@@ -32,7 +33,8 @@ module StateMachine
         end
         # TODO: You have to handler the return state.
         # YOU HAVE TO HANDLER OTHER STATES INSIDE FUNCTION.
-        if (@previousState.is_a? StateMachine::OOStructuredFSM::ModuleState)
+        if (@language.previousState.is_a? (
+            StateMachine::OOStructuredFSM::ModuleState))
           module_capture
         else
           idle_capture
