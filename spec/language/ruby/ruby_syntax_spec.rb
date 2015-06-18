@@ -126,6 +126,29 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Module declaration." do
+    it "Correct state transition." do
+      path = "spec/samples/rubySyntaxParts/module/simpleModule.rb"
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (module)" do
+      path = "spec/samples/rubySyntaxParts/module/simpleModule.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].modules[0].name)
+        .to eq("Xpto")
+      expect(@syntax.fileElements[0].modules[1].name)
+        .to eq("Abc")
+      expect(@syntax.fileElements[0].modules[2].name)
+        .to eq("Simple")
+    end
+  end
+
   after :each do
     @syntax = nil
   end
