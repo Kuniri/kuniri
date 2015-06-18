@@ -2,7 +2,7 @@ require_relative 'basic_data'
 require_relative 'function_data'
 require_relative 'variable_global_data'
 require_relative 'extern_requirement_data'
-require_relative 'module_namespace_data.rb'
+require_relative 'module_namespace_data'
 
 module Languages
  
@@ -52,7 +52,7 @@ module Languages
       end
 
       def add_modules(pModule)
-        return if not pModule.is_a?(Languages::ModuleData)
+        return if not pModule.is_a?(Languages::ModuleNamespaceData)
 
         @modules.push(pModule)
       end

@@ -1,4 +1,7 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
+require_relative 'function_state'
+require_relative 'class_state'
+require_relative 'idle_state'
 
 module StateMachine
 
@@ -32,6 +35,29 @@ module StateMachine
 
       def function_capture
         @language.set_state(@language.functionState)
+      end
+
+      def execute(pElementFile, pLine)
+
+        moduleElement = @language.moduleHandler.get_module(pLine)
+
+        if moduleElement
+          pElementFile.add_modules(moduleElement)
+        end
+
+        if (@language.previousState.is_a?( 
+            StateMachine::OOStructuredFSM::FunctionState))
+          function_capture
+        elsif (@language.previousState.is_a?(
+               StateMachine::OOStructuredFSM::IdleState))
+          idle_capture
+        elsif (@language.previousState.is_a?(
+               StateMachine::OOStructuredFSM::ClassState))
+          class_capture
+        end
+        # TODO: YOU HAVE TO HANDLER AUTO REFERENCE.
+
+        return pElementFile
       end
 
     # End class

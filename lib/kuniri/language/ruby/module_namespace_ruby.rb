@@ -5,22 +5,32 @@ module Languages
 
   module Ruby
 
+    # Class for handling ruby module
     class ModuleNamespaceRuby < Languages::ModuleNamespace
     
       public
 
         def get_module(pLine)
-          #TODO
+          result = detect_module(pLine)
+          return nil unless result
+
+          result = remove_unnecessary_information(result)
+          moduleCaptured = Languages::ModuleNamespaceData.new(result)
+
+          return moduleCaptured
         end
 
       protected
 
         def detect_module(pLine)
-          #TODO
+          regexExpression = /^\s*module\s+(.*)/
+          return nil unless pLine =~ regexExpression
+          return pLine.scan(regexExpression).join("")
         end
 
         def remove_unnecessary_information(pLine)
-          #TODO
+          return pLine.gsub(/\s/, "") if pLine =~ /\s/
+          return pLine
         end
 
     # class

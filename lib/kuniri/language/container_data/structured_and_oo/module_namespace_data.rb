@@ -13,5 +13,6 @@ module Languages
 
   # Class
   end
+
 # Module
 end

@@ -20,9 +20,9 @@ module StateMachine
           variable_capture
         elsif @language.functionHandler.get_function(pLine)
           function_capture
+        elsif @language.moduleHandler.get_module(pLine)
+          module_capture
         # TODO: Uncomment the lines below, after finish to implement it.
-        #elsif @language.moduleHandler.get_module(pLine)
-        #  module_capture
         #elsif @language.classHandler.get_class(pLine)
         #  class_capture
         else

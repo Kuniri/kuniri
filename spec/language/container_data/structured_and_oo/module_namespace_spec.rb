@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 RSpec.describe Languages::ModuleNamespace do
 
   before :all do
-    @moduleNamespace = Languages::ModuleNamespaceData.new
+    @moduleNamespace = Languages::ModuleNamespaceData.new("Simple")
   end
 
   context "Module simple behavior." do
