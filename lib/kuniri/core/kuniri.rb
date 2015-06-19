@@ -66,6 +66,10 @@ module Kuniri
         navigate.navigate_mode
       end
 
+      def get_parser
+        @parser
+      end
+
     private
 
       @configurationInfo # !@attribute Hash with configuration description

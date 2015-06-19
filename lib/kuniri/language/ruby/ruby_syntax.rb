@@ -95,6 +95,10 @@ module Languages
         return @externRequirements
       end
 
+      def get_classes
+        @classes
+      end
+
     private
 
       @class_token
