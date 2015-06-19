@@ -2,7 +2,9 @@
 
 require 'kuniri'
 require 'optparse'
-require_relative '../lib/kuniri/core/kuniri'
+require 'kuniri/core/kuniri'
+require 'kuniri/language/container_data/structured_and_oo/class_data'
+require 'kuniri/parser/parser_xml'
 
 options = {}
 
@@ -28,6 +30,17 @@ OptionParser.new do |opts|
 
   opts.on("-p", "Parse project") do |v|
     puts "PARSER..."
+  end
+
+  opts.on("--export", "Export XML") do |v|
+    puts "Exporting XML..."
+    kuniri = Kuniri::Kuniri.new
+    kuniri.run_analysis
+
+    path = 'export/class.xml'
+    parser = Parser::XML.new
+    parser.create_class_data kuniri.get_parser().fileLanguage[1].class_extract
+    puts parser.get_builder.to_xml
   end
 
 end.parse!
