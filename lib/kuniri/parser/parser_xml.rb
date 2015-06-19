@@ -41,11 +41,9 @@ module Parser
     def generate_class(xml, class_data)
       @log.write_log(class_data.name.name)
       xml.class_data(:name => class_data.name.name) {
-        xml.methods_ {
-          class_data.get_methods.each do |o|
-            generate_method(xml, o)
-          end
-        }
+        class_data.get_methods.each do |o|
+          generate_method(xml, o)
+        end
       }
     end
 
