@@ -11,6 +11,9 @@ module Languages
     public
 
       attr_accessor :inheritances
+      attr_reader :attributes
+      attr_reader :methods
+      attr_reader :constructors
 
       def initialize
         @inheritances = [] 
@@ -21,6 +24,7 @@ module Languages
       end
 
       def add_attribute(pAttribute)
+        # Rememeber, attribute can be a list of AttributeData
         return if not pAttribute.is_a?(Languages::AttributeData)
 
         @attributes.push(pAttribute)
@@ -38,6 +42,7 @@ module Languages
         @constructors.push(pConstructor)
       end
 
+# TODO: REMOVE IT!
       def get_methods
         @methods
       end
@@ -74,11 +79,8 @@ module Languages
 #        puts "constructors: #{@constructors.size()}"
 #      end
 
+#TODO: REMOVE IT!
     private
-
-      @attributes
-      @methods
-      @constructors
 
   # Class
   end

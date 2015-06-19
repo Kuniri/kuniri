@@ -15,10 +15,11 @@ module StateMachine
       def handle_line(pLine)
         if @language.methodHandler.get_method(pLine)
           method_capture
-        elsif @language.constructorHandler.get_constructor(pLine)
-          constructor_capture
         elsif @language.attributeHandler.get_attribute(pLine)
           attribute_capture
+        # TODO: UNCOMMENT IT, after you implement it.
+        # elsif @language.constructorHandler.get_constructor(pLine)
+        #  constructor_capture
         elsif @language.moduleHandler.get_module(pLine)
           module_capture
         elsif @language.idleHandler.get_idle(pLine)
@@ -45,6 +46,24 @@ module StateMachine
       def idle_capture
         @language.set_state(@language.idleState)
       end 
+
+      def execute(pElementFile, pLine)
+        classElement = @language.classHandler.get_class(pLine)
+
+        if classElement
+          pElementFile.add_class(classElement)
+        end
+
+        if (@language.previousState.is_a? (
+            StateMachine::OOStructuredFSM::IdleState))
+          idle_capture
+        elsif (@language.previousState.is_a? (
+            StateMachine::OOStructuredState::ModuleState))
+          module_capture
+        end
+
+        return pElementFile
+      end
 
     # End class
     end
