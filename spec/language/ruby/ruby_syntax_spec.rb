@@ -149,6 +149,61 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Class declaration" do
+    it "Correct state transition." do
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (class)." do
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].name).to eq("Simple1")
+      expect(@syntax.fileElements[0].classes[1].name).to eq("Simple2")
+      expect(@syntax.fileElements[0].classes[2].name).to eq("Simple3")
+      expect(@syntax.fileElements[0].classes[3].name).to eq("Simple4")
+      expect(@syntax.fileElements[0].classes[4].name).to eq("Simple5")
+    end
+
+  end
+
+  context "Attribute line" do
+    it "Correct state transition." do
+      path = "spec/samples/rubySyntaxParts/attribute/simpleAttribute.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (attribute)" do
+      path = "spec/samples/rubySyntaxParts/attribute/simpleAttribute.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].attributes[0].name)
+        .to eq("attribute1")
+      expect(@syntax.fileElements[0].classes[0].attributes[1].name)
+        .to eq("attribute2")
+      expect(@syntax.fileElements[0].classes[0].attributes[2].name)
+        .to eq("attribute3")
+      expect(@syntax.fileElements[0].classes[0].attributes[3].name)
+        .to eq("attribute4")
+      expect(@syntax.fileElements[0].classes[0].attributes[4].name)
+        .to eq("attribute5")
+      expect(@syntax.fileElements[0].classes[0].attributes[5].name)
+        .to eq("attribute6")
+
+    end
+  end
+
   after :each do
     @syntax = nil
   end
