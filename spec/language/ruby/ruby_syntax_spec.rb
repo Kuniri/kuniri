@@ -204,6 +204,30 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Method line" do
+    it "Correct state transition." do
+      path = "spec/samples/rubySyntaxParts/method/simpleMethod.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (method)" do
+      path = "spec/samples/rubySyntaxParts/method/simpleMethod.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+        .to eq("method1")
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+        .to eq("method2")
+      expect(@syntax.fileElements[0].classes[0].methods[2].name)
+        .to eq("method3")
+    end
+  end
+
   after :each do
     @syntax = nil
   end
