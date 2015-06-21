@@ -88,17 +88,6 @@ module Languages
         return @externRequirements
       end
 
-      def dumpData
-        puts "=" * 30
-        puts @currentClass.dumpClassData
-        puts "_" * 30
-        puts extern_requirement_extract
-        puts "-" * 30
-        puts @functionList
-        puts "-" * 30
-        puts @token
-      end
-
     private
 
       @class_token

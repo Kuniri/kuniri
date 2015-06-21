@@ -56,33 +56,6 @@ module Languages
         @constructors
       end
 
-# REMOVE IT SOON! JUST DEBUG
-#      def dumpClassData
-#        puts "-" * 40
-#        puts "> METHOD"
-#        @methods.each do |i|
-#          puts "#{i.visibility} -> #{i.name}"
-#        end
-#        puts "-"  * 40
-#        puts "> INITIALIZE"
-#        @constructors.each do |i|
-#          puts "#{i.visibility} -> #{i.name}"
-#        end
-#        puts "*" * 40
-#        puts "> ATTRIBUTE"
-#        @attributes.each do |i|
-#          puts "#{i.visibility} -> #{i.name}"
-#        end
-#        puts "_" * 40
-#        puts "> COUNT:"
-#        puts "Methods: #{@methods.size()}"
-#        puts "Attributes: #{@attributes.size()}"
-#        puts "constructors: #{@constructors.size()}"
-#      end
-
-#TODO: REMOVE IT!
-    private
-
   # Class
   end
 

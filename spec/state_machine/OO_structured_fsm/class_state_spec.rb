@@ -65,13 +65,6 @@ RSpec.describe StateMachine::OOStructuredFSM::ClassState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ClassState)
     end
 
-    it "Class to module" do
-      @classStateTest.class_capture
-      @classStateTest.module_capture
-      expect(@classStateTest.state)
-        .to be_instance_of(StateMachine::OOStructuredFSM::ModuleState)
-    end
-
     it "Module to class" do
       @classStateTest.class_capture
       @classStateTest.module_capture
