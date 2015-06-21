@@ -40,11 +40,11 @@ module StateMachine
       end
 
       def module_capture
-        @language.set_state(@language.moduleState)
+        @language.rewind_state
       end
 
       def idle_capture
-        @language.set_state(@language.idleState)
+        @language.rewind_state
       end 
 
       def execute(pElementFile, pLine)
@@ -53,18 +53,18 @@ module StateMachine
         if classElement
           pElementFile.add_class(classElement)
         end
+ 
+        if @language.endBlockHandler.has_end_of_block?(pLine)
+          previous = @language.previousState.last
 
-        previous = @language.previousState.last
-
-        if (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
-          idle_capture
-        elsif (previous.is_a? (StateMachine::OOStructuredState::ModuleState))
-          module_capture
-        else
-          return
+          if (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
+            idle_capture
+          elsif (previous.is_a? (StateMachine::OOStructuredFSM::ModuleState))
+            module_capture
+          else
+            return pElementFile
+          end
         end
-
-        @language.rewind_state
 
         return pElementFile
       end

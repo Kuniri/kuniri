@@ -115,7 +115,7 @@ module Languages
 
       # Rewind state
       def rewind_state
-        return @previousState.pop
+        @state = @previousState.pop
       end
 
       def get_name

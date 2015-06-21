@@ -13,12 +13,11 @@ module StateMachine
       end
 
       def handle_line(pLine)
-          class_capture
           # TODO: YOU HAVE TO HANDLER THE CASE OF SELF REFERENCE
       end
 
       def class_capture
-        @language.set_state(@language.classState)
+        @language.rewind_state
       end
 
       def execute(pElementFile, pLine)

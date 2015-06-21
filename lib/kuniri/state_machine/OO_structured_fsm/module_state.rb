@@ -45,20 +45,15 @@ module StateMachine
           pElementFile.add_modules(moduleElement)
         end
 
-        previous = @language.previousState.last
+        if @language.endBlockHandler.has_end_of_block?(pLine)
+          previous = @language.previousState.last
 
-        if (previous.is_a?(StateMachine::OOStructuredFSM::FunctionState))
-          function_capture
-        elsif (previous.is_a?(StateMachine::OOStructuredFSM::IdleState))
-          idle_capture
-        elsif (previousState.is_a?(StateMachine::OOStructuredFSM::ClassState))
-          class_capture
-        else
-          # Self reference, keep in this state.
-          return
+          if (previous.is_a?(StateMachine::OOStructuredFSM::IdleState))
+            idle_capture
+          else
+            return pElementFile
+          end
         end
-
-        @language.rewind_state
 
         return pElementFile
       end
