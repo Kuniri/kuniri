@@ -37,6 +37,7 @@ module Languages
       attr_reader :functionHandler
       attr_reader :moduleHandler
       attr_reader :classHandler
+      attr_reader :endBlockHandler
 
       attr_accessor :fileElements
 
@@ -77,7 +78,7 @@ module Languages
       end
 
       # Extract all the comments from the source.
-      # @param source [String] Source code to analys.
+      # @param source [String] Source code to analyses.
       def comment_extract
         raise NotImplementedError
       end

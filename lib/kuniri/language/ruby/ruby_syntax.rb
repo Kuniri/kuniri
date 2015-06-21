@@ -6,6 +6,7 @@ require_relative '../container_data/structured_and_oo/file_element'
 require_relative 'extern_requirement_ruby'
 require_relative 'variable_global_ruby'
 require_relative 'module_namespace_ruby'
+require_relative 'end_block_ruby'
 
 module Languages
 
@@ -22,6 +23,7 @@ module Languages
         @moduleHandler = Languages::Ruby::ModuleNamespaceRuby.new
         @classHandler = Languages::Ruby::ClassRuby.new
         @attributeHandler = Languages::Ruby::AttributeRuby.new
+        @endBlockHandler = Languages::Ruby::EndBlockRuby.new
         clear_data
       end
 
