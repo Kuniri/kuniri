@@ -56,7 +56,8 @@ module Languages
         @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
         @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
         @state = @idleState
-        @previousState = @state
+        @previousState = []
+        @previousState.push (@state)
 
         @fileElements = []
       end
@@ -74,7 +75,7 @@ module Languages
       def analyse_source
         raise NotImplementedError
       end
- 
+
       # Extract all the comments from the source.
       # @param source [String] Source code to analys.
       def comment_extract
@@ -109,6 +110,11 @@ module Languages
       # @return Return an array with all the requirements.
       def extern_requirement_extract
         raise NotImplementedError
+      end
+
+      # Rewind state
+      def rewind_state
+        return @previousState.pop
       end
 
       def get_name
@@ -170,8 +176,9 @@ module Languages
         @state.idle_capture
       end
 
+      # keep track of state.
       def set_state (pState)
-        @previousState = @state
+        @previousState.push(@state)
         @state = pState
       end
 

@@ -45,17 +45,20 @@ module StateMachine
           pElementFile.add_modules(moduleElement)
         end
 
-        if (@language.previousState.is_a?( 
-            StateMachine::OOStructuredFSM::FunctionState))
+        previous = @language.previousState.last
+
+        if (previous.is_a?(StateMachine::OOStructuredFSM::FunctionState))
           function_capture
-        elsif (@language.previousState.is_a?(
-               StateMachine::OOStructuredFSM::IdleState))
+        elsif (previous.is_a?(StateMachine::OOStructuredFSM::IdleState))
           idle_capture
-        elsif (@language.previousState.is_a?(
-               StateMachine::OOStructuredFSM::ClassState))
+        elsif (previousState.is_a?(StateMachine::OOStructuredFSM::ClassState))
           class_capture
+        else
+          # Self reference, keep in this state.
+          return
         end
-        # TODO: YOU HAVE TO HANDLER AUTO REFERENCE.
+
+        @language.rewind_state
 
         return pElementFile
       end

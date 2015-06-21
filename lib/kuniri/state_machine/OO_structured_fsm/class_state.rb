@@ -54,13 +54,17 @@ module StateMachine
           pElementFile.add_class(classElement)
         end
 
-        if (@language.previousState.is_a? (
-            StateMachine::OOStructuredFSM::IdleState))
+        previous = @language.previousState.last
+
+        if (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
           idle_capture
-        elsif (@language.previousState.is_a? (
-            StateMachine::OOStructuredState::ModuleState))
+        elsif (previous.is_a? (StateMachine::OOStructuredState::ModuleState))
           module_capture
+        else
+          return
         end
+
+        @language.rewind_state
 
         return pElementFile
       end

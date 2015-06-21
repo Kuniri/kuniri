@@ -16,6 +16,7 @@ module StateMachine
       def handle_line(pLine)
         # TODO: Handle it!
         # idle_capture
+        # Conditionals, repetitions
       end
 
       def idle_capture
@@ -28,17 +29,23 @@ module StateMachine
 
       def execute(pElementFile, pLine)
         function = @language.functionHandler.get_function(pLine)
+
         if function
          pElementFile.add_global_function(function)
         end
-        # TODO: You have to handler the return state.
-        # YOU HAVE TO HANDLER OTHER STATES INSIDE FUNCTION.
-        if (@language.previousState.is_a? (
-            StateMachine::OOStructuredFSM::ModuleState))
+
+        previous = @language.previousState.last
+
+        if (previous.is_a? (StateMachine::OOStructuredFSM::ModuleState))
           module_capture
-        else
+        elsif (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
           idle_capture
+        else
+          return 
         end
+
+        @language.rewind_state
+
         return pElementFile
       end
 
