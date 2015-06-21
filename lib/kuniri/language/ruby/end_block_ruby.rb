@@ -9,13 +9,15 @@ module Languages
       public
 
         def has_end_of_block?(pLine)
-          #TODO
+          return detect_end(pLine)
         end
 
       protected
 
         def detect_end(pLine)
-          #TODO
+          #TODO: EXTREMELY SIMPLE HANDLING, IT HAVE TO BE IMPROVED!
+          return true if pLine =~ /^\s+end|^end/
+          return false
         end
 
     # Class
