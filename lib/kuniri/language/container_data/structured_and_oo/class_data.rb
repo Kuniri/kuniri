@@ -25,13 +25,14 @@ module Languages
 
       def add_attribute(pAttribute)
         # Rememeber, attribute can be a list of AttributeData
-        return if not pAttribute.is_a?(Languages::AttributeData)
-
-        @attributes.push(pAttribute)
+        pAttribute.each do |attributeElement|
+          return unless attributeElement.is_a?(Languages::AttributeData)
+          @attributes.push(attributeElement)
+        end
       end
 
       def add_method(pMethod)
-        return if not pMethod.is_a?(Languages::MethodData)
+        return unless pMethod.is_a?(Languages::MethodData)
 
         @methods.push(pMethod)
       end

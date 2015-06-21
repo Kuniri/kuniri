@@ -30,16 +30,21 @@ RSpec.describe Languages::ClassData do
 
     it ": #{description}" do
 
-      attributes.each do |element|
-        attribute = Languages::AttributeData.new(element)
-        @classData.add_attribute(attribute)
-      end
+      listOfAttributes = []
 
-      attributeList = @classData.get_attributes
+      attributes.each do |nameElement|
+        listOfAttributes.push(Languages::AttributeData.new(nameElement))
+      end
+ 
+      @classData.add_attribute(listOfAttributes)
+
+      attributeList = @classData.attributes
       listResult = []
+
       attributeList.each do |element|
         listResult.push(element.name)
       end
+
       expect(listResult).to match_array(attributes)
     end
 

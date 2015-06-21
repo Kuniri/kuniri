@@ -13,17 +13,15 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.methodHandler.get_method(pLine)
-          method_capture
-        elsif @language.attributeHandler.get_attribute(pLine)
+        if @language.attributeHandler.get_attribute(pLine)
           attribute_capture
         # TODO: UNCOMMENT IT, after you implement it.
         # elsif @language.constructorHandler.get_constructor(pLine)
         #  constructor_capture
+        #elsif @language.methodHandler.get_method(pLine)
+        #  method_capture
         elsif @language.moduleHandler.get_module(pLine)
           module_capture
-        elsif @language.idleHandler.get_idle(pLine)
-          idle_capture
         end
       end
 

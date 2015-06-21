@@ -25,15 +25,12 @@ module StateMachine
 
         if attributeElement
           # Add attribute to the last class
-          lastElement = pElementFile.classes.leght
-          pElementFile.classes[lastElement].add_attribute(attributeElement)
+          lastIndex = pElementFile.classes.length - 1 # We want the index
+          pElementFile.classes[lastIndex].add_attribute(attributeElement)
         end
 
-        if (@language.previousState.is_a? (
-            StateMachine::OOStructuredFSM::ClassState))
-          class_capture
-        end
-
+        class_capture
+        return pElementFile
       end
 
     # End class
