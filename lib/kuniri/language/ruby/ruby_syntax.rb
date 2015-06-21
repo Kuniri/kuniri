@@ -21,6 +21,7 @@ module Languages
         @functionHandler = Languages::Ruby::FunctionBehaviorRuby.new
         @moduleHandler = Languages::Ruby::ModuleNamespaceRuby.new
         @classHandler = Languages::Ruby::ClassRuby.new
+        @attributeHandler = Languages::Ruby::AttributeRuby.new
         clear_data
       end
 

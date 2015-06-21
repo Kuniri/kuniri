@@ -13,13 +13,28 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.classHandler.get_class(pLine)
           class_capture
-        end
+          # TODO: YOU HAVE TO HANDLER THE CASE OF SELF REFERENCE
       end
 
       def class_capture
         @language.set_state(@language.classState)
+      end
+
+      def execute(pElementFile, pLine)
+        attributeElement = @language.attributeHandler.get_attribute(pLine)
+
+        if attributeElement
+          # Add attribute to the last class
+          lastElement = pElementFile.classes.leght
+          pElementFile.classes[lastElement].add_attribute(attributeElement)
+        end
+
+        if (@language.previousState.is_a? (
+            StateMachine::OOStructuredFSM::ClassState))
+          class_capture
+        end
+
       end
 
     # End class
