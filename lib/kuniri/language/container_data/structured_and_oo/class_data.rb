@@ -32,7 +32,7 @@ module Languages
       end
 
       def add_method(pMethod)
-        return unless pMethod.is_a?(Languages::MethodData)
+        return unless pMethod.is_a?(Languages::FunctionData)
 
         @methods.push(pMethod)
       end

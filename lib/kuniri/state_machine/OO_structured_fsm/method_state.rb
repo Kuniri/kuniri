@@ -13,13 +13,26 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.classHandler.get_class(pLine)
-          class_capture
-        end
+        # FROM HERE, WE CAN GO TO: REPETITION ANS CONDITIONAL STRUCTURES.
       end
 
       def class_capture
-        @language.set_state(@language.classState)
+        @language.rewind_state
+      end
+
+      def execute(pElementFile, pLine)
+        methodElement = @language.methodHandler.get_function(pLine)
+
+        if (methodElement)
+          lastIndex = pElementFile.classes.length - 1 # We want the index
+          pElementFile.classes[lastIndex].add_method(methodElement)
+        end
+
+        if (@language.endBlockHandler.has_end_of_block?(pLine))
+          class_capture
+        end
+
+        return pElementFile
       end
 
     # End class

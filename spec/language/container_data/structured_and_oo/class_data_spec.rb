@@ -71,7 +71,7 @@ RSpec.describe Languages::ClassData do
     it ": #{description}" do
 
       methods.each do |element|
-        method = Languages::MethodData.new(element)
+        method = Languages::FunctionData.new(element)
         @classData.add_method(method)
       end
 

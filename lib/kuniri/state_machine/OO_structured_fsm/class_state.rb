@@ -18,8 +18,8 @@ module StateMachine
         # TODO: UNCOMMENT IT, after you implement it.
         # elsif @language.constructorHandler.get_constructor(pLine)
         #  constructor_capture
-        #elsif @language.methodHandler.get_method(pLine)
-        #  method_capture
+        elsif @language.methodHandler.get_function(pLine)
+          method_capture
         elsif @language.moduleHandler.get_module(pLine)
           module_capture
         end

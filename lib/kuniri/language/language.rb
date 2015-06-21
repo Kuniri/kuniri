@@ -39,6 +39,7 @@ module Languages
       attr_reader :classHandler
       attr_reader :endBlockHandler
       attr_reader :attributeHandler
+      attr_reader :methodHandler
 
       attr_accessor :fileElements
 
