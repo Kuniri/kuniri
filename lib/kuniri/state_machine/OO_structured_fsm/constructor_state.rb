@@ -13,7 +13,7 @@ module StateMachine
       end
 
       def class_capture
-        @language.set_state(@language.classState)
+        @language.rewind_state
       end
     
     # End class

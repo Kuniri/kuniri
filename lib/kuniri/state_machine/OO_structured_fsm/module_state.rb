@@ -16,12 +16,12 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.idleHandler.get_idle(pLine)
-          idle_capture
-        elsif @language.classHandler.get_class(pLine)
+        if @language.classHandler.get_class(pLine)
           class_capture
         elsif @language.functionHandler.get_function(pLine)
           function_capture
+        elsif @language.variableHandler.get_variable(pLine)
+          variable_capture
         end
       end
 
@@ -31,6 +31,10 @@ module StateMachine
 
       def class_capture
         @language.set_state(@language.classState)
+      end
+
+      def variable_capture
+        @language.set_state(@language.variableState)
       end
 
       def function_capture
