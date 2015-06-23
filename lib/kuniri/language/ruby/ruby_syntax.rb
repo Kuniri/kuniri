@@ -25,6 +25,7 @@ module Languages
         @attributeHandler = Languages::Ruby::AttributeRuby.new
         @endBlockHandler = Languages::Ruby::EndBlockRuby.new
         @methodHandler = Languages::Ruby::FunctionBehaviorRuby.new
+        @constructorHandler = Languages::Ruby::ConstructorRuby.new
         clear_data
       end
 

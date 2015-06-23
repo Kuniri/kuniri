@@ -228,6 +228,29 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Constructor line" do
+    it "Correct state transition." do
+      path = "spec/samples/rubySyntaxParts/constructor/simpleConstructor.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (constructor)" do
+      path = "spec/samples/rubySyntaxParts/constructor/simpleConstructor.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].constructors[0].name)
+        .to eq("initialize")
+      expect(@syntax.fileElements[0].classes[1].constructors[0].name)
+        .to eq("initialize")
+    end
+  end
+
+
   after :each do
     @syntax = nil
   end
