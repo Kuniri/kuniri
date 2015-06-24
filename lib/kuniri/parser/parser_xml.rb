@@ -35,20 +35,21 @@ module Parser
     # @param parser - Receives the parser
     def create_all_data(parser)
       @log.write_log("---- PARSER XML ----")
-      builder = Nokogiri::XML::Builder.new do |xml|
-        xml.data {
-          for elements in parser.fileLanguage do
-            if(elements.fileElements[0].classes.length() > 0)
-              generate_class(xml, elements.fileElements[0].classes[0])
-            end
+      #Use a fragment to allow multiple root elements in xml
+      fragment = Nokogiri::XML::DocumentFragment.parse ""
+
+      builder = Nokogiri::XML::Builder.with(fragment) do |xml|
+        for elements in parser.fileLanguage do
+          if(elements.fileElements[0].classes.length() > 0)
+            generate_class(xml, elements.fileElements[0].classes[0])
           end
-        }
+        end
       end
 
       @builder = builder
 
       File.open(@parser_path, 'w') do |file|
-        file.write(builder.to_xml)
+        file.write(fragment.to_xml)
       end
     end
 
