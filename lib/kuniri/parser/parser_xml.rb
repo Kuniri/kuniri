@@ -30,6 +30,28 @@ module Parser
       end
     end
 
+    # Create the xml output file.
+    #   only saves a ClassData for now
+    # @param parser - Receives the parser
+    def create_all_data(parser)
+      @log.write_log("---- PARSER XML ----")
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.data {
+          for elements in parser.fileLanguage do
+            if(elements.fileElements[0].classes.length() > 0)
+              generate_class(xml, elements.fileElements[0].classes[0])
+            end
+          end
+        }
+      end
+
+      @builder = builder
+
+      File.open(@parser_path, 'w') do |file|
+        file.write(builder.to_xml)
+      end
+    end
+
     # returns the builder if create method already executed
     def get_builder
       @builder
