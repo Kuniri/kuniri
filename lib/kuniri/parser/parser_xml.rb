@@ -39,10 +39,34 @@ module Parser
     # @param xml [Nokogiri::XML::Builder] xml builder to edit
     # @param class_data [ClassData] the ClassData to save
     def generate_class(xml, class_data)
-      @log.write_log(class_data.name.name)
-      xml.class_data(:name => class_data.name.name) {
-        class_data.get_methods.each do |o|
+      @log.write_log(class_data.name)
+      xml.class_data(:name => class_data.name) {
+        class_data.methods.each do |o|
           generate_method(xml, o)
+        end
+        class_data.constructors.each do |c|
+          generate_constructor(xml, c)
+        end
+        class_data.inheritances.each do |i|
+          generate_inheritance(xml, i)
+        end
+      }
+    end
+
+    # Parse a InheritanceData to xml
+    # @param xml [Nokogiri::XML::Builder] xml builder to edit
+    # @param class_data [inheritance_data] the InheritanceData to save
+    def generate_inheritance(xml, inheritance_data)
+      xml.inheritance(:name => inheritance_data[0].strip()) {}
+    end
+
+    # Parse a ConstructorData to xml
+    # @param xml [Nokogiri::XML::Builder] xml builder to edit
+    # @param class_data [constructor_data] the ConstructorData to save
+    def generate_constructor(xml, constructor_data)
+      xml.method_(:name => constructor_data.name) {
+        constructor_data.parameters.each do |p|
+          generate_parameter(xml, p)
         end
       }
     end
@@ -51,7 +75,7 @@ module Parser
     # @param xml [Nokogiri::XML::Builder] xml builder to edit
     # @param class_data [MethodData] the MethodData to save
     def generate_method(xml, method_data)
-      xml.method_(:name => method_data.name) {
+      xml.method_(:name => method_data.name, :visibility => method_data.visibility) {
         method_data.parameters.each do |p|
           generate_parameter(xml, p)
         end
@@ -62,9 +86,14 @@ module Parser
     # @param xml [Nokogiri::XML::Builder] xml builder to edit
     # @param class_data [String] the Attribute to save
     def generate_parameter(xml, parameter)
-      xml.parameter {
-        xml.name parameter
-      }
+      if parameter.kind_of?(String)
+        xml.parameter(:name => parameter) {}
+      else
+        # Is a hash parameter=>defaultValue
+        for p in parameter do
+          xml.parameter(:name => p[0]+'='+p[1]) {}
+        end
+      end
     end
 
     private

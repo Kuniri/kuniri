@@ -39,7 +39,7 @@ OptionParser.new do |opts|
 
     path = 'export/class.xml'
     parser = Parser::XML.new
-    parser.create_class_data kuniri.get_parser().fileLanguage[1].class_extract
+    parser.create_class_data kuniri.get_parser().fileLanguage[1].fileElements[0].classes[0]
     puts parser.get_builder.to_xml
   end
 
