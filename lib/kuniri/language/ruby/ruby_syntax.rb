@@ -1,12 +1,14 @@
-require_relative 'ruby_syntax_support'
-require_relative 'token_ruby'
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
 require_relative '../container_data/structured_and_oo/file_element'
+require_relative 'ruby_syntax_support'
+require_relative 'token_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'variable_global_ruby'
 require_relative 'module_namespace_ruby'
 require_relative 'end_block_ruby'
+require_relative 'constructor_ruby'
+require_relative 'class_ruby'
 
 module Languages
 
