@@ -7,7 +7,6 @@ RSpec.describe Languages::ConstructorData do
   end
 
   context "When constructor without parameters" do
-
     it "Constructor name" do
       @constructorData.name = "initialize"
       expect(@constructorData.name).to eq("initialize")

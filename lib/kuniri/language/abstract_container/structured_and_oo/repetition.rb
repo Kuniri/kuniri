@@ -1,29 +1,29 @@
 module Languages
 
-  class Conditional
+  class Repetition
 
     public
 
       # Get conditional  
-      # @param pLine String with possible conditional statement.
+      # @param pLine String with possible repetition statement.
       # @return Return an ConditionalData, otherwise return nil.
-      def get_conditional(pLine)
+      def get_repetition(pLine)
         raise NotImplementedError
       end
 
     protected
 
-      # Try to detect possible conditional in the line.
-      # @param pLine String with possible conditional event.
+      # Try to detect possible repetition in the line.
+      # @param pLine String with possible repetition event.
       # @return Return a partial string, otherwise return nil.
-      def detect_conditional(pLine)
+      def detect_repetition(pLine)
         raise NotImplementedError
       end
 
       # Handling string type
-      # @param pString String for find the conditional type.
+      # @param pString String for find the repetition type.
       # @return Return a string with the type.
-      def conditional_type(pString)
+      def repetition_type(pString)
         raise NotImplementedError
       end
 
