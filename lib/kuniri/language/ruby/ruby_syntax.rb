@@ -9,6 +9,8 @@ require_relative 'module_namespace_ruby'
 require_relative 'end_block_ruby'
 require_relative 'constructor_ruby'
 require_relative 'class_ruby'
+require_relative 'conditional_ruby'
+require_relative 'repetition_ruby'
 
 module Languages
 
@@ -28,6 +30,8 @@ module Languages
         @endBlockHandler = Languages::Ruby::EndBlockRuby.new
         @methodHandler = Languages::Ruby::FunctionBehaviorRuby.new
         @constructorHandler = Languages::Ruby::ConstructorRuby.new
+        @conditionalHandler = Languages::Ruby::ConditionalRuby.new
+        @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         clear_data
       end
 

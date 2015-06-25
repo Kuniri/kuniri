@@ -14,9 +14,11 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        # TODO: Handle it!
-        # idle_capture
-        # Conditionals, repetitions
+        if @language.conditionalHandler.get_conditional(pLine)
+          conditional_capture
+        else
+          return
+        end
       end
 
       def idle_capture
@@ -25,6 +27,11 @@ module StateMachine
 
       def module_capture
         @language.rewind_state
+      end
+
+      def conditional_capture
+        @language.set_state(@language.conditionalState)
+        @language.flagFunctionBehaviour = Languages::GLOBAL_FUNCTION_STATE
       end
 
       def execute(pElementFile, pLine)

@@ -13,7 +13,6 @@ module StateMachine
       end
 
       def handle_line(pLine)
-
         if @language.externRequirementHandler.get_requirement(pLine)
           include_capture
         elsif @language.variableHandler.get_variable(pLine)

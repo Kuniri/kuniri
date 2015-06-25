@@ -250,6 +250,43 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Conditional line" do
+    it "Correct state transition." do
+      path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (conditional)" do
+       path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].global_functions[0].name)
+        .to eq("simple1")
+
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].expression).to eq("3 > 2")
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].type).to eq("IF")
+
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].expression).to eq("7 > 2")
+      expect(@syntax.fileElements[0].classes[0].global_functions[1]
+            .conditionals[0].type).to eq("IF")
+
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].expression).to eq("\"a\" < \"k\"")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].type).to eq("IF")
+    end
+  end
+
 
   after :each do
     @syntax = nil

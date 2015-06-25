@@ -20,6 +20,10 @@ module StateMachine
         @language.rewind_state
       end
 
+      def conditional_capture
+        @language.set_state(@language.conditionalState)
+      end
+
       def execute(pElementFile, pLine)
         methodElement = @language.methodHandler.get_function(pLine)
 

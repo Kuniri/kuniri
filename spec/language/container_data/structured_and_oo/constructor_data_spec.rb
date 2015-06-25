@@ -28,6 +28,17 @@ RSpec.describe Languages::ConstructorData do
     end
   end
 
+  context "When have codiditional statements." do
+    it "Simple case of conditional statment" do
+      condiditonal = Languages::ConditionalData.new
+      condiditonal.type = "IF"
+      condiditonal.expression = "x > 3"
+      @constructorData.add_conditional(condiditonal)
+      expect(@constructorData.conditionals[0].instance_of?(
+              Languages::ConditionalData)).to eq(true)
+    end
+  end
+
   after :each do
     @constructorData = nil
   end
