@@ -13,11 +13,6 @@ require_relative '../state_machine/OO_structured_fsm/conditional_state.rb'
 # Module that keeps the language syntax.
 module Languages
 
-  NONE_HANDLING_STATE       ||= -1
-  GLOBAL_FUNCTION_STATE     ||= 0
-  CONSTRUCTOR_STATE         ||= 1
-  METHOD_STATE              ||= 2
-
   # @abstract Abstract class for handling different types of language.
   class Language
 

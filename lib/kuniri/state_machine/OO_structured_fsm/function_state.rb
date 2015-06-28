@@ -1,5 +1,6 @@
 require_relative 'oo_structured_state'
 require_relative 'module_state'
+require_relative 'token_state_machine'
 
 module StateMachine
 
@@ -30,8 +31,8 @@ module StateMachine
       end
 
       def conditional_capture
+        @language.flagFunctionBehaviour = StateMachine::GLOBAL_FUNCTION_STATE
         @language.set_state(@language.conditionalState)
-        @language.flagFunctionBehaviour = Languages::GLOBAL_FUNCTION_STATE
       end
 
       def execute(pElementFile, pLine)
