@@ -250,6 +250,131 @@ RSpec.describe Languages::RubySyntax do
     end
   end
 
+  context "Conditional line" do
+    it "Correct state transition (Global function)." do
+      path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (conditional - Global function)" do
+       path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].global_functions[0].name)
+        .to eq("simple1")
+
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].expression).to eq("3 > 2")
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].type).to eq("IF")
+
+      expect(@syntax.fileElements[0].global_functions[1].name)
+        .to eq("simple2")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].expression).to eq("7 > 2")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].type).to eq("IF")
+
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[1].expression).to eq("\"a\" < \"k\"")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[1].type).to eq("IF")
+    end
+
+    it "Correct state transition (Method)." do
+      path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/methodConditional.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (conditional - method)" do
+       path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/methodConditional.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+        .to eq("method1")
+
+      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
+              .expression).to eq("x > 3")
+      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
+              .type).to eq("IF")
+
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+        .to eq("method2")
+      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
+              .expression).to eq("b && c")
+      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
+              .type).to eq("IF")
+
+      expect(@syntax.fileElements[0].classes[0].methods[2].name)
+        .to eq("method3")
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
+              .expression).to eq("b == 3")
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[1]
+              .expression).to eq("b < 7")
+
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
+              .type).to eq("IF")
+
+      expect(@syntax.fileElements[0].classes[0].methods[3].name)
+        .to eq("method4")
+      expect(@syntax.fileElements[0].classes[0].methods[3].conditionals[0]
+              .expression).to eq("x")
+    end
+
+    it "Correct state transition (Constructor)." do
+      path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/constructorConditional.rb"
+
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
+
+    it "Correct data capture (conditional - method)" do
+       path =
+        "spec/samples/rubySyntaxParts/conditionalStatment/constructorConditional.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].constructors[0].name)
+          .to eq("initialize")
+
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
+              .expression).to eq("a > b")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
+              .type).to eq("IF")
+
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
+              .expression).to eq("x")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
+              .type).to eq("CASE")
+
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
+              .expression).to eq("u && y")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
+              .type).to eq("IF")
+
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
+              .expression).to eq("u == 1")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
+              .type).to eq("ELSIF")
+    end
+  end
 
   after :each do
     @syntax = nil

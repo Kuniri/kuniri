@@ -13,11 +13,20 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        # FROM HERE, WE CAN GO TO: REPETITION ANS CONDITIONAL STRUCTURES.
+        if @language.conditionalHandler.get_conditional(pLine)
+          conditional_capture
+        else
+          return
+        end
       end
 
       def class_capture
         @language.rewind_state
+      end
+
+      def conditional_capture
+        @language.flagFunctionBehaviour = StateMachine::METHOD_STATE
+        @language.set_state(@language.conditionalState)
       end
 
       def execute(pElementFile, pLine)

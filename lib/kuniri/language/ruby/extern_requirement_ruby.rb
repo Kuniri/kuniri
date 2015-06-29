@@ -24,15 +24,13 @@ module Languages
       protected
 
         def detect_extern_requirement(pLine)
-          regexExpression = /(?:require_relative|require)\s*['|"](.*)['|"]/
-          # TODO: CREATE HERE SOME CHECK OF DOUBLE QUOTES, FOR AVOID: "...'
-          # return nil if pLine.count(""") != 2 or pLine.count("'") != 2
+          regexExpression = /^\s*require(?:_relative)?\s+('|")(.*)\1/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
 
         def remove_unnecessary_information(pLine)
-          regexClean = /\s*|"|'/
+          regexClean = /\s+|"|'/
           return pLine.gsub!(regexClean, "") if pLine =~ regexClean
           return pLine
         end

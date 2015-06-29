@@ -3,6 +3,7 @@ require_relative 'function_data'
 require_relative 'variable_global_data'
 require_relative 'extern_requirement_data'
 require_relative 'module_namespace_data'
+require_relative 'class_data'
 
 module Languages
  
@@ -34,25 +35,25 @@ module Languages
       def add_global_variable(pVariable)
         # Check all element and add it
         pVariable.each do |element|
-          next if not element.is_a?(Languages::VariableGlobalData)
+          next unless element.is_a?(Languages::VariableGlobalData)
           @global_variables.push(element)
         end
       end
 
       def add_extern_requirement(pOutside)
-        return if not pOutside.is_a?(Languages::ExternRequirementData)
+        return unless pOutside.is_a?(Languages::ExternRequirementData)
 
         @extern_requirements.push(pOutside)
       end
 
       def add_class(pClass)
-        return if not pClass.is_a?(Languages::ClassData)
+        return unless pClass.is_a?(Languages::ClassData)
 
         @classes.push(pClass)
       end
 
       def add_modules(pModule)
-        return if not pModule.is_a?(Languages::ModuleNamespaceData)
+        return unless pModule.is_a?(Languages::ModuleNamespaceData)
 
         @modules.push(pModule)
       end

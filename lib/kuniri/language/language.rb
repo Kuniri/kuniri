@@ -8,6 +8,7 @@ require_relative '../state_machine/OO_structured_fsm/method_state.rb'
 require_relative '../state_machine/OO_structured_fsm/module_state.rb'
 require_relative '../state_machine/OO_structured_fsm/variable_state.rb'
 require_relative '../state_machine/OO_structured_fsm/oo_structured_state.rb'
+require_relative '../state_machine/OO_structured_fsm/conditional_state.rb'
 
 # Module that keeps the language syntax.
 module Languages
@@ -31,6 +32,7 @@ module Languages
       attr_reader :methodState
       attr_reader :moduleState
       attr_reader :variableState
+      attr_reader :conditionalState
 
       attr_reader :externRequirementHandler
       attr_reader :variableHandler
@@ -41,8 +43,13 @@ module Languages
       attr_reader :attributeHandler
       attr_reader :methodHandler
       attr_reader :constructorHandler
+      attr_reader :conditionalHandler
 
       attr_accessor :fileElements
+
+      # Those values help state machine to understand which place to add
+      # conditional information and repetition data.
+      attr_accessor :flagFunctionBehaviour
 
       # @param pReference Reference of child class.
       # This method initialize all the needed states of state machine.
@@ -59,11 +66,14 @@ module Languages
         @methodState = StateMachine::OOStructuredFSM::MethodState.new(self)
         @moduleState = StateMachine::OOStructuredFSM::ModuleState.new(self)
         @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
+        @conditionalState =
+          StateMachine::OOStructuredFSM::ConditionalState.new(self)
         @state = @idleState
         @previousState = []
         @previousState.push (@state)
 
         @fileElements = []
+        @flagFunctionBehaviour = nil
       end
 
       # Set the source code to by analysed.
@@ -178,6 +188,10 @@ module Languages
       # Idle state, waiting for action! =D
       def idle_capture
         @state.idle_capture
+      end
+
+      def conditional_capture
+        @state.conditional_capture
       end
 
       # keep track of state.

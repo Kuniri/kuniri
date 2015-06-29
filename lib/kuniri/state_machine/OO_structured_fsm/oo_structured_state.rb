@@ -57,6 +57,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Handling conditional state
+      def conditional_capture
+        raise NotImplementedError
+      end
+
       def execute(pElementFile, pLine)
         raise NotImplementedError
       end

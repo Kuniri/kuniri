@@ -49,7 +49,7 @@ module Languages
           regexExp = /^\s+unless|^unless/
           return "UNLESS" if regexExp =~ pString
 
-          regexExpression = /^\s+elsif|^elsif/
+          regexExp = /^\s+elsif|^elsif/
           return "ELSIF" if regexExp =~ pString
 
           return nil
