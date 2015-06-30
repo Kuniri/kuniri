@@ -56,6 +56,10 @@ module Languages
         @constructors
       end
 
+      def get_parameters
+        @parameters
+      end
+
   # Class
   end
 
