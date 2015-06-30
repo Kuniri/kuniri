@@ -10,6 +10,8 @@ require_relative 'constructor_ruby'
 require_relative 'class_ruby'
 require_relative 'conditional_ruby'
 require_relative 'repetition_ruby'
+require_relative 'function_behavior_ruby'
+require_relative 'attribute_ruby'
 
 module Languages
 
@@ -35,7 +37,6 @@ module Languages
       end
 
       def clear_data
-        @rubySyntaxSupport = Languages::RubySyntaxSupport.new
         #You have to make it more generic, for the situation of many class.
         @currentClass = Languages::ClassData.new
         @classes = []
