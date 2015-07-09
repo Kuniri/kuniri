@@ -7,6 +7,8 @@
 [![Test Coverage](https://codeclimate.com/github/rodrigosiqueira/kuniri/badges/coverage.svg)](https://codeclimate.com/github/rodrigosiqueira/kuniri)
 [![Stories in Ready](https://badge.waffle.io/rodrigosiqueira/kuniri.png?label=ready&title=Ready)](https://waffle.io/rodrigosiqueira/kuniri)
 
+[[License](https://img.shields.io/badge/license-GPLv3-green.svg)]
+
 ----
 # What is Kuniri?
 

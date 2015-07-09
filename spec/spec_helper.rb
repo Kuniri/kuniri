@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 #CodeClimate::TestReporter.start
 require 'rspec'
 require 'simplecov'
+require 'coveralls'
 
 if ENV['CI']
   require 'codeclimate-test-reporter'
@@ -27,3 +28,5 @@ end
 Dir[File.join(File.dirname(__FILE__), "../lib/kuniri/**" , "**.rb")].each do |f|
   require_relative f
 end
+
+Coveralls.wear!
