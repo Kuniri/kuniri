@@ -32,7 +32,7 @@ module Languages
       end
 
       def add_repetition(pRepetition)
-        return nil unless (pConditional.instance_of?Languages::RepetitionData)
+        return nil unless (pRepetition.instance_of?Languages::RepetitionData)
         @repetitions.push(pRepetition)
       end
 

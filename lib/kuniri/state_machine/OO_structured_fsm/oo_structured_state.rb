@@ -62,6 +62,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Handling conditional state
+      def repetition_capture
+        raise NotImplementedError
+      end
+
       def execute(pElementFile, pLine)
         raise NotImplementedError
       end

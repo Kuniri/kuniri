@@ -15,6 +15,8 @@ module StateMachine
       def handle_line(pLine)
         if @language.conditionalHandler.get_conditional(pLine)
           conditional_capture
+        elsif @language.repetitionHandler.get_repetition(pLine)
+          repetition_capture
         else
           return
         end
@@ -27,6 +29,11 @@ module StateMachine
       def conditional_capture
         @language.flagFunctionBehaviour = StateMachine::METHOD_STATE
         @language.set_state(@language.conditionalState)
+      end
+
+      def repetition_capture
+        @language.flagFunctionBehaviour = StateMachine::METHOD_STATE
+        @language.set_state(@language.repetitionState)
       end
 
       def execute(pElementFile, pLine)

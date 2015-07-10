@@ -24,7 +24,7 @@ module Languages
       protected
 
         def detect_repetition(pLine)
-          regexExp = /^\s*while\s+(.*)/
+          regexExp = /^\s*while\s+(.*)do/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
           regexExp = /^\s*for\s+(.*)/

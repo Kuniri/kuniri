@@ -8,19 +8,19 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
 
   context "When it is if statment." do
     it "Simple if statment." do
-      input = "while gets"
+      input = "while gets do"
       repetitionCaptured = @repetitionRuby.get_repetition(input).expression
       expect(repetitionCaptured).to eq("gets")
 
-      input = "while 2 < 3"
+      input = "while 2 < 3 do"
       repetitionCaptured = @repetitionRuby.get_repetition(input).expression
       expect(repetitionCaptured).to eq("2 < 3")
 
-      input = "for x.range(0,1)"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).expression
-      expect(repetitionCaptured).to eq("x.range(0,1)")
+      #input = "for x.range(0,1)"
+      #repetitionCaptured = @repetitionRuby.get_repetition(input).expression
+      #expect(repetitionCaptured).to eq("x.range(0,1)")
 
-      input = "while x == 222222"
+      input = "while x == 222222 do"
       repetitionCaptured = @repetitionRuby.get_repetition(input).expression
       expect(repetitionCaptured).to eq("x == 222222")
     end

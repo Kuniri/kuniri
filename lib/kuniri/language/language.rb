@@ -33,6 +33,7 @@ module Languages
       attr_reader :moduleState
       attr_reader :variableState
       attr_reader :conditionalState
+      attr_reader :repetitionState
 
       attr_reader :externRequirementHandler
       attr_reader :variableHandler
@@ -44,6 +45,7 @@ module Languages
       attr_reader :methodHandler
       attr_reader :constructorHandler
       attr_reader :conditionalHandler
+      attr_reader :repetitionHandler 
 
       attr_accessor :fileElements
 
@@ -68,6 +70,8 @@ module Languages
         @variableState = StateMachine::OOStructuredFSM::VariableState.new(self)
         @conditionalState =
           StateMachine::OOStructuredFSM::ConditionalState.new(self)
+        @repetitionState =
+          StateMachine::OOStructuredFSM::RepetitionState.new(self)
         @state = @idleState
         @previousState = []
         @previousState.push (@state)
