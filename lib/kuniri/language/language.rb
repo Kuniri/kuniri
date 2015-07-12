@@ -9,6 +9,7 @@ require_relative '../state_machine/OO_structured_fsm/module_state.rb'
 require_relative '../state_machine/OO_structured_fsm/variable_state.rb'
 require_relative '../state_machine/OO_structured_fsm/oo_structured_state.rb'
 require_relative '../state_machine/OO_structured_fsm/conditional_state.rb'
+require_relative '../state_machine/OO_structured_fsm/repetition_state.rb'
 
 # Module that keeps the language syntax.
 module Languages

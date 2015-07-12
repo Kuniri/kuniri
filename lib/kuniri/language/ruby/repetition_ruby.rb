@@ -30,6 +30,9 @@ module Languages
           regexExp = /^\s*for\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
+          regexExp = /^\s*until\s+(.*)do/
+          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+
           return nil
         end
 

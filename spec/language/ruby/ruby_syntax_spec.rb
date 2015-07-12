@@ -375,7 +375,7 @@ RSpec.describe Languages::RubySyntax do
               .type).to eq("ELSIF")
     end
 
-    it "Correct data capture (repetition -  Method)" do
+    it "Correct data capture (repetition[while] -  Method)" do
        path = "spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb"
 
       @syntax.analyse_source(path)
@@ -384,6 +384,29 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.fileElements[0].classes[0].methods[0].repetitions[0]
               .expression).to eq("i < num")
+    end
+
+    it "Correct data capture (repetiton[util] - Method)" do
+      path = "spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+          .to eq("simple2")
+
+      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[0]
+              .expression).to eq("i > num")
+
+    end
+
+    it "Correct data capture (repetition[for] -  Method)" do
+      path = "spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+          .to eq("simple2")
+
+      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[1]
+              .expression).to eq("i in 0..5")
     end
 
   end
