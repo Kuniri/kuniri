@@ -33,19 +33,7 @@ module Languages
         @constructorHandler = Languages::Ruby::ConstructorRuby.new
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
-        clear_data
-      end
-
-      def clear_data
-        #You have to make it more generic, for the situation of many class.
-        @currentClass = Languages::ClassData.new
-        @classes = []
         @visibility = "public"
-        @class_token = 0
-        @token = 0
-        @attributeList = []
-        @externRequirements = []
-        @functionList = []
       end
 
       def analyse_source(pPath)
@@ -102,16 +90,8 @@ module Languages
 
     private
 
-      @class_token
-      @token
-      @rubySyntaxSupport
-      @classes
-      @currentClass
-      @functionList
       attr_accessor :visibility
       @source
-      @attributeList
-      @externRequirements
 
       def analyse_first_step(pPath)
         fileElement = Languages::FileElement.new(pPath)
@@ -123,10 +103,6 @@ module Languages
           fileElement = @state.execute(fileElement, line)
         end
         @fileElements.push(fileElement)
-      end
-
-      def increase_token
-        @token = @token + 1
       end
 
   # Class
