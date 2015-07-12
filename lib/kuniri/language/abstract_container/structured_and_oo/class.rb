@@ -1,4 +1,3 @@
-
 module Languages
 
   # @abstract Class is an container for handling class

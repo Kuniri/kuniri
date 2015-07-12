@@ -85,7 +85,6 @@ module Languages
       end
 
       def get_classes
-        @classes
       end
 
     private

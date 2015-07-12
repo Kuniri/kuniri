@@ -1,4 +1,3 @@
-
 module Languages
 
   # Class responsible for handling end block of each language.
