@@ -1,7 +1,6 @@
 require_relative '../error/configuration_file_error'
 require_relative '../parser/parser'
 require_relative '../util/logger'
-require_relative '../navigate/code_navigate'
 require_relative 'configuration/language_available'
 require_relative 'configuration/monitor_available'
 require_relative 'configuration/log_available'
@@ -52,20 +51,7 @@ module Kuniri
         @parser = Parser::Parser.new(@filesPathProject)
         @parser.start_parser()
       end
-
-      # If the parser was already ran, entry in the navigation mode. This mode
-      # is similar to bash terminal, however instead of see the folder
-      # directory you can see the code.
-      def start_navigation_mode
-        unless @parser
-          puts "Please, run parse first :("
-          return -1
-        end
-        files = @parser.fileLanguage 
-        navigate = Navigate::CodeNavigate.new(files)
-        navigate.navigate_mode
-      end
-
+ 
       def get_parser
         @parser
       end

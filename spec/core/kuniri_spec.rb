@@ -11,11 +11,4 @@ RSpec.describe Kuniri::Kuniri do
     end
   end
 
-  context "When navigation." do
-    it "Try to call navigation without start_parser first." do
-      @kuniriTest = Kuniri::Kuniri.new
-      expect(@kuniriTest.start_navigation_mode).to be -1
-    end
-  end
-
 end
