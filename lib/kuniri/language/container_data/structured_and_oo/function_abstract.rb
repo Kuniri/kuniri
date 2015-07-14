@@ -13,6 +13,7 @@ module Languages
       attr_reader :parameters
       attr_reader :conditionals
       attr_reader :repetitions
+      attr_accessor :type
 
       def initialize(pFunctionName)
         @name = pFunctionName

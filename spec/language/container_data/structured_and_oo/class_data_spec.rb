@@ -101,7 +101,7 @@ RSpec.describe Languages::ClassData do
 
   context "When add constructor" do
     it "Add constructors" do
-      constructorAdd = Languages::ConstructorData.new("constructor")
+      constructorAdd = Languages::FunctionData.new("constructor")
       @classData.add_constructor(constructorAdd)
       constructors = @classData.get_constructors
       expect(constructors[0].name == "constructor").to be true

@@ -49,6 +49,7 @@ module Languages
     ARRAY_TOKEN      ||= 41
     HASH_TOKEN       ||= 42
     OBJECT_TOKEN     ||= 43
+    CONSTRUCTOR_TOKEN ||= 44
 
     # Module
   end

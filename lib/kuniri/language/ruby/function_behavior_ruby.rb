@@ -29,7 +29,7 @@ module Languages
               functionRuby.add_parameters(parameter)
             end
           end
-
+ 
           @log.write_log("Debug: Method: #{functionRuby.name}, Parameter:
                          #{functionRuby.parameters}")
 

@@ -38,7 +38,7 @@ module Languages
       end
 
       def add_constructor(pConstructor)
-        return unless pConstructor.is_a?(Languages::ConstructorData)
+        return unless pConstructor.is_a?(Languages::FunctionData)
 
         @constructors.push(pConstructor)
       end
