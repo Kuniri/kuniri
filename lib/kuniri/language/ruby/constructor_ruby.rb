@@ -11,7 +11,7 @@ module Languages
 
       public
 
-        def get_constructor(pLine, type = 'globalFunction')
+        def get_constructor(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result
 

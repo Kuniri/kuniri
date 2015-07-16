@@ -30,23 +30,28 @@ module StateMachine
         @language.rewind_state
       end
 
+      def add_conditional_element(pFlag, pElementFile, pConditional)
+        if pFlag == StateMachine::GLOBAL_FUNCTION_STATE
+          pElementFile.global_functions
+                  .last.add_conditional(pConditional)
+        elsif pFlag == StateMachine::METHOD_STATE
+          pElementFile.classes.last.methods
+                  .last.add_conditional(pConditional)
+        elsif pFlag == StateMachine::CONSTRUCTOR_STATE
+           pElementFile.classes.last.constructors
+                   .last.add_conditional(pConditional)
+        end
+          return pElementFile
+      end
+
       def execute(pElementFile, pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
 
-        flag = @language.flagFunctionBehaviour 
+        flag = @language.flagFunctionBehaviour
 
         if (conditional)
-          #Function
-          if (flag == StateMachine::GLOBAL_FUNCTION_STATE)
-            pElementFile.global_functions.last.add_conditional(conditional)
-          #Method
-          elsif (flag == StateMachine::METHOD_STATE)
-            pElementFile.classes.last.methods.last.add_conditional(conditional)
-          #Constructor
-          elsif (flag == StateMachine::CONSTRUCTOR_STATE)
-            pElementFile.classes.last.constructors
-                        .last.add_conditional(conditional)
-          end
+          pElementFile = add_conditional_element(flag,
+                                          pElementFile, conditional)
         end
 
         if (@language.endBlockHandler.has_end_of_block?(pLine))
