@@ -10,6 +10,8 @@ module Languages
 
       public
 
+        # Get Ruby variable.
+        # @see Languages::VariableGlobal
         def get_variable(pLine)
           result = detect_variable(pLine)
           return nil unless result
@@ -30,6 +32,7 @@ module Languages
 
       protected
 
+        # Override
         def detect_variable(pLine)
           # Check basic case of non variable. Ex.: value x
           pLine.gsub!(/^\s*/, "")
@@ -43,6 +46,7 @@ module Languages
           return pLine
         end
 
+        # Override
         def remove_unnecessary_information(pLine)
           return pLine
         end

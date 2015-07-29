@@ -11,6 +11,8 @@ module Languages
 
       public
 
+        # Get Ruby constructor.
+        # @see FunctionBehaviorRuby
         def get_constructor(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result

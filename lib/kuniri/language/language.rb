@@ -1,15 +1,15 @@
-require_relative '../state_machine/OO_structured_fsm/attribute_state.rb'
-require_relative '../state_machine/OO_structured_fsm/class_state.rb'
-require_relative '../state_machine/OO_structured_fsm/constructor_state.rb'
-require_relative '../state_machine/OO_structured_fsm/function_state.rb'
-require_relative '../state_machine/OO_structured_fsm/idle_state.rb'
-require_relative '../state_machine/OO_structured_fsm/include_state.rb'
-require_relative '../state_machine/OO_structured_fsm/method_state.rb'
-require_relative '../state_machine/OO_structured_fsm/module_state.rb'
-require_relative '../state_machine/OO_structured_fsm/variable_state.rb'
-require_relative '../state_machine/OO_structured_fsm/oo_structured_state.rb'
-require_relative '../state_machine/OO_structured_fsm/conditional_state.rb'
-require_relative '../state_machine/OO_structured_fsm/repetition_state.rb'
+require_relative '../state_machine/OO_structured_fsm/attribute_state'
+require_relative '../state_machine/OO_structured_fsm/class_state'
+require_relative '../state_machine/OO_structured_fsm/constructor_state'
+require_relative '../state_machine/OO_structured_fsm/function_state'
+require_relative '../state_machine/OO_structured_fsm/idle_state'
+require_relative '../state_machine/OO_structured_fsm/include_state'
+require_relative '../state_machine/OO_structured_fsm/method_state'
+require_relative '../state_machine/OO_structured_fsm/module_state'
+require_relative '../state_machine/OO_structured_fsm/variable_state'
+require_relative '../state_machine/OO_structured_fsm/oo_structured_state'
+require_relative '../state_machine/OO_structured_fsm/conditional_state'
+require_relative '../state_machine/OO_structured_fsm/repetition_state'
 
 # Module that keeps the language syntax.
 module Languages
@@ -129,10 +129,12 @@ module Languages
         @state = @previousState.pop
       end
 
+      # TODO: REMOVE IT
       def get_name
         return @name
       end
 
+      # TODO: REMOVE IT
       def get_path
         return @path
       end
@@ -188,6 +190,7 @@ module Languages
         @state.idle_capture
       end
 
+      # Conditional state.
       def conditional_capture
         @state.conditional_capture
       end

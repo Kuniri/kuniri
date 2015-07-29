@@ -3,6 +3,7 @@
 
 module Languages
 
+  # Module responsible for handling ruby syntax.
   module Ruby
 
     # Token types used to identify keywords

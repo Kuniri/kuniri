@@ -1,5 +1,5 @@
-require_relative '../abstract_container/structured_and_oo/attribute.rb'
-require_relative '../container_data/structured_and_oo/attribute_data.rb'
+require_relative '../abstract_container/structured_and_oo/attribute'
+require_relative '../container_data/structured_and_oo/attribute_data'
 require_relative '../../util/html_logger'
 require_relative '../../core/setting'
 
@@ -17,6 +17,9 @@ module Languages
           @attributeList = []
         end
 
+        # Get ruby attribute. 
+        # @param pLine Verify if line has a ruby attribute.
+        # @return Return AttributeData or nil.
         def get_attribute(pLine)
           result = detect_attribute(pLine)
           return nil unless result

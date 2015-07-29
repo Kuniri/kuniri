@@ -10,6 +10,8 @@ module Languages
 
       public
 
+        # Get Ruby requirement.
+        # @see ExternRequirement
         def get_requirement(pLine)
           detectExpression = detect_extern_requirement(pLine)
           return nil unless detectExpression
@@ -23,12 +25,14 @@ module Languages
 
       protected
 
+        # Override
         def detect_extern_requirement(pLine)
           regexExpression = /^\s*require(?:_relative)?\s+('|")(.*)\1/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
 
+        # Override
         def remove_unnecessary_information(pLine)
           regexClean = /\s+|"|'/
           return pLine.gsub!(regexClean, "") if pLine =~ regexClean

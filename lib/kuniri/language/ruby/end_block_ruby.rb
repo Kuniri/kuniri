@@ -4,10 +4,13 @@ module Languages
 
   module Ruby
 
+    # Class responsible for handling Ruby end of block.
     class EndBlockRuby < Languages::EndBlock
 
       public
 
+        # Verify Ruby end of block.
+        # @see EndBlock
         def has_end_of_block?(pLine)
           return detect_end(pLine)
         end

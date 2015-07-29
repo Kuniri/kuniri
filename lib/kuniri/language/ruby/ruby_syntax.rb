@@ -36,6 +36,8 @@ module Languages
         @visibility = "public"
       end
 
+      # Analyse source code.
+      # @param pPath Path of file to be analysed.
       def analyse_source(pPath)
         @name = File.basename(pPath, ".*")
         @path = File.dirname(pPath)
@@ -43,7 +45,7 @@ module Languages
         #self.analyse_second_step
       end
 
-      # Extract all the comments from the source.
+      # TODO: remove it.
       def comment_extract
         all_comments = Array.new
         #Find a simple Ruby comment with '#'
@@ -57,28 +59,32 @@ module Languages
         return all_comments
       end
 
-      # Extract all method from the source.
+      # TODO: remove it.
       def method_extract
         return @currentClass.get_methods
       end
 
-      # Extract all the class declared in the source.
+      # TODO: remove it.
       def class_extract
         return @currentClass
       end
 
+      # TODO: remove it.
       def attribute_extract
         return @currentClass.get_attributes
       end
 
+      # TODO: remove it.
       def global_variable_extract
         raise NotImplementedError
       end
 
+      # TODO: remove it.
       def extern_requirement_extract
         return @externRequirements
       end
 
+      # TODO: remove it.
       def get_classes
       end
 
@@ -87,6 +93,9 @@ module Languages
       attr_accessor :visibility
       @source
 
+      # First step for analyse code, it is responsible for get only basic
+      # informations.
+      # @param pPath Path of file to be analysed.
       def analyse_first_step(pPath)
         fileElement = Languages::FileElement.new(pPath)
         @source = File.open(pPath, "rb")

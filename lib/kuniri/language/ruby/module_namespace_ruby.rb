@@ -10,6 +10,8 @@ module Languages
     
       public
 
+        # Get Ruby module.
+        # @see Languages::ModuleNamespace
         def get_module(pLine)
           result = detect_module(pLine)
           return nil unless result
@@ -22,12 +24,14 @@ module Languages
 
       protected
 
+        # Override
         def detect_module(pLine)
           regexExpression = /^\s*module\s+(.*)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
 
+        # Override
         def remove_unnecessary_information(pLine)
           return pLine.gsub(/\s/, "") if pLine =~ /\s/
           return pLine

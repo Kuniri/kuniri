@@ -6,7 +6,7 @@ module Languages
 
   module Ruby
 
-    # Handling ruby method
+    # Handling Ruby method
     class FunctionBehaviorRuby < Languages::FunctionBehavior
 
       public
@@ -15,6 +15,7 @@ module Languages
           @log = @settings = Kuniri::Setting.create.log
         end
 
+        # Get Ruby function.
         def get_function(pLine, type = 'globalFunction')
           result = detect_function(pLine)
           return nil unless result
@@ -38,12 +39,14 @@ module Languages
 
       protected
 
+        # Override
         def detect_function(pLine)
           regexExpression = /^\s*def\b\s*(\w*)\b/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
 
+        # Override
         def handling_default_parameter(pLine)
           return pLine unless pLine =~ /=/
 
@@ -69,11 +72,13 @@ module Languages
 
         end
 
+        # Override
         def remove_unnecessary_information(pLine)
           return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
           return pLine
         end
 
+        # Override
         def handling_parameter(pLine)
           # Handling with parenthesis and without it.
           if pLine =~ /\(.+\)/
@@ -92,12 +97,14 @@ module Languages
 
         @log
 
+        # Override
         def get_parameters(pLine, pRegex)
           partialParameters = pLine.scan(pRegex).join("")
           partialParameters = remove_unnecessary_information(partialParameters)
           return partialParameters
         end
 
+        # Override
         def split_string_by_comma(pString)
           return pString.split(",") if pString =~ /,/
           return [pString]

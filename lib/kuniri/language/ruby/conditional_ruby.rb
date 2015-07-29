@@ -1,14 +1,17 @@
-require_relative '../abstract_container/structured_and_oo/conditional.rb'
-require_relative '../container_data/structured_and_oo/conditional_data.rb'
+require_relative '../abstract_container/structured_and_oo/conditional'
+require_relative '../container_data/structured_and_oo/conditional_data'
 
 module Languages
 
   module Ruby
 
+    # Class responsible for handling ruby conditional statements.
     class ConditionalRuby < Languages::Conditional
 
       public
 
+        # Get ruby conditional.
+        # @see Languages::Conditional
         def get_conditional(pLine)
           result = detect_conditional(pLine)
           return nil unless result
@@ -23,6 +26,7 @@ module Languages
 
       protected
 
+        # Override.
         def detect_conditional(pLine)
           regexExp = /^\s*if\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
@@ -39,6 +43,7 @@ module Languages
           return nil
         end
 
+        # Override
         def conditional_type(pString)
           regexExp = /^\s+if|^if/
           return "IF" if regexExp =~ pString
@@ -55,6 +60,7 @@ module Languages
           return nil
         end
 
+        # Override
         def get_expression(pString)
           leftStrip = pString.lstrip
           rightStrip = leftStrip.rstrip
