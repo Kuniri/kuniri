@@ -6,6 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/rodrigosiqueira/kuniri/badges/gpa.svg)](https://codeclimate.com/github/rodrigosiqueira/kuniri)
 [![Stories in Ready](https://badge.waffle.io/rodrigosiqueira/kuniri.png?label=ready&title=Ready)](https://waffle.io/rodrigosiqueira/kuniri)
 [![Coverage Status](https://coveralls.io/repos/rodrigosiqueira/kuniri/badge.svg?branch=master&service=github)](https://coveralls.io/github/rodrigosiqueira/kuniri?branch=master)
+[![Inline docs](http://inch-ci.org/github/rodrigosiqueira/kuniri.svg?branch=master)](http://inch-ci.org/github/rodrigosiqueira/kuniri)
 [![License](https://img.shields.io/badge/license-GPLv3-green.svg)](https://github.com/rodrigosiqueira/kuniri/blob/master/COPYING)
 
 ----

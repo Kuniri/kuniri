@@ -1,10 +1,11 @@
 module Languages
 
+  # @abstract Repetition class handling repetition structures.
   class Repetition
 
     public
 
-      # Get conditional  
+      # Get conditional.
       # @param pLine String with possible repetition statement.
       # @return Return an ConditionalData, otherwise return nil.
       def get_repetition(pLine)

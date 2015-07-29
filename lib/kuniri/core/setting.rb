@@ -39,7 +39,7 @@ module Kuniri
  
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
-      # @param path [String] Path to ".kuniri" file, it means, the 
+      # @param pPath [String] Path to ".kuniri" file, it means, the 
       #         configurations.
       # @return [Hash] Return a Hash with the configurations read in ".kuniri",
       #     otherwise, raise an exception.

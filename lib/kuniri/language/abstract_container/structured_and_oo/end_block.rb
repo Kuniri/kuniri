@@ -1,11 +1,11 @@
 module Languages
 
-  # Class responsible for handling end block of each language.
+  # @abstract Class responsible for handling end block of each language.
   class EndBlock
 
     public
 
-      # Verify if the line has an end of line token.
+      # Verify if line has an end of line token.
       # @param pLine Line to inspect.
       # @return Return true if find an end block, otherwise return false.
       def has_end_of_block?(pLine)
@@ -15,6 +15,7 @@ module Languages
     protected
 
       # Keeps some operation for find line.
+      # @param pLine Line with potential end of block.
       def detect_end(pLine)
         raise NotImplementedError
       end

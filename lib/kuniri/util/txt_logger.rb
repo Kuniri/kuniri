@@ -7,13 +7,13 @@ module Util
   # generate the log in a .txt format.
   class TxtLogger < Util::Logger
 
-    # @param path [String] Path for save the log. The default is /tmp/
+    # @param pPath [String] Path for save the log. The default is /tmp/
     def initialize(pPath = "/tmp/kuniri.log")
       super(pPath)
     end
 
     # Write a message as .txt file.
-    # @param message [String] Massage to be write in the log file.
+    # @param pMessage [String] Massage to be write in the log file.
     def write_log(pMessage)
       File.open(@log_path, 'a') do |file|
         file.write("="*10 + "\n")

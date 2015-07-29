@@ -1,12 +1,13 @@
 module Languages
 
+  # @abstract Class responsible for handling conditional instructions.
   class Conditional
 
     public
 
       # Get conditional  
       # @param pLine String with possible conditional statement.
-      # @return Return an ConditionalData, otherwise return nil.
+      # @return Returns an ConditionalData, otherwise return nil.
       def get_conditional(pLine)
         raise NotImplementedError
       end

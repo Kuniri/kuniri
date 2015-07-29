@@ -54,7 +54,6 @@ module Languages
       # conditional information and repetition data.
       attr_accessor :flagFunctionBehaviour
 
-      # @param pReference Reference of child class.
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.
       def initialize
@@ -82,7 +81,7 @@ module Languages
       end
 
       # Set the source code to by analysed.
-      # @param source [String] Set the source string.
+      # @param pSource [String] Set the source string.
       def set_source(pSource)
         @source = pSource
       end
@@ -96,37 +95,31 @@ module Languages
       end
 
       # Extract all the comments from the source.
-      # @param source [String] Source code to analyses.
       def comment_extract
         raise NotImplementedError
       end
 
       # Extract all the method/function from the source.
-      # @param source [String]
       def method_extract
         raise NotImplementedError
       end
 
       # Extract all the class declared in the source.
-      # @param source [String]
       def class_extract
         raise NotImplementedError
       end
 
       # Extract the attribute from source file.
-      # @param source [String]
       def attribute_extract
         raise NotImplementedError
       end
 
       # Extract global variables.
-      # @param source [String]
       def global_variable_extract
         raise NotImplementedError
       end
 
       # Take all the extern requirements
-      # @return Return an array with all the requirements.
       def extern_requirement_extract
         raise NotImplementedError
       end

@@ -44,7 +44,6 @@ module Languages
       end
 
       # Extract all the comments from the source.
-      # @param source [String] Source code to analys.
       def comment_extract
         all_comments = Array.new
         #Find a simple Ruby comment with '#'
@@ -59,23 +58,19 @@ module Languages
       end
 
       # Extract all method from the source.
-      # @param source [String]
       def method_extract
         return @currentClass.get_methods
       end
 
       # Extract all the class declared in the source.
-      # @param source [String]
       def class_extract
         return @currentClass
       end
 
-      # @param source [String]
       def attribute_extract
         return @currentClass.get_attributes
       end
 
-      # @param source [String]
       def global_variable_extract
         raise NotImplementedError
       end

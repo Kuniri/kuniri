@@ -2,7 +2,7 @@ require_relative 'basic_data'
 
 module Languages
 
-  # @class ExternRequirementData Handling extern requirements
+  # ExternRequirementData Handling extern requirements
   class ExternRequirementData < Languages::BasicData
 
     public

@@ -5,7 +5,7 @@ module Languages
 
   module Ruby
 
-    # @class ExternRequirement Handling extern requirements.
+    # ExternRequirement Handling extern requirements.
     class ExternRequirementRuby < Languages::ExternRequirement
 
       public

@@ -1,13 +1,13 @@
 module Languages
 
-  # @abstract Function behavior.
+  # @abstract Constructor.
   class Constructor
 
     public
 
-      # Get constructor in a specific language.
-      # @param pLine String with potencial function.
-      # @return Return constructor data, or nil if line doesn't have method.
+      # Inspect line for trying to find a constructor.
+      # @param pLine String with potential function.
+      # @return Returns ConstructorData, or nil if line doesn't have method.
       def get_constructor(pLine)
         raise NotImplementedError
       end
@@ -24,10 +24,16 @@ module Languages
         raise NotImplementedError
       end
 
+      # Trim unnecessary information from the string.
+      # @param pLine String for handling.
+      # @return Return an string.
       def remove_unnecessary_information(pLine)
         raise NotImplementedError
       end
 
+      # Handling default parameters.
+      # @param pLine String with parameters.
+      # @return Return an array with default parameters.
       def handling_default_parameter(pLine)
         raise NotImplementedError
       end

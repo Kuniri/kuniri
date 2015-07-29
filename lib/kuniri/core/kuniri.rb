@@ -9,9 +9,8 @@ require_relative 'setting'
 # Kuniri module connect all the elements and use it in the proper sequence.
 module Kuniri
 
-  # @class Kuniri
-  # @brief Kuniri class have the reference for all files and settings.
-  #     Basically this class launch the application.
+  # Kuniri class have the reference for all files and settings. Basically this
+  # class launch the application.
   class Kuniri
 
     public
@@ -34,8 +33,6 @@ module Kuniri
 
       # Start Kuniri tasks based on configuration file. After read 
       # configuration file, find all files in source directory.
-      # @param pPath [String] Path of configuration file. Default is the 
-      #         current directory
       def run_analysis()
         @log.write_log("info: Start to run analysis.")
         @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")

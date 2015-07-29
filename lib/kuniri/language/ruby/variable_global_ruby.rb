@@ -5,7 +5,7 @@ module Languages
 
   module Ruby
 
-    # @class VariableGlobalRuby Handling extern requirements.
+    # VariableGlobalRuby Handling extern requirements.
     class VariableGlobalRuby < Languages::VariableGlobal
 
       public

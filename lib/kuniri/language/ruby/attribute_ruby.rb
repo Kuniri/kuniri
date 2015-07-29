@@ -4,10 +4,10 @@ require_relative '../../util/html_logger'
 require_relative '../../core/setting'
 
 module Languages
-  # @module Ruby Handling Ruby attributes
+
   module Ruby
 
-    # Handle ruby attribute
+    # Ruby Handling Ruby attributes
     class AttributeRuby < Languages::Attribute
 
       public

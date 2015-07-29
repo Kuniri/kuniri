@@ -6,7 +6,7 @@ module Util
   class Logger
 
     # Create/open the log file, and save the path.
-    # @param path [String] Receives the path for save the log file. By default
+    # @param pPath [String] Receives the path for save the log file. By default
     #   it is saved on /tmp with the name "kuniri".
     def initialize(pPath = "/tmp/kuniri.log")
       File.open(pPath, 'a')
@@ -18,7 +18,7 @@ module Util
       # Write log, based on the message and the path. The most important thing
       # about this method, is related with the implementation in different
       # formats. Ex.: write_log can be implemented as HTML, txt, XML, etc.
-      # @param message to write in the log file.
+      # @param pMessage to write in the log file.
       def write_log(pMessage)
         raise NotImplementedError
       end

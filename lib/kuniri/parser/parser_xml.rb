@@ -77,15 +77,15 @@ module Parser
     end
 
     # Parse a InheritanceData to xml
-    # @param xml [Nokogiri::XML::Builder] xml builder to edit
-    # @param class_data [inheritance_data] the InheritanceData to save
+    # @param xml builder to edit
+    # @param inheritance_data the InheritanceData to save
     def generate_inheritance(xml, inheritance_data)
       xml.inheritance(:name => inheritance_data[0].strip()) {}
     end
 
     # Parse a ConstructorData to xml
-    # @param xml [Nokogiri::XML::Builder] xml builder to edit
-    # @param class_data [constructor_data] the ConstructorData to save
+    # @param xml xml builder to edit
+    # @param constructor_data the ConstructorData to save
     def generate_constructor(xml, constructor_data)
       xml.method_(:name => constructor_data.name) {
         constructor_data.parameters.each do |p|
@@ -95,8 +95,8 @@ module Parser
     end
 
     # Parse a MethodData to xml
-    # @param xml [Nokogiri::XML::Builder] xml builder to edit
-    # @param class_data [MethodData] the MethodData to save
+    # @param xml builder to edit
+    # @param method_data the MethodData to save
     def generate_method(xml, method_data)
       xml.method_(:name => method_data.name, :visibility => method_data.visibility) {
         method_data.parameters.each do |p|
@@ -106,8 +106,8 @@ module Parser
     end
 
     # Parse a MethodData to xml
-    # @param xml [Nokogiri::XML::Builder] xml builder to edit
-    # @param class_data [String] the Attribute to save
+    # @param xml builder to edit
+    # @param parameter the Attribute to save
     def generate_parameter(xml, parameter)
       if parameter.kind_of?(String)
         xml.parameter(:name => parameter) {}

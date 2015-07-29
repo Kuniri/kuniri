@@ -7,13 +7,14 @@ module Util
 
     public
 
-      # @param path [String] Receives the path to save the log.
+      # @param pPath [String] Receives the path to save the log.
       def initialize(pPath = "/tmp/kuniri_log.html")
         super(pPath)
         initialize_html_file
       end
 
-      # @param message [String] Log message to be write as .html documentation.
+      # @param pMessage [String] Log message to be write as .html
+      # documentation.
       def write_log(pMessage)
         File.open(@log_path, 'a') do |file|
           file.write("<hr>\n")
