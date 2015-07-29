@@ -21,6 +21,7 @@ module Parser
           @language = pLanguage
         end
 
+        # Start parse in the project.
         def start_parser
           # TODO: handle the case of filePAth is empty
           @log.write_log("Debug: START FIRST PARSER")

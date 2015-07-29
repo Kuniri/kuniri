@@ -3,6 +3,7 @@ require_relative '../language/container_data/structured_and_oo/class_data'
 
 module Parser
 
+  # Class responsible for generate xml output
   class XML
 
     def initialize(path = "kuniri.xml")
@@ -10,12 +11,13 @@ module Parser
       set_path(path)
     end
 
-    def set_path(path)
-      @parser_path = path
+    # Set path to save the output.
+    # @param pPath Output path.
+    def set_path(pPath)
+      @parser_path = pPath
     end
 
-    # Create the xml output file.
-    #   only saves a single ClassData for now
+    # Create the xml output file, only saves a single ClassData for now
     # @param class_data [ClassData] Receives the ClassData to save
     def create_class_data(class_data)
       @log.write_log("---- PARSER XML ----")
@@ -30,8 +32,7 @@ module Parser
       end
     end
 
-    # Create the xml output file.
-    #   only saves a ClassData for now
+    # Create the xml output file, only saves a ClassData for now.
     # @param parser - Receives the parser
     def create_all_data(parser)
       @log.write_log("---- PARSER XML ----")
