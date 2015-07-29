@@ -2,6 +2,7 @@ require_relative 'basic_data'
 
 module Languages
 
+  # Class responsible for handling global variables.
   class VariableGlobalData < Languages::BasicData
 
     public

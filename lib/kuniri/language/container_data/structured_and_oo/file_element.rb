@@ -6,7 +6,9 @@ require_relative 'module_namespace_data'
 require_relative 'class_data'
 
 module Languages
- 
+
+  # FileElement is the upper element related with container data, this class
+  # refers to file.
   class FileElement < Languages::BasicData
 
     public
@@ -26,32 +28,41 @@ module Languages
         @name = pName
       end
 
+      # Add global function to the file.
+      # @param pFunction An object of FunctionData to be added at the file.
       def add_global_function(pFunction)
         return if not pFunction.is_a?(Languages::FunctionData)
 
         @global_functions.push(pFunction)
       end
 
+      # Add global variable inside file.
+      # @param pVariable An VariableGlobalData object to be added.
       def add_global_variable(pVariable)
-        # Check all element and add it
         pVariable.each do |element|
           next unless element.is_a?(Languages::VariableGlobalData)
           @global_variables.push(element)
         end
       end
 
+      # Add extern requirement inside file.
+      # @param pOutside Add an object of ExternRequirementData.
       def add_extern_requirement(pOutside)
         return unless pOutside.is_a?(Languages::ExternRequirementData)
 
         @extern_requirements.push(pOutside)
       end
 
+      # Add a class inside file.
+      # @param pClass Add an object of ClassData.
       def add_class(pClass)
         return unless pClass.is_a?(Languages::ClassData)
 
         @classes.push(pClass)
       end
 
+      # Add a module inside file.
+      # @param pModule Add an object of ModuleNamespaceData
       def add_modules(pModule)
         return unless pModule.is_a?(Languages::ModuleNamespaceData)
 

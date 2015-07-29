@@ -4,8 +4,7 @@ require_relative 'repetition_data'
 
 module Languages
 
-  # @abstract Function Abstract class responsible to abstract the behavior.
-  # Handle function data
+  # Abstraction for handling function data
   class FunctionAbstract < Languages::BasicData
 
     public
@@ -22,16 +21,25 @@ module Languages
         @repetitions = []
       end
 
+      # Add parameters inside function.
+      # @param pValue Add a parameter inside function.
       def add_parameters(pValue)
-        # TODO: You have to fix it. 
+        # TODO: You have to fix it.
         @parameters.push(pValue)
       end
 
+      # Add conditional element inside function.
+      # @param pConditional An object of ConditionalData.
+      # @return If pConditional is not an instance of ConditionalData,
+      #         return nil.
       def add_conditional(pConditional)
         return nil unless (pConditional.instance_of?Languages::ConditionalData)
         @conditionals.push(pConditional)
       end
 
+      # Add repetition element inside function.
+      # @param pRepetition An object of RepetionData.
+      # @return If pRepetition is not RepetionData instance return nil.
       def add_repetition(pRepetition)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
         @repetitions.push(pRepetition)

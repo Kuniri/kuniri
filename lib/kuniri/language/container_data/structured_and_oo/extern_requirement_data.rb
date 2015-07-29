@@ -13,6 +13,8 @@ module Languages
         @name = pRequirement
       end
 
+      # Set path of extern requirement.
+      # @param pPath Path inside the extern requirement.
       def setPath(pPath)
         @path = pPath
       end

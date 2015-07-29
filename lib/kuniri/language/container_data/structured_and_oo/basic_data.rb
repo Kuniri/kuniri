@@ -1,7 +1,8 @@
-# Basic meta data.
-
 module Languages
-  # @abstract This class provides the basic data to code abstraction. 
+
+  # @abstract Usually, all data in this container needs at list one
+  # information: name. This class aim to be a generic class for all elements
+  # of container data.
   class BasicData
 
     public
@@ -9,5 +10,8 @@ module Languages
       attr_accessor :name
       attr_accessor :visibility
 
+  # class
   end
+
+# module
 end

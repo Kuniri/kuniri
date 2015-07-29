@@ -7,6 +7,8 @@ module Languages
 
     public
 
+      # Basic initialization of attribute.
+      # @param pAttribute_name Attribute name for basic initialization.
       def initialize (pAttribute_name)
         @name = pAttribute_name
         @visibility = "public"
@@ -14,6 +16,7 @@ module Languages
 
     private
 
+      # Type of the attribute.
       @type
 
   # Class
