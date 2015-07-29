@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling Idle state.
     class IdleState < OOStructuredState
 
       @language
@@ -12,6 +13,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         if @language.externRequirementHandler.get_requirement(pLine)
           include_capture
@@ -28,26 +30,32 @@ module StateMachine
         end
       end
 
+      # @see OOStructuredState
       def include_capture
         @language.set_state(@language.includeState)
       end
 
+      # @see OOStructuredState
       def variable_capture
         @language.set_state(@language.variableState)
       end
 
+      # @see OOStructuredState
       def function_capture
         @language.set_state(@language.functionState)
       end
 
+      # @see OOStructuredState
       def module_capture
         @language.set_state(@language.moduleState)
       end
 
+      # @see OOStructuredState
       def class_capture
         @language.set_state(@language.classState)
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         # Having nothing to do
         return pElementFile

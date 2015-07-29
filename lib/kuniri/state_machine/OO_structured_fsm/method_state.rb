@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling Method state.
     class MethodState < OOStructuredState
 
       @language
@@ -12,6 +13,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         if @language.conditionalHandler.get_conditional(pLine)
           conditional_capture
@@ -22,20 +24,24 @@ module StateMachine
         end
       end
 
+      # @see OOStructuredState
       def class_capture
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def conditional_capture
         @language.flagFunctionBehaviour = StateMachine::METHOD_STATE
         @language.set_state(@language.conditionalState)
       end
 
+      # @see OOStructuredState
       def repetition_capture
         @language.flagFunctionBehaviour = StateMachine::METHOD_STATE
         @language.set_state(@language.repetitionState)
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         methodElement = @language.methodHandler.get_function(pLine)
 

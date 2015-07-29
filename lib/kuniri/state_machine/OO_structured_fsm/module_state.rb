@@ -7,6 +7,7 @@ module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling Module state.
     class ModuleState < OOStructuredState
 
       @language
@@ -15,6 +16,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         if @language.classHandler.get_class(pLine)
           class_capture
@@ -25,22 +27,27 @@ module StateMachine
         end
       end
 
+      # @see OOStructuredState
       def idle_capture
         @language.set_state(@language.idleState)
       end
 
+      # @see OOStructuredState
       def class_capture
         @language.set_state(@language.classState)
       end
 
+      # @see OOStructuredState
       def variable_capture
         @language.set_state(@language.variableState)
       end
 
+      # @see OOStructuredState
       def function_capture
         @language.set_state(@language.functionState)
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
 
         moduleElement = @language.moduleHandler.get_module(pLine)

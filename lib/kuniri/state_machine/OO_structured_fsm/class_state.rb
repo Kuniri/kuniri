@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling class state.
     class ClassState < OOStructuredState
 
       @language
@@ -12,6 +13,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         if @language.attributeHandler.get_attribute(pLine)
           attribute_capture
@@ -24,26 +26,32 @@ module StateMachine
         end
       end
 
+      # @see OOStructuredState
       def method_capture
         @language.set_state(@language.methodState)
       end
 
+      # @see OOStructuredState
       def constructor_capture
         @language.set_state(@language.constructorState)
       end
 
+      # @see OOStructuredState
       def attribute_capture
         @language.set_state(@language.attributeState)
       end
 
+      # @see OOStructuredState
       def module_capture
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def idle_capture
         @language.rewind_state
       end 
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         classElement = @language.classHandler.get_class(pLine)
 

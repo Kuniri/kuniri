@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling conditional state.
     class ConditionalState < OOStructuredState
 
       @language
@@ -15,21 +16,25 @@ module StateMachine
         def handle_line(pLine)
         end
 
+      # @see OOStructuredState
       def method_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def constructor_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def function_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def add_conditional_element(pFlag, pElementFile, pConditional)
         if pFlag == StateMachine::GLOBAL_FUNCTION_STATE
           pElementFile.global_functions
@@ -44,6 +49,7 @@ module StateMachine
           return pElementFile
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
 
@@ -70,6 +76,7 @@ module StateMachine
 
       private
 
+        # @see OOStructuredState
         def reset_flag
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end

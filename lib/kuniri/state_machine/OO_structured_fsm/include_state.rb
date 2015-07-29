@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling Include state.
     class IncludeState < OOStructuredState
 
       @language
@@ -12,6 +13,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         idle_capture
         # TODO: HANDLING MULTIPLE LINE COMMENT.
@@ -22,10 +24,12 @@ module StateMachine
         #end
       end
 
+      # @see OOStructuredState
       def idle_capture
         @language.set_state(@language.idleState)
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         requirement = @language.externRequirementHandler.get_requirement(pLine)
         if requirement 

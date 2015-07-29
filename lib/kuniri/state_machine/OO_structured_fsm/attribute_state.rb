@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling attribute state.
     class AttributeState < OOStructuredState
 
       @language
@@ -12,14 +13,17 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
           # TODO: YOU HAVE TO HANDLER THE CASE OF SELF REFERENCE
       end
 
+      # @see OOStructuredState
       def class_capture
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         attributeElement = @language.attributeHandler.get_attribute(pLine)
 

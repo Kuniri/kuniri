@@ -1,9 +1,10 @@
-require_relative 'oo_structured_state.rb'
+require_relative 'oo_structured_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling Repetition state.
     class RepetitionState < OOStructuredState
 
       @language
@@ -15,25 +16,29 @@ module StateMachine
         def handle_line(pLine)
         end
 
+      # @see OOStructuredState
       def method_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def constructor_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def function_capture
         reset_flag
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         repetition = @language.repetitionHandler.get_repetition(pLine)
 
-        flag = @language.flagFunctionBehaviour 
+        flag = @language.flagFunctionBehaviour
 
         if (repetition)
           #Function
@@ -65,10 +70,11 @@ module StateMachine
 
       private
 
+        # @see OOStructuredState
         def reset_flag
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end
-    
+
     # End class
     end
 

@@ -7,6 +7,8 @@ module StateMachine
     # @abstract State machine for oriented object and structured paradigm.
     class OOStructuredState
 
+      # Method responsible each line, and decide which way to go inside state
+      # machine.
       def handle_line(pLine)
         raise NotImplementedError
       end
@@ -67,6 +69,10 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Method responsible for make the state machine go forward.
+      # @param pElementFile File to be improved.
+      # @param pLine Line for verify element.
+      # @return Return pElementFile with new elements, or with the same values.
       def execute(pElementFile, pLine)
         raise NotImplementedError
       end

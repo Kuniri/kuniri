@@ -6,6 +6,7 @@ module StateMachine
 
   module OOStructuredFSM
 
+    # Class responsible for handling function state.
     class FunctionState < OOStructuredState
 
       @language
@@ -14,6 +15,7 @@ module StateMachine
         @language = pLanguage
       end
 
+      # @see OOStructuredState
       def handle_line(pLine)
         if @language.conditionalHandler.get_conditional(pLine)
           conditional_capture
@@ -24,24 +26,29 @@ module StateMachine
         end
       end
 
+      # @see OOStructuredState
       def idle_capture
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def module_capture
         @language.rewind_state
       end
 
+      # @see OOStructuredState
       def conditional_capture
         @language.flagFunctionBehaviour = StateMachine::GLOBAL_FUNCTION_STATE
         @language.set_state(@language.conditionalState)
       end
 
+      # @see OOStructuredState
       def repetition_capture
         @language.flagFunctionBehaviour = StateMachine::GLOBAL_FUNCTION_STATE
         @language.set_state(@language.repetitionState)
       end
 
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         function = @language.functionHandler.get_function(pLine)
 
