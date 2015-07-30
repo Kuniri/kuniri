@@ -22,6 +22,11 @@ namespace :parser do |args|
     end
     parsername = ARGV[1]
 
+    if File.directory?("lib/kuniri/language/#{parsername.downcase}") then
+      puts "Warning: A folder for this parser code already exists at lib/kuniri/language/#{parsername.downcase}"
+      exit 1
+    end
+
     FileUtils.mkdir_p("lib/kuniri/language/#{parsername.downcase}")
     Dir.glob( 'data/*.rb' ).select { |f| File.file?( f ) }.each do |f|
       fdest = File.basename(f).gsub('lang', parsername.downcase)
@@ -39,7 +44,14 @@ namespace :parser do |args|
 
     f = 'lib/kuniri/language/language_factory.rb'
     text = File.read(f)
-    formated_text = "require_relative '#{parsername.downcase}/#{parsername.downcase}_syntax'\n" + text
+    relative = "require_relative '#{parsername.downcase}/#{parsername.downcase}_syntax'"
+
+    if text.include?(relative) then
+      puts "Warning: the /lib/kuniri/language/language_factory.rb file already has the require for this parser"
+      exit 1
+    end
+
+    formated_text = relative + "\n" + text
 
     condition = "pType.downcase!
 
