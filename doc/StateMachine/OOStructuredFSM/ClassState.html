@@ -1,0 +1,757 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: StateMachine::OOStructuredFSM::ClassState
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!StateMachine/OOStructuredFSM/ClassState.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../StateMachine.html" title="StateMachine (module)">StateMachine</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../OOStructuredFSM.html" title="StateMachine::OOStructuredFSM (module)">OOStructuredFSM</a></span></span>
+     &raquo; 
+    <span class="title">ClassState</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: StateMachine::OOStructuredFSM::ClassState
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+          
+            <li class="next">StateMachine::OOStructuredFSM::ClassState</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/kuniri/state_machine/OO_structured_fsm/class_state.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Class responsible for handling class state.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#attribute_capture-instance_method" title="#attribute_capture (instance method)">- (Object) <strong>attribute_capture</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#constructor_capture-instance_method" title="#constructor_capture (instance method)">- (Object) <strong>constructor_capture</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#execute-instance_method" title="#execute (instance method)">- (Object) <strong>execute</strong>(pElementFile, pLine) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handle_line-instance_method" title="#handle_line (instance method)">- (Object) <strong>handle_line</strong>(pLine) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#idle_capture-instance_method" title="#idle_capture (instance method)">- (Object) <strong>idle_capture</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (ClassState) <strong>initialize</strong>(pLanguage) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of ClassState.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_capture-instance_method" title="#method_capture (instance method)">- (Object) <strong>method_capture</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#module_capture-instance_method" title="#module_capture (instance method)">- (Object) <strong>module_capture</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="OOStructuredState.html#class_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#class_capture (method)">#class_capture</a></span>, <span class='object_link'><a href="OOStructuredState.html#conditional_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#conditional_capture (method)">#conditional_capture</a></span>, <span class='object_link'><a href="OOStructuredState.html#function_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#function_capture (method)">#function_capture</a></span>, <span class='object_link'><a href="OOStructuredState.html#include_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#include_capture (method)">#include_capture</a></span>, <span class='object_link'><a href="OOStructuredState.html#repetition_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#repetition_capture (method)">#repetition_capture</a></span>, <span class='object_link'><a href="OOStructuredState.html#variable_capture-instance_method" title="StateMachine::OOStructuredFSM::OOStructuredState#variable_capture (method)">#variable_capture</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="StateMachine::OOStructuredFSM::ClassState (class)">ClassState</a></span></tt>) <strong>initialize</strong>(pLanguage) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of ClassState</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='lparen'>(</span><span class='id identifier rubyid_pLanguage'>pLanguage</span><span class='rparen'>)</span>
+  <span class='ivar'>@language</span> <span class='op'>=</span> <span class='id identifier rubyid_pLanguage'>pLanguage</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="attribute_capture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>attribute_capture</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_attribute_capture'>attribute_capture</span>
+  <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_set_state'>set_state</span><span class='lparen'>(</span><span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_attributeState'>attributeState</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="constructor_capture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>constructor_capture</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_constructor_capture'>constructor_capture</span>
+  <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_set_state'>set_state</span><span class='lparen'>(</span><span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_constructorState'>constructorState</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="execute-instance_method">
+  
+    - (<tt>Object</tt>) <strong>execute</strong>(pElementFile, pLine) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_pElementFile'>pElementFile</span><span class='comma'>,</span> <span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_classElement'>classElement</span> <span class='op'>=</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_classHandler'>classHandler</span><span class='period'>.</span><span class='id identifier rubyid_get_class'>get_class</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_classElement'>classElement</span>
+    <span class='id identifier rubyid_pElementFile'>pElementFile</span><span class='period'>.</span><span class='id identifier rubyid_add_class'>add_class</span><span class='lparen'>(</span><span class='id identifier rubyid_classElement'>classElement</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+ 
+  <span class='kw'>if</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_endBlockHandler'>endBlockHandler</span><span class='period'>.</span><span class='id identifier rubyid_has_end_of_block?'>has_end_of_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_previous'>previous</span> <span class='op'>=</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_previousState'>previousState</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_previous'>previous</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='lparen'>(</span><span class='const'>StateMachine</span><span class='op'>::</span><span class='const'>OOStructuredFSM</span><span class='op'>::</span><span class='const'>IdleState</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_idle_capture'>idle_capture</span>
+    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_previous'>previous</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='lparen'>(</span><span class='const'>StateMachine</span><span class='op'>::</span><span class='const'>OOStructuredFSM</span><span class='op'>::</span><span class='const'>ModuleState</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_module_capture'>module_capture</span>
+    <span class='kw'>else</span>
+      <span class='kw'>return</span> <span class='id identifier rubyid_pElementFile'>pElementFile</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_pElementFile'>pElementFile</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="handle_line-instance_method">
+  
+    - (<tt>Object</tt>) <strong>handle_line</strong>(pLine) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_line'>handle_line</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_attributeHandler'>attributeHandler</span><span class='period'>.</span><span class='id identifier rubyid_get_attribute'>get_attribute</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_attribute_capture'>attribute_capture</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_constructorHandler'>constructorHandler</span><span class='period'>.</span><span class='id identifier rubyid_get_constructor'>get_constructor</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_constructor_capture'>constructor_capture</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_methodHandler'>methodHandler</span><span class='period'>.</span><span class='id identifier rubyid_get_function'>get_function</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_method_capture'>method_capture</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_moduleHandler'>moduleHandler</span><span class='period'>.</span><span class='id identifier rubyid_get_module'>get_module</span><span class='lparen'>(</span><span class='id identifier rubyid_pLine'>pLine</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_module_capture'>module_capture</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="idle_capture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>idle_capture</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_idle_capture'>idle_capture</span>
+  <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_rewind_state'>rewind_state</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="method_capture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>method_capture</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_method_capture'>method_capture</span>
+  <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_set_state'>set_state</span><span class='lparen'>(</span><span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_methodState'>methodState</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="module_capture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>module_capture</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="OOStructuredState.html" title="StateMachine::OOStructuredFSM::OOStructuredState (class)">OOStructuredState</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/state_machine/OO_structured_fsm/class_state.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_module_capture'>module_capture</span>
+  <span class='ivar'>@language</span><span class='period'>.</span><span class='id identifier rubyid_rewind_state'>rewind_state</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 29 11:36:04 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

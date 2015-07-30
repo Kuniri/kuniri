@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>KUNIRI</h1>
+
+<p><a href="https://gitter.im/rodrigosiqueira/kuniri?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/rodrigosiqueira/kuniri"></a></p>
+
+<p><a href="https://travis-ci.org/rodrigosiqueira/kuniri"><img src="https://travis-ci.org/rodrigosiqueira/kuniri.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/rodrigosiqueira/kuniri"><img src="https://codeclimate.com/github/rodrigosiqueira/kuniri/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://waffle.io/rodrigosiqueira/kuniri"><img src="https://badge.waffle.io/rodrigosiqueira/kuniri.png?label=ready&amp;title=Ready" alt="Stories in Ready"></a>
+<a href="https://coveralls.io/github/rodrigosiqueira/kuniri?branch=master"><img src="https://coveralls.io/repos/rodrigosiqueira/kuniri/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a>
+<a href="http://inch-ci.org/github/rodrigosiqueira/kuniri"><img src="http://inch-ci.org/github/rodrigosiqueira/kuniri.svg?branch=master" alt="Inline docs"></a>
+<a href="https://github.com/rodrigosiqueira/kuniri/blob/master/COPYING"><img src="https://img.shields.io/badge/license-GPLv3-green.svg" alt="License"></a></p>
+
+<hr>
+
+<h1>What is Kuniri?</h1>
+
+<blockquote>
+<p>Briefly, the main goal of Kuniri is: parse any kind of language, and generate
+a common model file with code information. We believe that Kuniri can be a base
+tool for other tools, like diagram generator, traceability, code quality,
+documentation, and so forth. Initially, the main objective of Kuniri was to
+provide a way to dynamically generate diagrams and traceability based on code.
+However, the parser proved much more useful for many other kinds of
+applications; thus, the focus shifted to the parser creation.</p>
+
+<p>Kuniri will inspect the source code, and extract information to generate a
+final output. This file is a XML file (and other types in the near future), and
+follows a strong pattern. This feature gives flexibility to other tools read the
+file and process anything they want.</p>
+
+<p>Additionally, Kuniri was designed to grow to two main directions: support for
+different languages, and provide ways to select which kind of information to
+extract from the code.</p>
+</blockquote>
+
+<hr>
+
+<h2>What is the the meaning of &quot;kuniri&quot;?</h2>
+
+<blockquote>
+<p>Kuniri is an Esperanto word, that means &quot;go with&quot; or &quot;follow&quot;. This name was
+chosen because of the idea to keep following your code project with diagrams,
+traceability, code quality and others.</p>
+</blockquote>
+
+<hr>
+
+<h1>Development</h1>
+
+<ul>
+<li>System Dependencies (Kubuntu/Ubuntu)
+
+<ul>
+<li>YARD 0.8</li>
+<li>RSpec 3.1.7</li>
+<li>Rake 10.4</li>
+<li>Guard-rspec 4.2</li>
+<li>nokogiri 1.6.6</li>
+</ul></li>
+<li>Ruby version: 2.1</li>
+<li>Run test suit
+
+<ul>
+<li>rake or spec</li>
+</ul></li>
+<li>YARD documentation
+
+<ul>
+<li>yardoc</li>
+</ul></li>
+</ul>
+
+<hr>
+
+<h1>Install</h1>
+
+<p>First of all, you have to install all the required gems.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+</code></pre>
+
+<p>Kuniri can be installed with:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_install'>install</span>
+</code></pre>
+
+<p>After installing you can check the commands with</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_kuniri'>kuniri</span> <span class='op'>-</span><span class='id identifier rubyid_h'>h</span>
+</code></pre>
+
+<hr>
+
+<h1>How to use</h1>
+
+<p>If you want to use kuniri in your project, first you have to create &quot;.kuniri&quot;
+file. The example below show the basic syntax:</p>
+
+<pre class="code ruby"><code class="ruby">language:ruby
+source:lib/
+output:bin/
+extract:uml
+</code></pre>
+
+<p>Finally, you can run Kuniri in your project and extract the information with:</p>
+
+<pre class="code ruby"><code class="ruby">kuniri -e [file_name_output.xml]
+</code></pre>
+
+<p>-e means &quot;extract mode&quot;. After you entered into iterative mode you can type:</p>
+
+<hr>
+
+<h1>Author</h1>
+
+<ul>
+<li>Rodrigo Siqueira de Melo
+
+<ul>
+<li><a href="mailto:rodrigosiqueiramelo@gmail.com">rodrigosiqueiramelo@gmail.com</a></li>
+</ul></li>
+<li>Gustavo Jaruga
+
+<ul>
+<li><a href="mailto:darksshades@hotmail.com">darksshades@hotmail.com</a></li>
+</ul></li>
+</ul>
+</div></div>
+
+    <div id="footer">
+  Generated on Wed Jul 29 11:36:02 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

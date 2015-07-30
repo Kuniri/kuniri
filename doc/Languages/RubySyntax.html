@@ -1,0 +1,816 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Languages::RubySyntax
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Languages/RubySyntax.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Languages.html" title="Languages (module)">Languages</a></span></span>
+     &raquo; 
+    <span class="title">RubySyntax</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Languages::RubySyntax
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Language.html" title="Languages::Language (class)">Language</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Language.html" title="Languages::Language (class)">Language</a></span></li>
+          
+            <li class="next">Languages::RubySyntax</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/kuniri/language/ruby/ruby_syntax.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Handling the ruby syntax for extract information.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Language.html" title="Languages::Language (class)">Language</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Language.html#attributeHandler-instance_method" title="Languages::Language#attributeHandler (method)">#attributeHandler</a></span>, <span class='object_link'><a href="Language.html#attributeState-instance_method" title="Languages::Language#attributeState (method)">#attributeState</a></span>, <span class='object_link'><a href="Language.html#classHandler-instance_method" title="Languages::Language#classHandler (method)">#classHandler</a></span>, <span class='object_link'><a href="Language.html#classState-instance_method" title="Languages::Language#classState (method)">#classState</a></span>, <span class='object_link'><a href="Language.html#conditionalHandler-instance_method" title="Languages::Language#conditionalHandler (method)">#conditionalHandler</a></span>, <span class='object_link'><a href="Language.html#conditionalState-instance_method" title="Languages::Language#conditionalState (method)">#conditionalState</a></span>, <span class='object_link'><a href="Language.html#constructorHandler-instance_method" title="Languages::Language#constructorHandler (method)">#constructorHandler</a></span>, <span class='object_link'><a href="Language.html#constructorState-instance_method" title="Languages::Language#constructorState (method)">#constructorState</a></span>, <span class='object_link'><a href="Language.html#endBlockHandler-instance_method" title="Languages::Language#endBlockHandler (method)">#endBlockHandler</a></span>, <span class='object_link'><a href="Language.html#externRequirementHandler-instance_method" title="Languages::Language#externRequirementHandler (method)">#externRequirementHandler</a></span>, <span class='object_link'><a href="Language.html#fileElements-instance_method" title="Languages::Language#fileElements (method)">#fileElements</a></span>, <span class='object_link'><a href="Language.html#flagFunctionBehaviour-instance_method" title="Languages::Language#flagFunctionBehaviour (method)">#flagFunctionBehaviour</a></span>, <span class='object_link'><a href="Language.html#functionHandler-instance_method" title="Languages::Language#functionHandler (method)">#functionHandler</a></span>, <span class='object_link'><a href="Language.html#functionState-instance_method" title="Languages::Language#functionState (method)">#functionState</a></span>, <span class='object_link'><a href="Language.html#idleState-instance_method" title="Languages::Language#idleState (method)">#idleState</a></span>, <span class='object_link'><a href="Language.html#includeState-instance_method" title="Languages::Language#includeState (method)">#includeState</a></span>, <span class='object_link'><a href="Language.html#methodHandler-instance_method" title="Languages::Language#methodHandler (method)">#methodHandler</a></span>, <span class='object_link'><a href="Language.html#methodState-instance_method" title="Languages::Language#methodState (method)">#methodState</a></span>, <span class='object_link'><a href="Language.html#moduleHandler-instance_method" title="Languages::Language#moduleHandler (method)">#moduleHandler</a></span>, <span class='object_link'><a href="Language.html#moduleState-instance_method" title="Languages::Language#moduleState (method)">#moduleState</a></span>, <span class='object_link'><a href="Language.html#name-instance_method" title="Languages::Language#name (method)">#name</a></span>, <span class='object_link'><a href="Language.html#path-instance_method" title="Languages::Language#path (method)">#path</a></span>, <span class='object_link'><a href="Language.html#previousState-instance_method" title="Languages::Language#previousState (method)">#previousState</a></span>, <span class='object_link'><a href="Language.html#repetitionHandler-instance_method" title="Languages::Language#repetitionHandler (method)">#repetitionHandler</a></span>, <span class='object_link'><a href="Language.html#repetitionState-instance_method" title="Languages::Language#repetitionState (method)">#repetitionState</a></span>, <span class='object_link'><a href="Language.html#state-instance_method" title="Languages::Language#state (method)">#state</a></span>, <span class='object_link'><a href="Language.html#variableHandler-instance_method" title="Languages::Language#variableHandler (method)">#variableHandler</a></span>, <span class='object_link'><a href="Language.html#variableState-instance_method" title="Languages::Language#variableState (method)">#variableState</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#analyse_source-instance_method" title="#analyse_source (instance method)">- (Object) <strong>analyse_source</strong>(pPath) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Analyse source code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#attribute_extract-instance_method" title="#attribute_extract (instance method)">- (Object) <strong>attribute_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#class_extract-instance_method" title="#class_extract (instance method)">- (Object) <strong>class_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#comment_extract-instance_method" title="#comment_extract (instance method)">- (Object) <strong>comment_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extern_requirement_extract-instance_method" title="#extern_requirement_extract (instance method)">- (Object) <strong>extern_requirement_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_classes-instance_method" title="#get_classes (instance method)">- (Object) <strong>get_classes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#global_variable_extract-instance_method" title="#global_variable_extract (instance method)">- (Object) <strong>global_variable_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (RubySyntax) <strong>initialize</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of RubySyntax.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_extract-instance_method" title="#method_extract (instance method)">- (Object) <strong>method_extract</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>TODO: remove it.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Language.html" title="Languages::Language (class)">Language</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Language.html#attribute_capture-instance_method" title="Languages::Language#attribute_capture (method)">#attribute_capture</a></span>, <span class='object_link'><a href="Language.html#class_capture-instance_method" title="Languages::Language#class_capture (method)">#class_capture</a></span>, <span class='object_link'><a href="Language.html#conditional_capture-instance_method" title="Languages::Language#conditional_capture (method)">#conditional_capture</a></span>, <span class='object_link'><a href="Language.html#constructor_capture-instance_method" title="Languages::Language#constructor_capture (method)">#constructor_capture</a></span>, <span class='object_link'><a href="Language.html#function_capture-instance_method" title="Languages::Language#function_capture (method)">#function_capture</a></span>, <span class='object_link'><a href="Language.html#get_name-instance_method" title="Languages::Language#get_name (method)">#get_name</a></span>, <span class='object_link'><a href="Language.html#get_path-instance_method" title="Languages::Language#get_path (method)">#get_path</a></span>, <span class='object_link'><a href="Language.html#handle_line-instance_method" title="Languages::Language#handle_line (method)">#handle_line</a></span>, <span class='object_link'><a href="Language.html#idle_capture-instance_method" title="Languages::Language#idle_capture (method)">#idle_capture</a></span>, <span class='object_link'><a href="Language.html#include_capture-instance_method" title="Languages::Language#include_capture (method)">#include_capture</a></span>, <span class='object_link'><a href="Language.html#method_capture-instance_method" title="Languages::Language#method_capture (method)">#method_capture</a></span>, <span class='object_link'><a href="Language.html#module_capture-instance_method" title="Languages::Language#module_capture (method)">#module_capture</a></span>, <span class='object_link'><a href="Language.html#rewind_state-instance_method" title="Languages::Language#rewind_state (method)">#rewind_state</a></span>, <span class='object_link'><a href="Language.html#set_source-instance_method" title="Languages::Language#set_source (method)">#set_source</a></span>, <span class='object_link'><a href="Language.html#set_state-instance_method" title="Languages::Language#set_state (method)">#set_state</a></span>, <span class='object_link'><a href="Language.html#variable_capture-instance_method" title="Languages::Language#variable_capture (method)">#variable_capture</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Languages::RubySyntax (class)">RubySyntax</a></span></tt>) <strong>initialize</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of RubySyntax</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
+  <span class='kw'>super</span>
+  <span class='ivar'>@externRequirementHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>ExternRequirementRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@variableHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>VariableGlobalRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@functionHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>FunctionBehaviorRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@moduleHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>ModuleNamespaceRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@classHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>ClassRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@attributeHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>AttributeRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@endBlockHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>EndBlockRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@methodHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>FunctionBehaviorRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@constructorHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>ConstructorRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@conditionalHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>ConditionalRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@repetitionHandler</span> <span class='op'>=</span> <span class='const'>Languages</span><span class='op'>::</span><span class='const'>Ruby</span><span class='op'>::</span><span class='const'>RepetitionRuby</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@visibility</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>public</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="analyse_source-instance_method">
+  
+    - (<tt>Object</tt>) <strong>analyse_source</strong>(pPath) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Analyse source code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>pPath</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Path of file to be analysed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_analyse_source'>analyse_source</span><span class='lparen'>(</span><span class='id identifier rubyid_pPath'>pPath</span><span class='rparen'>)</span>
+  <span class='ivar'>@name</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_pPath'>pPath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_pPath'>pPath</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_analyse_first_step'>analyse_first_step</span><span class='lparen'>(</span><span class='id identifier rubyid_pPath'>pPath</span><span class='rparen'>)</span>
+  <span class='comment'>#self.analyse_second_step
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="attribute_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>attribute_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 73</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_attribute_extract'>attribute_extract</span>
+  <span class='kw'>return</span> <span class='ivar'>@currentClass</span><span class='period'>.</span><span class='id identifier rubyid_get_attributes'>get_attributes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="class_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>class_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_class_extract'>class_extract</span>
+  <span class='kw'>return</span> <span class='ivar'>@currentClass</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="comment_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>comment_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_comment_extract'>comment_extract</span>
+  <span class='id identifier rubyid_all_comments'>all_comments</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='comment'>#Find a simple Ruby comment with &#39;#&#39;
+</span>  <span class='ivar'>@source</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>#(.*)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_comments'>comments</span><span class='op'>|</span>
+    <span class='id identifier rubyid_all_comments'>all_comments</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_comments'>comments</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='comment'>#Find multiple line comment.
+</span>  <span class='ivar'>@source</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^=begin(.*?)^=end</span><span class='regexp_end'>/m</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_comment'>comment</span><span class='op'>|</span>
+    <span class='id identifier rubyid_all_comments'>all_comments</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_lstrip'>lstrip</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_all_comments'>all_comments</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="extern_requirement_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>extern_requirement_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_extern_requirement_extract'>extern_requirement_extract</span>
+  <span class='kw'>return</span> <span class='ivar'>@externRequirements</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_classes-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_classes</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_classes'>get_classes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="global_variable_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>global_variable_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NotImplementedError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_global_variable_extract'>global_variable_extract</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="method_extract-instance_method">
+  
+    - (<tt>Object</tt>) <strong>method_extract</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>TODO: remove it.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kuniri/language/ruby/ruby_syntax.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_method_extract'>method_extract</span>
+  <span class='kw'>return</span> <span class='ivar'>@currentClass</span><span class='period'>.</span><span class='id identifier rubyid_get_methods'>get_methods</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 29 11:36:03 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.2).
+</div>
+
+  </body>
+</html>

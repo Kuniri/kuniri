@@ -1,0 +1,5 @@
+language:ruby 
+source:lib/
+output:bin/
+extract:uml
+log:html
