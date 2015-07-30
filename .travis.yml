@@ -2,7 +2,7 @@ language: ruby
 rvm:
 - 2.1.2
 before_script:
-- git clone https://github.com/rodrigosiqueira/kuniri.git
+- git clone https://github.com/Kuniri/kuniri.git
 - cd kuniri
 - gem install yard
 - gem install rspec
