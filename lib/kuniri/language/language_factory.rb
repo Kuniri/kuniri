@@ -15,19 +15,26 @@ module Languages
 
       if pType == "ruby"
         return Languages::RubySyntax.new
-      elsif pType == "python"
+      end
+      if pType == "python"
         raise Error::LanguageError
-      elsif pType == "vhdl"
+      end
+      if pType == "vhdl"
         raise Error::LanguageError
-      elsif pType == "c"
+      end
+      if pType == "c"
         raise Error::LanguageError
-      elsif pType == "cplusplus"
+      end
+      if pType == "cplusplus"
         raise Error::LanguageError
-      elsif pType == "java"
+      end
+      if pType == "java"
         raise Error::LanguageError
-      elsif pType == "assemblyarm"
+      end
+      if pType == "assemblyarm"
         raise Error::LanguageError
-      elsif pType == "php"
+      end
+      if pType == "php"
         raise Error::LanguageError
       else
         raise Error::LanguageError

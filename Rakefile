@@ -22,20 +22,33 @@ namespace :parser do |args|
     end
     parsername = ARGV[1]
 
+    FileUtils.mkdir_p("lib/kuniri/language/#{parsername.downcase}")
     Dir.glob( 'data/*.rb' ).select { |f| File.file?( f ) }.each do |f|
-      fdest = File.basename(f).gsub('lang', parsername)
-      dest = "dest/#{fdest}"
-      FileUtils.mkdir_p('dest')
+      fdest = File.basename(f).gsub('lang', parsername.downcase)
+      dest = "lib/kuniri/language/#{parsername.downcase}/#{fdest}"
       FileUtils.cp( f, dest )
       p dest
     end
 
-    Dir.glob( 'dest/*.rb' ).select { |f| File.file?( f ) }.each do |f|
+    Dir.glob( "lib/kuniri/language/#{parsername.downcase}/*.rb" ).select { |f| File.file?( f ) }.each do |f|
       text = File.read(f)
       formated_text = text.gsub('{LANG}', parsername.capitalize)
       formated_text = formated_text.gsub('{lang}', parsername.downcase)
       File.open(f, "w") { |file| file << formated_text }
     end
+
+    f = 'lib/kuniri/language/language_factory.rb'
+    text = File.read(f)
+    formated_text = "require_relative '#{parsername.downcase}/#{parsername.downcase}_syntax'\n" + text
+
+    condition = "pType.downcase!
+
+      if pType == '#{parsername.downcase}'
+        return Languages::#{parsername.capitalize}Syntax.new
+      end"
+
+    formated_text = formated_text.gsub("pType.downcase!\n", condition)
+    File.open(f, "w") { |file| file << formated_text }
 
     exit 0
   end
