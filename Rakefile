@@ -22,7 +22,6 @@ namespace :parser do |args|
     end
     parsername = ARGV[1]
 
-
     Dir.glob( 'data/*.rb' ).select { |f| File.file?( f ) }.each do |f|
       fdest = File.basename(f).gsub('lang', parsername)
       dest = "dest/#{fdest}"
@@ -37,8 +36,6 @@ namespace :parser do |args|
       formated_text = formated_text.gsub('{lang}', parsername.downcase)
       File.open(f, "w") { |file| file << formated_text }
     end
-
-
 
     exit 0
   end
