@@ -12,6 +12,7 @@ require_relative 'conditional_ruby'
 require_relative 'repetition_ruby'
 require_relative 'function_behavior_ruby'
 require_relative 'attribute_ruby'
+require_relative 'comment_ruby'
 
 module Languages
 
@@ -33,6 +34,7 @@ module Languages
         @constructorHandler = Languages::Ruby::ConstructorRuby.new
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
+        @commentHandler = Languages::Ruby::CommentRuby.new
         @visibility = "public"
       end
 

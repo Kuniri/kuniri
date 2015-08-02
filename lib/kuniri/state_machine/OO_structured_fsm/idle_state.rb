@@ -56,6 +56,11 @@ module StateMachine
       end
 
       # @see OOStructuredState
+      def comment_capture
+        @language.set_state(@language.commentState)
+      end
+
+      # @see OOStructuredState
       def execute(pElementFile, pLine)
         # Having nothing to do
         return pElementFile

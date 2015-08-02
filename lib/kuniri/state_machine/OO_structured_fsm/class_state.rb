@@ -49,7 +49,12 @@ module StateMachine
       # @see OOStructuredState
       def idle_capture
         @language.rewind_state
-      end 
+      end
+
+      # @see OOStructuredState
+      def comment_capture
+        @language.set_state(@language.commentState)
+      end
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)

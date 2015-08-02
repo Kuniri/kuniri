@@ -10,6 +10,7 @@ require_relative '../state_machine/OO_structured_fsm/variable_state'
 require_relative '../state_machine/OO_structured_fsm/oo_structured_state'
 require_relative '../state_machine/OO_structured_fsm/conditional_state'
 require_relative '../state_machine/OO_structured_fsm/repetition_state'
+require_relative '../state_machine/OO_structured_fsm/comment_state'
 
 # Module that keeps the language syntax.
 module Languages
@@ -35,6 +36,7 @@ module Languages
       attr_reader :variableState
       attr_reader :conditionalState
       attr_reader :repetitionState
+      attr_reader :commentState
 
       attr_reader :externRequirementHandler
       attr_reader :variableHandler
@@ -46,13 +48,16 @@ module Languages
       attr_reader :methodHandler
       attr_reader :constructorHandler
       attr_reader :conditionalHandler
-      attr_reader :repetitionHandler 
+      attr_reader :repetitionHandler
+      attr_reader :commentHandler
 
       attr_accessor :fileElements
 
       # Those values help state machine to understand which place to add
       # conditional information and repetition data.
       attr_accessor :flagFunctionBehaviour
+
+      attr_accessor :string_comment_to_transfer
 
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.
@@ -72,12 +77,16 @@ module Languages
           StateMachine::OOStructuredFSM::ConditionalState.new(self)
         @repetitionState =
           StateMachine::OOStructuredFSM::RepetitionState.new(self)
+        @commentState = StateMachine::OOStructuredFSM::CommentState.new(self)
+
         @state = @idleState
         @previousState = []
         @previousState.push (@state)
 
         @fileElements = []
         @flagFunctionBehaviour = nil
+
+        @string_comment_to_transfer = ""
       end
 
       # Set the source code to by analysed.
