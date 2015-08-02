@@ -69,6 +69,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Handling comment
+      def comment_capture
+        raise NotImplementedError
+      end
+
       # Method responsible for make the state machine go forward.
       # @param pElementFile File to be improved.
       # @param pLine Line for verify element.
