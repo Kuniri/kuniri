@@ -46,6 +46,15 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
   end
 
+  context "Special case" do
+
+    it "Ruby multiple line comment - =begin" do
+      variable = @variableRuby.get_variable("=begin")
+      expect(variable).to eq(nil)
+    end
+
+  end
+
   RSpec.shared_examples "Compare array" do |lineInput, arrayComp, description|
 
     it ": #{description}" do

@@ -39,6 +39,7 @@ module Languages
           pLine.gsub!(/\s*$/, "")
           return nil if pLine =~ /end/
           return nil if pLine =~ /^def\s+/
+          return nil if pLine =~ /=begin/
           return pLine if pLine.split(",").size > 1
           return pLine if pLine.split("=").size > 1
 
