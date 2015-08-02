@@ -9,6 +9,7 @@ module Languages
 
       attr_accessor :name
       attr_accessor :visibility
+      attr_accessor :comments
 
   # class
   end
