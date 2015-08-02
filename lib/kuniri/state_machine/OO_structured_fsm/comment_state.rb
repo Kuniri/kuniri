@@ -9,10 +9,12 @@ module StateMachine
 
       @language
       @multipleLineComment
+      @enableMultipleLine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @commentString = ""
+        @multipleLineComment = ""
+        @enableMultipleLine = false
       end
 
       def handle_line(pLine)
@@ -27,13 +29,23 @@ module StateMachine
           comment_string += "\n"
           @language.string_comment_to_transfer += comment_string
           @language.rewind_state
-        elsif @language.commentHandler.is_multiple_line_comment?(pLine)
-          @multipleLineComment += @language.commentHandler.get_comment(pLine)
-          @multipleLineComment += "\n"
-        elsif @language.commentHandler.is_multiple_line_comment_end?(pLine)
+        end
+
+        # Multiple line handling
+        if @language.commentHandler.is_multiple_line_comment?(pLine)
+          @enableMultipleLine = true
+        end
+
+        if @language.commentHandler.is_multiple_line_comment_end?(pLine)
+          @enableMultipleLine = false
           @language.string_comment_to_transfer = @multipleLineComment
           @multipleLineComment = ""
           @language.rewind_state
+        end
+
+        if @enableMultipleLine
+          comment_string = @language.commentHandler.get_comment(pLine)
+          @multipleLineComment += comment_string
         end
  
         return pElementFile

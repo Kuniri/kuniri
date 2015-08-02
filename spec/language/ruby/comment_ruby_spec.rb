@@ -52,15 +52,15 @@ RSpec.describe Languages::Ruby::CommentRuby do
       expect(comment).to eq(true)
 
       comment = @rubyComment.is_multiple_line_comment?("      =begin")
-      expect(comment).to eq(true)
+      expect(comment).to eq(false)
 
       comment = @rubyComment.is_multiple_line_comment?("              =begin ")
-      expect(comment).to eq(true) 
+      expect(comment).to eq(false) 
     end
 
     it "Find final of multiple line comment." do
       comment = @rubyComment.is_multiple_line_comment_end?(" =end")
-      expect(comment).to eq(true)
+      expect(comment).to eq(false)
 
       comment = @rubyComment.is_multiple_line_comment_end?("=end")
       expect(comment).to eq(true)

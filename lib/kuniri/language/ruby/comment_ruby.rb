@@ -9,13 +9,35 @@ module Languages
 
       public
 
+        @flagMultipleLine
+
+        def initialize
+          @flagMultipleLine = false
+        end
+
         # @see Comment
         def get_comment(pLine)
-          result = detect_comment(pLine)
-          return nil unless result
 
-          result = get_line_comment(result)
-          return result
+          if is_single_line_comment?(pLine)
+            return pLine.scan(/#(.*)/)[0].join
+          end
+
+          if is_multiple_line_comment_end?(pLine)
+            @flagMultipleLine = false
+            return ""
+          end
+
+          if @flagMultipleLine
+            pLine = get_line_comment(pLine)
+            return pLine
+          end
+
+          if is_multiple_line_comment?(pLine)
+            @flagMultipleLine = true
+            return ""
+          end
+
+          return nil
         end
 
         # @see Comment
@@ -26,14 +48,16 @@ module Languages
 
         # @see Comment
         def is_multiple_line_comment?(pLine)
-          return true if pLine =~ /=begin(.*?)/
+          if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
+            return true
+          end
           return false
         end
 
         # @see Comment
         def is_multiple_line_comment_end?(pLine)
           # TODO: improve it
-          return true if pLine =~ /=end/
+          return true if pLine =~ /^=end/
           return false
         end
 
@@ -41,14 +65,13 @@ module Languages
 
         # @see Comment
         def detect_comment(pLine)
-          regex = /#(.*)/
-          return pLine.scan(regex)[0].join if pLine =~ regex
+          return pLine.scan(/#(.*)/)[0].join if is_single_line_comment?(pLine)
           return nil
         end
 
         # @see Comment
         def get_line_comment(pString)
-          # TODO: Handling string
+          return "" if pString =~ /=begin/
           return pString
         end
 

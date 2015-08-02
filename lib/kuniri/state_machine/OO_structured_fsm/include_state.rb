@@ -31,10 +31,13 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
+
         requirement = @language.externRequirementHandler.get_requirement(pLine)
+
         if requirement 
          pElementFile.add_extern_requirement(requirement)
         end
+
         # TODO: You have to handler the return state.
         idle_capture
 

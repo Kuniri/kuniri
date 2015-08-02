@@ -103,7 +103,7 @@ module Languages
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
-          # Special token for class
+
           @state.handle_line(line)
           fileElement = @state.execute(fileElement, line)
         end

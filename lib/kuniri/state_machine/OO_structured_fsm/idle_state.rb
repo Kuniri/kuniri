@@ -25,8 +25,8 @@ module StateMachine
           module_capture
         elsif @language.classHandler.get_class(pLine)
           class_capture
-        elsif @language.commentHandler.is_single_line_comment?(pLine) ||
-              @language.commentHandler.is_multiple_line_comment?(pLine)
+        elsif ((@language.commentHandler.is_single_line_comment?(pLine)) || 
+                (@language.commentHandler.is_multiple_line_comment?(pLine)))
           comment_capture
         else
           return

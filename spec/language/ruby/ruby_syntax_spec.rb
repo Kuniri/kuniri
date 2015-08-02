@@ -444,6 +444,35 @@ RSpec.describe Languages::RubySyntax do
               .to eq (" Comment 6: Attribute\n")
     end
 
+    it "Correct multiple line comment capture - Global" do
+
+      path = "spec/samples/rubySyntaxParts/comment/simple_multiple_line_comment_global.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].comments)
+        .to eq("Comment 1:\nMultiple line.\n")
+      expect(@syntax.fileElements[0].global_functions[0].comments)
+              .to eq("Global Function\nnumber one\nmultiple line\n")
+      expect(@syntax.fileElements[0].global_variables[0].comments)
+              .to eq("global\n")
+    end
+
+    it "Correct multiple line comment capture - Class" do
+
+      path = "spec/samples/rubySyntaxParts/comment/simple_multiple_line_comment_class.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].comments)
+              .to eq("This is the\nfirst class\nof this file.\n")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
+              .to eq("    Constructor\n    initialize\n")
+      expect(@syntax.fileElements[0].classes[0].methods[0].comments)
+              .to eq("    First method\n")
+      expect(@syntax.fileElements[0].classes[0].methods[1].comments)
+              .to eq("    methodTwo\n")
+
+    end
+
   end
 
   after :each do
