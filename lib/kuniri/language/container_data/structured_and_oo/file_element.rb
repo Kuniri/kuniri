@@ -26,6 +26,7 @@ module Languages
         @classes = []
         @modules = []
         @name = pName
+        @comments = ""
       end
 
       # Add global function to the file.

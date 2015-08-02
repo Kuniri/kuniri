@@ -411,6 +411,41 @@ RSpec.describe Languages::RubySyntax do
 
   end
 
+  context "Comments" do
+
+    it "Correct single line comment capture - Globals" do
+
+      path = "spec/samples/rubySyntaxParts/comment/simple_single_line_comment_global.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].comments).to eq(" First comment\n")
+      expect(@syntax.fileElements[0].global_functions[0].comments)
+              .to eq(" Comment 2\n")
+      expect(@syntax.fileElements[0].global_functions[1].comments)
+              .to eq(" Combo comment p1\n Combo comment p2\n")
+      expect(@syntax.fileElements[0].global_variables[0].comments)
+              .to eq(" Comment 4\n")
+    end
+
+    it "Correct single line comment capture - Class" do
+
+      path = "spec/samples/rubySyntaxParts/comment/simple_single_line_comment_class.rb"
+
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].comments)
+              .to eq(" Comment 1: class\n")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
+              .to eq(" Comment 2: constructor\n")
+      expect(@syntax.fileElements[0].classes[0].methods[0].comments)
+              .to eq(" Comment 3: method\n")
+      expect(@syntax.fileElements[0].classes[0].methods[1].comments)
+              .to eq(" Comment 4: Combo 1\n Comment 5: Combo 2\n")
+      expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
+              .to eq (" Comment 6: Attribute\n")
+    end
+
+  end
+
   after :each do
     @syntax = nil
   end

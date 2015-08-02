@@ -37,6 +37,12 @@ module StateMachine
         end
         # TODO: You have to handler the return state.
         idle_capture
+
+        if (@language.state.is_a? StateMachine::OOStructuredFSM::IdleState)
+          pElementFile.comments = @language.string_comment_to_transfer
+          @language.string_comment_to_transfer = ""
+        end
+
         return pElementFile
       end
 

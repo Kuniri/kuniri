@@ -12,45 +12,30 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
+        @commentString = ""
       end
 
       def handle_line(pLine)
-        # Nothing
-      end
-
-      # @see OOStructuredState
-      def comment_capture
-        @language.set_state(@language.commentState)
-      end
-
-      # @see OOStructuredState
-      def idle_capture
-        @language.rewind_state
-      end
-
-      # @see OOStructuredState
-      def class_capture
-        @language.rewind_state
+        # TODO
       end
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        comment_string = @language.commentHandler.get_comment(pLine)
 
-        if comment_string
+        if @language.commentHandler.is_single_line_comment?(pLine)
+          comment_string = @language.commentHandler.get_comment(pLine)
           comment_string += "\n"
-          @language.string_comment_to_transfer += comment_string 
+          @language.string_comment_to_transfer += comment_string
+          @language.rewind_state
+        elsif @language.commentHandler.is_multiple_line_comment?(pLine)
+          @multipleLineComment += @language.commentHandler.get_comment(pLine)
+          @multipleLineComment += "\n"
+        elsif @language.commentHandler.is_multiple_line_comment_end?(pLine)
+          @language.string_comment_to_transfer = @multipleLineComment
+          @multipleLineComment = ""
+          @language.rewind_state
         end
-
-        if ((not @multipleLineComment) or 
-            (comment_string == StateMachine::END_MULTIPLE_LINE_COMMENT))
-          if (previous.is_a? (StateMachine::OOStructuredState::IdleState))
-            idle_capture
-          elsif (previous.is_a? (StateMachine::OOStructuredState::ClassState))
-            class_capture
-          end
-        end
-
+ 
         return pElementFile
 
       end

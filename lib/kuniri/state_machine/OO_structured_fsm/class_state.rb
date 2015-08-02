@@ -23,6 +23,9 @@ module StateMachine
           method_capture
         elsif @language.moduleHandler.get_module(pLine)
           module_capture
+        elsif @language.commentHandler.is_single_line_comment?(pLine) ||
+              @language.commentHandler.is_multiple_line_comment?(pLine)
+          comment_capture
         end
       end
 
@@ -61,6 +64,8 @@ module StateMachine
         classElement = @language.classHandler.get_class(pLine)
 
         if classElement
+          classElement.comments = @language.string_comment_to_transfer
+          @language.string_comment_to_transfer = ""
           pElementFile.add_class(classElement)
         end
  

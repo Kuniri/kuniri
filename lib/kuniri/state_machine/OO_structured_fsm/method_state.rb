@@ -47,6 +47,8 @@ module StateMachine
 
         if (methodElement)
           lastIndex = pElementFile.classes.length - 1 # We want the index
+          methodElement.comments = @language.string_comment_to_transfer
+          @language.string_comment_to_transfer = ""
           pElementFile.classes[lastIndex].add_method(methodElement)
         end
 

@@ -53,7 +53,9 @@ module StateMachine
         function = @language.functionHandler.get_function(pLine)
 
         if function
-         pElementFile.add_global_function(function)
+          function.comments = @language.string_comment_to_transfer
+          @language.string_comment_to_transfer = ""
+          pElementFile.add_global_function(function)
         end
 
         if (@language.endBlockHandler.has_end_of_block?(pLine))

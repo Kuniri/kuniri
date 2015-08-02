@@ -48,6 +48,8 @@ module StateMachine
 
         if (constructorElement)
           lastIndex = pElementFile.classes.length - 1 # We want the index
+          constructorElement.comments = @language.string_comment_to_transfer
+          @language.string_comment_to_transfer = ""
           pElementFile.classes[lastIndex].add_constructor(constructorElement)
         end
 

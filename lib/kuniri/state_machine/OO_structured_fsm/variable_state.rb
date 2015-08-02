@@ -27,8 +27,13 @@ module StateMachine
       def execute(pElementFile, pLine)
         variableList = @language.variableHandler.get_variable(pLine)
         if variableList
+          variableList.each do |variable|
+            variable.comments = @language.string_comment_to_transfer
+          end
+          @language.string_comment_to_transfer = ""
           pElementFile.add_global_variable(variableList)
         end
+
         # TODO: You have to handler the return state.
         idle_capture
         return pElementFile

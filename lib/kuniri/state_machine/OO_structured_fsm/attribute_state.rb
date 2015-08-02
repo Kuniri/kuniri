@@ -30,6 +30,10 @@ module StateMachine
         if attributeElement
           # Add attribute to the last class
           lastIndex = pElementFile.classes.length - 1 # We want the index
+          attributeElement.each do |attribute|
+            attribute.comments = @language.string_comment_to_transfer
+          end
+          @language.string_comment_to_transfer = ""
           pElementFile.classes[lastIndex].add_attribute(attributeElement)
         end
 
