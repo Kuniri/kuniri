@@ -11,6 +11,7 @@
 [![Stories in Ready](https://badge.waffle.io/Kuniri/kuniri.svg?label=ready&title=Ready)](http://waffle.io/Kuniri/kuniri)
 [![Coverage Status](https://coveralls.io/repos/Kuniri/kuniri/badge.svg?branch=master&service=github)](https://coveralls.io/github/Kuniri/kuniri?branch=master)
 [![Inline docs](http://inch-ci.org/github/Kuniri/kuniri.svg?branch=master)](http://inch-ci.org/github/Kuniri/kuniri)
+[![Gem Version](https://badge.fury.io/rb/kuniri.svg)](http://badge.fury.io/rb/kuniri)
 [![License](https://img.shields.io/badge/license-GPLv3-green.svg)](https://github.com/Kuniri/kuniri/blob/master/COPYING)
 
 ----
