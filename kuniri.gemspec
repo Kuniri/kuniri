@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Gustavo Jaruga", "Rodrigo Siqueira"]
   spec.email         = ["darksshades@hotmail.com", "rodrigosiqueiramelo@gmail.com"]
   spec.summary       = %q{Extract class information from code.}
-  spec.description   = %q{Extract class information from code.}
-  spec.homepage      = ""
-  spec.license       = ""
+  spec.description   = 'Generic parser'
+  spec.homepage      = "http://kuniri.github.io/kuniri/"
+  spec.license       = "GPLv3"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = ["kuniri"]
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6.6'
 end
