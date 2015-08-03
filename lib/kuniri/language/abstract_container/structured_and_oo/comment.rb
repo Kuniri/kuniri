@@ -1,6 +1,9 @@
 module Languages
 
-  # @abstract Class responsible for handling comments.
+  # @abstract Class responsible for handling comments. Attention, this class
+  # is the only exception to the pattern. Usually, we implements a method
+  # called detect_something. However, in the case of comment, it is easier
+  # to create another set of methods.
   class Comment
 
     public
@@ -40,15 +43,10 @@ module Languages
 
     protected
 
-      # Detect if line has a comment or not.
-      # @param pLine Line to inspect for find comment.
-      # @return Return nil if not find comment, or return a row string with
-      #         the comment inside.
-      def detect_comment(pLine)
-        raise NotImplementedError
-      end
-
-      def get_line_comment(pString)
+      # Method responsible for doing the final adjustment in the comment.
+      # @param pString Comment string to be handled.
+      # @return Return a string.
+      def prepare_line_comment(pString)
         raise NotImplementedError
       end
 

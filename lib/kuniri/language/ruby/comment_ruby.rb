@@ -18,25 +18,12 @@ module Languages
         # @see Comment
         def get_comment(pLine)
 
-          if is_single_line_comment?(pLine)
-            return pLine.scan(/#(.*)/)[0].join
-          end
+          # Single line
+          return pLine.scan(/#(.*)/)[0].join if is_single_line_comment?(pLine)
 
-          if is_multiple_line_comment_end?(pLine)
-            @flagMultipleLine = false
-            return ""
-          end
-
-          if @flagMultipleLine
-            pLine = get_line_comment(pLine)
-            return pLine
-          end
-
-          if is_multiple_line_comment?(pLine)
-            @flagMultipleLine = true
-            return ""
-          end
-
+          # Multiple line
+          multipleLine = handle_multiple_line(pLine)
+          return multipleLine if multipleLine
           return nil
         end
 
@@ -48,15 +35,12 @@ module Languages
 
         # @see Comment
         def is_multiple_line_comment?(pLine)
-          if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
-            return true
-          end
+          return true if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
           return false
         end
 
         # @see Comment
         def is_multiple_line_comment_end?(pLine)
-          # TODO: improve it
           return true if pLine =~ /^=end/
           return false
         end
@@ -64,15 +48,30 @@ module Languages
       protected
 
         # @see Comment
-        def detect_comment(pLine)
-          return pLine.scan(/#(.*)/)[0].join if is_single_line_comment?(pLine)
-          return nil
-        end
-
-        # @see Comment
-        def get_line_comment(pString)
+        def prepare_line_comment(pString)
           return "" if pString =~ /=begin/
           return pString
+        end
+
+      private
+
+        def handle_multiple_line(pLine)
+          if is_multiple_line_comment_end?(pLine)
+            @flagMultipleLine = false
+            return ""
+          end
+
+          if @flagMultipleLine
+            pLine = prepare_line_comment(pLine)
+            return pLine
+          end
+
+          if is_multiple_line_comment?(pLine)
+            @flagMultipleLine = true
+            return ""
+          end
+
+          return nil
         end
 
     # class
