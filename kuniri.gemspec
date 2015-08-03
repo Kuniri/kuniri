@@ -3,7 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'kuniri/version'
 
-Gem::Specification.new do |spec|
+Gem::Specification.new 'kuniri', '0.1' do |spec|
   spec.name          = "kuniri"
   spec.version       = Kuniri::VERSION
   spec.authors       = ["Gustavo Jaruga", "Rodrigo Siqueira"]
