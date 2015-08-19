@@ -69,19 +69,35 @@ module Languages
         return pString
       end
 
+      # Override
+      def handle_line(pString)
+        if pString =~ /=/
+          pString = pString.scan(/.*=/).join("")
+          return nil if pString =~ /\./
+        end
+
+        pString = yield(pString)
+
+        return nil if pString =~ /\./
+
+        pString = prepare_final_string(pString)
+        attribute = Languages::AttributeData.new(pString)
+
+        return [attribute]
+      end
+
+      # Override
+      def handle_line_declaration(pString)
+        return handle_line(pString){ |pString| pString }
+      end
+
+      # Override
       def handle_multiple_declaration(pString, splitChar)
         listOfAttributes = []
         pString = pString.split(splitChar)
         pString.each do |variable|
-          return nil if variable.scan(/=/).count > 1
-
-          variable = yield(variable)
-
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
+          attribute = handle_line(variable) { |pString| yield(pString) }
+          listOfAttributes.concat(attribute) if attribute
         end
 
         return listOfAttributes
@@ -97,24 +113,7 @@ module Languages
 
       # Override
       def handle_multiple_declaration_with_equal(pString)
-        return handle_multiple_declaration(pString, "="){ |variable| variable}
-      end
-
-      # Override
-      def handle_line_declaration(pString)
-        listOfAttributes = []
-        if pString =~ /=/
-          pString = pString.scan(/.*=/).join("")
-          return nil if pString =~ /\./
-        end
-
-        return nil if pString =~ /\./
-
-        pString = prepare_final_string(pString)
-        attribute = Languages::AttributeData.new(pString)
-        listOfAttributes.push(attribute)
-
-        return listOfAttributes
+        return handle_multiple_declaration(pString, "="){ |variable| variable }
       end
 
     private
