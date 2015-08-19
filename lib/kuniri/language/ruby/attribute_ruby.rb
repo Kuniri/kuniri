@@ -17,7 +17,7 @@ module Languages
           @attributeList = []
         end
 
-        # Get ruby attribute. 
+        # Get ruby attribute.
         # @param pLine Verify if line has a ruby attribute.
         # @return Return AttributeData or nil.
         def get_attribute(pLine)
@@ -69,14 +69,13 @@ module Languages
         return pString
       end
 
-      # Override
-      def handle_multiple_declaration_with_comma(pString)
+      def handle_multiple_declaration(pString, splitChar)
         listOfAttributes = []
-        pString = pString.split(",")
+        pString = pString.split(splitChar)
         pString.each do |variable|
           return nil if variable.scan(/=/).count > 1
 
-          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
+          variable = yield(variable)
 
           return nil if variable =~ /\./
 
@@ -89,18 +88,16 @@ module Languages
       end
 
       # Override
-      def handle_multiple_declaration_with_equal(pString)
-        listOfAttributes = []
-        pString = pString.split("=")
-        pString.each do |variable|
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
+      def handle_multiple_declaration_with_comma(pString)
+        return handle_multiple_declaration(pString, ",") do |variable|
+          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
+          variable
         end
+      end
 
-        return listOfAttributes
+      # Override
+      def handle_multiple_declaration_with_equal(pString)
+        return handle_multiple_declaration(pString, "="){ |variable| variable}
       end
 
       # Override
