@@ -38,9 +38,9 @@ module Languages
       end
 
       # Add global variable inside file.
-      # @param pVariable An VariableGlobalData object to be added.
-      def add_global_variable(pVariable)
-        pVariable.each do |element|
+      # @param pVariable A single VariableGlobalData object or list to be added.
+      def add_global_variable(*pVariable)
+        pVariable.flatten.each do |element|
           next unless element.is_a?(Languages::VariableGlobalData)
           @global_variables.push(element)
         end
