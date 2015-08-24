@@ -70,40 +70,6 @@ module Languages
       end
 
       # Override
-      def handle_line(pString)
-        if pString =~ /=/
-          pString = pString.scan(/.*=/).join("")
-          return nil if pString =~ /\./
-        end
-
-        pString = yield(pString)
-
-        return nil if pString =~ /\./
-
-        pString = prepare_final_string(pString)
-        attribute = Languages::AttributeData.new(pString)
-
-        return [attribute]
-      end
-
-      # Override
-      def handle_line_declaration(pString)
-        return handle_line(pString){ |pString| pString }
-      end
-
-      # Override
-      def handle_multiple_declaration(pString, splitChar)
-        listOfAttributes = []
-        pString = pString.split(splitChar)
-        pString.each do |variable|
-          attribute = handle_line(variable) { |pString| yield(pString) }
-          listOfAttributes.concat(attribute) if attribute
-        end
-
-        return listOfAttributes
-      end
-
-      # Override
       def handle_multiple_declaration_with_comma(pString)
         return handle_multiple_declaration(pString, ",") do |variable|
           variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
@@ -120,6 +86,37 @@ module Languages
 
       @log
       @attributeList
+
+      def handle_line_declaration(pString)
+        return handle_line(pString){ |pString| pString }
+      end
+
+      def handle_line(pString)
+        if pString =~ /=/
+          pString = pString.scan(/.*=/).join("")
+          return nil if pString =~ /\./
+        end
+
+        pString = yield(pString)
+
+        return nil if pString =~ /\./
+
+        pString = prepare_final_string(pString)
+        attribute = Languages::AttributeData.new(pString)
+
+        return [attribute]
+      end
+
+      def handle_multiple_declaration(pString, pSplitChar)
+        listOfAttributes = []
+        pString = pString.split(pSplitChar)
+        pString.each do |variable|
+          attribute = handle_line(variable) { |pString| yield(pString) }
+          listOfAttributes.concat(attribute) if attribute
+        end
+
+        return listOfAttributes
+      end
 
     #Class
     end
