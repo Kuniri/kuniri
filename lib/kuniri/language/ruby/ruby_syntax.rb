@@ -71,25 +71,6 @@ module Languages
         return @currentClass
       end
 
-      # TODO: remove it.
-      def attribute_extract
-        return @currentClass.get_attributes
-      end
-
-      # TODO: remove it.
-      def global_variable_extract
-        raise NotImplementedError
-      end
-
-      # TODO: remove it.
-      def extern_requirement_extract
-        return @externRequirements
-      end
-
-      # TODO: remove it.
-      def get_classes
-      end
-
     private
 
       attr_accessor :visibility
