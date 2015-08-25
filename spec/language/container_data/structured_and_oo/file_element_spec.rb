@@ -1,13 +1,14 @@
 require_relative '../../../spec_helper'
 
-RSpec.describe Languages::FileElement do
+RSpec.describe Languages::FileElementData do
 
   before :each do
-    @fileElement = Languages::FileElement.new ("test")
+    @fileElement = Languages::FileElementData.new ("test")
     @globalFunction1 = Languages::FunctionData.new("xpto")
     @globalFunction2 = Languages::FunctionData.new("second")
     @globalVariable1 = [Languages::VariableGlobalData.new("var1")]
     @globalVariable2 = [Languages::VariableGlobalData.new("var2")]
+    @globalVariable3 = Languages::VariableGlobalData.new("var3")
     @externFile1 = Languages::ExternRequirementData.new ("/dir/1")
     @externFile2 = Languages::ExternRequirementData.new ("/dir/2")
     @class1 = Languages::ClassData.new
@@ -54,6 +55,11 @@ RSpec.describe Languages::FileElement do
       expect(variables).to match_array(["var1", "var2"])
     end
 
+    it "Add one global variable as single parameter." do
+      @fileElement.add_global_variable(@globalVariable3)
+      expect(@fileElement.global_variables[0].name == "var3").to be true
+    end
+
     it "Add non global variable." do
       @fileElement.add_global_variable(["xpto"])
       expect(@fileElement.global_variables).to match_array([])
@@ -88,4 +94,4 @@ RSpec.describe Languages::FileElement do
     @fileElement = nil
   end
 
-end 
+end

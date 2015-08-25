@@ -1,6 +1,6 @@
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
-require_relative '../container_data/structured_and_oo/file_element'
+require_relative '../container_data/structured_and_oo/file_element_data'
 require_relative 'token_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'variable_global_ruby'
@@ -71,25 +71,6 @@ module Languages
         return @currentClass
       end
 
-      # TODO: remove it.
-      def attribute_extract
-        return @currentClass.get_attributes
-      end
-
-      # TODO: remove it.
-      def global_variable_extract
-        raise NotImplementedError
-      end
-
-      # TODO: remove it.
-      def extern_requirement_extract
-        return @externRequirements
-      end
-
-      # TODO: remove it.
-      def get_classes
-      end
-
     private
 
       attr_accessor :visibility
@@ -99,7 +80,7 @@ module Languages
       # informations.
       # @param pPath Path of file to be analysed.
       def analyse_first_step(pPath)
-        fileElement = Languages::FileElement.new(pPath)
+        fileElement = Languages::FileElementData.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
