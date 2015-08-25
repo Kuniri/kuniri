@@ -1,6 +1,6 @@
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
-require_relative '../container_data/structured_and_oo/file_element'
+require_relative '../container_data/structured_and_oo/file_element_data'
 require_relative 'token_{lang}'
 require_relative 'extern_requirement_{lang}'
 require_relative 'variable_global_{lang}'
