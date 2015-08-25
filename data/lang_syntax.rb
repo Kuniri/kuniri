@@ -93,7 +93,7 @@ module Languages
       @source
 
       def analyse_first_step(pPath)
-        fileElement = Languages::FileElement.new(pPath)
+        fileElement = Languages::FileElementData.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0

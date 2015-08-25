@@ -37,7 +37,7 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
 
     it "Include state, and capture require." do
       @rubyTest.state.include_capture
-      fileElement = Languages::FileElement.new("test_spec")
+      fileElement = Languages::FileElementData.new("test_spec")
       @rubyTest.state.execute(fileElement, "require_relative 'test_file.rb'")
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
@@ -45,7 +45,7 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
 
     it "Include state, and returned value" do
       @rubyTest.state.include_capture
-      fileElement = Languages::FileElement.new("test_spec")
+      fileElement = Languages::FileElementData.new("test_spec")
       fileElement = @rubyTest.state.execute(fileElement,
                                             "require_relative 'test.rb'")
       expect(fileElement.extern_requirements[0].name).to eq ("test")

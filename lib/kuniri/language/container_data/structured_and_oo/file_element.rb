@@ -7,9 +7,9 @@ require_relative 'class_data'
 
 module Languages
 
-  # FileElement is the upper element related with container data, this class
+  # FileElementData is the upper element related with container data, this class
   # refers to file.
-  class FileElement < Languages::BasicData
+  class FileElementData < Languages::BasicData
 
     public
 

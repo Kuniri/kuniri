@@ -1,9 +1,9 @@
 require_relative '../../../spec_helper'
 
-RSpec.describe Languages::FileElement do
+RSpec.describe Languages::FileElementData do
 
   before :each do
-    @fileElement = Languages::FileElement.new ("test")
+    @fileElement = Languages::FileElementData.new ("test")
     @globalFunction1 = Languages::FunctionData.new("xpto")
     @globalFunction2 = Languages::FunctionData.new("second")
     @globalVariable1 = [Languages::VariableGlobalData.new("var1")]
@@ -94,4 +94,4 @@ RSpec.describe Languages::FileElement do
     @fileElement = nil
   end
 
-end 
+end
