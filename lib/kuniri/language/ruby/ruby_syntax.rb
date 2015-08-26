@@ -47,30 +47,6 @@ module Languages
         #self.analyse_second_step
       end
 
-      # TODO: remove it.
-      def comment_extract
-        all_comments = Array.new
-        #Find a simple Ruby comment with '#'
-        @source.scan(/#(.*)/).each do |comments|
-          all_comments.push(comments[0])
-        end
-        #Find multiple line comment.
-        @source.scan(/^=begin(.*?)^=end/m).each do |comment|
-          all_comments.push(comment[0].lstrip)
-        end
-        return all_comments
-      end
-
-      # TODO: remove it.
-      def method_extract
-        return @currentClass.get_methods
-      end
-
-      # TODO: remove it.
-      def class_extract
-        return @currentClass
-      end
-
     private
 
       attr_accessor :visibility
