@@ -9,8 +9,8 @@ module StateMachine
 
       MAP_STATE = {
         StateMachine::METHOD_STATE => "method",
-        StateMachine::CONSTRUCTOR_STATE => "function",
-        StateMachine::GLOBAL_FUNCTION_STATE => "constructor"
+        StateMachine::CONSTRUCTOR_STATE => "constructor",
+        StateMachine::GLOBAL_FUNCTION_STATE => "function"
       }
 
       @language
@@ -41,30 +41,11 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def add_conditional_element(pFlag, pElementFile, pConditional)
-        if pFlag == StateMachine::GLOBAL_FUNCTION_STATE
-          pElementFile.global_functions
-                  .last.add_conditional(pConditional)
-        elsif pFlag == StateMachine::METHOD_STATE
-          pElementFile.classes.last.methods
-                  .last.add_conditional(pConditional)
-        elsif pFlag == StateMachine::CONSTRUCTOR_STATE
-           pElementFile.classes.last.constructors
-                   .last.add_conditional(pConditional)
-        end
-          return pElementFile
-      end
-
-      # @see OOStructuredState
       def execute(pElementFile, pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
-
         flag = @language.flagFunctionBehaviour
 
-        if (conditional)
-          pElementFile = add_conditional_element(flag,
-                                          pElementFile, conditional)
-        end
+        get_add_conditional_lambda(MAP_STATE[flag]).call(conditional, pElementFile)
 
         has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
         get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
@@ -88,6 +69,22 @@ module StateMachine
           return capture_lambda
         end
 
+        def get_list_of_file(pElementFile, elementType)
+          if elementType == MAP_STATE[StateMachine::GLOBAL_FUNCTION_STATE]
+            return pElementFile.global_functions
+          else
+            return pElementFile.classes.last.send("#{elementType}s")
+          end
+        end
+
+        def get_add_conditional_lambda(lambdaType)
+          add_conditional_lambda = lambda do |conditional, pElementFile|
+            element = get_list_of_file(pElementFile, lambdaType).last
+            element.add_conditional(conditional) if conditional
+          end
+
+          add_conditional_lambda
+        end
     # End class
     end
 
