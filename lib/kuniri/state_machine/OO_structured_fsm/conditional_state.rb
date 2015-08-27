@@ -7,6 +7,12 @@ module StateMachine
     # Class responsible for handling conditional state.
     class ConditionalState < OOStructuredState
 
+      MAP_STATE = {
+        StateMachine::METHOD_STATE => "method",
+        StateMachine::CONSTRUCTOR_STATE => "function",
+        StateMachine::GLOBAL_FUNCTION_STATE => "constructor"
+      }
+
       @language
 
       def initialize(pLanguage)
@@ -60,15 +66,8 @@ module StateMachine
                                           pElementFile, conditional)
         end
 
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
-          if (flag == StateMachine::GLOBAL_FUNCTION_STATE)
-            function_capture
-          elsif (flag == StateMachine::METHOD_STATE)
-            method_capture
-          elsif (flag == StateMachine::CONSTRUCTOR_STATE)
-            constructor_capture
-          end
-        end
+        has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
+        get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
 
         return pElementFile
 
@@ -81,7 +80,14 @@ module StateMachine
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end
 
-    
+        def get_capture_lambda(lambdaType)
+          capture_lambda = lambda do |has_end_of_block|
+          self.send("#{lambdaType}_capture") if has_end_of_block
+          end
+
+          return capture_lambda
+        end
+
     # End class
     end
 
