@@ -16,7 +16,7 @@ module Languages
       attr_reader :constructors
 
       def initialize
-        @inheritances = [] 
+        @inheritances = []
         @attributes = []
         @methods = []
         @constructors = []
@@ -50,23 +50,6 @@ module Languages
         return unless pConstructor.is_a?(Languages::FunctionData)
 
         @constructors.push(pConstructor)
-      end
-
-# TODO: REMOVE IT!
-      def get_methods
-        @methods
-      end
-
-      def get_attributes
-        @attributes
-      end
-
-      def get_constructors
-        @constructors
-      end
-
-      def get_parameters
-        @parameters
       end
 
   # Class
