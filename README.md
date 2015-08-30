@@ -1,4 +1,4 @@
-# KUNIRI
+# Kuniri
 
 ![alt text](https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png "Kuniri")
 
@@ -12,7 +12,6 @@
 [![Coverage Status](https://coveralls.io/repos/Kuniri/kuniri/badge.svg?branch=master&service=github)](https://coveralls.io/github/Kuniri/kuniri?branch=master)
 [![Inline docs](http://inch-ci.org/github/Kuniri/kuniri.svg?branch=master)](http://inch-ci.org/github/Kuniri/kuniri)
 [![Gem Version](https://badge.fury.io/rb/kuniri.svg)](http://badge.fury.io/rb/kuniri)
-[![License](https://img.shields.io/badge/license-GPLv3-green.svg)](https://github.com/Kuniri/kuniri/blob/master/COPYING)
 
 ----
 # What is Kuniri?
@@ -35,7 +34,7 @@ different languages, and provide ways to select which kind of information to
 extract from the code.
 
 ----
-## What is the the meaning of "kuniri"?
+## What is the the meaning of kuniri?
 
 > Kuniri is an Esperanto word, that means "go with" or "follow". This name was
 chosen because of the idea to keep following your code project with diagrams,
