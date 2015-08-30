@@ -30,7 +30,7 @@ module Languages
               functionRuby.add_parameters(parameter)
             end
           end
- 
+
           @log.write_log("Debug: Method: #{functionRuby.name}, Parameter:
                          #{functionRuby.parameters}")
 
@@ -61,7 +61,7 @@ module Languages
             if element =~ /=/
               parameter = element.scan(/(\w*)=/).join("")
               value = element.scan(/=(\w*)/).join("")
-              defaultParameter = Hash(parameter => value)
+              defaultParameter = {parameter => value}
               newList.push(defaultParameter)
               next
             end
