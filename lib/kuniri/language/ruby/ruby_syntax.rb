@@ -1,6 +1,6 @@
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
-require_relative '../container_data/structured_and_oo/file_element'
+require_relative '../container_data/structured_and_oo/file_element_data'
 require_relative 'token_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'variable_global_ruby'
@@ -80,7 +80,7 @@ module Languages
       # informations.
       # @param pPath Path of file to be analysed.
       def analyse_first_step(pPath)
-        fileElement = Languages::FileElement.new(pPath)
+        fileElement = Languages::FileElementData.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
