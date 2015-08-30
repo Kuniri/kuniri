@@ -11,7 +11,7 @@ Gem::Specification.new 'kuniri', '0.1' do |spec|
   spec.summary       = %q{Extract class information from code.}
   spec.description   = 'Generic parser'
   spec.homepage      = "http://kuniri.github.io/kuniri/"
-  spec.license       = "GPLv3"
+  spec.license       = "LGPLv3"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = ["kuniri"]
