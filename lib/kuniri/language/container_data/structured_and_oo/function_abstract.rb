@@ -1,6 +1,7 @@
 require_relative 'basic_data'
 require_relative 'conditional_data'
 require_relative 'repetition_data'
+require_relative 'attribute_data'
 
 module Languages
 
@@ -24,7 +25,7 @@ module Languages
       # Add parameters inside function.
       # @param pValue Add a parameter inside function.
       def add_parameters(pValue)
-        # TODO: You have to fix it.
+        return nil unless (pValue.is_a? Hash or pValue.is_a? String)
         @parameters.push(pValue)
       end
 
@@ -38,8 +39,8 @@ module Languages
       end
 
       # Add repetition element inside function.
-      # @param pRepetition An object of RepetionData.
-      # @return If pRepetition is not RepetionData instance return nil.
+      # @param pRepetition An object of RepetitionData.
+      # @return If pRepetition is not RepetitionData instance return nil.
       def add_repetition(pRepetition)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
         @repetitions.push(pRepetition)
