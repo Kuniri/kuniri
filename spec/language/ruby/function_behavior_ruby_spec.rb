@@ -191,13 +191,6 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
       methodOne = @functionBehaviorRuby.get_function(input)
       expect(methodOne.parameters).to eq([])
     end
-
-    it "Parameter name that is a number" do
-      input = "def xpto_method(12)"
-
-      methodOne = @functionBehaviorRuby.get_function(input)
-      expect(methodOne.parameters).to_not eq(["12"])
-    end
   end
 
 
