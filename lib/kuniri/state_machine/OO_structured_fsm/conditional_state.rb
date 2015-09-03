@@ -45,7 +45,8 @@ module StateMachine
         conditional = @language.conditionalHandler.get_conditional(pLine)
         flag = @language.flagFunctionBehaviour
 
-        get_add_conditional_lambda(MAP_STATE[flag]).call(conditional, pElementFile)
+        get_add_conditional_lambda(MAP_STATE[flag]).call(conditional,
+          pElementFile)
 
         has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
         get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
@@ -61,12 +62,13 @@ module StateMachine
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end
 
-        def get_capture_lambda(lambdaType)
-          capture_lambda = lambda do |has_end_of_block|
-          self.send("#{lambdaType}_capture") if has_end_of_block
+        def get_add_conditional_lambda(lambdaType)
+          add_conditional_lambda = lambda do |conditional, pElementFile|
+            element = get_list_of_file(pElementFile, lambdaType).last
+            element.add_conditional(conditional) if conditional
           end
 
-          return capture_lambda
+          add_conditional_lambda
         end
 
         def get_list_of_file(pElementFile, elementType)
@@ -77,13 +79,12 @@ module StateMachine
           end
         end
 
-        def get_add_conditional_lambda(lambdaType)
-          add_conditional_lambda = lambda do |conditional, pElementFile|
-            element = get_list_of_file(pElementFile, lambdaType).last
-            element.add_conditional(conditional) if conditional
+        def get_capture_lambda(lambdaType)
+          capture_lambda = lambda do |has_end_of_block|
+          self.send("#{lambdaType}_capture") if has_end_of_block
           end
 
-          add_conditional_lambda
+          return capture_lambda
         end
     # End class
     end
