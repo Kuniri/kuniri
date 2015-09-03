@@ -23,8 +23,10 @@ module Parser
 
         # Start parse in the project.
         def start_parser
-          # TODO: handle the case of filePath is empty
-          raise Error::ConfigurationFileError if(@filesPath.empty?)
+          if (@filesPath.empty?)
+            @log.write_log("Error: FilePath can not be empty")
+            raise Error::ConfigurationFileError
+          end
 
           @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
