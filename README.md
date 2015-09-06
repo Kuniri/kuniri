@@ -1,7 +1,5 @@
 # KUNIRI
 
-![alt text](https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png "Kuniri")
-
 ----
 
 [![Join the chat at https://gitter.im/rodrigosiqueira/kuniri](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rodrigosiqueira/kuniri?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -12,11 +10,12 @@
 [![Coverage Status](https://coveralls.io/repos/Kuniri/kuniri/badge.svg?branch=master&service=github)](https://coveralls.io/github/Kuniri/kuniri?branch=master)
 [![Inline docs](http://inch-ci.org/github/Kuniri/kuniri.svg?branch=master)](http://inch-ci.org/github/Kuniri/kuniri)
 [![Gem Version](https://badge.fury.io/rb/kuniri.svg)](http://badge.fury.io/rb/kuniri)
-[![License](https://img.shields.io/badge/license-GPLv3-green.svg)](https://github.com/Kuniri/kuniri/blob/master/COPYING)
+[![License](https://img.shields.io/badge/license-LGPLv3-green.svg)](https://github.com/Kuniri/kuniri/blob/master/COPYING)
 
 ----
 # What is Kuniri?
 
+<img src="https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png" alt="Kuniri" align="left" />
 > Briefly, the main goal of Kuniri is: parse any kind of language, and generate
 a common model file with code information. We believe that Kuniri can be a base
 tool for other tools, like diagram generator, traceability, code quality,
@@ -92,7 +91,7 @@ Finally, you can run Kuniri in your project and extract the information with:
 kuniri -e [file_name_output.xml]
 ```
 
--e means "extract mode". After you entered into iterative mode you can type:
+-e means "extract mode".
 
 ----
 # Author
