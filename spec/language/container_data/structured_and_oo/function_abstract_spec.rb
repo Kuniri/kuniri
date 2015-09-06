@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 RSpec.describe Languages::FunctionAbstract do
 
   before :each do
-    @functionAbstract = Languages::FunctionAbstract.new "Teste"
+    @functionAbstract = Languages::FunctionAbstract.new "Test"
     @conditional = Languages::ConditionalData.new
     @repetition = Languages::RepetitionData.new
   end
@@ -30,7 +30,9 @@ RSpec.describe Languages::FunctionAbstract do
       @functionAbstract.add_parameters({"key1" => "a"})
       @functionAbstract.add_parameters({"key2" => "b"})
       @functionAbstract.add_parameters({"key3" => "c"})
-      expect(@functionAbstract.parameters).to eq([{"key1" => "a"}, {"key2" => "b"}, {"key3" => "c"}])
+      expect(@functionAbstract.parameters).to eq([{"key1" => "a"},
+                                                  {"key2" => "b"},
+                                                  {"key3" => "c"}])
     end
 
     it "adds an integer as a parameter" do
@@ -40,7 +42,8 @@ RSpec.describe Languages::FunctionAbstract do
 
     it "Adds a hash with more than one element as a parameter" do
       @functionAbstract.add_parameters({"key1" => "a", "key2" => "b"})
-      expect(@functionAbstract.parameters).to_not eq([{"key1" => "a", "key2" => "b"}])
+      expect(@functionAbstract.parameters).to_not eq([{"key1" => "a",
+                                                       "key2" => "b"}])
     end
 
   end

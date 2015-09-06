@@ -27,7 +27,10 @@ module Languages
       # @return if pValue is not String or Hash with more than one element.
       #         return nil.
       def add_parameters(pValue)
-        return nil unless ((pValue.is_a? Hash and pValue.length == 1) or pValue.is_a? String)
+        unless ((pValue.is_a? Hash and pValue.length == 1) or
+                 pValue.is_a? String)
+          return nil
+        end
         @parameters.push(pValue)
       end
 
