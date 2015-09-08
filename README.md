@@ -58,7 +58,24 @@ traceability, code quality and others.
 ----
 # Install
 
-First of all, you have to install all the required gems with:
+First of all, you have to install RVM. Instructions can be found on https://rvm.io/
+
+After this, you have to install the desired Ruby version with:
+```
+rvm install <version>
+``` 
+
+You can change the using ruby version with:
+```
+rvm use <version>
+```
+
+Then, install bundler with:
+```
+gem install bundler
+```
+
+Then, you have to install all the required gems with:
 ```
 bundle install
 ```
