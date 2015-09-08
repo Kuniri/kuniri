@@ -16,7 +16,7 @@ module StateMachine
       # @see OOStructuredState
       def handle_line(pLine)
         idle_capture
-        # TODO: HANDLING MULTIPLE LINE COMMENT.
+        # TODO: HANDLING MULTIPLE LINE.
         #if @language.idleHandler.get_idle(pLine)
         #  idle_capture
         #else
@@ -34,11 +34,10 @@ module StateMachine
 
         requirement = @language.externRequirementHandler.get_requirement(pLine)
 
-        if requirement 
+        if requirement
          pElementFile.add_extern_requirement(requirement)
         end
 
-        # TODO: You have to handler the return state.
         idle_capture
 
         if (@language.state.is_a? StateMachine::OOStructuredFSM::IdleState)
