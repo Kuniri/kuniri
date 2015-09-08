@@ -18,7 +18,7 @@
 <img src="https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png" alt="Kuniri" align="left" />
 > Briefly, the main goal of Kuniri is: parse any kind of language, and generate
 a common model file with code information. We believe that Kuniri can be a base
-tool for other tools, like diagram generator, traceability, code quality,
+tool for other tools, like a diagram generator, traceability, code quality,
 documentation, and so forth. Initially, the main objective of Kuniri was to
 provide a way to dynamically generate diagrams and traceability based on code.
 However, the parser proved much more useful for many other kinds of
@@ -36,7 +36,7 @@ extract from the code.
 ----
 ## What is the the meaning of "kuniri"?
 
-> Kuniri is an Esperanto word, that means "go with" or "follow". This name was
+> Kuniri is an Esperanto word that means "go with" or "follow". This name was
 chosen because of the idea to keep following your code project with diagrams,
 traceability, code quality and others.
 
@@ -58,7 +58,7 @@ traceability, code quality and others.
 ----
 # Install
 
-First of all, you have to install all the required gems.
+First of all, you have to install all the required gems with:
 ```
 bundle install
 ```
@@ -68,15 +68,15 @@ Kuniri can be installed with:
 rake install
 ```
 
-After installing you can check the commands with
+After installing you can check the commands with:
 ```
 kuniri -h
 ```
 
 ----
 # How to use
-If you want to use kuniri in your project, first you have to create ".kuniri"
-file. The example below show the basic syntax:
+If you want to use kuniri in your project, first you have to create the ".kuniri"
+file. The example below shows the basic syntax:
 
 ```
 language:ruby
