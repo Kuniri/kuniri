@@ -15,7 +15,6 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-          # TODO: YOU HAVE TO HANDLER THE CASE OF SELF REFERENCE
       end
 
       # @see OOStructuredState

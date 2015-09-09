@@ -34,7 +34,6 @@ module StateMachine
           pElementFile.add_global_variable(variableList)
         end
 
-        # TODO: You have to handler the return state.
         idle_capture
         return pElementFile
       end
