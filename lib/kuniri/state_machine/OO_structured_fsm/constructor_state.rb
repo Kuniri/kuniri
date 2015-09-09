@@ -8,7 +8,7 @@ module StateMachine
     # Class responsible for handling constructor state.
     class ConstructorState < MethodState
 
-      CLASS_TYPE = "constructor"
+      CLASS_TYPE = StateMachine::CONSTRUCTOR_LABEL
       METHOD_TYPE = "constructor"
 
       def initialize(pLanguage)

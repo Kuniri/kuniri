@@ -1,4 +1,5 @@
 require_relative 'oo_structured_state'
+require_relative 'token_state_machine'
 
 module StateMachine
 
@@ -7,8 +8,8 @@ module StateMachine
     # Class responsible for handling Method state.
     class MethodState < OOStructuredState
 
-      CLASS_TYPE = "method"
-      METHOD_TYPE = "function"
+      CLASS_TYPE = StateMachine::METHOD_LABEL
+      METHOD_TYPE = StateMachine::FUNCTION_LABEL
 
       @language
 
