@@ -8,9 +8,9 @@ module StateMachine
     class ConditionalState < OOStructuredState
 
       MAP_STATE = {
-        StateMachine::METHOD_STATE => "method",
-        StateMachine::CONSTRUCTOR_STATE => "constructor",
-        StateMachine::GLOBAL_FUNCTION_STATE => "function"
+        StateMachine::METHOD_STATE => StateMachine::METHOD_LABEL,
+        StateMachine::CONSTRUCTOR_STATE => StateMachine::CONSTRUCTOR_LABEL,
+        StateMachine::GLOBAL_FUNCTION_STATE => StateMachine::FUNCTION_LABEL
       }
 
       @language
