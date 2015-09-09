@@ -7,10 +7,11 @@ module StateMachine
     # Class responsible for handling Repetition state.
     class RepetitionState < OOStructuredState
 
-      MAP_STATE = {
-        StateMachine::METHOD_STATE => "method",
-        StateMachine::CONSTRUCTOR_STATE => "function",
-        StateMachine::GLOBAL_FUNCTION_STATE => "constructor"
+      MAP_STATE =
+      {
+        StateMachine::METHOD_STATE => StateMachine::METHOD_LABEL,
+        StateMachine::CONSTRUCTOR_STATE => StateMachine::CONSTRUCTOR_STATE,
+        StateMachine::GLOBAL_FUNCTION_STATE => StateMachine::FUNCTION_LABEL
       }
 
       @language
@@ -60,19 +61,19 @@ module StateMachine
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end
 
-        def get_capture_lambda(lambdaType)
+        def get_capture_lambda(pLambdaType)
           capture_lambda = lambda do |has_end_of_block|
-            self.send("#{lambdaType}_capture") if has_end_of_block
+            self.send("#{pLambdaType}_capture") if has_end_of_block
           end
 
           return capture_lambda
         end
 
-        def get_list_of_file(pElementFile, elementType)
-          if elementType == MAP_STATE[StateMachine::CONSTRUCTOR_STATE]
+        def get_list_of_file(pElementFile, pElementType)
+          if pElementType == MAP_STATE[StateMachine::GLOBAL_FUNCTION_STATE]
             return pElementFile.global_functions
           else
-            return pElementFile.classes.last.send("#{elementType}s")
+            return pElementFile.classes.last.send("#{pElementType}s")
           end
         end
 
