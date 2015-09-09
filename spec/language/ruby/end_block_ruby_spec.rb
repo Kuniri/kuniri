@@ -48,6 +48,17 @@ RSpec.describe Languages::Ruby::EndBlockRuby do
       expect(isEnd).to eq(true)
     end
 
+    it "Find end of block when the whole method is in one line." do
+       isEnd = @endBlock.has_end_of_block?("def subtract(a,b) a-b end")
+       expect(isEnd).to eq(true)
+       isEnd = @endBlock.has_end_of_block?("def subtract(a,b) a-b friend")
+       expect(isEnd).to eq(false)
+       isEnd = @endBlock.has_end_of_block?("def subtract(a,b) a-b endless")
+       expect(isEnd).to eq(false)
+       isEnd = @endBlock.has_end_of_block?("def sum(a,b) a+b end;")
+       expect(isEnd).to eq(true)
+    end
+
   end
 
   #context "end in the same line of other instructions" do

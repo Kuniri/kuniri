@@ -55,18 +55,6 @@ RSpec.describe Languages::Language do
     end
   end
 
-  context "When try to call get_name" do
-    it "Try to call get_name" do
-      expect(@abstractLanguage.get_name).to eq(nil)
-    end
-  end
-
-  context "When try to call get_path" do
-    it "Try to call get_path" do
-      expect(@abstractLanguage.get_path).to eq(nil)
-    end
-  end
-
   after :all do
     @abstractLanguage = nil
   end

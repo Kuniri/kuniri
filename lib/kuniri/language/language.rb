@@ -138,16 +138,6 @@ module Languages
         @state = @previousState.pop
       end
 
-      # TODO: REMOVE IT
-      def get_name
-        return @name
-      end
-
-      # TODO: REMOVE IT
-      def get_path
-        return @path
-      end
-
       # Handling line
       def handle_line(pLine)
         @state.handle_line
@@ -214,7 +204,7 @@ module Languages
 
       @languageType
       @source
-      
+
   # End class
   end
 

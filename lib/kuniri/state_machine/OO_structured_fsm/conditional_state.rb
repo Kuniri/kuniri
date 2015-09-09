@@ -7,6 +7,12 @@ module StateMachine
     # Class responsible for handling conditional state.
     class ConditionalState < OOStructuredState
 
+      MAP_STATE = {
+        StateMachine::METHOD_STATE => StateMachine::METHOD_LABEL,
+        StateMachine::CONSTRUCTOR_STATE => StateMachine::CONSTRUCTOR_LABEL,
+        StateMachine::GLOBAL_FUNCTION_STATE => StateMachine::FUNCTION_LABEL
+      }
+
       @language
 
       def initialize(pLanguage)
@@ -35,40 +41,15 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def add_conditional_element(pFlag, pElementFile, pConditional)
-        if pFlag == StateMachine::GLOBAL_FUNCTION_STATE
-          pElementFile.global_functions
-                  .last.add_conditional(pConditional)
-        elsif pFlag == StateMachine::METHOD_STATE
-          pElementFile.classes.last.methods
-                  .last.add_conditional(pConditional)
-        elsif pFlag == StateMachine::CONSTRUCTOR_STATE
-           pElementFile.classes.last.constructors
-                   .last.add_conditional(pConditional)
-        end
-          return pElementFile
-      end
-
-      # @see OOStructuredState
       def execute(pElementFile, pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
-
         flag = @language.flagFunctionBehaviour
 
-        if (conditional)
-          pElementFile = add_conditional_element(flag,
-                                          pElementFile, conditional)
-        end
+        get_add_conditional_lambda(MAP_STATE[flag]).call(conditional,
+          pElementFile)
 
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
-          if (flag == StateMachine::GLOBAL_FUNCTION_STATE)
-            function_capture
-          elsif (flag == StateMachine::METHOD_STATE)
-            method_capture
-          elsif (flag == StateMachine::CONSTRUCTOR_STATE)
-            constructor_capture
-          end
-        end
+        has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
+        get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
 
         return pElementFile
 
@@ -81,7 +62,30 @@ module StateMachine
           @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
         end
 
-    
+        def get_add_conditional_lambda(lambdaType)
+          add_conditional_lambda = lambda do |conditional, pElementFile|
+            element = get_list_of_file(pElementFile, lambdaType).last
+            element.add_conditional(conditional) if conditional
+          end
+
+          add_conditional_lambda
+        end
+
+        def get_list_of_file(pElementFile, elementType)
+          if elementType == MAP_STATE[StateMachine::GLOBAL_FUNCTION_STATE]
+            return pElementFile.global_functions
+          else
+            return pElementFile.classes.last.send("#{elementType}s")
+          end
+        end
+
+        def get_capture_lambda(lambdaType)
+          capture_lambda = lambda do |has_end_of_block|
+          self.send("#{lambdaType}_capture") if has_end_of_block
+          end
+
+          return capture_lambda
+        end
     # End class
     end
 

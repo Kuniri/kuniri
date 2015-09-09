@@ -23,7 +23,9 @@ module Parser
 
         # Start parse in the project.
         def start_parser
-          # TODO: handle the case of filePAth is empty
+          # TODO: handle the case of filePath is empty
+          raise Error::ConfigurationFileError if(@filesPath.empty?)
+
           @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
             language = @factory.get_language(@language)

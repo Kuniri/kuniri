@@ -35,7 +35,7 @@ RSpec.describe Languages::ClassData do
       attributes.each do |nameElement|
         listOfAttributes.push(Languages::AttributeData.new(nameElement))
       end
- 
+
       @classData.add_attribute(listOfAttributes)
 
       attributeList = @classData.attributes
@@ -48,22 +48,6 @@ RSpec.describe Languages::ClassData do
       expect(listResult).to match_array(attributes)
     end
 
-  end
-
-  context "When add attribute" do
-    it "No attribute." do
-      attributes = @classData.get_attributes
-      expect(attributes).to eq([])
-    end
-
-    message = "Add 1 element."
-    include_examples "Add attribute", ["value1"], message
-
-    message = "Add 2 element."
-    include_examples "Add attribute", ["value1", "value2"], message
-
-    message = "Add 3 element."
-    include_examples "Add attribute", ["value1", "value2", "value3"], message
   end
 
   RSpec.shared_examples "Add method" do |methods, description|
@@ -81,35 +65,6 @@ RSpec.describe Languages::ClassData do
         listResult.push(element.name)
       end
       expect(listResult).to match_array(methods)
-    end
-
-  end
-
-
-  context "When add method" do
-    it "No method" do
-      methods = @classData.get_methods
-      expect(methods).to eq([])
-    end
-
-    message = "Add 1 method."
-    include_examples "Add method", ["method1"], message
-
-    message = "Add 2 method"
-    include_examples "Add method", ["method1", "method2"], message
-  end
-
-  context "When add constructor" do
-    it "Add constructors" do
-      constructorAdd = Languages::FunctionData.new("constructor")
-      @classData.add_constructor(constructorAdd)
-      constructors = @classData.get_constructors
-      expect(constructors[0].name == "constructor").to be true
-    end
-
-    it "Try to add non-constructor" do
-      @classData.add_constructor("xpto")
-        expect(@classData.get_constructors).to match_array([])
     end
 
   end

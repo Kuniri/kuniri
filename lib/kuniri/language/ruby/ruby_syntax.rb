@@ -1,6 +1,6 @@
 require_relative '../language'
 require_relative '../container_data/structured_and_oo/class_data'
-require_relative '../container_data/structured_and_oo/file_element'
+require_relative '../container_data/structured_and_oo/file_element_data'
 require_relative 'token_ruby'
 require_relative 'extern_requirement_ruby'
 require_relative 'variable_global_ruby'
@@ -47,49 +47,6 @@ module Languages
         #self.analyse_second_step
       end
 
-      # TODO: remove it.
-      def comment_extract
-        all_comments = Array.new
-        #Find a simple Ruby comment with '#'
-        @source.scan(/#(.*)/).each do |comments|
-          all_comments.push(comments[0])
-        end
-        #Find multiple line comment.
-        @source.scan(/^=begin(.*?)^=end/m).each do |comment|
-          all_comments.push(comment[0].lstrip)
-        end
-        return all_comments
-      end
-
-      # TODO: remove it.
-      def method_extract
-        return @currentClass.get_methods
-      end
-
-      # TODO: remove it.
-      def class_extract
-        return @currentClass
-      end
-
-      # TODO: remove it.
-      def attribute_extract
-        return @currentClass.get_attributes
-      end
-
-      # TODO: remove it.
-      def global_variable_extract
-        raise NotImplementedError
-      end
-
-      # TODO: remove it.
-      def extern_requirement_extract
-        return @externRequirements
-      end
-
-      # TODO: remove it.
-      def get_classes
-      end
-
     private
 
       attr_accessor :visibility
@@ -99,7 +56,7 @@ module Languages
       # informations.
       # @param pPath Path of file to be analysed.
       def analyse_first_step(pPath)
-        fileElement = Languages::FileElement.new(pPath)
+        fileElement = Languages::FileElementData.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0

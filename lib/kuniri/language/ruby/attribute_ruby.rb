@@ -17,7 +17,7 @@ module Languages
           @attributeList = []
         end
 
-        # Get ruby attribute. 
+        # Get ruby attribute.
         # @param pLine Verify if line has a ruby attribute.
         # @return Return AttributeData or nil.
         def get_attribute(pLine)
@@ -71,59 +71,52 @@ module Languages
 
       # Override
       def handle_multiple_declaration_with_comma(pString)
-        listOfAttributes = []
-        pString = pString.split(",")
-        pString.each do |variable|
-          return nil if variable.scan(/=/).count > 1
-
+        return handle_multiple_declaration(pString, ",") do |variable|
           variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
-
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
+          variable
         end
-
-        return listOfAttributes
       end
 
       # Override
       def handle_multiple_declaration_with_equal(pString)
-        listOfAttributes = []
-        pString = pString.split("=")
-        pString.each do |variable|
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
-        end
-
-        return listOfAttributes
-      end
-
-      # Override
-      def handle_line_declaration(pString)
-        listOfAttributes = []
-        if pString =~ /=/
-          pString = pString.scan(/.*=/).join("")
-          return nil if pString =~ /\./
-        end
-
-        return nil if pString =~ /\./
-
-        pString = prepare_final_string(pString)
-        attribute = Languages::AttributeData.new(pString)
-        listOfAttributes.push(attribute)
-
-        return listOfAttributes
+        return handle_multiple_declaration(pString, "="){ |variable| variable }
       end
 
     private
 
       @log
       @attributeList
+
+      def handle_line_declaration(pString)
+        return handle_line(pString){ |pString| pString }
+      end
+
+      def handle_line(pString)
+        if pString =~ /=/
+          pString = pString.scan(/.*=/).join("")
+          return nil if pString =~ /\./
+        end
+
+        pString = yield(pString)
+
+        return nil if pString =~ /\./
+
+        pString = prepare_final_string(pString)
+        attribute = Languages::AttributeData.new(pString)
+
+        return [attribute]
+      end
+
+      def handle_multiple_declaration(pString, pSplitChar)
+        listOfAttributes = []
+        pString = pString.split(pSplitChar)
+        pString.each do |variable|
+          attribute = handle_line(variable) { |pString| yield(pString) }
+          listOfAttributes.concat(attribute) if attribute
+        end
+
+        return listOfAttributes
+      end
 
     #Class
     end
