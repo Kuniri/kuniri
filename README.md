@@ -36,7 +36,7 @@ extract from the code.
 ----
 ## What is the the meaning of "kuniri"?
 
-> Kuniri is an Esperanto word that means "go with" or "follow". This name was
+> Kuniri is an Esperanto word which means "go with" or "follow". This name was
 chosen because of the idea to keep following your code project with diagrams,
 traceability, code quality and others.
 
@@ -58,7 +58,8 @@ traceability, code quality and others.
 ----
 # Install
 
-First of all, you have to install RVM. Instructions can be found on https://rvm.io/
+First of all, you have to install RVM. Instructions can be found on
+https://rvm.io/rvm/install
 
 After this, you have to install the desired Ruby version with:
 ```
