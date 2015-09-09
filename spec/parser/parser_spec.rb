@@ -16,6 +16,13 @@ RSpec.describe Parser::Parser do
       @parser.start_parser
       expect(@parser.fileLanguage.size).to eq(@filesProject.size)
     end
+
+    it "Try a empty file path" do
+      @filesProject = ""
+      @parser = Parser::Parser.new(@filesProject)
+      expect{@parser.start_parser}.to raise_error(
+        Error::ConfigurationFileError)
+    end
   end
 
   after :each do
