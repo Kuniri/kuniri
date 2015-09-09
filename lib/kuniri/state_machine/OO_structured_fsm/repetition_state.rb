@@ -46,7 +46,8 @@ module StateMachine
         repetition = @language.repetitionHandler.get_repetition(pLine)
 
         flag = @language.flagFunctionBehaviour
-        get_add_repetition_lambda(MAP_STATE[flag]).call(repetition, pElementFile)
+        get_add_repetition_lambda(MAP_STATE[flag]).call(repetition,
+                                                        pElementFile)
 
         has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
         get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
