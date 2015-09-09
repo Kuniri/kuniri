@@ -5,4 +5,8 @@ module StateMachine
   CONSTRUCTOR_STATE         ||= 2       # Constructor state track.
   METHOD_STATE              ||= 3       # Method state track.
 
+  METHOD_LABEL          ||= "method"
+  CONSTRUCTOR_LABEL     ||= "constructor"
+  FUNCTION_LABEL        ||= "function"
+
 end

@@ -64,7 +64,7 @@ module StateMachine
         raise NotImplementedError
       end
 
-      # Handling conditional state
+      # Handling repetition state
       def repetition_capture
         raise NotImplementedError
       end
