@@ -11,6 +11,12 @@ RSpec.describe Languages::ModuleNamespace do
       @moduleNamespace.name = "Abc"
       expect(@moduleNamespace.name).to eq("Abc")
     end
+    it "Does not set name" do
+      @moduleNamespace = Languages::ModuleNamespaceData.new(nil)
+      expect(@moduleNamespace.name).to be_nil
+      @moduleNamespace = Languages::ModuleNamespaceData.new(1)
+      expect(@moduleNamespace.name).to be_nil
+    end
   end
 
   after :all do

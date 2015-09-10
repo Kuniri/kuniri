@@ -91,9 +91,11 @@ RSpec.describe Languages::FileElementData do
   end
 
   context "When instantiating" do
-    it "Get argument error" do
-      expect{Languages::FileElementData.new(nil)}.to raise_error(ArgumentError)
-      expect{Languages::FileElementData.new(1)}.to raise_error(ArgumentError)
+    it "Does not set name" do
+      @fileElement = Languages::FileElementData.new(nil)
+      expect(@fileElement.name).to be_nil
+      @fileElement = Languages::FileElementData.new(1)
+      expect(@fileElement.name).to be_nil
     end
 
   end

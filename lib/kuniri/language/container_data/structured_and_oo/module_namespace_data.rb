@@ -8,7 +8,9 @@ module Languages
     public
 
       def initialize(pName)
-          @name = pName
+      	return nil if pName.nil? or !pName.is_a? String
+
+        @name = pName
       end
 
   # Class

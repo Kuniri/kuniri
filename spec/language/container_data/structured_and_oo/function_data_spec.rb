@@ -15,6 +15,15 @@ RSpec.describe Languages::FunctionData do
     end
   end
 
+  context "When instantiating" do
+    it "Does not set name" do
+      @functionData = Languages::FunctionData.new(nil)
+      expect(@functionData.name).to be_nil
+      @functionData = Languages::FunctionData.new(1)
+      expect(@functionData.name).to be_nil
+    end
+  end
+
   after :all do
     @functionData = nil
   end

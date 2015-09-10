@@ -20,9 +20,8 @@ module Languages
       attr_reader :modules
 
       def initialize(pName)
-        if pName.nil? or !pName.is_a? String
-          raise ArgumentError
-        end
+        return nil if pName.nil? or !pName.is_a? String
+
         @global_functions = []
         @global_variables = []
         @extern_requirements = []
