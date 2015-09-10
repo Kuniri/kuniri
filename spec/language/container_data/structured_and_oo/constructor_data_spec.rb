@@ -40,9 +40,11 @@ RSpec.describe Languages::ConstructorData do
   end
 
   context "When instantiating" do
-    it "Get argument error" do
-      expect{Languages::ConditionalData.new(nil)}.to raise_error(ArgumentError)
-      expect{Languages::ConditionalData.new(1)}.to raise_error(ArgumentError)
+    it "Does not set name" do
+      @constructorData = Languages::ConstructorData.new(nil)
+      expect(@constructorData.name).to be_nil
+      @constructorData = Languages::ConstructorData.new(1)
+      expect(@constructorData.name).to be_nil
     end
   end
 
