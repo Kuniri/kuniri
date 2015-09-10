@@ -10,7 +10,7 @@ module Languages
       attr_reader :library
 
       def initialize(pRequirement)
-        return if pRequirement.nil? or !pRequirement.is_a? String
+        return nil if pRequirement.nil? or !pRequirement.is_a? String
 
         @name = pRequirement
       end
@@ -18,7 +18,7 @@ module Languages
       # Set library of extern requirement.
       # @param pLibrary Library inside the extern requirement.
       def setLibrary(pLibrary)
-        return if pLibrary.nil? or !pLibrary.is_a? String or pLibrary.empty?
+        return nil if pLibrary.nil? or !pLibrary.is_a? String or pLibrary.empty?
 
         @library = pLibrary
       end

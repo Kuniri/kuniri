@@ -34,7 +34,7 @@ module Languages
       # Add global function to the file.
       # @param pFunction An object of FunctionData to be added at the file.
       def add_global_function(pFunction)
-        return if not pFunction.is_a?(Languages::FunctionData)
+        return nil if not pFunction.is_a?(Languages::FunctionData)
 
         @global_functions.push(pFunction)
       end
@@ -51,7 +51,7 @@ module Languages
       # Add extern requirement inside file.
       # @param pOutside Add an object of ExternRequirementData.
       def add_extern_requirement(pOutside)
-        return unless pOutside.is_a?(Languages::ExternRequirementData)
+        return nil unless pOutside.is_a?(Languages::ExternRequirementData)
 
         @extern_requirements.push(pOutside)
       end
@@ -59,7 +59,7 @@ module Languages
       # Add a class inside file.
       # @param pClass Add an object of ClassData.
       def add_class(pClass)
-        return unless pClass.is_a?(Languages::ClassData)
+        return nil unless pClass.is_a?(Languages::ClassData)
 
         @classes.push(pClass)
       end
@@ -67,7 +67,7 @@ module Languages
       # Add a module inside file.
       # @param pModule Add an object of ModuleNamespaceData
       def add_modules(pModule)
-        return unless pModule.is_a?(Languages::ModuleNamespaceData)
+        return nil unless pModule.is_a?(Languages::ModuleNamespaceData)
 
         @modules.push(pModule)
       end
