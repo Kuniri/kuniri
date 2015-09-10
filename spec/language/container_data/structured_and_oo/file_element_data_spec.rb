@@ -90,6 +90,14 @@ RSpec.describe Languages::FileElementData do
 
   end
 
+  context "When instantiating" do
+    it "Get argument error" do
+      expect{Languages::FileElementData.new(nil)}.to raise_error(ArgumentError)
+      expect{Languages::FileElementData.new(1)}.to raise_error(ArgumentError)
+    end
+
+  end
+
   after :each do
     @fileElement = nil
   end

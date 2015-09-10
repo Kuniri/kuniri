@@ -7,22 +7,20 @@ module Languages
 
     public
 
-      attr_reader :path
+      attr_reader :library
 
       def initialize(pRequirement)
-        if pRequirement.nil? or !pRequirement.is_a? String
-          raise ArgumentError
-        end
+        return if pRequirement.nil? or !pRequirement.is_a? String
+
         @name = pRequirement
       end
 
-      # Set path of extern requirement.
-      # @param pPath Path inside the extern requirement.
-      def setPath(pPath)
-        if pPath.nil? or !pPath.is_a? String or !File.exist?(pPath)
-          raise ArgumentError
-        end
-        @path = pPath
+      # Set library of extern requirement.
+      # @param pLibrary Library inside the extern requirement.
+      def setLibrary(pLibrary)
+        return if pLibrary.nil? or !pLibrary.is_a? String or pLibrary.empty?
+
+        @library = pLibrary
       end
 
   # Class

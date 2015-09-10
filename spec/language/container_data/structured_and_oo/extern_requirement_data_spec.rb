@@ -10,21 +10,27 @@ RSpec.describe Languages::ExternRequirementData do
     it "Create container" do
       expect(@externRequirement.name).to eq("xpto")
     end
-    it "Get argument error" do
-      expect{Languages::ExternRequirementData.new(nil)}.to raise_error(ArgumentError)
-      expect{Languages::ExternRequirementData.new(1)}.to raise_error(ArgumentError)
+    it "Does not set name" do
+      @externRequirement = Languages::ExternRequirementData.new(nil)
+      expect(@externRequirement.name).to be_nil
+      @externRequirement = Languages::ExternRequirementData.new(1)
+      expect(@externRequirement.name).to be_nil
     end
   end
 
-  context "When set path" do
-    it "Set path." do
-      @externRequirement.setPath("spec/samples/emptyFile")
-      expect(@externRequirement.path).to eq("spec/samples/emptyFile")
+  context "When set library" do
+    it "Set library." do
+      @externRequirement.setLibrary("spec/samples/emptyFile")
+      expect(@externRequirement.library).to eq("spec/samples/emptyFile")
     end
-    it "Get argument error" do
-      expect{@externRequirement.setPath(nil)}.to raise_error(ArgumentError)
-      expect{@externRequirement.setPath(1)}.to raise_error(ArgumentError)
-      expect{@externRequirement.setPath("non-file")}.to raise_error(ArgumentError)
+    it "Does not set library" do
+      @externRequirement = Languages::ExternRequirementData.new("xpto")
+      @externRequirement.setLibrary(1)
+      expect(@externRequirement.library).to be_nil
+      @externRequirement.setLibrary(nil)
+      expect(@externRequirement.library).to be_nil
+      @externRequirement.setLibrary("")
+      expect(@externRequirement.library).to be_nil
     end
   end
 
