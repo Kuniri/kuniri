@@ -8,6 +8,9 @@ module Languages
     public
 
       def initialize(pConstructorName)
+      	if pConstructorName.nil? or !pConstructorName.is_a? String
+          raise ArgumentError
+        end
         super(pConstructorName)
       end
 

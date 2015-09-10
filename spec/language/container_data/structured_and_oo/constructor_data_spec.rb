@@ -39,6 +39,13 @@ RSpec.describe Languages::ConstructorData do
     end
   end
 
+  context "When instantiating" do
+    it "Get argument error" do
+      expect{Languages::ConditionalData.new(nil)}.to raise_error(ArgumentError)
+      expect{Languages::ConditionalData.new(1)}.to raise_error(ArgumentError)
+    end
+  end
+
   after :each do
     @constructorData = nil
   end
