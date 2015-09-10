@@ -23,10 +23,15 @@ RSpec.describe Languages::AttributeData do
       @attributeData.visibility = "protected"
       expect(@attributeData.visibility).to eq("protected")
     end
-  end 
+
+    it "Get argument error" do
+      expect{Languages::AttributeData.new(nil)}.to raise_error(ArgumentError)
+      expect{Languages::AttributeData.new(1)}.to raise_error(ArgumentError)
+    end
+  end
 
   after :all do
     @attributeData = nil
   end
 
-end 
+end

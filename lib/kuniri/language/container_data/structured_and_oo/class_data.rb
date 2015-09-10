@@ -40,7 +40,6 @@ module Languages
       #         informations.
       def add_method(pMethod)
         return unless pMethod.is_a?(Languages::FunctionData)
-
         @methods.push(pMethod)
       end
 
@@ -48,7 +47,6 @@ module Languages
       # @param pConstructor Object of FunctionData to be added at class.
       def add_constructor(pConstructor)
         return unless pConstructor.is_a?(Languages::FunctionData)
-
         @constructors.push(pConstructor)
       end
 
