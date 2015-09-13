@@ -6,7 +6,7 @@ RSpec.describe Languages::LanguageFactory do
     @factory = Languages::LanguageFactory.new
   end
 
-  context "When have supprt to language." do
+  context "When have support to language." do
     it "Ruby support." do
       expect(@factory.get_language("ruby").is_a?(Languages::RubySyntax))
               .to be true
