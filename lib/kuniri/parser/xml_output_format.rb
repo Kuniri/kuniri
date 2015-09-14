@@ -60,7 +60,7 @@ module Parser
       end
 
       # @see OutputFormat
-      def require_generate(pRequire)
+      def extern_requirement_generate(pRequire)
         # TODO
         return "<require name=\"TODO\">"
       end
@@ -70,6 +70,13 @@ module Parser
         # TODO
         return "<repetition type=\"TODO\" >"
       end
+
+      # @see OutputFormat
+      def module_generate(pModule)
+        # TODO
+        return "<module name=\"TODO\" \>"
+      end
+
 
       # @see OutputFormat
       def conditional_generate(pConditional)
