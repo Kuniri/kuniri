@@ -5,7 +5,28 @@ module Parser
     public
 
       def create_data(pParser)
-        raise NotImplementedError
+        # @log.write_log("Start parser: create data")
+
+        # Go through each file
+        pParser.fileLanguage.each do |listOfFile|
+
+          # Inspect each element
+          listOfFile.fileElements.each do |singleElement|
+
+            if (singleElement.classes.length() > 0)
+              class_generate(singleElement.classes)
+            elsif (singleElement.global_functions.length() > 0)
+              function_generate(singleElement.global_functions)
+            elsif (singleElement.global_variables.length() > 0)
+              global_variable_generate(singleElement.global_variables)
+            elsif (singleElement.extern_requirements.length() > 0)
+              extern_requirement_generate(singleElement.extern_requirements)
+            elsif (singleElement.modules.length() > 0)
+              module_generate(singleElement.modules)
+            end
+
+          end
+        end
       end
 
       def class_generate(pClass)
@@ -40,11 +61,15 @@ module Parser
         raise NotImplementedError
       end
 
-      def require_generate(pRequire)
+      def extern_requirement_generate(pRequire)
         raise NotImplementedError
       end
 
       def repetition_generate(pRepetition)
+        raise NotImplementedError
+      end
+
+      def module_generate(pModule)
         raise NotImplementedError
       end
 

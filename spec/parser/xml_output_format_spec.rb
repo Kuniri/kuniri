@@ -65,8 +65,14 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "Generate require" do
       requireTmp = Languages::ExternRequirementData.new("xpto")
-      ret = @outputFormat.require_generate(requireTmp)
+      ret = @outputFormat.extern_requirement_generate(requireTmp)
       expect(ret).to eq("<externRequirementData name=\"xpto\" />")
+    end
+
+    it "Generate module" do
+      moduleTmp = Languages::ModuleNamespaceData("xpto")
+      ret = @outputFormat.module_generate(moduleTmp)
+      expect(ret).to eq("<module name=\"xpto\" />")
     end
 
     it "Generate repetition" do
