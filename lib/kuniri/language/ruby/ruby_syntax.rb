@@ -35,7 +35,7 @@ module Languages
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
-        @visibility = "public"
+        @firstSemicolon = "public"
       end
 
       # Analyse source code.
@@ -51,7 +51,12 @@ module Languages
 
       attr_accessor :visibility
       @source
+      # Needs to not pass by Strings, Commentary and Regexes
+      def preprocessor(pLine)
+        pLine.split(/;/)
+      end
 
+      
       # First step for analyse code, it is responsible for get only basic
       # informations.
       # @param pPath Path of file to be analysed.
@@ -60,11 +65,17 @@ module Languages
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
-
-          @state.handle_line(line)
-          fileElement = @state.execute(fileElement, line)
+          processedLines = preprocessor(line)
+          if !processedLines.nil?
+            processedLines.each do |line|
+              @state.handle_line(line)
+              fileElement = @state.execute(fileElement, line)
+            end
+          end
         end
+
         @fileElements.push(fileElement)
+        
       end
 
   # Class
