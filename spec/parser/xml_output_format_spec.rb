@@ -6,19 +6,42 @@ RSpec.describe Parser::XMLOutputFormat do
     @outputFormat = Parser::XMLOutputFormat.new
   end
 
+  context "Generate class" do
+
+   it "Simple case class" do
+      classTmp = Languages::ClassData.new
+      classTmp.name = "Xpto"
+      ret = @outputFormat.class_generate(classTmp)
+      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"public\" >")
+    end
+
+   it "Set visibility" do
+      classTmp = Languages::ClassData.new
+      classTmp.name = "Xpto"
+      classTmp.visibility = "private"
+      ret = @outputFormat.class_generate(classTmp)
+      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"private\" >")
+    end
+
+   it "Set comment" do
+      classTmp = Languages::ClassData.new
+      classTmp.name = "Xpto"
+      classTmp.comments = "This is a simple comment"
+      ret = @outputFormat.class_generate(classTmp)
+      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"public\"" +
+                        "\n\tcomments=\"This is a simple comment\" >")
+    end
+
+
+
+  end
+
   context "Cannot call unimplemented method." do
 
     it "Create all data" do
       ret = @outputFormat.create_data(nil)
     end
-
-    it "Generate class" do
-      classTmp = Languages::ClassData.new
-      classTmp.name = "Xpto"
-      ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\" >")
-    end
-
+ 
     it "Generate constructor" do
       constructorTmp = Languages::ConstructorData.new("initialize")
       ret = @outputFormat.constructor_generate(constructorTmp)

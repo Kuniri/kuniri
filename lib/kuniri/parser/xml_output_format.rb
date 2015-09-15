@@ -6,15 +6,14 @@ module Parser
 
     public
 
-      def create_data(pParser)
-        # TODO
-        raise NotImplementedError
-      end
-
       # @see OutputFormat
       def class_generate(pClass)
-        # TODO
-        return "<class name=\"TODO\" >"
+        classString = "<class name=\"#{pClass.name}\""
+        classString += "\n\tvisibility=\"#{pClass.visibility}\""
+        classString += (pClass.comments.empty?) ? "" :
+                                    "\n\tcomments=\"#{pClass.comments}\""
+        classString += " >"
+        return classString
       end
 
       # @see OutputFormat

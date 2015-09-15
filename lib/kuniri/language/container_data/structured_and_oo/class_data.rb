@@ -21,6 +21,7 @@ module Languages
         @methods = []
         @constructors = []
         @visibility = "public"
+        @comments = ""
       end
 
       # Add attribute to class data, notice the possibility of call this
