@@ -23,9 +23,10 @@ module Parser
       def constructor_generate(pConstructor)
 
         # Special case, empty constructor
-        if (pConstructor.parameters.empty? && pConstructor.conditionals &&
-            pConstructor.repetitions.empty? && pConstructor.type.empty?)
-            return default_fields("initialize", pConstructor)
+        if (pConstructor.parameters.empty? &&
+            pConstructor.conditionals.empty? &&
+            pConstructor.repetitions.empty?)
+            return default_fields("constructor", pConstructor)
         else
           return default_fields("constructor", pConstructor)
         end

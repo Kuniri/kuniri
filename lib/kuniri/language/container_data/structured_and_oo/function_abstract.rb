@@ -22,6 +22,8 @@ module Languages
         @parameters = []
         @conditionals = []
         @repetitions = []
+        @visibility = "public"
+        @comments = ""
       end
 
       # Add parameters inside function.
