@@ -439,9 +439,9 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[0].comments)
               .to eq(" Comment 3: method\n")
       expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-              .to eq(" Comment 4: Combo 1\n Comment 5: Combo 2\n")
+              .to eq(" Comment 4: Combo 1\n Comment 5: Combo 2\n Comment 6: Combo 3; Combo 4\n")
       expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
-              .to eq (" Comment 6: Attribute\n")
+              .to eq (" Comment 7: Attribute\n")
     end
 
     it "Correct multiple line comment capture - Global" do

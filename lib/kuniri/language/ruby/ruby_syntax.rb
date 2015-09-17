@@ -51,9 +51,21 @@ module Languages
 
       attr_accessor :visibility
       @source
-      # Needs to not pass by Strings, Commentary and Regexes
-      def preprocessor(pLine)
-        pLine.split(/;/)
+      @flagMultipleLineComment = false
+      # Needs to not pass by multiple line Commentary
+      def handle_semicolon(pLine)
+        commentLine = []
+
+        if pLine =~ /^=begin(.*?)/
+          @flagMultipleLineComment = true
+        elsif pLine =~ /^=end/
+          @flagMultipleLineComment = false
+        end
+
+        unless @flagMultipleLineComment == true || pLine =~ /#(.*)/
+          return pLine.split(/;/)
+        end
+        commentLine << pLine
       end
 
       
@@ -65,7 +77,7 @@ module Languages
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
-          processedLines = preprocessor(line)
+          processedLines = handle_semicolon(line)
           if !processedLines.nil?
             processedLines.each do |line|
               @state.handle_line(line)
