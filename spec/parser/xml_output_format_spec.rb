@@ -8,31 +8,29 @@ RSpec.describe Parser::XMLOutputFormat do
 
   context "Generate class" do
 
-   it "Simple case class" do
+   it "::Simple case class" do
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
       ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"public\" >")
+      expect(ret).to eq("<class name=\"Xpto\" visibility=\"public\" />")
     end
 
-   it "Set visibility" do
+   it "::Set visibility" do
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
       classTmp.visibility = "private"
       ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"private\" >")
+      expect(ret).to eq("<class name=\"Xpto\" visibility=\"private\" />")
     end
 
-   it "Set comment" do
+   it "::Set comment" do
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
       classTmp.comments = "This is a simple comment"
       ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\"\n\tvisibility=\"public\"" +
-                        "\n\tcomments=\"This is a simple comment\" >")
+      expect(ret).to eq("<class name=\"Xpto\" visibility=\"public\"" +
+                        "\n\tcomments=\"This is a simple comment\" />")
     end
-
-
 
   end
 
