@@ -34,18 +34,32 @@ RSpec.describe Parser::XMLOutputFormat do
 
   end
 
+  context "Generate constructor" do
+
+    it "::Simple constructor" do
+      constructorTmp = Languages::ConstructorData.new("initialize")
+      ret = @outputFormat.constructor_generate(constructorTmp)
+      expect(ret).to eq("<constructor name=\"initialize\" " +
+                        "visibility=\"public\" />")
+    end
+
+    it "::Constructor with parameters" do
+      constructorTmp = Languages::ConstructorData.new("initialize")
+      constructorTmp.comments = "Comment constructor"
+      ret = @outputFormat.constructor_generate(constructorTmp)
+      expect(ret).to eq("<constructor name=\"initialize\" " +
+                        "visibility=\"public\"" +
+                        "\n\tcomments=\"Comment constructor\" />")
+    end
+
+  end
+
   context "Cannot call unimplemented method." do
 
     it "Create all data" do
       ret = @outputFormat.create_data(nil)
     end
  
-    it "Generate constructor" do
-      constructorTmp = Languages::ConstructorData.new("initialize")
-      ret = @outputFormat.constructor_generate(constructorTmp)
-      expect(ret).to eq("<constructor name=\"initialize\">")
-    end
-
     it "Generate inheritance" do
       inheritanceTmp = Languages::ClassData.new
       inheritanceTmp.inheritances = "Xpto"
