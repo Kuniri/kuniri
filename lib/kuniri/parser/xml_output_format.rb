@@ -8,18 +8,28 @@ module Parser
 
       # @see OutputFormat
       def class_generate(pClass)
-        classString = "<class name=\"#{pClass.name}\""
-        classString += "\n\tvisibility=\"#{pClass.visibility}\""
-        classString += (pClass.comments.empty?) ? "" :
-                                    "\n\tcomments=\"#{pClass.comments}\""
-        classString += " >"
-        return classString
+
+        # Special case, empty class.
+        if (pClass.inheritances.empty? && pClass.attributes.empty? &&
+            pClass.methods.empty? && pClass.constructors.empty?)
+          return default_fields("class", pClass)
+        else
+          return default_fields("class", pClass, false)
+        end
+
       end
 
       # @see OutputFormat
       def constructor_generate(pConstructor)
-        # TODO
-        return "<constructor name=\"TODO\" >"
+
+        # Special case, empty constructor
+        if (pConstructor.parameters.empty? && pConstructor.conditionals &&
+            pConstructor.repetitions.empty? && pConstructor.type.empty?)
+            return default_fields("initialize", pConstructor)
+        else
+          return default_fields("constructor", pConstructor)
+        end
+
       end
 
       # @see OutputFormat
@@ -81,6 +91,17 @@ module Parser
       def conditional_generate(pConditional)
         # TODO
         return "<conditional type=\"TODO\">"
+      end
+
+    private
+
+      def default_fields(pLabelField, pElement, pCloseIt=true)
+        buildString = "<#{pLabelField} name=\"#{pElement.name}\" "
+        buildString += "visibility=\"#{pElement.visibility}\""
+        buildString += (pElement.comments.empty?) ? " " :
+                        "\n\tcomments=\"#{pElement.comments}\" "
+        buildString += (pCloseIt) ? "/>" : ">"
+        return buildString
       end
 
   # class
