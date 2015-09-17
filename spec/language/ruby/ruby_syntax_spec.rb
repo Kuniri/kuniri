@@ -225,6 +225,10 @@ RSpec.describe Languages::RubySyntax do
         .to eq("method2")
       expect(@syntax.fileElements[0].classes[0].methods[2].name)
         .to eq("method3")
+      expect(@syntax.fileElements[0].classes[0].methods[3].name)
+        .to eq("method4")
+      expect(@syntax.fileElements[0].classes[0].methods[4].name)
+        .to eq("method5")
     end
   end
 
@@ -470,6 +474,8 @@ RSpec.describe Languages::RubySyntax do
               .to eq("    First method\n")
       expect(@syntax.fileElements[0].classes[0].methods[1].comments)
               .to eq("    methodTwo\n")
+      expect(@syntax.fileElements[0].classes[0].methods[2].comments)
+              .to eq("    method;Three\n")
 
     end
 
