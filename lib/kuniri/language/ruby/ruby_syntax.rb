@@ -35,7 +35,7 @@ module Languages
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
-        @firstSemicolon = "public"
+        @visibility = "public"
       end
 
       # Analyse source code.
