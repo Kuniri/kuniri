@@ -52,7 +52,9 @@ module Languages
       attr_accessor :visibility
       @source
       @flagMultipleLineComment = false
-      # Needs to not pass by multiple line Commentary
+
+      # Puts every statement in a single line
+      # @param pLine Line of the file to be analysed.
       def handle_semicolon(pLine)
         commentLine = []
 
