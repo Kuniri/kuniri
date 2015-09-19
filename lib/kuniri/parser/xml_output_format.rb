@@ -34,9 +34,12 @@ module Parser
       end
 
       # @see OutputFormat
-      def inheritance_generate(pInheritance)
-        # TODO
-        return "<inheritance name=\"TODO\" />"
+      def inheritance_generate(pClassInheritances)
+        inheritanceString = []
+        pClassInheritances.inheritances.each do |inheritance|
+          inheritanceString.push("<inheritance name=\"#{inheritance}\" />")
+        end
+        return inheritanceString.join("\n")
       end
 
       # @see OutputFormat
