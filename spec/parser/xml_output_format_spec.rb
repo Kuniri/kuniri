@@ -59,7 +59,7 @@ RSpec.describe Parser::XMLOutputFormat do
     it "::Simple inheritance" do
       inheritanceTmp = Languages::ClassData.new
       inheritanceTmp.inheritances.push("Xpto")
-      ret = @outputFormat.inheritance_generate(inheritanceTmp)
+      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
       expect(ret).to eq("<inheritance name=\"Xpto\" />")
     end
 
@@ -67,11 +67,27 @@ RSpec.describe Parser::XMLOutputFormat do
       inheritanceTmp = Languages::ClassData.new
       inheritanceTmp.inheritances.push("Xpto1")
       inheritanceTmp.inheritances.push("Xpto2")
-      ret = @outputFormat.inheritance_generate(inheritanceTmp)
+      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
       expect(ret).to eq("<inheritance name=\"Xpto1\" />\n" +
                         "<inheritance name=\"Xpto2\" />")
     end
 
+    it "::No inheritance" do
+      inheritanceTmp = Languages::ClassData.new
+      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      expect(ret).to eq(nil)
+    end
+
+  end
+
+  context "::Generate methods" do
+
+    it "::Generate simple method" do
+      methodTmp = Languages::MethodData.new("xpto")
+      ret = @outputFormat.method_generate(methodTmp)
+      expect(ret).to eq("<method name=\"xpto\" " +
+                        "visibility=\"public\" />")
+    end
 
   end
 
@@ -79,12 +95,6 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "Create all data" do
       ret = @outputFormat.create_data(nil)
-    end
-
-    it "Generate method" do
-      methodTmp = Languages::MethodData.new("xpto")
-      ret = @outputFormat.method_generate(methodTmp)
-      expect(ret).to eq("<method name=\"xpto\">")
     end
 
     it "Generate parameters" do
