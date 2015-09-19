@@ -54,17 +54,31 @@ RSpec.describe Parser::XMLOutputFormat do
 
   end
 
+  context "::Generate initialize" do
+
+    it "::Simple inheritance" do
+      inheritanceTmp = Languages::ClassData.new
+      inheritanceTmp.inheritances.push("Xpto")
+      ret = @outputFormat.inheritance_generate(inheritanceTmp)
+      expect(ret).to eq("<inheritance name=\"Xpto\" />")
+    end
+
+    it "::Double inheritance" do
+      inheritanceTmp = Languages::ClassData.new
+      inheritanceTmp.inheritances.push("Xpto1")
+      inheritanceTmp.inheritances.push("Xpto2")
+      ret = @outputFormat.inheritance_generate(inheritanceTmp)
+      expect(ret).to eq("<inheritance name=\"Xpto1\" />\n" +
+                        "<inheritance name=\"Xpto2\" />")
+    end
+
+
+  end
+
   context "Cannot call unimplemented method." do
 
     it "Create all data" do
       ret = @outputFormat.create_data(nil)
-    end
- 
-    it "Generate inheritance" do
-      inheritanceTmp = Languages::ClassData.new
-      inheritanceTmp.inheritances = "Xpto"
-      ret = @outputFormat.inheritance_generate(inheritanceTmp)
-      expect(ret).to eq("<inheritance name=\"Xpto\" />")
     end
 
     it "Generate method" do
