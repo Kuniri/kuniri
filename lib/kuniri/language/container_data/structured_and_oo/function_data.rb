@@ -7,8 +7,6 @@ module Languages
 
     public
 
-      attr_reader :parameters
-
       def initialize(pFunctionName)
         super(pFunctionName)
         @visibility = "global"

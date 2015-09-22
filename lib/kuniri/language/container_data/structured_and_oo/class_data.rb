@@ -40,7 +40,7 @@ module Languages
       # @param pMethod It is an object of FunctionData with the method
       #         informations.
       def add_method(pMethod)
-        return unless pMethod.is_a?(Languages::FunctionData)
+        return unless pMethod.is_a?(Languages::MethodData)
 
         @methods.push(pMethod)
       end
