@@ -44,10 +44,8 @@ module Kuniri
           return -1
         end
         @log.write_log("debug: files: #{@filesPathProject.to_s}")
-		puts @filesPathProject
         @parser = Parser::Parser.new(@filesPathProject)
-	    @parser.start_parser()
-		puts "+" * 40
+  	    @parser.start_parser()
       end
 
       def get_parser
