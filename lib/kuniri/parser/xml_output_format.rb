@@ -21,20 +21,20 @@ module Parser
         # Go through elements
         # 1 - Inheritances
         temporaryStringXML = inheritance_generate(pClass.inheritances)
-        buildClassString += temporaryStringXML unless temporaryStringXML
+        buildClassString += temporaryStringXML unless temporaryStringXML.empty?
         # 2 - Attributes
         temporaryStringXML = attribute_generate(pClass.attributes)
-        buildClassString += temporaryStringXML unless temporaryStringXML
+        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
         # 3 - Constructors
         temporaryStringXML = constructor_generate(pClass.constructors)
-        buildClassString += temporaryStringXML unless temporaryStringXML
+        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
         # 4 - Methods
         temporaryStringXML = method_generate(pClass.methods)
-        buildClassString += temporaryStringXML unless temporaryStringXML
+        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
         # 5 - TODO: You have to handler class inside class
 
         # Close class
-        buildClassString += "\n</class>"
+        buildClassString += "</class>"
 
         return buildClassString
       end
@@ -88,26 +88,33 @@ module Parser
 
         return "" if pMethod.empty?
 
-        # Empty method
-        if (pMethod.parameters.empty? && pMethod.conditionals.empty? &&
-            pMethod.repetitions.empty?)
-            return default_fields("method", pMethod)
+        temporaryStringXML = ""
+        buildMethodStringXML = ""
+
+        pMethod.each do |method|
+          # Empty method
+          if (method.parameters.empty? && method.conditionals.empty? &&
+              method.repetitions.empty?)
+              buildMethodStringXML += default_fields("method", method)
+              next
+          end
+
+          temporaryStringXML += default_fields("method", method, false)
+
+          # 1 - Handle parameters
+          temporaryStringXML = parameters_generate(method.parameters)
+          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
+          # 2 - Conditional
+          temporaryStringXML = conditional_generate(method)
+          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
+          # 3 - Repetition
+          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
+          # 4 - TODO: local variable
+
+          buildMethodStringXML += "\n</method>"
         end
 
-        default_fields("method", pMethod, false)
-
-        # 1 - Handle parameters
-        temporaryStringXML = parameters_generate(pConstructor.parameters)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 2 - Conditional
-        temporaryStringXML = conditional_generate(pConstructor)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 3 - Repetition
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 4 - TODO: local variable
-
-        buildConstructorStringXML += "\n</constructor>"
-        return buildConstructorStringXML
+        return buildMethodStringXML
       end
 
       # @see OutputFormat
@@ -128,9 +135,9 @@ module Parser
 
         return "" if pAttribute.empty?
 
-        buildParameterString = []
+        buildAttributeString = []
         pAttribute.each do |attribute|
-          buildAttributeString.push("<attribute name=\"#{attribute}\">")
+          buildAttributeString.push("<attribute name=\"#{attribute.name}\" />")
         end
 
         return buildAttributeString.join("\n")
@@ -221,7 +228,7 @@ module Parser
         buildString += (pElement.comments.empty?) ? " " :
                         "\n\tcomments=\"#{pElement.comments}\" "
         buildString += (pCloseIt) ? "/>" : ">"
-        return buildString
+        return buildString + "\n"
       end
 
       def handle_function_behavior
@@ -247,7 +254,7 @@ module Parser
         buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
         # 4 - TODO: local variable
 
-        buildConstructorStringXML += "\n</constructor>"
+        buildConstructorStringXML += "\n</method>"
         return buildConstructorStringXML
 
       end
