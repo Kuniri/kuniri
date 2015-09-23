@@ -48,7 +48,7 @@ module Languages
       # Add constructor inside class.
       # @param pConstructor Object of FunctionData to be added at class.
       def add_constructor(pConstructor)
-        return unless pConstructor.is_a?(Languages::FunctionData)
+        return unless pConstructor.is_a?(Languages::ConstructorData)
 
         @constructors.push(pConstructor)
       end
