@@ -44,28 +44,32 @@ module Parser
 
         return "" if pConstructor.empty?
 
-        # Special case, empty constructor
-        if (pConstructor.parameters.empty? &&
-            pConstructor.conditionals.empty? &&
-            pConstructor.repetitions.empty?)
-            return default_fields("constructor", pConstructor)
+        pConstructor.each do |constructor|
+          # Special case, empty constructor
+          if (constructor.parameters.empty? &&
+              constructor.conditionals.empty? &&
+              constructor.repetitions.empty?)
+              return default_fields("constructor", constructor)
+          end
+
+          buildConstructorStringXML = ""
+          buildConstructorStringXML += default_fields("constructor",
+                                                      constructor, false)
+
+          # 1 - Handle parameters
+          temporaryStringXML = parameters_generate(constructor)
+          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+          # 2 - Conditional
+          temporaryStringXML = conditional_generate(constructor)
+          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+          # 3 - Repetition
+          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+          # 4 - TODO: local variable
+
+          buildConstructorStringXML += "\n</constructor>"
+
         end
 
-        buildConstructorStringXML = ""
-        buildConstructorStringXML += default_fields("constructor",
-                                                    pConstructor, false)
-
-        # 1 - Handle parameters
-        temporaryStringXML = parameters_generate(pConstructor)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 2 - Conditional
-        temporaryStringXML = conditional_generate(pConstructor)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 3 - Repetition
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-        # 4 - TODO: local variable
-
-        buildConstructorStringXML += "\n</constructor>"
         return buildConstructorStringXML
 
       end
