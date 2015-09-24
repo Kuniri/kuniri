@@ -34,7 +34,7 @@ module Languages
       # Add global function to the file.
       # @param pFunction An object of FunctionData to be added at the file.
       def add_global_function(pFunction)
-        return nil if not pFunction.is_a?(Languages::FunctionData)
+        return nil unless pFunction.is_a?(Languages::FunctionData)
 
         @global_functions.push(pFunction)
       end
