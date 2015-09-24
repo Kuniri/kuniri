@@ -112,6 +112,25 @@ RSpec.describe Kuniri::Kuniri do
     expect(@parameters.size).to eq(4)
   end
 
+  it "Should contain the inheritance name" do
+    @inheritance_name = nil
+    @output.each do |line|
+      @inheritance_name = line =~ /\s+<inheritance\sname="Array"\/>/
+      break unless @inheritance_name.nil?
+    end
+    expect(@inheritance_name).not_to be_nil
+  end
+
+
+  it "Should find all inheritances" do
+    @inheritance = []
+    @output.each do |line|
+      line_of_inheritance = line =~ /\s+<inheritance\sname="\w+"\/>/
+      @inheritance << line_of_inheritance unless line_of_inheritance.nil?
+    end
+    expect(@inheritance.size).to eq(1)
+  end
+
   it "Should verify the opening-closing structure" do
     @stack = []
     @output.each do |line|
