@@ -39,21 +39,24 @@ RSpec.describe Kuniri::Kuniri do
   it "Should contain the method name and visibility" do
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ /\s+<method\sname="method1"\svisibility="global"\/?>/
+      @method_name = line =~ 
+      /\s+<method\sname="method1"\svisibility="global"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
 
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ /\s+<method\sname="method2"\svisibility="global"\/?>/
+      @method_name = line =~ 
+      /\s+<method\sname="method2"\svisibility="global"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
 
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ /\s+<method\sname="method3"\svisibility="global"\/?>/
+      @method_name = line =~ 
+      /\s+<method\sname="method3"\svisibility="global"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
@@ -62,7 +65,8 @@ RSpec.describe Kuniri::Kuniri do
   it "Should find all methods" do
     @methods = []
     @output.each do |line|
-      line_of_method = line =~ /\s+<method\sname="method\d"\svisibility="global"\/?>/
+      line_of_method = line =~ 
+      /\s+<method\sname="method\d"\svisibility="global"\/?>/
       @methods << line_of_method unless line_of_method.nil?
     end
     expect(@methods.size).to eq(3)
@@ -108,7 +112,25 @@ RSpec.describe Kuniri::Kuniri do
     expect(@parameters.size).to eq(4)
   end
 
+  it "Should verify the opening-closing structure" do
+    @stack = []
+    @output.each do |line|
+      next if line =~ /<\?xml.*/
+      next if line =~ /.*\/>/
 
+      if line =~ /\s*<\/(\w*)>/
+        expect(@stack.last).to eq($1)
+        @stack.pop
+
+      elsif line =~ /\s*<(\w*)(.*)>/
+        @stack.push $1
+      end      
+  
+    end
+
+    expect(@stack.size).to eq(0)
+
+  end
 
   after :each do
     @kuniri = nil
