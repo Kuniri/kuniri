@@ -6,27 +6,30 @@ module Parser
 
       def create_data(pParser)
         # @log.write_log("Start parser: create data")
-
+        output = ""
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
 
           # Inspect each element
           listOfFile.fileElements.each do |singleElement|
-
             if (singleElement.classes.length() > 0)
-              class_generate(singleElement.classes)
-            elsif (singleElement.global_functions.length() > 0)
-              function_generate(singleElement.global_functions)
-            elsif (singleElement.global_variables.length() > 0)
-              global_variable_generate(singleElement.global_variables)
-            elsif (singleElement.extern_requirements.length() > 0)
-              extern_requirement_generate(singleElement.extern_requirements)
-            elsif (singleElement.modules.length() > 0)
-              module_generate(singleElement.modules)
+              output += class_generate(singleElement.classes[0])
             end
-
+            if (singleElement.global_functions.length() > 0)
+              output += function_generate(singleElement.global_functions)
+            end
+            if (singleElement.global_variables.length() > 0)
+              output += global_variable_generate(singleElement.global_variables)
+            end
+            if (singleElement.extern_requirements.length() > 0)
+              output += extern_requirement_generate(singleElement.extern_requirements)
+            end
+            if (singleElement.modules.length() > 0)
+              output += module_generate(singleElement.modules)
+            end
           end
         end
+        return output
       end
 
       def class_generate(pClass)
