@@ -10,7 +10,7 @@ module Languages
       attr_reader :path
 
       def initialize(pRequirement)
-        @name = pRequirement
+        @path = pRequirement
       end
 
       # Set path of extern requirement.
