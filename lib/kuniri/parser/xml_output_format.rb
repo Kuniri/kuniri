@@ -20,58 +20,23 @@ module Parser
 
         # Go through elements
         # 1 - Inheritances
-        temporaryStringXML = inheritance_generate(pClass.inheritances)
-        buildClassString += temporaryStringXML unless temporaryStringXML.empty?
+        tempStringXML = inheritance_generate(pClass.inheritances)
+        buildClassString += tempStringXML unless tempStringXML.empty?
         # 2 - Attributes
-        temporaryStringXML = attribute_generate(pClass.attributes)
-        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
+        tempStringXML = attribute_generate(pClass.attributes)
+        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
         # 3 - Constructors
-        temporaryStringXML = constructor_generate(pClass.constructors)
-        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
+        tempStringXML = constructor_generate(pClass.constructors)
+        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
         # 4 - Methods
-        temporaryStringXML = method_generate(pClass.methods)
-        buildClassString += temporaryStringXML + "\n" unless temporaryStringXML.empty?
+        tempStringXML = method_generate(pClass.methods)
+        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
         # 5 - TODO: You have to handler class inside class
 
         # Close class
         buildClassString += "</class>"
 
         return buildClassString
-      end
-
-      # @see OutputFormat
-      def constructor_generate(pConstructor)
-
-        return "" if pConstructor.empty?
-
-        pConstructor.each do |constructor|
-          # Special case, empty constructor
-          if (constructor.parameters.empty? &&
-              constructor.conditionals.empty? &&
-              constructor.repetitions.empty?)
-              return default_fields("constructor", constructor)
-          end
-
-          buildConstructorStringXML = ""
-          buildConstructorStringXML += default_fields("constructor",
-                                                      constructor, false)
-
-          # 1 - Handle parameters
-          temporaryStringXML = parameters_generate(constructor)
-          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-          # 2 - Conditional
-          temporaryStringXML = conditional_generate(constructor)
-          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-          # 3 - Repetition
-          buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
-          # 4 - TODO: local variable
-
-          buildConstructorStringXML += "\n</constructor>"
-
-        end
-
-        return buildConstructorStringXML
-
       end
 
       # @see OutputFormat
@@ -84,7 +49,21 @@ module Parser
           inheritanceString.push("<inheritance name=\"#{inheritance}\" />")
         end
 
-        return inheritanceString.join("\n")
+        return inheritanceString.join("\n") + "\n"
+      end
+
+      # @see OutputFormat
+      def constructor_generate(pConstructor)
+
+        return "" if pConstructor.empty?
+
+        stringXML = []
+        pConstructor.each do |constructor|
+          stringXML.push(handle_function_behavior(constructor, "constructor"))
+        end
+
+        return stringXML.join("\n")
+
       end
 
       # @see OutputFormat
@@ -92,33 +71,24 @@ module Parser
 
         return "" if pMethod.empty?
 
-        temporaryStringXML = ""
-        buildMethodStringXML = ""
-
+        stringXML = []
         pMethod.each do |method|
-          # Empty method
-          if (method.parameters.empty? && method.conditionals.empty? &&
-              method.repetitions.empty?)
-              buildMethodStringXML += default_fields("method", method)
-              next
-          end
-
-          temporaryStringXML += default_fields("method", method, false)
-
-          # 1 - Handle parameters
-          temporaryStringXML = parameters_generate(method.parameters)
-          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
-          # 2 - Conditional
-          temporaryStringXML = conditional_generate(method)
-          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
-          # 3 - Repetition
-          buildMethodStringXML += temporaryStringXML unless temporaryStringXML
-          # 4 - TODO: local variable
-
-          buildMethodStringXML += "\n</method>"
+          stringXML.push(handle_function_behavior(method, "method"))
         end
 
-        return buildMethodStringXML
+        return stringXML.join("\n")
+      end
+
+      # @see OutputFormat
+      def function_generate(pFunction)
+        return "" if pFunction.empty?
+
+        stringXML = []
+        pFunction.each do |function|
+          stringXML.push(handle_function_behavior(function, "function"))
+        end
+
+        return stringXML.join("\n")
       end
 
       # @see OutputFormat
@@ -148,12 +118,6 @@ module Parser
       end
 
       # @see OutputFormat
-      def function_generate(pFunction)
-        # TODO
-        return "<function name=\"TODO\">"
-      end
-
-      # @see OutputFormat
       def global_variable_generate(pGlobalVariable)
 
         return "" if pGlobalVariable.empty?
@@ -161,7 +125,7 @@ module Parser
         buildGlobalVariableString = []
 
         pGlobalVariable.each do |globalVariable|
-          buildGlobalVariableString.push("<globalVariable " +
+          buildGlobalVariableString.push("<variableGlobal " +
                                          "name=\"#{globalVariable}\" />")
         end
 
@@ -176,10 +140,23 @@ module Parser
 
         buildExternRequirement = []
         pRequire.each do |path|
-          buildExternRequirement.push("<require name=\"#{path}\" />")
+          buildExternRequirement.push("<require name=\"#{path.path}\" />")
         end
 
         return buildExternRequirement.join("\n")
+      end
+
+      # @see OutputFormat
+      def module_generate(pModule)
+
+        return "" if pModule.empty?
+
+        buildModule = []
+        pModule.each do |modules|
+          buildModule.push(default_fields("module", pModule))
+        end
+
+        return buildModule.join("\n")
       end
 
       # @see OutputFormat
@@ -194,34 +171,20 @@ module Parser
                                "expression=\"#{repetition.expression}\" />")
         end
 
-        return buildRepetition.join("\n")
+        return buildRepetition.join("\n") + "\n"
       end
-
-      # @see OutputFormat
-      def module_generate(pModule)
-
-        return "" if pModule.empty?
-
-        buildModule = []
-        pModule.each do |modules|
-          buildModule.push(default_fields("module", pModule))
-        end
-        return buildModule.join("\n")
-      end
-
 
       # @see OutputFormat
       def conditional_generate(pConditional)
 
         return "" if pConditional.empty?
-
         buildConditional = []
-        buildConditional.each do |conditional|
-          buildConditional.push("<conditional type=\"#{conditional}\" " +
+        pConditional.each do |conditional|
+          buildConditional.push("<conditional type=\"#{conditional.type}\" " +
                                 "expression=\"#{conditional.expression}\" />")
         end
 
-        return buildConditional.join("\n")
+        return buildConditional.join("\n") + "\n"
       end
 
     private
@@ -235,31 +198,30 @@ module Parser
         return buildString + "\n"
       end
 
-      def handle_function_behavior
-
-        return "" if pMethod.empty?
+      def handle_function_behavior(pFunctionElement, pType)
 
         # Empty method
-        if (pMethod.parameters.empty? && pMethod.conditionals.empty? &&
-            pMethod.repetitions.empty?)
-            return default_fields("method", pMethod)
+        if (pFunctionElement.parameters.empty? &&
+            pFunctionElement.conditionals.empty? &&
+            pFunctionElement.repetitions.empty?)
+            return default_fields(pType, pFunctionElement)
         end
 
-        default_fields("method", pMethod, false)
-
+        buildStringXML = default_fields(pType, pFunctionElement, false)
         #send(#{begin}_generate(element))
         # 1 - Handle parameters
-        temporaryStringXML = parameters_generate(pConstructor.parameters)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+        tempStringXML = parameters_generate(pFunctionElement.parameters)
+        buildStringXML += tempStringXML unless tempStringXML.empty?
         # 2 - Conditional
-        temporaryStringXML = conditional_generate(pConstructor)
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+        tempStringXML = conditional_generate(pFunctionElement.conditionals)
+        buildStringXML += tempStringXML unless tempStringXML.empty?
         # 3 - Repetition
-        buildConstructorStringXML += temporaryStringXML unless temporaryStringXML
+        tempStringXML = repetition_generate(pFunctionElement.repetitions)
+        buildStringXML += tempStringXML unless tempStringXML.empty?
         # 4 - TODO: local variable
+        buildStringXML += "\n</#{pType}>"
 
-        buildConstructorStringXML += "\n</method>"
-        return buildConstructorStringXML
+        return buildStringXML
 
       end
 
