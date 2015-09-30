@@ -8,7 +8,7 @@ RSpec.describe Languages::ExternRequirementData do
 
   context "Using constructor to create data container." do
     it "Create container" do
-      expect(@externRequirement.name).to eq("xpto")
+      expect(@externRequirement.path).to eq("xpto")
     end
     it "Does not set name" do
       @externRequirement = Languages::ExternRequirementData.new(nil)
@@ -23,6 +23,7 @@ RSpec.describe Languages::ExternRequirementData do
       @externRequirement.setLibrary("spec/samples/emptyFile")
       expect(@externRequirement.library).to eq("spec/samples/emptyFile")
     end
+
     it "Does not set library" do
       @externRequirement = Languages::ExternRequirementData.new("xpto")
       @externRequirement.setLibrary(1)

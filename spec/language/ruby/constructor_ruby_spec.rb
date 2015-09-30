@@ -46,7 +46,7 @@ RSpec.describe Languages::Ruby::ConstructorRuby do
     it "No constructor" do
       input = "   def methodX"
       expect(@constructor.get_constructor(input))
-             .to eq(nil) 
+             .to eq(nil)
     end
   end
 
