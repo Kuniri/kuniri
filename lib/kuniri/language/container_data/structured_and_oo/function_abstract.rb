@@ -15,6 +15,10 @@ module Languages
       attr_reader :repetitions
       attr_accessor :type
 
+      METHOD_DATA ||= "METHOD"
+      CONSTRUCTOR_DATA ||= "CONSTRUCTOR"
+      GLOBAL_FUNCTION_DATA ||= "GLOBALFUNCTION"
+
       def initialize(pFunctionName)
         @name = pFunctionName
         @parameters = []
@@ -22,6 +26,7 @@ module Languages
         @repetitions = []
         @visibility = "public"
         @comments = ""
+        @type = "unknown"
       end
 
       # Add parameters inside function.

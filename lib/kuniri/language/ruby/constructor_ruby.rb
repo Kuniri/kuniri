@@ -16,12 +16,10 @@ module Languages
         def get_constructor(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result
+          return nil unless result.name =~ /initialize/
 
-          if result.name =~ /initialize/
-            result.type = "CONSTRUCTOR"
-          else
-            return nil
-          end
+          constructorData = ConstructorData.new(result.name)
+          constructorData << result
 
           return result
         end
