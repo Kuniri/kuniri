@@ -37,14 +37,32 @@ module Kuniri
         @log.write_log("info: Start to run analysis.")
         @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
 
-        @filesPathProject = get_project_file(@configurationInfo["source"])
+        @language_extension = ""
+        if @configurationInfo["language"] == "ruby"
+          @language_extension = "**.rb" 
+        end
+        if @configurationInfo["language"] == "java"
+          @language_extension = "**.java"
+        end
+        if @configurationInfo["language"] == "python"
+          @language_extension = "**.py" 
+        end
+        if @configurationInfo["language"] == "cplusplus"
+          @language_extension = "**.cpp"
+        end
+        if @configurationInfo["language"] == "csharp"
+          @language_extension = "**.cs"
+        end
+        
+        @filesPathProject = get_project_file(@configurationInfo["source"], 
+          @language_extension)
         unless @filesPathProject
           puts "Problem on source path: #{@configurationInfo["source"]}"
           @log.write_log("Prolblem when tried to access source folder.")
           return -1
         end
         @log.write_log("debug: files: #{@filesPathProject.to_s}")
-        @parser = Parser::Parser.new(@filesPathProject)
+        @parser = Parser::Parser.new(@filesPathProject, @configurationInfo["language"])
   	    @parser.start_parser()
       end
 
@@ -63,19 +81,19 @@ module Kuniri
       # !@param pPath Relative path of the project.
       # !@param pLanguage Language extension for make the parser.
       def get_project_file(pPath="./", pLanguage="**.rb")
-		# Verify if path is a valid directory or file
-		return nil unless File.file?(pPath) or File.directory?(pPath)
+    		# Verify if path is a valid directory or file
+    		return nil unless File.file?(pPath) or File.directory?(pPath)
 
-		# Handle single file
-		if (File.file?(pPath))
-			@filesProject = [pPath]
-		# Handle multiple files
-		else
-        	@filesProject = Dir[File.join(pPath, "**", pLanguage)]
-		end
+    		# Handle single file
+    		if (File.file?(pPath))
+    			@filesProject = [pPath]
+    		# Handle multiple files
+    		else
+            	@filesProject = Dir[File.join(pPath, "**", pLanguage)]
+    		end
 
-        @log.write_log("Info: Reading all files.")
-		return @filesProject
+            @log.write_log("Info: Reading all files.")
+    		return @filesProject
       end
 
   # Class
