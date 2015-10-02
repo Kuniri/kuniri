@@ -30,7 +30,7 @@ module Languages
         @classHandler = Languages::Ruby::ClassRuby.new
         @attributeHandler = Languages::Ruby::AttributeRuby.new
         @endBlockHandler = Languages::Ruby::EndBlockRuby.new
-        @methodHandler = Languages::Ruby::FunctionBehaviorRuby.new
+        @methodHandler = Languages::Ruby::MethodRuby.new
         @constructorHandler = Languages::Ruby::ConstructorRuby.new
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
