@@ -21,7 +21,8 @@ module Languages
           constructorData = ConstructorData.new(result.name)
           constructorData << result
 
-          return result
+          return constructorData
+
         end
 
     # Class

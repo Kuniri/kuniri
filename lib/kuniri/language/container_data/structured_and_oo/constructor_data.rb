@@ -7,6 +7,7 @@ module Languages
 
     public
 
+      # Constructor based on name.
       def initialize(pConstructorName)
         super(pConstructorName)
         @type = CONSTRUCTOR_DATA
