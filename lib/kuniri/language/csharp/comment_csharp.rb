@@ -20,6 +20,7 @@ module Languages
 
           # Single line
           return pLine.scan(/\/\/(.*)/)[0].join if is_single_line_comment?(pLine)
+
           # Multiple line
           multipleLine = handle_multiple_line(pLine)
           return multipleLine if multipleLine
