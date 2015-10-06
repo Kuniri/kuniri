@@ -12,6 +12,7 @@ module Languages
       public
 
         # Class responsible for handling c# classes.
+
         def initialize
           @log = @settings = Kuniri::Setting.create.log
         end
@@ -47,6 +48,7 @@ module Languages
         end
 
         # Override
+
         def get_inheritance(pString)
           if pString =~ /:/
             partial = pString.scan(/:(.*)/)
