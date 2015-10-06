@@ -22,6 +22,21 @@ RSpec.describe Languages::Csharp::ClassCsharp do
       expect(classNameCaptured).to eq("Xpto")
     end
 
+    it "Ordinary public partial class declaration." do
+      classNameCaptured = @classCsharp.get_class("public partial class Xpto").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+    
+    it "Ordinary private partial class declaration." do 
+      classNameCaptured = @classCsharp.get_class("private partial class Xpto").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+
+    it "Ordinary scopeless partial class declaration." do 
+      classNameCaptured = @classCsharp.get_class("partial class Xpto").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+
     it "Class declaration with whitespace." do
       classNameCaptured = @classCsharp.get_class("public    class      Xpto").name
       expect(classNameCaptured).to eq("Xpto")

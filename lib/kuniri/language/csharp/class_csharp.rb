@@ -11,10 +11,13 @@ module Languages
 
       public
 
+        # Class responsible for handling c# classes.
         def initialize
           @log = @settings = Kuniri::Setting.create.log
         end
 
+        # Get c# class.
+        # @see Languages::Class
         def get_class(pLine)
           result = detect_class(pLine)
           return nil unless result
@@ -36,14 +39,14 @@ module Languages
 
       protected
 
+        # Override
         def detect_class(pLine)
-          classesList = []
-          regexExpression = /^\s*(public|private)?\s*class\s+(.*)/
+          regexExpression = /^(?:\s*public|private)?(?:\s*partial)?\s*class\s+(.*)/
           return nil unless pLine =~ regexExpression
-          classesList.push(pLine.scan(regexExpression)[0].last)
-          return classesList.join("")
+          return pLine.scan(regexExpression)[0].join("")
         end
 
+        # Override
         def get_inheritance(pString)
           if pString =~ /:/
             partial = pString.scan(/:(.*)/)
@@ -52,18 +55,19 @@ module Languages
           return nil
         end
 
-      def remove_unnecessary_information(pString)
-        return pString.gsub(/\s|:|{/, "") if pString =~ /\s|:|{/
-        return pString
-      end
-
-      def prepare_final_string(pString)
-        if pString =~ /\s|:/
-          partial = pString.gsub(/:.*/,"")
-          return remove_unnecessary_information(partial)
+        # Override
+        def remove_unnecessary_information(pString)
+          return pString.gsub(/\s|:|{/, "") if pString =~ /\s|:|{/
+          return pString
         end
-        return pString
-      end
+
+        def prepare_final_string(pString)
+          if pString =~ /\s|:/
+            partial = pString.gsub(/:.*/,"")
+            return remove_unnecessary_information(partial)
+          end
+          return pString
+        end
 
     private
 
