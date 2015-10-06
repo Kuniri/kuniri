@@ -11,6 +11,11 @@ RSpec.describe Languages::LanguageFactory do
       expect(@factory.get_language("ruby").is_a?(Languages::RubySyntax))
               .to be true
     end
+    it "Java support." do
+      expect(@factory.get_language("java").is_a?(Languages::JavaSyntax))
+              .to be true
+    end
+
   end
 
   context "When have not support." do
@@ -31,11 +36,6 @@ RSpec.describe Languages::LanguageFactory do
 
     it "C++ support." do
       expect{@factory.get_language("cplusplus")}.to raise_error(
-            Error::LanguageError)
-    end
-
-    it "Java support." do
-      expect{@factory.get_language("java")}.to raise_error(
             Error::LanguageError)
     end
 

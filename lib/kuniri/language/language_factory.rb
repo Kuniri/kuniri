@@ -1,3 +1,4 @@
+require_relative 'java/java_syntax'
 require_relative 'language'
 require_relative 'ruby/ruby_syntax'
 require_relative '../error/language_error'
@@ -13,6 +14,9 @@ module Languages
     def get_language(pType)
       pType.downcase!
 
+      if pType == 'java'
+        return Languages::JavaSyntax.new
+      end
       if pType == "ruby"
         return Languages::RubySyntax.new
       end
