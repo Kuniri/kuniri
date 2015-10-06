@@ -43,21 +43,21 @@ module Languages
         end
 
         def get_inheritance(pString)
-          if pString =~ /</
-            partial = pString.scan(/<(.*)/)
+          if pString =~ /:/
+            partial = pString.scan(/(.*):\s*(public|protected|private)\s*/)
             return remove_unnecessary_information(partial)
           end
           return nil
         end
 
       def remove_unnecessary_information(pString)
-        return pString.gsub(/\s|</, "") if pString =~ /\s|</
+        return pString.gsub(/\s|:|{/, "") if pString =~ /\s|{|:/
         return pString
       end
 
       def prepare_final_string(pString)
-        if pString =~ /\s|</
-          partial = pString.gsub(/<.*/,"")
+        if pString =~ /\s|:/
+          partial = pString.gsub(/:\s*(public|protected|private).*/,"")
           return remove_unnecessary_information(partial)
         end
         return pString

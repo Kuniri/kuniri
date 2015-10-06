@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<kuniri>
+  <class_data name="Abc">
+    <method name="method1" visibility="global"/>
+    <method name="method2" visibility="global">
+      <parameter name="x"/>
+    </method>
+    <method name="method3" visibility="global">
+      <parameter name="a"/>
+      <parameter name="b"/>
+      <parameter name="c"/>
+    </method>
+    <method name="initialize"/>
+    <inheritance name="Array"/>
+  </class_data>
+</kuniri>
