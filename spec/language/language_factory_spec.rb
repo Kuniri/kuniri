@@ -11,6 +11,10 @@ RSpec.describe Languages::LanguageFactory do
       expect(@factory.get_language("ruby").is_a?(Languages::RubySyntax))
               .to be true
     end
+    it "Csharp support." do
+      expect(@factory.get_language("csharp").is_a?(Languages::CsharpSyntax))
+              .to be true
+    end
   end
 
   context "When have not support." do
