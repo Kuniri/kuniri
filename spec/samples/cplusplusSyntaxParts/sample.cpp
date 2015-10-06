@@ -1,0 +1,4 @@
+class Sample {
+	Sample(){}
+	~Sample(){}
+}

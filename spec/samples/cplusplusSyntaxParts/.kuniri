@@ -1,0 +1,4 @@
+language:cplusplus
+source:./sample.cpp
+output:/bin
+extract:uml

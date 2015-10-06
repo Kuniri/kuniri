@@ -11,6 +11,10 @@ RSpec.describe Languages::LanguageFactory do
       expect(@factory.get_language("ruby").is_a?(Languages::RubySyntax))
               .to be true
     end
+    it "C++ support." do
+      expect(@factory.get_language("cplusplus").is_a?(Languages::CplusplusSyntax))
+              .to be true
+    end
   end
 
   context "When have not support." do
@@ -26,11 +30,6 @@ RSpec.describe Languages::LanguageFactory do
 
     it "C support." do
       expect{@factory.get_language("c")}.to raise_error(
-            Error::LanguageError)
-    end
-
-    it "C++ support." do
-      expect{@factory.get_language("cplusplus")}.to raise_error(
             Error::LanguageError)
     end
 
