@@ -1,0 +1,4 @@
+language:csharp
+source:./sample.cs
+output:/bin
+extract:uml

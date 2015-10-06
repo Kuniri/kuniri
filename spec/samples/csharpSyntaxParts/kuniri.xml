@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<kuniri>
+  <class_data name="Sample">
+    <method name="Sample"/>
+    <method name="Sample1"/>
+    <method name="Sample2">
+      <parameter name="int a"/>
+    </method>
+    <method name="Sample3">
+      <parameter name="int a"/>
+      <parameter name="int b"/>
+      <parameter name="string c"/>
+    </method>
+    <method name="Sample4">
+      <parameter name="int a"/>
+      <parameter name="int b"/>
+    </method>
+    <method name="Sample5"/>
+    <inheritance name="Inheritance"/>
+  </class_data>
+</kuniri>
