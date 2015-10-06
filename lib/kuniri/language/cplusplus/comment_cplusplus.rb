@@ -19,7 +19,7 @@ module Languages
         def get_comment(pLine)
 
           # Single line
-          return pLine.scan(/#(.*)/)[0].join if is_single_line_comment?(pLine)
+          return pLine.scan(/\s*\/\/(.*)/)[0].join if is_single_line_comment?(pLine)
 
           # Multiple line
           multipleLine = handle_multiple_line(pLine)
@@ -29,19 +29,19 @@ module Languages
 
         # @see Comment
         def is_single_line_comment?(pLine)
-          return true if pLine =~ /#(.*)/
+          return true if pLine =~ /\s*\/\/(.*)/
           return false
         end
 
         # @see Comment
         def is_multiple_line_comment?(pLine)
-          return true if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
+          return true if (pLine =~ /.*\/\*(.*)/ || @flagMultipleLine)
           return false
         end
 
         # @see Comment
         def is_multiple_line_comment_end?(pLine)
-          return true if pLine =~ /^=end/
+          return true if pLine =~ /(.*)\*\//
           return false
         end
 
@@ -49,7 +49,7 @@ module Languages
 
         # @see Comment
         def prepare_line_comment(pString)
-          return "" if pString =~ /=begin/
+          return "" if pString =~ /\/\*/
           return pString
         end
 
