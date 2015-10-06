@@ -38,7 +38,7 @@ module Languages
 
         def detect_class(pLine)
           classesList = []
-          regexExpression = /^\s*(public|private)\s+class\s+(.*)/
+          regexExpression = /^\s*(public|private)?\s*class\s+(.*)/
           return nil unless pLine =~ regexExpression
           classesList.push(pLine.scan(regexExpression)[0].last)
           return classesList.join("")
