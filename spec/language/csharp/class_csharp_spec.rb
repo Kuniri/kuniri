@@ -17,6 +17,11 @@ RSpec.describe Languages::Csharp::ClassCsharp do
       expect(classNameCaptured).to eq("Xpto")
     end
 
+    it "Ordinary scopeless class declaration." do 
+      classNameCaptured = @classCsharp.get_class("class Xpto").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+
     it "Class declaration with whitespace." do
       classNameCaptured = @classCsharp.get_class("public    class      Xpto").name
       expect(classNameCaptured).to eq("Xpto")
@@ -68,37 +73,47 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
   end
 
-  # context "When with inheritance" do
-  #   it "Simple class inheritance." do
-  #     classNameCaptured = @classCsharp.get_class("class Xpto < Abc").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
+  context "When with inheritance" do
+    it "Simple public class inheritance." do
+      classNameCaptured = @classCsharp.get_class("public class Xpto : Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
 
-  #   it "Class inheritance with whitespace in the beginning." do
-  #     classNameCaptured = @classCsharp.get_class("     class   Xpto < Abc").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
+    it "Simple private class inheritance." do
+      classNameCaptured = @classCsharp.get_class("private class Xpto : Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
 
-  #   it "Class inheritance with whitespace between <." do
-  #     classNameCaptured = @classCsharp.get_class("class Xpto   < Abc").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
+    it "Scopeless class inheritance." do
+      classNameCaptured = @classCsharp.get_class("class Xpto : Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
 
-  #   it "Class inheritance with many whitespace." do
-  #     classNameCaptured = @classCsharp.get_class("   class   Xpto < Abc ").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
+    it "Class inheritance with whitespace in the beginning." do
+      classNameCaptured = @classCsharp.get_class("   public  class   Xpto : Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
 
-  #   it "Class inheritance with many whitespace between <." do
-  #     classNameCaptured = @classCsharp.get_class("class Xpto      <    Abc").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
+    it "Class inheritance with whitespace between <." do
+      classNameCaptured = @classCsharp.get_class("public class Xpto   : Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
 
-  #   it "Class inheritance with whitespace in the corners." do
-  #     classNameCaptured = @classCsharp.get_class("  class   Xpto < Abc   ").name
-  #     expect(classNameCaptured).to eq("Xpto")
-  #   end
-  # end
+    it "Class inheritance with many whitespace." do
+      classNameCaptured = @classCsharp.get_class("  public class   Xpto : Abc ").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+
+    it "Class inheritance with many whitespace between :." do
+      classNameCaptured = @classCsharp.get_class("public class Xpto      :    Abc").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+
+    it "Class inheritance with whitespace in the corners." do
+      classNameCaptured = @classCsharp.get_class(" public  class   Xpto : Abc   ").name
+      expect(classNameCaptured).to eq("Xpto")
+    end
+  end
 
   after :all do
     @classCsharp = nil
