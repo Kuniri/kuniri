@@ -42,7 +42,7 @@ module Languages
           pLine.gsub!(/\s{2,}/," ")
           regexExpression = /(\w*(?:\s?)::(?:\s?)\w*\()/
           return nil unless pLine =~ regexExpression
-          pLine.gsub!(/\s+/,"")
+
           return pLine.scan(regexExpression)[0].join("")
         end
 
