@@ -39,7 +39,8 @@ module Languages
       protected
 
         def detect_function(pLine)
-          regexExpression = /^\s*def\b\s*(\w*)\b/
+          pLine.gsub!(/\s{2,}/," ")
+          regexExpression = /^\s?(?:private|public|protected)(?:\sstatic|\svirtual|\ssealed)?\s(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
