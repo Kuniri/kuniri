@@ -39,12 +39,10 @@ module Languages
       protected
 
         def detect_function(pLine)
-
           pLine.gsub!(/\s{2,}/," ")
           access_regex = /private|public|protected/
           modifier_regex = /\sstatic|\svirtual|\ssealed/
           regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
-
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
