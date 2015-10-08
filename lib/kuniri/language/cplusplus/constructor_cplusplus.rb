@@ -15,7 +15,8 @@ module Languages
           result = get_function(pLine)
           return nil unless result
 
-          if result.name =~ /initialize/
+          if result.name =~ /(\w*)::\1\(/
+            result.name = $1
             result.type = "CONSTRUCTOR"
           else
             return nil

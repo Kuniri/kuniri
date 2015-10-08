@@ -29,7 +29,7 @@ module Languages
               functionCplusplus.add_parameters(parameter)
             end
           end
- 
+
           @log.write_log("Debug: Method: #{functionCplusplus.name}, Parameter:
                          #{functionCplusplus.parameters}")
 
@@ -39,8 +39,10 @@ module Languages
       protected
 
         def detect_function(pLine)
-          regexExpression = /^\s*def\b\s*(\w*)\b/
+          pLine.gsub!(/\s{2,}/," ")
+          regexExpression = /(\w*(?:\s?)::(?:\s?)\w*\()/
           return nil unless pLine =~ regexExpression
+          pLine.gsub!(/\s+/,"")
           return pLine.scan(regexExpression)[0].join("")
         end
 

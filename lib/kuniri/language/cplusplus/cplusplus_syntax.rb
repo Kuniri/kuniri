@@ -50,11 +50,11 @@ module Languages
       def comment_extract
         all_comments = Array.new
         #Find a simple Cplusplus comment with '#'
-        @source.scan(/#(.*)/).each do |comments|
+        @source.scan(/\/\/(.*)/).each do |comments|
           all_comments.push(comments[0])
         end
         #Find multiple line comment.
-        @source.scan(/^=begin(.*?)^=end/m).each do |comment|
+        @source.scan(/\/\*(.*?)^\*\//m).each do |comment|
           all_comments.push(comment[0].lstrip)
         end
         return all_comments
