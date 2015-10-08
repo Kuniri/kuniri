@@ -40,7 +40,9 @@ module Languages
 
         def detect_function(pLine)
           pLine.gsub!(/\s{2,}/," ")
-          regexExpression = /^\s?(?:private|public|protected)(?:\sstatic|\svirtual|\ssealed)?\s(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
+          access_regex = /private|public|protected/
+          modifier_regex = /\sstatic|\svirtual|\ssealed/
+          regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
@@ -71,16 +73,23 @@ module Languages
         end
 
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
+          if pLine =~ /\(|\)/
+            pLine.gsub!(/\(|\)/,"") 
+          elsif pLine =~ /,\s/
+            pLine.gsub!(/,\s/,",")
+          else 
+            #do nothing to the pLine
+          end
           return pLine
         end
 
         def handling_parameter(pLine)
-          # Handling with parenthesis and without it.
-          if pLine =~ /\(.+\)/
-            partial = get_parameters(pLine, /\(.+\)/)
-          elsif pLine =~ /def\s+\w+[\s]+(.+)/
-            partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
+          pLine.gsub!(/\s{2,}/," ")
+          access_regex = /private|public|protected/
+          modifier_regex = /\sstatic|\svirtual|\ssealed/
+          regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(?:\w+)\s?\((.*)\)\s?(?:{|})?/
+          if pLine =~ regexExpression 
+            partial = get_parameters(pLine, regexExpression )
           else
             return nil
           end
@@ -103,7 +112,6 @@ module Languages
           return pString.split(",") if pString =~ /,/
           return [pString]
         end
-
     # Class
     end
 
