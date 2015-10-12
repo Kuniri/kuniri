@@ -340,8 +340,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it "Correct state transition (Constructor)." do
-      path =
-        "spec/samples/rubySyntaxParts/conditionalStatment/constructorConditional.rb"
+      path = "spec/samples/rubySyntaxParts/" +
+              "conditionalStatment/constructorConditional.rb"
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
@@ -351,8 +351,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it "Correct data capture (conditional - method)" do
-       path =
-        "spec/samples/rubySyntaxParts/conditionalStatment/constructorConditional.rb"
+       path = "spec/samples/rubySyntaxParts/" +
+                "conditionalStatment/constructorConditional.rb"
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
@@ -419,7 +419,8 @@ RSpec.describe Languages::RubySyntax do
 
     it "Correct single line comment capture - Globals" do
 
-      path = "spec/samples/rubySyntaxParts/comment/simple_single_line_comment_global.rb"
+      path = "spec/samples/rubySyntaxParts/" +
+              "comment/simple_single_line_comment_global.rb"
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].comments).to eq(" First comment\n")
@@ -433,7 +434,8 @@ RSpec.describe Languages::RubySyntax do
 
     it "Correct single line comment capture - Class" do
 
-      path = "spec/samples/rubySyntaxParts/comment/simple_single_line_comment_class.rb"
+      path = "spec/samples/rubySyntaxParts/" +
+              "comment/simple_single_line_comment_class.rb"
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].classes[0].comments)
@@ -443,14 +445,16 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[0].comments)
               .to eq(" Comment 3: method\n")
       expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-              .to eq(" Comment 4: Combo 1\n Comment 5: Combo 2\n Comment 6: Combo 3; Combo 4\n")
+              .to eq(" Comment 4: Combo 1\n Comment 5: "+
+                      "Combo 2\n Comment 6: Combo 3; Combo 4\n")
       expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
               .to eq (" Comment 7: Attribute\n")
     end
 
     it "Correct multiple line comment capture - Global" do
 
-      path = "spec/samples/rubySyntaxParts/comment/simple_multiple_line_comment_global.rb"
+      path = "spec/samples/rubySyntaxParts/" +
+              "comment/simple_multiple_line_comment_global.rb"
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].comments)
@@ -463,7 +467,8 @@ RSpec.describe Languages::RubySyntax do
 
     it "Correct multiple line comment capture - Class" do
 
-      path = "spec/samples/rubySyntaxParts/comment/simple_multiple_line_comment_class.rb"
+      path = "spec/samples/rubySyntaxParts/" +
+              "comment/simple_multiple_line_comment_class.rb"
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].classes[0].comments)
