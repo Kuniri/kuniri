@@ -13,11 +13,12 @@ class Xpto
 
   # Comment 4: Combo 1
   # Comment 5: Combo 2
+  # Comment 6: Combo 3; Combo 4
   def method_2 (krakatoa, abc)
     puts "Nothing..."
   end
 
-  # Comment 6: Attribute
+  # Comment 7: Attribute
   @magicAttribute
 
 end

@@ -10,4 +10,6 @@ class Simple1
     def method3 (param)
 end
 
+	def method4 (a) end; def method5 () end;
+
 end
