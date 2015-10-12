@@ -4,7 +4,6 @@ gemspec
 
 group :development do
   gem 'guard-rspec', '~> 4.2.10'
-  gem 'nokogiri', '~> 1.6.6'
 end
 
 group :test do

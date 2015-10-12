@@ -48,7 +48,6 @@ traceability, code quality and others.
  * RSpec 3.1.7
  * Rake 10.4
  * Guard-rspec 4.2
- * nokogiri 1.6.6
 * Ruby version: 2.1
 * Run test suit
  * rake or spec
