@@ -3,7 +3,7 @@
 require 'kuniri'
 require 'optparse'
 require 'kuniri/core/kuniri'
-require 'kuniri/parser/parser_xml'
+require 'kuniri/parser/xml_output_format'
 
 options = {}
 
@@ -42,9 +42,9 @@ OptionParser.new do |opts|
     kuniri = Kuniri::Kuniri.new
     kuniri.run_analysis
 
-    parser = Parser::XML.new
+    parser = Parser::XMLOutputFormat.new
     parser.set_path(options[:filename])
-    parser.create_all_data kuniri.get_parser()
+    parser.create_all_data(kuniri.get_parser())
   end
 
 end.parse!
