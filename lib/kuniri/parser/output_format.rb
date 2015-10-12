@@ -4,32 +4,45 @@ module Parser
 
     public
 
-      def create_data(pParser)
-        # @log.write_log("Start parser: create data")
-        output = ""
+      attr_accessor :outputEngine
+      attr_accessor :parserPath
+      attr_accessor :extension
+
+      # Set path to save the output.
+      # @param pPath Output path.
+      def set_path(pPath)
+        @parserPath = pPath
+      end
+
+      def create_all_data(pParser)
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
-
           # Inspect each element
           listOfFile.fileElements.each do |singleElement|
-            if (singleElement.classes.length() > 0)
-              output += class_generate(singleElement.classes[0])
-            end
-            if (singleElement.global_functions.length() > 0)
-              output += function_generate(singleElement.global_functions)
-            end
-            if (singleElement.global_variables.length() > 0)
-              output += global_variable_generate(singleElement.global_variables)
-            end
             if (singleElement.extern_requirements.length() > 0)
-              output += extern_requirement_generate(singleElement.extern_requirements)
+              extern_requirement_generate(singleElement.extern_requirements)
             end
             if (singleElement.modules.length() > 0)
-              output += module_generate(singleElement.modules)
+              module_generate(singleElement.modules)
+            end
+            if (singleElement.global_variables.length() > 0)
+              global_variable_generate(singleElement.global_variables)
+            end
+            if (singleElement.global_functions.length() > 0)
+              function_generate(singleElement.global_functions)
+            end
+            if (singleElement.classes.length() > 0)
+              class_generate(singleElement.classes)
             end
           end
+          # TODO: save the current output, or mix everything in the same file.
+          # DOIT here!
+          File.open("test_out/" + listOfFile.name + ".xml", 'w') do |file|
+            file.write(@outputEngine.to_xml)
+          end
+          @outputEngine.reset_engine
         end
-        return output
+
       end
 
       def class_generate(pClass)
@@ -77,6 +90,10 @@ module Parser
       end
 
       def conditional_generate(pConditional)
+        raise NotImplementedError
+      end
+
+      def comment_generate(pComment)
         raise NotImplementedError
       end
 
