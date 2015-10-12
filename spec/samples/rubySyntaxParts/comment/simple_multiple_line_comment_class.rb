@@ -30,4 +30,11 @@ class Xpto
     puts "I don't think you trust!"
   end
 
+=begin
+    method;Three
+=end
+def methodTwo
+    puts "In my self righteous suicide"
+  end
+
 end
