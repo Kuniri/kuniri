@@ -1,4 +1,5 @@
 require_relative 'output_format'
+require_relative 'xml_builder_engine'
 
 module Parser
 
@@ -6,223 +7,162 @@ module Parser
 
     public
 
+      def initialize(pPath = "kuniri.xml")
+        @outputEngine = XMLBuilderEngine.new
+        set_path(pPath)
+      end
+
+      # Set path to save the output.
+      # @param pPath Output path.
+      def set_path(pPath)
+        @parser_path = pPath
+      end
+
       # @see OutputFormat
       def class_generate(pClass)
-        buildClassString = ""
-
-        # Special case, empty class.
-        if (pClass.inheritances.empty? && pClass.attributes.empty? &&
-            pClass.methods.empty? && pClass.constructors.empty?)
-          return default_fields("class", pClass)
+        pClass.each do |singleClass|
+          @outputEngine.classData :name => singleClass.name do
+            # TODO: Inheritance
+            singleClass.attributes.each do |singleAttribute|
+              attribute_generate(singleAttribute)
+            end
+            singleClass.constructors.each do |singleConstructor|
+              constructor_generate(singleConstructor)
+            end
+            singleClass.methods.each do |singleMethod|
+              method_generate(singleMethod)
+            end
+          end
         end
-
-        buildClassString = default_fields("class", pClass, false)
-
-        # Go through elements
-        # 1 - Inheritances
-        tempStringXML = inheritance_generate(pClass.inheritances)
-        buildClassString += tempStringXML unless tempStringXML.empty?
-        # 2 - Attributes
-        tempStringXML = attribute_generate(pClass.attributes)
-        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
-        # 3 - Constructors
-        tempStringXML = constructor_generate(pClass.constructors)
-        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
-        # 4 - Methods
-        tempStringXML = method_generate(pClass.methods)
-        buildClassString += tempStringXML + "\n" unless tempStringXML.empty?
-        # 5 - TODO: You have to handler class inside class
-
-        # Close class
-        buildClassString += "</class>"
-
-        return buildClassString
-      end
-
-      # @see OutputFormat
-      def inheritance_generate(pInheritances)
-
-        return "" if pInheritances.empty?
-
-        inheritanceString = []
-        pInheritances.each do |inheritance|
-          inheritanceString.push("<inheritance name=\"#{inheritance}\" />")
-        end
-
-        return inheritanceString.join("\n") + "\n"
-      end
-
-      # @see OutputFormat
-      def constructor_generate(pConstructor)
-
-        return "" if pConstructor.empty?
-
-        stringXML = []
-        pConstructor.each do |constructor|
-          stringXML.push(handle_function_behavior(constructor, "constructor"))
-        end
-
-        return stringXML.join("\n")
-
-      end
-
-      # @see OutputFormat
-      def method_generate(pMethod)
-
-        return "" if pMethod.empty?
-
-        stringXML = []
-        pMethod.each do |method|
-          stringXML.push(handle_function_behavior(method, "method"))
-        end
-
-        return stringXML.join("\n")
-      end
-
-      # @see OutputFormat
-      def function_generate(pFunction)
-        return "" if pFunction.empty?
-
-        stringXML = []
-        pFunction.each do |function|
-          stringXML.push(handle_function_behavior(function, "function"))
-        end
-
-        return stringXML.join("\n")
-      end
-
-      # @see OutputFormat
-      def parameters_generate(pParameters)
-
-        return "" if pParameters.empty?
-
-        buildParameterString = []
-        pParameters.each do |parameter|
-           buildParameterString.push("<parameter name=\"#{parameter}\">")
-        end
-
-        return buildParameterString.join("\n")
       end
 
       # @see OutputFormat
       def attribute_generate(pAttribute)
-
-        return "" if pAttribute.empty?
-
-        buildAttributeString = []
-        pAttribute.each do |attribute|
-          buildAttributeString.push("<attribute name=\"#{attribute.name}\" />")
+        pAttribute.each do |singleAttribute|
+          @outputEngine.attributeData :name => singleAttribute.name,
+                                      :visibility => singleAttribute.visibility
         end
+      end
 
-        return buildAttributeString.join("\n")
+      # @see OutputFormat
+      def inheritance_generate(pInheritances)
+        pInheritances.each do |singleInheritance|
+          @outputEngine.inheritanceData :name => singleInheritance.name
+        end
+      end
+
+      # @see OutputFormat
+      def constructor_generate(pConstructor)
+        pConstructor.each do |singleConstructor|
+          @outputEngine.constructorData :name => singleConstructor.name do
+            if singleConstructor.comments != ""
+              comment_generate(singleConstructor.comments)
+            end
+            singleConstructor.parameters.each do |parameter|
+              parameter_generate(parameter)
+            end
+            singleConstructor.conditionals.each do |conditional|
+              conditional_generate(conditional)
+            end
+            singleConstructor.repetitions.each do |repetition|
+              repetition_generate(repetition)
+            end
+          end
+        end
+      end
+
+      # @see OutputFormat
+      def method_generate(pMethod)
+puts "*"*30
+        pMethod.each do |singleMethod|
+          @outputEngine.methodData :name => singleMethod.name do
+            if singleMethod.comments != ""
+              comment_generate(singleMethod.comments)
+            end
+            singleMethod.parameters.each do |parameter|
+              parameter_generate(parameter)
+            end
+            singleMethod.conditionals.each do |conditional|
+              conditional_generate(conditional)
+            end
+            singleMethod.repetitions.each do |repetition|
+              repetition_generate(repetition)
+            end
+          end
+        end
+      end
+
+      # @see OutputFormat
+      def function_generate(pFunction)
+        pFunction.each do |singleFunction|
+          @outputEngine.functionData :name => singleFunction.name do
+            if singleFunction.comments != ""
+              comment_generate(singleFunction.comments)
+            end
+            singleFunction.parameters.each do |parameter|
+              parameter_generate(parameter)
+            end
+            singleFunction.conditionals.each do |conditional|
+              conditional_generate(conditional)
+            end
+          end
+        end
+      end
+
+      # @see OutputFormat
+      def parameters_generate(pParameters)
+        pParameters.each do |parameter|
+          if parameter.is_a?Hash
+            parameter.each do |nameParam, value|
+              @outputEngine.parameterData :name => "#{nameParam}=#{value}"
+            end
+          elsif parameter.is_a?String
+            @outputEngine.parameterData :name => parameter
+          end
+        end
       end
 
       # @see OutputFormat
       def global_variable_generate(pGlobalVariable)
-
-        return "" if pGlobalVariable.empty?
-
-        buildGlobalVariableString = []
-
-        pGlobalVariable.each do |globalVariable|
-          buildGlobalVariableString.push("<variableGlobal " +
-                                         "name=\"#{globalVariable}\" />")
+        pGlobalVariable.each do |globalVar|
+          @outputEngine.globalVariableData :name => globalVar.name
         end
-
-        return buildGlobalVariableString.join("\n")
       end
 
       # @see OutputFormat
-      def extern_requirement_generate(pRequire)
-        # TODO: Extern requirement not follows the global behaviour. Fix it.
-
-        return "" if pRequire.empty?
-
-        buildExternRequirement = []
-        pRequire.each do |path|
-          buildExternRequirement.push("<require name=\"#{path.path}\" />")
+      def extern_requirement_generate(pRequirement)
+        pRequirement.each do |externRequirement|
+          @outputEngine.externRequirementData :name => externRequirement.path
         end
-
-        return buildExternRequirement.join("\n")
       end
 
       # @see OutputFormat
       def module_generate(pModule)
-
-        return "" if pModule.empty?
-
-        buildModule = []
-        pModule.each do |modules|
-          buildModule.push(default_fields("module", pModule))
+        pModule.each do |singleModule|
+          @outputEngine.moduleData :name => singleModule.name
         end
-
-        return buildModule.join("\n")
       end
 
       # @see OutputFormat
       def repetition_generate(pRepetition)
-
-        return "" if pRepetition.empty?
-
-        buildRepetition = []
-        # TODO: We have to call it recursively and inspect for conditional too.
         pRepetition.each do |repetition|
-          buildRepetition.push("<repetition type=\"#{repetition.type}\" " +
-                               "expression=\"#{repetition.expression}\" />")
+          @outputEngine.repetitionData :name => repetition.name,
+                                        :type => repetition.type,
+                                        :expression => repetition.expression
         end
-
-        return buildRepetition.join("\n") + "\n"
       end
 
       # @see OutputFormat
       def conditional_generate(pConditional)
-
-        return "" if pConditional.empty?
-        buildConditional = []
         pConditional.each do |conditional|
-          buildConditional.push("<conditional type=\"#{conditional.type}\" " +
-                                "expression=\"#{conditional.expression}\" />")
+          @outputEngine.conditionalData :name => conditional.name,
+                                        :type => conditional.type,
+                                        :expression => conditional.expression
         end
-
-        return buildConditional.join("\n") + "\n"
       end
 
-    private
-
-      def default_fields(pLabelField, pElement, pCloseIt=true)
-        buildString = "<#{pLabelField} name=\"#{pElement.name}\" "
-        buildString += "visibility=\"#{pElement.visibility}\""
-        buildString += (pElement.comments.empty?) ? " " :
-                        "\n\tcomments=\"#{pElement.comments}\" "
-        buildString += (pCloseIt) ? "/>" : ">"
-        return buildString + "\n"
-      end
-
-      def handle_function_behavior(pFunctionElement, pType)
-
-        # Empty method
-        if (pFunctionElement.parameters.empty? &&
-            pFunctionElement.conditionals.empty? &&
-            pFunctionElement.repetitions.empty?)
-            return default_fields(pType, pFunctionElement)
-        end
-
-        buildStringXML = default_fields(pType, pFunctionElement, false)
-        #send(#{begin}_generate(element))
-        # 1 - Handle parameters
-        tempStringXML = parameters_generate(pFunctionElement.parameters)
-        buildStringXML += tempStringXML unless tempStringXML.empty?
-        # 2 - Conditional
-        tempStringXML = conditional_generate(pFunctionElement.conditionals)
-        buildStringXML += tempStringXML unless tempStringXML.empty?
-        # 3 - Repetition
-        tempStringXML = repetition_generate(pFunctionElement.repetitions)
-        buildStringXML += tempStringXML unless tempStringXML.empty?
-        # 4 - TODO: local variable
-        buildStringXML += "\n</#{pType}>"
-
-        return buildStringXML
-
+      def comment_generate(pComment)
+        @outputEngine.commentData :text => pComment
       end
 
   # class
