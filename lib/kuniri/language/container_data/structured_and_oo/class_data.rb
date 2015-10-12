@@ -29,7 +29,7 @@ module Languages
       #         is a list of AttributeData.
       def add_attribute(pAttribute)
         pAttribute.each do |attributeElement|
-          return unless attributeElement.is_a?(Languages::AttributeData)
+          next unless attributeElement.is_a?(Languages::AttributeData)
           @attributes.push(attributeElement)
         end
       end
@@ -39,7 +39,7 @@ module Languages
       # @param pMethod It is an object of FunctionData with the method
       #         informations.
       def add_method(pMethod)
-        return unless pMethod.is_a?(Languages::FunctionData)
+        return nil unless pMethod.is_a?(Languages::FunctionData)
 
         @methods.push(pMethod)
       end
@@ -47,7 +47,7 @@ module Languages
       # Add constructor inside class.
       # @param pConstructor Object of FunctionData to be added at class.
       def add_constructor(pConstructor)
-        return unless pConstructor.is_a?(Languages::FunctionData)
+        return nil unless pConstructor.is_a?(Languages::FunctionData)
 
         @constructors.push(pConstructor)
       end

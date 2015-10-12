@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 
-RSpec.describe Languages::ModuleNamespace do
+RSpec.describe Languages::ModuleNamespaceData do
 
   before :all do
     @moduleNamespace = Languages::ModuleNamespaceData.new("Simple")
@@ -10,6 +10,12 @@ RSpec.describe Languages::ModuleNamespace do
     it "Set name" do
       @moduleNamespace.name = "Abc"
       expect(@moduleNamespace.name).to eq("Abc")
+    end
+    it "Does not set name" do
+      @moduleNamespace = Languages::ModuleNamespaceData.new(nil)
+      expect(@moduleNamespace.name).to be_nil
+      @moduleNamespace = Languages::ModuleNamespaceData.new(1)
+      expect(@moduleNamespace.name).to be_nil
     end
   end
 

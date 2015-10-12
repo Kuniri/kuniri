@@ -9,8 +9,8 @@ module Languages
 
       attr_reader :parameters
 
-      def initialize(pMethod_name)
-        super(pMethod_name)
+      def initialize(pMethodName)
+        super(pMethodName)
       end
 
   # Class

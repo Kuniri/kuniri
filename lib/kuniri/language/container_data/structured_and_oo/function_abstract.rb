@@ -16,6 +16,8 @@ module Languages
       attr_accessor :type
 
       def initialize(pFunctionName)
+        return nil if pFunctionName.nil? or !pFunctionName.is_a? String
+
         @name = pFunctionName
         @parameters = []
         @conditionals = []

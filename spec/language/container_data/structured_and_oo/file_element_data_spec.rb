@@ -90,6 +90,16 @@ RSpec.describe Languages::FileElementData do
 
   end
 
+  context "When instantiating" do
+    it "Does not set name" do
+      @fileElement = Languages::FileElementData.new(nil)
+      expect(@fileElement.name).to be_nil
+      @fileElement = Languages::FileElementData.new(1)
+      expect(@fileElement.name).to be_nil
+    end
+
+  end
+
   after :each do
     @fileElement = nil
   end

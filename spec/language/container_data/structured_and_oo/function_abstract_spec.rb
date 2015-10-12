@@ -72,10 +72,19 @@ RSpec.describe Languages::FunctionAbstract do
     end
   end
 
+  context "When instantiating" do
+    it "Does not set name" do
+      @functionAbstract = Languages::FunctionAbstract.new(nil)
+      expect(@functionAbstract.name).to be_nil
+      @functionAbstract = Languages::FunctionAbstract.new(1)
+      expect(@functionAbstract.name).to be_nil
+    end
+  end
+
   after :each do
     @functionAbstract = nil
     @conditional = nil
     @repetition = nil
   end
 
-end 
+end
