@@ -63,19 +63,19 @@ module Kuniri
       # !@param pPath Relative path of the project.
       # !@param pLanguage Language extension for make the parser.
       def get_project_file(pPath="./", pLanguage="**.rb")
-		# Verify if path is a valid directory or file
-		return nil unless File.file?(pPath) or File.directory?(pPath)
+        # Verify if path is a valid directory or file
+        return nil unless File.file?(pPath) or File.directory?(pPath)
 
-		# Handle single file
-		if (File.file?(pPath))
-			@filesProject = [pPath]
-		# Handle multiple files
-		else
-        	@filesProject = Dir[File.join(pPath, "**", pLanguage)]
-		end
+        # Handle single file
+        if (File.file?(pPath))
+          @filesProject = [pPath]
+        # Handle multiple files
+        else
+          @filesProject = Dir[File.join(pPath, "**", pLanguage)]
+        end
 
         @log.write_log("Info: Reading all files.")
-		return @filesProject
+        return @filesProject
       end
 
   # Class
