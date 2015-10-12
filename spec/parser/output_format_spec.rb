@@ -8,10 +8,10 @@ RSpec.describe Parser::OutputFormat do
 
   context "Cannot call unimplemented method." do
 
-    it "Create all data" do
-      expect{@outputFormat.create_data(nil)}.to raise_error(
-              NotImplementedError)
-    end
+   # it "Create all data" do
+   #   expect{@outputFormat.create_data(nil)}.to raise_error(
+   #           NotImplementedError)
+   # end
 
     it "Generate class" do
       expect{@outputFormat.class_generate(nil)}.to raise_error(
@@ -54,7 +54,7 @@ RSpec.describe Parser::OutputFormat do
     end
 
     it "Generate require" do
-      expect{@outputFormat.require_generate(nil)}.to raise_error(
+      expect{@outputFormat.extern_requirement_generate(nil)}.to raise_error(
               NotImplementedError)
     end
 
