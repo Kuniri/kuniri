@@ -36,10 +36,10 @@ module Kuniri
         end
 
       end
- 
+
       # Read the configuration file and return a list with the configurations.
       # In this method it is checked the configuration file syntax.
-      # @param pPath [String] Path to ".kuniri" file, it means, the 
+      # @param pPath [String] Path to ".kuniri" file, it means, the
       #         configurations.
       # @return [Hash] Return a Hash with the configurations read in ".kuniri",
       #     otherwise, raise an exception.
@@ -105,8 +105,11 @@ module Kuniri
             # @log.write_log("Syntax error on configuration file.")
             raise Error::ConfigurationFileError
           end
-          key = handling_basic_syntax(line, 0)
+          key = handling_basic_syntax(line, 0).downcase
           value = handling_basic_syntax(line, 1)
+          unless key == "source" or key == "output"
+            value.downcase!
+          end
           configuration[key] = value
         end
         return configuration
@@ -122,7 +125,7 @@ module Kuniri
       end
 
       def handling_basic_syntax(pLine, pIndex)
-        text = pLine.split(':')[pIndex].downcase
+        text = pLine.split(':')[pIndex]
         text.gsub!(/\s/, '')
         return text
       end
