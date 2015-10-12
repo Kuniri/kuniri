@@ -13,6 +13,7 @@ require_relative 'repetition_ruby'
 require_relative 'function_behavior_ruby'
 require_relative 'attribute_ruby'
 require_relative 'comment_ruby'
+require_relative 'method_ruby'
 
 module Languages
 
