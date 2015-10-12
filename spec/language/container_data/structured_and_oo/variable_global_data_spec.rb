@@ -32,6 +32,15 @@ RSpec.describe Languages::VariableGlobalData do
     end
   end
 
+  context "When instantiating" do
+    it "Does not set name" do
+      @variableData = Languages::VariableGlobalData.new(nil)
+      expect(@variableData.name).to be_nil
+      @variableData = Languages::VariableGlobalData.new(1)
+      expect(@variableData.name).to be_nil
+    end
+  end
+
   after :all do
     @variableData = nil
   end

@@ -9,8 +9,10 @@ module Languages
 
       # Basic initialization of attribute.
       # @param pAttribute_name Attribute name for basic initialization.
-      def initialize (pAttribute_name)
-        @name = pAttribute_name
+      def initialize (pAttributeName)
+        return nil if pAttributeName.nil? or !pAttributeName.is_a? String
+
+        @name = pAttributeName
         @visibility = "public"
       end
 

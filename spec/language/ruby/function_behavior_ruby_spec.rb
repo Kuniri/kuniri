@@ -67,7 +67,7 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
               .to eq("xpto_method")
     end
 
-    it "Whitespace in the beginning, between and in the end" do  
+    it "Whitespace in the beginning, between and in the end" do
       input = "  def   xpto_method   "
       expect(@functionBehaviorRuby.get_function(input).name)
               .to eq("xpto_method")
@@ -193,7 +193,6 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
     end
   end
 
-
   context "When has parameters and no parenthesis." do
     it "No parenthesis, and one parameter" do
       input = "def xpto_method x"
@@ -237,6 +236,59 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
       expect(methodOne.parameters).to match_array(["x", "m", "nda", "t"])
     end
 
+    it "No parenthesis, and one parameter with assignment" do
+      input = "def xpto_method x=1"
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"}])
+    end
+
+    it "One parameter with assignment, with space at the end." do
+      input = "def xpto_method x=1       "
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"}])
+    end
+
+    it "One parameter with: assignment, and spaces as a delimiter." do
+      input = "def xpto_method       x=1           "
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"}])
+    end
+
+    it "One parameter with assignment, multiple spaces" do
+      input = "       def xpto_method       x=1         "
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"}])
+    end
+
+    it "One parameter with assignment with multiple spaces between" do
+      input = "def xpto_method       x   =   1           "
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"}])
+    end
+
+    it "Two parameters with assignment" do
+      input = "def xpto_method x=1,y=2"
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"},
+                                                   {"y"=>"2"}])
+    end
+
+    it "Three parameters with assignment" do
+      input = "def xpto_method x=1, abcde=2, xyz=3"
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"},
+                                                   {"abcde"=>"2"},
+                                                   {"xyz"=>"3"}])
+    end
+
+    it "Multiple parameters with assignment and with many spaces" do
+      input = " def xpto_method     x=1 ,    m=65,    nda=8 ,       t=4  "
+      methodOne = @functionBehaviorRuby.get_function(input)
+      expect(methodOne.parameters).to match_array([{"x"=>"1"},
+                                                   {"m"=>"65"}, 
+                                                   {"nda"=>"8"},
+                                                   {"t"=>"4"}])
+    end
   end
 
   after :all do

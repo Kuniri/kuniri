@@ -39,6 +39,15 @@ RSpec.describe Languages::ConstructorData do
     end
   end
 
+  context "When instantiating" do
+    it "Does not set name" do
+      @constructorData = Languages::ConstructorData.new(nil)
+      expect(@constructorData.name).to be_nil
+      @constructorData = Languages::ConstructorData.new(1)
+      expect(@constructorData.name).to be_nil
+    end
+  end
+
   after :each do
     @constructorData = nil
   end

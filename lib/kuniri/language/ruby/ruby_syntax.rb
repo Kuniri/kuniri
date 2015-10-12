@@ -51,7 +51,26 @@ module Languages
 
       attr_accessor :visibility
       @source
+      @flagMultipleLineComment = false
 
+      # Puts every statement in a single line
+      # @param pLine Line of the file to be analysed.
+      def handle_semicolon(pLine)
+        commentLine = []
+
+        if pLine =~ /^=begin(.*?)/
+          @flagMultipleLineComment = true
+        elsif pLine =~ /^=end/
+          @flagMultipleLineComment = false
+        end
+
+        unless @flagMultipleLineComment == true || pLine =~ /#(.*)/
+          return pLine.split(/;/)
+        end
+        commentLine << pLine
+      end
+
+      
       # First step for analyse code, it is responsible for get only basic
       # informations.
       # @param pPath Path of file to be analysed.
@@ -60,11 +79,17 @@ module Languages
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
-
-          @state.handle_line(line)
-          fileElement = @state.execute(fileElement, line)
+          processedLines = handle_semicolon(line)
+          if !processedLines.nil?
+            processedLines.each do |line|
+              @state.handle_line(line)
+              fileElement = @state.execute(fileElement, line)
+            end
+          end
         end
+
         @fileElements.push(fileElement)
+        
       end
 
   # Class

@@ -11,6 +11,8 @@ module Languages
       attr_accessor :type
 
       def initialize(pName)
+        return nil if pName.nil? or !pName.is_a? String
+
         @name = pName
         @visibility = "global"
       end

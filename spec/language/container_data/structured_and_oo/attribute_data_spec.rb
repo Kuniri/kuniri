@@ -23,10 +23,17 @@ RSpec.describe Languages::AttributeData do
       @attributeData.visibility = "protected"
       expect(@attributeData.visibility).to eq("protected")
     end
-  end 
+
+    it "Does not set name" do
+      @attributeData = Languages::AttributeData.new(nil)
+      expect(@attributeData.name).to be_nil
+      @attributeData = Languages::AttributeData.new(1)
+      expect(@attributeData.name).to be_nil
+    end
+  end
 
   after :all do
     @attributeData = nil
   end
 
-end 
+end
