@@ -7,6 +7,7 @@ module Languages
 
   module Java
 
+    # Class responsible for handling java classes.
     class ClassJava < Languages::Class
 
       public
@@ -37,7 +38,11 @@ module Languages
       protected
 
         def detect_class(pLine)
-          regexExpression = /^\s*class\s+(.*)/
+          pLine.gsub!(/\s{2,}/, " ")
+          access_regex =  /(?:(?:public|private|protected)\s)/
+          modifiers_regex = /(?:(?:abstract|final|static)\s)/
+          inheritance_regex = /(?:\sextends\s(?:\w+))/
+          regexExpression = /\s?#{access_regex}?#{modifiers_regex}?class\s(\w+)#{inheritance_regex}?/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
