@@ -144,84 +144,86 @@ RSpec.describe Languages::Csharp::FunctionBehaviorCsharp do
     end
   end
 
-  # context "With parameters" do
-  #   it "Take method name" do
-  #     input = "def xpto_method(a, b, c, d)\n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+  context "With parameters" do
+    it "Take method name" do
+      input = "private virtual int xpto_method(int a, int b, string c){\n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Whitespace in the beginning." do
-  #     input = "    def xpto_method(a, b, c, d)\n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Whitespace in the beginning." do
+      input = "    private virtual int xpto_method(int a, int b, string c){\n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Whitespace in the end." do
-  #     input = "def xpto_method(a, b, c, d)     \n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Whitespace in the end." do
+      input = "private virtual int xpto_method(int a, int b, string c){     \n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Between whitespace." do
-  #     input = "    def xpto_method(a, b, c, d)   \n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Between whitespace." do
+      input = "    private virtual int xpto_method(int a,int b,string c){   \n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Spaces between parameters." do
-  #     input = "def xpto_method (a, b, c, d)\n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Spaces between parameters." do
+      input = "private virtual int xpto_method(int a, int b, string c)\n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Many whitespace between method name and parameters." do
-  #     input = "  def xpto_method      (a, b, c, d)\n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Many whitespace between method name and parameters." do
+      input = "  private virtual int xpto_method     (int a, int b, string c)\n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Many whitespace between method declaration." do
-  #     input = "   def    xpto_method     (   a  , b  ,      c   ,     d   ) \n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
+    it "Many whitespace between method declaration." do
+      input = "private virtual int   xpto_method   (int a, int b, string  c) \n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
 
-  #   it "Different whitespace patterns." do
-  #     input = "  def    xpto_method    (        a, b,    c, d )   \n"
-  #     expect(@functionBehaviorCsharp.get_function(input).name)
-  #             .to eq("xpto_method")
-  #   end
-  # end
+    it "Different whitespace patterns." do
+      input = "  private   virtual  int  xpto_method  (int a,   int b,  string  c)   \n"
+      expect(@functionBehaviorCsharp.get_function(input).name)
+              .to eq("xpto_method")
+    end
+  end
 
-  # context "When has parameters and parenthesis." do
-  #   it "One parameter" do
-  #     input = "def xpto_method(a)"
+  context "When has parameters and parenthesis." do
+    it "One parameter" do
+      input = "private virtual int xpto_method (int a)"
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["a"])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array(["int a"])
+    end
 
-  #   it "Two parameters" do
-  #     input = "def xpto_method(a, b)"
+    it "Two parameters" do
+      input = "private virtual int xpto_method(int a, int b)"
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["a", "b"])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array(["int a", "int b"])
+    end
 
-  #   it "Three parameters" do
-  #     input = "def xpto_method(a, ab, abc)"
+    it "Three parameters" do
+      input = "private virtual int xpto_method(int a, int b, string c)"
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["a", "ab", "abc"])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters)
+            .to match_array(["int a", "int b", "string c"])
+    end
 
-  #   it "Three parameters, with whitespace." do
-  #     input = "def xpto_method (a, ab , abc)   "
+    it "Three parameters, with whitespace." do
+      input = "private virtual int xpto_method(int a ,  int b , string c)   "
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["a", "ab", "abc"])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters)
+            .to match_array(["int a", "int b", "string c"])
+    end
 
 
   #   it "One parameter with assignment" do
@@ -261,7 +263,7 @@ RSpec.describe Languages::Csharp::FunctionBehaviorCsharp do
   #     methodOne = @functionBehaviorCsharp.get_function(input)
   #     expect(methodOne.parameters).to eq([])
   #   end
-  # end
+  end
 
 
   # context "When has parameters and no parenthesis." do
