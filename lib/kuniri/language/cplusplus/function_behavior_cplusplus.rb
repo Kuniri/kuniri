@@ -71,7 +71,11 @@ module Languages
         end
 
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s{2,}|\(|\)/," ") if pLine =~ /\s+|\(|\)/
+
+          pLine.gsub!(/, /,",") if pLine =~ /.*, .*/
+          pLine.gsub!(/\s{2,}/," ") if pLine =~ /\s+/
+          pLine.gsub!(/\(|\)/,"") if pLine =~ /\(|\)/
+          puts pLine
           return pLine
         end
 

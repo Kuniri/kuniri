@@ -44,7 +44,7 @@ module Languages
 
         def get_inheritance(pString)
           if pString =~ /:/
-            partial = pString.scan(/(.*):\s*(public|protected|private)\s*/)
+            partial = pString.scan(/.*:\s*(?:public|protected|private)\s*(\w+)/)
             return remove_unnecessary_information(partial)
           end
           return nil
