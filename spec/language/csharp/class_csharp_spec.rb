@@ -23,12 +23,14 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
 
     it "Ordinary public partial class declaration." do
-      classNameCaptured = @classCsharp.get_class("public partial class Xpto").name
+      classNameCaptured = @classCsharp
+                          .get_class("public partial class Xpto").name
       expect(classNameCaptured).to eq("Xpto")
     end
     
     it "Ordinary private partial class declaration." do 
-      classNameCaptured = @classCsharp.get_class("private partial class Xpto").name
+      classNameCaptured = @classCsharp
+                          .get_class("private partial class Xpto").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
@@ -38,12 +40,14 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
 
     it "Class declaration with whitespace." do
-      classNameCaptured = @classCsharp.get_class("public    class      Xpto").name
+      classNameCaptured = @classCsharp
+                          .get_class("public    class      Xpto").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class declaration between whitespace." do
-      classNameCaptured = @classCsharp.get_class("public    class      Xpto   ").name
+      classNameCaptured = @classCsharp
+                          .get_class("public    class      Xpto   ").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
@@ -53,12 +57,14 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
 
     it "Class declaration with whitespace in the end." do
-      classNameCaptured = @classCsharp.get_class("public class Xpto       ").name
+      classNameCaptured = @classCsharp
+                          .get_class("public class Xpto       ").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class declaration delimited by whitespace." do
-      classNameCaptured = @classCsharp.get_class(" public class  Xpto      ").name
+      classNameCaptured = @classCsharp
+                          .get_class(" public class  Xpto      ").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
@@ -95,7 +101,8 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
 
     it "Simple private class inheritance." do
-      classNameCaptured = @classCsharp.get_class("private class Xpto : Abc").name
+      classNameCaptured = @classCsharp
+                          .get_class("private class Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
@@ -105,27 +112,32 @@ RSpec.describe Languages::Csharp::ClassCsharp do
     end
 
     it "Class inheritance with whitespace in the beginning." do
-      classNameCaptured = @classCsharp.get_class("   public  class   Xpto : Abc").name
+      classNameCaptured = @classCsharp
+                          .get_class("   public  class   Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class inheritance with whitespace between <." do
-      classNameCaptured = @classCsharp.get_class("public class Xpto   : Abc").name
+      classNameCaptured = @classCsharp
+                          .get_class("public class Xpto   : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class inheritance with many whitespace." do
-      classNameCaptured = @classCsharp.get_class("  public class   Xpto : Abc ").name
+      classNameCaptured = @classCsharp
+                          .get_class("  public class   Xpto : Abc ").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class inheritance with many whitespace between :." do
-      classNameCaptured = @classCsharp.get_class("public class Xpto      :    Abc").name
+      classNameCaptured = @classCsharp
+                          .get_class("public class Xpto      :    Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
     it "Class inheritance with whitespace in the corners." do
-      classNameCaptured = @classCsharp.get_class(" public  class   Xpto : Abc   ").name
+      classNameCaptured = @classCsharp
+                          .get_class(" public  class   Xpto : Abc   ").name
       expect(classNameCaptured).to eq("Xpto")
     end
   end

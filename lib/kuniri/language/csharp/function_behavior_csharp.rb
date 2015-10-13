@@ -16,6 +16,7 @@ module Languages
         end
 
         def get_function(pLine, type = 'globalFunction')
+          pLine.gsub!(/\s{2,}/," ")
           result = detect_function(pLine)
           return nil unless result
 
@@ -39,14 +40,13 @@ module Languages
       protected
 
         def detect_function(pLine)
-          pLine.gsub!(/\s{2,}/," ")
           access_regex = /private|public|protected/
           modifier_regex = /\sstatic|\svirtual|\ssealed/
-          regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
+          regexExpression = /^\s?(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
-
+        
         def handling_default_parameter(pLine)
           return pLine unless pLine =~ /=/
 
@@ -78,18 +78,17 @@ module Languages
           elsif pLine =~ /,\s/
             pLine.gsub!(/,\s/,",")
           else 
-            #do nothing to the pLine
+            #do nothing to pLine
           end
           return pLine
         end
 
         def handling_parameter(pLine)
-          pLine.gsub!(/\s{2,}/," ")
           access_regex = /private|public|protected/
           modifier_regex = /\sstatic|\svirtual|\ssealed/
           regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(?:\w+)\s?\((.*)\)\s?(?:{|})?/
           if pLine =~ regexExpression 
-            partial = get_parameters(pLine, regexExpression )
+            partial = get_parameters(pLine, regexExpression)
           else
             return nil
           end
