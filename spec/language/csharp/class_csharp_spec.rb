@@ -128,6 +128,7 @@ RSpec.describe Languages::Csharp::ClassCsharp do
       classNameCaptured = @classCsharp.get_class(" public  class   Xpto : Abc   ").name
       expect(classNameCaptured).to eq("Xpto")
     end
+
   end
 
   after :all do
