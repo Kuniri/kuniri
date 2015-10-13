@@ -41,7 +41,8 @@ module Languages
 
         # Override
         def detect_class(pLine)
-          regexExpression = /^(?:\s*public|private)?(?:\s*partial)?\s*class\s+(.*)/
+          pLine.gsub!(/\s{2,}/," ")
+          regexExpression = /^(?:\s?public|private)?(?:\s?partial)?\s?class\s(.*)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
@@ -49,7 +50,7 @@ module Languages
         # Override
         def get_inheritance(pString)
           if pString =~ /:/
-            partial = pString.scan(/:(.*)/)
+            partial = pString.scan(/:\s*(\w+)\s*/)
             return remove_unnecessary_information(partial)
           end
           return nil
@@ -57,7 +58,7 @@ module Languages
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub(/\s|:|{/, "") if pString =~ /\s|:|{/
+          return pString.gsub(/\s*|:|{/, "") if pString =~ /\s|:|{/
           return pString
         end
 
