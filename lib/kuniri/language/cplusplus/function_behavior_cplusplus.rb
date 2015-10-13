@@ -39,8 +39,7 @@ module Languages
       protected
 
         def detect_function(pLine)
-          pLine.gsub!(/\s{2,}/," ")
-          regexExpression = /(\w*(?:\s?)::(?:\s?)\w*\()/
+          regexExpression = /\w*\s*(\w*)\s*(::)\s*(\w*)\s*\((?:.*)\)\s*/
           return nil unless pLine =~ regexExpression
 
           return pLine.scan(regexExpression)[0].join("")
@@ -72,7 +71,7 @@ module Languages
         end
 
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
+          return pLine.gsub(/\s{2,}|\(|\)/," ") if pLine =~ /\s+|\(|\)/
           return pLine
         end
 
@@ -80,8 +79,6 @@ module Languages
           # Handling with parenthesis and without it.
           if pLine =~ /\(.+\)/
             partial = get_parameters(pLine, /\(.+\)/)
-          elsif pLine =~ /def\s+\w+[\s]+(.+)/
-            partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
           else
             return nil
           end
