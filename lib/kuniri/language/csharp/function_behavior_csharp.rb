@@ -40,13 +40,11 @@ module Languages
       protected
 
         def detect_function(pLine)
-          access_regex = /private|public|protected/
-          modifier_regex = /\sstatic|\svirtual|\ssealed/
-          regexExpression = /^\s?(?:\w+)\s(\w+)\s?\((?:.*)\)\s?(?:{|})?/
+          regexExpression = /\s?(?:\w+)\s(\w+)\s?\((?:.*)\)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
-        
+
         def handling_default_parameter(pLine)
           return pLine unless pLine =~ /=/
 
@@ -75,8 +73,8 @@ module Languages
         def remove_unnecessary_information(pLine)
           if pLine =~ /\(|\)/
             pLine.gsub!(/\(|\)/,"") 
-          elsif pLine =~ /,\s/
-            pLine.gsub!(/,\s/,",")
+          elsif pLine =~ /\s,|,\s/
+            pLine.gsub!(/\s,|,\s/,",")
           else 
             #do nothing to pLine
           end
@@ -84,9 +82,7 @@ module Languages
         end
 
         def handling_parameter(pLine)
-          access_regex = /private|public|protected/
-          modifier_regex = /\sstatic|\svirtual|\ssealed/
-          regexExpression = /^\s?(?:#{access_regex})(?:#{modifier_regex})?\s(?:\w+)\s(?:\w+)\s?\((.*)\)\s?(?:{|})?/
+          regexExpression = /\((.*)\)/
           if pLine =~ regexExpression 
             partial = get_parameters(pLine, regexExpression)
           else
@@ -108,7 +104,14 @@ module Languages
         end
 
         def split_string_by_comma(pString)
-          return pString.split(",") if pString =~ /,/
+          if pString =~ /,/
+            splittedString = pString.split(",") 
+            splittedString.each do |element|
+              element.lstrip!
+              element.rstrip!
+            end
+            return splittedString
+          end
           return [pString]
         end
     # Class
