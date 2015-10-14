@@ -35,10 +35,11 @@ module Parser
               class_generate(singleElement.classes)
             end
           end
+
           # TODO: save the current output, or mix everything in the same file.
           # DOIT here!
           File.open("test_out/" + listOfFile.name + ".xml", 'w') do |file|
-            file.write(@outputEngine.to_xml)
+           file.write(@outputEngine.to_xml)
           end
           @outputEngine.reset_engine
         end
