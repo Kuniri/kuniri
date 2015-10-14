@@ -20,17 +20,19 @@ module Parser
 
       # @see OutputFormat
       def class_generate(pClass)
+        # We use it because of the block below.
+        bridgeObject = self
         pClass.each do |singleClass|
           @outputEngine.classData :name => singleClass.name do
             # TODO: Inheritance
-            singleClass.attributes.each do |singleAttribute|
-              attribute_generate(singleAttribute)
-            end
+            #singleClass.attributes.each do |singleAttribute|
+            #  attribute_generate(singleAttribute)
+            #end
             singleClass.constructors.each do |singleConstructor|
-              constructor_generate(singleConstructor)
+              bridgeObject.constructor_generate(singleConstructor)
             end
             singleClass.methods.each do |singleMethod|
-              method_generate(singleMethod)
+              bridgeObject.method_generate(singleMethod)
             end
           end
         end
@@ -53,42 +55,39 @@ module Parser
 
       # @see OutputFormat
       def constructor_generate(pConstructor)
-        pConstructor.each do |singleConstructor|
-          @outputEngine.constructorData :name => singleConstructor.name do
-            if singleConstructor.comments != ""
-              comment_generate(singleConstructor.comments)
-            end
-            singleConstructor.parameters.each do |parameter|
-              parameter_generate(parameter)
-            end
-            singleConstructor.conditionals.each do |conditional|
-              conditional_generate(conditional)
-            end
-            singleConstructor.repetitions.each do |repetition|
-              repetition_generate(repetition)
-            end
+        bridgeObject = self
+        @outputEngine.constructorData :name => pConstructor.name do
+          if pConstructor.comments != ""
+            bridgeObject.comment_generate(pConstructor.comments)
           end
+          pConstructor.parameters.each do |parameter|
+            bridgeObject.parameters_generate(parameter)
+          end
+          #singleConstructor.conditionals.each do |conditional|
+          #  conditional_generate(conditional)
+          #end
+          #singleConstructor.repetitions.each do |repetition|
+          #  repetition_generate(repetition)
+          #end
         end
       end
 
       # @see OutputFormat
       def method_generate(pMethod)
-puts "*"*30
-        pMethod.each do |singleMethod|
-          @outputEngine.methodData :name => singleMethod.name do
-            if singleMethod.comments != ""
-              comment_generate(singleMethod.comments)
-            end
-            singleMethod.parameters.each do |parameter|
-              parameter_generate(parameter)
-            end
-            singleMethod.conditionals.each do |conditional|
-              conditional_generate(conditional)
-            end
-            singleMethod.repetitions.each do |repetition|
-              repetition_generate(repetition)
-            end
+        bridgeObject = self
+        @outputEngine.methodData :name => pMethod.name do
+          if pMethod.comments != ""
+            bridgeObject.comment_generate(pMethod.comments)
           end
+          pMethod.parameters.each do |parameter|
+            bridgeObject.parameters_generate(parameter)
+          end
+          #pMethod.conditionals.each do |conditional|
+          #  conditional_generate(conditional)
+          #end
+          #pMethod.repetitions.each do |repetition|
+          #  repetition_generate(repetition)
+          #end
         end
       end
 
@@ -100,7 +99,7 @@ puts "*"*30
               comment_generate(singleFunction.comments)
             end
             singleFunction.parameters.each do |parameter|
-              parameter_generate(parameter)
+              parameters_generate(parameter)
             end
             singleFunction.conditionals.each do |conditional|
               conditional_generate(conditional)
@@ -111,14 +110,12 @@ puts "*"*30
 
       # @see OutputFormat
       def parameters_generate(pParameters)
-        pParameters.each do |parameter|
-          if parameter.is_a?Hash
-            parameter.each do |nameParam, value|
-              @outputEngine.parameterData :name => "#{nameParam}=#{value}"
-            end
-          elsif parameter.is_a?String
-            @outputEngine.parameterData :name => parameter
+        if pParameters.is_a?Hash
+          pParameters.each do |nameParam, value|
+            @outputEngine.parameterData :name => "#{nameParam}=#{value}"
           end
+        elsif pParameters.is_a?String
+          @outputEngine.parameterData :name => pParameters
         end
       end
 
