@@ -13,10 +13,9 @@ module Languages
         def get_requirement(pLine)
           detectExpression = detect_extern_requirement(pLine)
           return nil unless detectExpression
-
           detectExpression = remove_unnecessary_information(detectExpression)
           # @requirement = detectExpression
-          name = File.basename(detectExpression, ".*")
+          name = File.basename(detectExpression)
           externReference = ExternRequirementData.new(name)
           return externReference
         end
@@ -24,13 +23,13 @@ module Languages
       protected
 
         def detect_extern_requirement(pLine)
-          regexExpression = /^\s*require(?:_relative)?\s+('|")(.*)\1/
+          regexExpression = /^\s*using\s+(.+)\s*/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
 
         def remove_unnecessary_information(pLine)
-          regexClean = /\s+|"|'/
+          regexClean = /\s+|;/
           return pLine.gsub!(regexClean, "") if pLine =~ regexClean
           return pLine
         end
