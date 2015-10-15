@@ -48,17 +48,13 @@ module Languages
         def handling_default_parameter(pLine)
           return pLine unless pLine =~ /=/
 
-          if pLine =~ /,/
-            partialParameters = pLine.split(",")
-          else
-            partialParameters = [pLine]
-          end
+          partialParameters = split_string_by_comma(pLine)
 
           newList = []
           partialParameters.each do |element|
             if element =~ /=/
-              parameter = element.scan(/(\w*)=/).join("")
-              value = element.scan(/=(\w*)/).join("")
+              parameter = element.scan(/(.*)=/).join("").rstrip
+              value = element.scan(/=(.*)/).join("").lstrip
               defaultParameter = Hash(parameter => value)
               newList.push(defaultParameter)
               next
@@ -82,7 +78,7 @@ module Languages
         end
 
         def handling_parameter(pLine)
-          regexExpression = /\((.*)\)/
+          regexExpression = /\((.+)\)/
           if pLine =~ regexExpression 
             partial = get_parameters(pLine, regexExpression)
           else

@@ -42,7 +42,7 @@ module Languages
         # Override
         def detect_class(pLine)
           pLine.gsub!(/\s{2,}/," ")
-          regexExpression = /^(?:\s?public|private)?(?:\s?partial)?\s?class\s(.*)/
+          regexExpression = /\s?class\s(.*)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end

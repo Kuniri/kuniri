@@ -188,7 +188,7 @@ RSpec.describe Languages::Csharp::FunctionBehaviorCsharp do
     end
 
     it "Different whitespace patterns." do
-      input = "  private   virtual  int  xpto_method  (int a,   int b,  string  c)   \n"
+      input = "  private   virtual  int  xpto_method  (    int a  )   \n"
       expect(@functionBehaviorCsharp.get_function(input).name)
               .to eq("xpto_method")
     end
@@ -226,90 +226,51 @@ RSpec.describe Languages::Csharp::FunctionBehaviorCsharp do
     end
 
 
-  #   it "One parameter with assignment" do
-  #     input = "def xpto_method(a=3)"
+    it "One parameter with assignment" do
+      input = "private virtual int xpto_method (int a=3)"
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array([{"a"=>"3"}])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array([{"int a"=>"3"}])
+    end
 
-  #   it "Two parameters with assignment" do
-  #     input = "def xpto_method(a=4, b=7)"
+    it "Two parameters with assignment" do
+      input = "private virtual int xpto_method (int a = 4, int b=7)"
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array([{"a"=>"4"}, {"b"=>"7"}])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array([{"int a"=>"4"}, 
+                                                   {"int b"=>"7"}])
+    end
 
-  #   it "Parameters with whitespace between them." do
-  #     input = "def xpto_method(a=7,               b=8, c =      0, d = 324)"
+    it "Parameters with whitespace between them." do
+      methodName = "private virtual int xpto_method"
+      methodParameters = "(int a=7,int   b = 8,int c =    0, int d = 324)"
+      input = methodName + methodParameters
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array([{"int a"=>"7"}, 
+                                                   {"int b"=>"8"}, 
+                                                   {"int c"=>"0"}, 
+                                                   {"int d"=>"324"}])
+    end
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array([{"a"=>"7"}, {"b"=>"8"}, 
-  #                                                 {"c"=>"0"}, {"d"=>"324"}])
-  #   end
+    it "Parameters with whitespace between assignment." do
+      methodName = "private virtual int xpto_method"
+      methodParameters = "(int a  =  7,int b = 8  ,  int c =    0, int d = 324)"
+      input = methodName + methodParameters
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to match_array([{"int a"=>"7"}, 
+                                                   {"int b"=>"8"}, 
+                                                   {"int c"=>"0"}, 
+                                                   {"int d"=>"324"}])
 
-  #   it "Parameters with whitespace between assignment." do
-  #     input = "def xpto_method(a        =  7,b =8, c  =  0,d    = 324)"
+    end
 
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array([{"a"=>"7"}, {"b"=>"8"}, 
-  #                                                 {"c"=>"0"}, {"d"=>"324"}])
+    it "No parameter, just parenthesis" do
+      input = "private virtual int xpto_method()"
 
-  #   end
-
-  #   it "No parameter, just parenthesis" do
-  #     input = "def xpto_method()"
-
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to eq([])
-  #   end
+      methodOne = @functionBehaviorCsharp.get_function(input)
+      expect(methodOne.parameters).to eq([])
+    end
   end
-
-
-  # context "When has parameters and no parenthesis." do
-  #   it "No parenthesis, and one parameter" do
-  #     input = "def xpto_method x"
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x"])
-  #   end
-
-  #   it "One parameter, with space at the end." do
-  #     input = "def xpto_method x       "
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x"])
-  #   end
-
-  #   it "One parameter, with space in the end and in the begining." do
-  #     input = "def xpto_method       x           "
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x"])
-  #   end
-
-  #   it "One parameter, multiple spaces" do
-  #     input = "       def xpto_method       x         "
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x"])
-  #   end
-
-  #   it "Two parameters" do
-  #     input = "def xpto_method x,y"
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x", "y"])
-  #   end
-
-  #   it "Three parameters" do
-  #     input = "def xpto_method x, abcde, xyz"
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x", "abcde", "xyz"])
-  #   end
-
-  #   it "Multiple parameters with many spaces" do
-  #     input = " def xpto_method     x ,    m,    nda ,       t  "
-  #     methodOne = @functionBehaviorCsharp.get_function(input)
-  #     expect(methodOne.parameters).to match_array(["x", "m", "nda", "t"])
-  #   end
-
-  # end
 
   after :all do
     @functionBehaviorCsharp = nil
