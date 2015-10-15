@@ -14,8 +14,8 @@ module Languages
         def get_constructor(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result
-
-          if result.name =~ /initialize/
+          access_regex = /public|private|protected/
+          if pLine =~ /^\s*#{access_regex}\s+(\w+)\s*\((.*)\)\s*$/
             result.type = "CONSTRUCTOR"
           else
             return nil
