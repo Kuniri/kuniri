@@ -24,7 +24,6 @@ module Parser
         bridgeObject = self
         pClass.each do |singleClass|
           @outputEngine.classData :name => singleClass.name do
-            # TODO: Inheritance
             #singleClass.attributes.each do |singleAttribute|
             #  attribute_generate(singleAttribute)
             #end
