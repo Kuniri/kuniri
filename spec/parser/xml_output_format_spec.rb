@@ -2,17 +2,21 @@ require_relative '../spec_helper'
 
 RSpec.describe Parser::XMLOutputFormat do
 
-  before :all do
+  before :each do
     @outputFormat = Parser::XMLOutputFormat.new
+    @stringHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
   end
 
   context "Generate class" do
 
    it "::Simple case class" do
+      expectedString = @stringHeader
+      expectedString += "<classData name=\"Xpto\" visibility=\"public\">"
+      expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
-      ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\" visibility=\"public\" />")
+      @outputFormat.class_generate([classTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
    it "::Set visibility" do
@@ -37,19 +41,25 @@ RSpec.describe Parser::XMLOutputFormat do
   context "Generate constructor" do
 
     it "::Simple constructor" do
+      expectedString = @stringHeader
+      expectedString += "<constructorData name=\"initialize\" "
+      expectedString += "visibility=\"public\">"
+      expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
-      ret = @outputFormat.constructor_generate(constructorTmp)
-      expect(ret).to eq("<constructor name=\"initialize\" " +
-                        "visibility=\"public\" />")
+      @outputFormat.constructor_generate(constructorTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "::Constructor with parameters" do
+      expectedString = @stringHeader
+      expectedString += "<constructorData name=\"initialize\" "
+      expectedString += "visibility=\"public\">\n"
+      expectedString += "  <commentData text=\"Comment constructor\"/>\n"
+      expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
       constructorTmp.comments = "Comment constructor"
-      ret = @outputFormat.constructor_generate(constructorTmp)
-      expect(ret).to eq("<constructor name=\"initialize\" " +
-                        "visibility=\"public\"" +
-                        "\n\tcomments=\"Comment constructor\" />")
+      @outputFormat.constructor_generate(constructorTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
   end
@@ -83,10 +93,12 @@ RSpec.describe Parser::XMLOutputFormat do
   context "::Generate methods" do
 
     it "::Generate simple method" do
+      expectedString = @stringHeader
+      expectedString += "<methodData name=\"xpto\" visibility=\"public\">"
+      expectedString += "</methodData>\n"
       methodTmp = Languages::MethodData.new("xpto")
-      ret = @outputFormat.method_generate(methodTmp)
-      expect(ret).to eq("<method name=\"xpto\" " +
-                        "visibility=\"public\" />")
+      @outputFormat.method_generate(methodTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
   end
@@ -94,14 +106,15 @@ RSpec.describe Parser::XMLOutputFormat do
   context "Cannot call unimplemented method." do
 
     it "Create all data" do
-      ret = @outputFormat.create_data(nil)
+      ret = @outputFormat.create_all_data(nil)
     end
 
     it "Generate parameters" do
-      parameterTmp = Languages::MethodData.new("xpto")
-      parameterTmp.add_parameters("a")
-      ret = @outputFormat.parameters_generate(parameterTmp)
-      expect(ret).to eq("<parameter name=\"a\"/>")
+      expectedString = @stringHeader
+      expectedString += "<parameterData name=\"value=1\"/>\n"
+      parameterTmp = {"value" => "1"}
+      @outputFormat.parameters_generate(parameterTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate attribute" do
@@ -129,7 +142,7 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate module" do
-      moduleTmp = Languages::ModuleNamespaceData("xpto")
+      moduleTmp = Languages::ModuleNamespaceData.new("xpto")
       ret = @outputFormat.module_generate(moduleTmp)
       expect(ret).to eq("<module name=\"xpto\" />")
     end
@@ -150,7 +163,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
   end
 
-  after :all do
+  after :each do
     @outputFormat = nil
   end
 
