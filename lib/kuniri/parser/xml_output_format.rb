@@ -21,17 +21,18 @@ module Parser
       # @see OutputFormat
       def class_generate(pClass)
         # We use it because of the block below.
-        bridgeObject = self
+        wrapper = self
         pClass.each do |singleClass|
-          @outputEngine.classData :name => singleClass.name do
+          @outputEngine.classData :name => singleClass.name,
+                                  :visibility => "public" do
             #singleClass.attributes.each do |singleAttribute|
             #  attribute_generate(singleAttribute)
             #end
             singleClass.constructors.each do |singleConstructor|
-              bridgeObject.constructor_generate(singleConstructor)
+              wrapper.constructor_generate(singleConstructor)
             end
             singleClass.methods.each do |singleMethod|
-              bridgeObject.method_generate(singleMethod)
+              wrapper.method_generate(singleMethod)
             end
           end
         end
@@ -54,13 +55,14 @@ module Parser
 
       # @see OutputFormat
       def constructor_generate(pConstructor)
-        bridgeObject = self
-        @outputEngine.constructorData :name => pConstructor.name do
+        wrapper = self
+        @outputEngine.constructorData :name => pConstructor.name,
+                                      :visibility => pConstructor.visibility do
           if pConstructor.comments != ""
-            bridgeObject.comment_generate(pConstructor.comments)
+            wrapper.comment_generate(pConstructor.comments)
           end
           pConstructor.parameters.each do |parameter|
-            bridgeObject.parameters_generate(parameter)
+            wrapper.parameters_generate(parameter)
           end
           #singleConstructor.conditionals.each do |conditional|
           #  conditional_generate(conditional)
@@ -73,13 +75,14 @@ module Parser
 
       # @see OutputFormat
       def method_generate(pMethod)
-        bridgeObject = self
-        @outputEngine.methodData :name => pMethod.name do
+        wrapper = self
+        @outputEngine.methodData :name => pMethod.name,
+                                  :visibility => pMethod.visibility do
           if pMethod.comments != ""
-            bridgeObject.comment_generate(pMethod.comments)
+            wrapper.comment_generate(pMethod.comments)
           end
           pMethod.parameters.each do |parameter|
-            bridgeObject.parameters_generate(parameter)
+            wrapper.parameters_generate(parameter)
           end
           #pMethod.conditionals.each do |conditional|
           #  conditional_generate(conditional)

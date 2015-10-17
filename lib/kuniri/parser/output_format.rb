@@ -15,26 +15,26 @@ module Parser
       end
 
       def create_all_data(pParser)
-        bridgeBlock = self
+        wrapper = self
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
           # Inspect each element
           listOfFile.fileElements.each do |singleElement|
             @outputEngine.kuniri do
               if (singleElement.extern_requirements.length() > 0)
-                bridgeBlock.extern_requirement_generate(singleElement.extern_requirements)
+                wrapper.extern_requirement_generate(singleElement.extern_requirements)
               end
               if (singleElement.modules.length() > 0)
-                bridgeBlock.module_generate(singleElement.modules)
+                wrapper.module_generate(singleElement.modules)
               end
               if (singleElement.global_variables.length() > 0)
-                bridgeBlock.global_variable_generate(singleElement.global_variables)
+                wrapper.global_variable_generate(singleElement.global_variables)
               end
               if (singleElement.global_functions.length() > 0)
-                bridgeBlock.function_generate(singleElement.global_functions)
+                wrapper.function_generate(singleElement.global_functions)
               end
               if (singleElement.classes.length() > 0)
-                bridgeBlock.class_generate(singleElement.classes)
+                wrapper.class_generate(singleElement.classes)
               end
             end
           end
