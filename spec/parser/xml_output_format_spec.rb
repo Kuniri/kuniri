@@ -20,20 +20,26 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
    it "::Set visibility" do
+      expectedString = @stringHeader
+      expectedString += "<classData name=\"Xpto\" visibility=\"private\">"
+      expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
       classTmp.visibility = "private"
-      ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\" visibility=\"private\" />")
+      @outputFormat.class_generate([classTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
    it "::Set comment" do
+      expectedString = @stringHeader
+      expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
+      expectedString += "  <commentData text=\"This is a simple comment\"/>\n"
+      expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
       classTmp.comments = "This is a simple comment"
-      ret = @outputFormat.class_generate(classTmp)
-      expect(ret).to eq("<class name=\"Xpto\" visibility=\"public\"" +
-                        "\n\tcomments=\"This is a simple comment\" />")
+      @outputFormat.class_generate([classTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
   end
@@ -67,25 +73,30 @@ RSpec.describe Parser::XMLOutputFormat do
   context "::Generate initialize" do
 
     it "::Simple inheritance" do
+      expectedString = @stringHeader
+      expectedString += "<inheritanceData name=\"Xpto\"/>\n"
       inheritanceTmp = Languages::ClassData.new
       inheritanceTmp.inheritances.push("Xpto")
-      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
-      expect(ret).to eq("<inheritance name=\"Xpto\" />")
+      @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "::Double inheritance" do
+      expectedString = @stringHeader
+      expectedString += "<inheritanceData name=\"Xpto1\"/>\n\n"
+      expectedString += "<inheritanceData name=\"Xpto2\"/>\n"
       inheritanceTmp = Languages::ClassData.new
       inheritanceTmp.inheritances.push("Xpto1")
       inheritanceTmp.inheritances.push("Xpto2")
-      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
-      expect(ret).to eq("<inheritance name=\"Xpto1\" />\n" +
-                        "<inheritance name=\"Xpto2\" />")
+      @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "::No inheritance" do
+      expectedString = @stringHeader.gsub("\n", "")
       inheritanceTmp = Languages::ClassData.new
-      ret = @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
-      expect(ret).to eq(nil)
+      @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
   end
@@ -106,7 +117,7 @@ RSpec.describe Parser::XMLOutputFormat do
   context "Cannot call unimplemented method." do
 
     it "Create all data" do
-      ret = @outputFormat.create_all_data(nil)
+      expect(@outputFormat.create_all_data(nil)).to eq(nil)
     end
 
     it "Generate parameters" do
@@ -124,15 +135,20 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate function" do
+      expectedString = @stringHeader
+      expectedString += "<functionData name=\"xpto\">"
+      expectedString += "</functionData>\n"
       functionTmp = Languages::FunctionData.new("xpto")
-      ret = @outputFormat.function_generate(functionTmp)
-      expect(ret).to eq("<function name=\"xpto\" >")
+      @outputFormat.function_generate([functionTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate global variable" do
+      expectedString = @stringHeader
+      expectedString += "<globalVariableData name=\"xpto\"/>\n"
       globalVariableTmp = Languages::VariableGlobalData.new("xpto")
-      ret = @outputFormat.global_variable_generate(globalVariableTmp)
-      expect(ret).to eq("<globalVariable name=\"xpto\"/>")
+      @outputFormat.global_variable_generate([globalVariableTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate require" do
@@ -142,9 +158,11 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate module" do
+      expectedString = @stringHeader
+      expectedString += "<moduleData name=\"xpto\"/>\n"
       moduleTmp = Languages::ModuleNamespaceData.new("xpto")
-      ret = @outputFormat.module_generate(moduleTmp)
-      expect(ret).to eq("<module name=\"xpto\" />")
+      @outputFormat.module_generate([moduleTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate repetition" do

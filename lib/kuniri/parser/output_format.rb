@@ -15,6 +15,10 @@ module Parser
       end
 
       def create_all_data(pParser)
+        unless pParser
+          return nil
+        end
+
         wrapper = self
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
