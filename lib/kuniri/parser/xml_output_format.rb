@@ -24,7 +24,10 @@ module Parser
         wrapper = self
         pClass.each do |singleClass|
           @outputEngine.classData :name => singleClass.name,
-                                  :visibility => "public" do
+                                  :visibility => singleClass.visibility do
+            if singleClass.comments != ""
+              wrapper.comment_generate(singleClass.comments)
+            end
             #singleClass.attributes.each do |singleAttribute|
             #  attribute_generate(singleAttribute)
             #end
@@ -49,7 +52,7 @@ module Parser
       # @see OutputFormat
       def inheritance_generate(pInheritances)
         pInheritances.each do |singleInheritance|
-          @outputEngine.inheritanceData :name => singleInheritance.name
+          @outputEngine.inheritanceData :name => singleInheritance
         end
       end
 
