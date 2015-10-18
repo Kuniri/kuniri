@@ -129,9 +129,12 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate attribute" do
+      expectedString = @stringHeader
+      expectedString += "<attributeData name=\"xpto\" "
+      expectedString += "visibility=\"public\"/>\n"
       attributeTmp = Languages::AttributeData.new("xpto")
-      ret = @outputFormat.attribute_generate(attributeTmp)
-      expect(ret).to eq("<attribute name=xpto />")
+      @outputFormat.attribute_generate([attributeTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate function" do
@@ -152,9 +155,11 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate require" do
+      expectedString = @stringHeader
+      expectedString += "<externRequirementData name=\"xpto\"/>\n"
       requireTmp = Languages::ExternRequirementData.new("xpto")
-      ret = @outputFormat.extern_requirement_generate(requireTmp)
-      expect(ret).to eq("<externRequirementData name=\"xpto\" />")
+      @outputFormat.extern_requirement_generate([requireTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate module" do
@@ -166,17 +171,25 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it "Generate repetition" do
+      expectedString = @stringHeader
+      expectedString += "<repetitionData name=\"nothing\" "
+      expectedString += "type=\"while\" expression=\"x>3\"/>\n"
       repetitionTmp = Languages::RepetitionData.new
       repetitionTmp.type = "while"
-      ret = @outputFormat.repetition_generate(repetitionTmp)
-      expect(ret).to eq("<repetiton type=\"while\" />")
+      repetitionTmp.expression = "x>3"
+      @outputFormat.repetition_generate([repetitionTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate conditional" do
+      expectedString = @stringHeader
+      expectedString += "<conditionalData name=\"nothing\" type=\"if\""
+      expectedString += " expression=\"y < 3\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
       conditionalTmp.type = "if"
-      ret = @outputFormat.conditional_generate(conditionalTmp)
-      expect(ret).to eq("<conditional type=\"if\" />")
+      conditionalTmp.expression = "y < 3"
+      @outputFormat.conditional_generate([conditionalTmp])
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
   end
