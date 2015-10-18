@@ -24,6 +24,13 @@ RSpec.describe Languages::ExternRequirementData do
       @externRequirement.setLibrary("spec/samples/emptyFile")
       expect(@externRequirement.library).to eq("spec/samples/emptyFile")
     end
+  end
+
+  context "When set path" do
+    it "Set path." do
+      @externRequirement.setLibrary("xpto")
+      expect(@externRequirement.library).to eq("xpto")
+    end
 
     it "Does not set library" do
       @externRequirement = Languages::ExternRequirementData.new("xpto")

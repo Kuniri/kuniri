@@ -66,6 +66,7 @@ RSpec.describe Languages::ConstructorData do
               Languages::ConditionalData)).to eq(true)
       expect(@constructorData.type).to eq("CONSTRUCTOR")
     end
+
   end
 
   after :each do
