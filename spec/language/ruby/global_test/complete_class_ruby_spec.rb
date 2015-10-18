@@ -7,7 +7,7 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri = Kuniri::Kuniri.new(@path)
     @kuniri.run_analysis
 
-    parser = Parser::XML.new
+    parser = Parser::XMLOutputFormat.new
     parser.set_path("./spec/language/ruby/global_test/output_test.xml")
     parser.create_all_data @kuniri.get_parser()
     @output = File.open("./spec/language/ruby/global_test/output_test.xml", "r")

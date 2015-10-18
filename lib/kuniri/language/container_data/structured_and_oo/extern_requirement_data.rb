@@ -11,7 +11,7 @@ module Languages
 
       def initialize(pRequirement)
         return nil if pRequirement.nil? or !pRequirement.is_a? String
-        @name = pRequirement
+        @library = pRequirement
       end
 
       # Set library of extern requirement.

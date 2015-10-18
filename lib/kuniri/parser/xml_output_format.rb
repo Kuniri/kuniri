@@ -134,7 +134,8 @@ module Parser
       # @see OutputFormat
       def extern_requirement_generate(pRequirement)
         pRequirement.each do |externRequirement|
-          @outputEngine.externRequirementData :name => externRequirement.path
+          @outputEngine.externRequirementData :name =>
+              externRequirement.library
         end
       end
 
