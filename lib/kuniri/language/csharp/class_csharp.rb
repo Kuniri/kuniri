@@ -58,7 +58,7 @@ module Languages
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub(/\s|:|{/, "") if pString =~ /\s|:|{/
+          return pString.gsub(/\s|:|\{/, "") if pString =~ /\s|:|\{/
           return pString
         end
 
