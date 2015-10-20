@@ -11,12 +11,16 @@ RSpec.describe Languages::Csharp::ConstructorCsharp do
       input = "public Xpto()"
       expect(@constructor.get_constructor(input).name)
              .to eq("Xpto")
+      expect(@constructor.get_constructor(input).type)
+             .to eq("CONSTRUCTOR")
     end
 
     it "With spaces in the begin" do
       input = "         public Xpto()"
       expect(@constructor.get_constructor(input).name)
              .to eq("Xpto")
+      expect(@constructor.get_constructor(input).type)
+             .to eq("CONSTRUCTOR")
     end
 
     it "With spaces in the begin and between the constructor name" do
@@ -26,6 +30,8 @@ RSpec.describe Languages::Csharp::ConstructorCsharp do
       input = "                 public              Xpto()"
       expect(@constructor.get_constructor(input).name)
              .to eq("Xpto")
+      expect(@constructor.get_constructor(input).type)
+             .to eq("CONSTRUCTOR")
     end
 
     it "With spaces in the end" do
@@ -35,18 +41,22 @@ RSpec.describe Languages::Csharp::ConstructorCsharp do
       input = "public                    Xpto()                   "
       expect(@constructor.get_constructor(input).name)
              .to eq("Xpto")
+      expect(@constructor.get_constructor(input).type)
+             .to eq("CONSTRUCTOR")
     end
 
     it "With spaces in both sides" do
       input = "           public              Xpto()              "
       expect(@constructor.get_constructor(input).name)
              .to eq("Xpto")
+      expect(@constructor.get_constructor(input).type)
+             .to eq("CONSTRUCTOR")
     end
 
     it "No constructor" do
       input = "public int methodX()"
-      expect(@constructor.get_constructor(input))
-             .to eq(nil) 
+      expect(@constructor.get_constructor(input).type)
+             .not_to eq("CONSTRUCTOR")
     end
   end
 
