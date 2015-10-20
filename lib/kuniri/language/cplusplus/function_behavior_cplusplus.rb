@@ -39,10 +39,10 @@ module Languages
       protected
 
         def detect_function(pLine)
-          regexExpression = /\w*\s*(\w*)\s*(::)\s*(\w*)\s*\((?:.*)\)\s*/
+          regexExpression = /\s*(\w+)\s*(\w+)\s*::\s*(\w+)\s*\(.*\)\s*/
           return nil unless pLine =~ regexExpression
 
-          return pLine.scan(regexExpression)[0].join("")
+          return $3
         end
 
         def handling_default_parameter(pLine)
@@ -73,9 +73,10 @@ module Languages
         def remove_unnecessary_information(pLine)
 
           pLine.gsub!(/, /,",") if pLine =~ /.*, .*/
-          pLine.gsub!(/\s{2,}/," ") if pLine =~ /\s+/
-          pLine.gsub!(/\(|\)/,"") if pLine =~ /\(|\)/
-          puts pLine
+          pLine.gsub!(/\s+/," ") if pLine =~ /\s+/
+          pLine.gsub!(/\(\s*|\s*\)/,"") if pLine =~ /\(\s*|\s*\)/
+          pLine.gsub!(/\s,|,\s/,",") if pLine =~ /\s,|,\s/
+
           return pLine
         end
 
@@ -102,7 +103,14 @@ module Languages
         end
 
         def split_string_by_comma(pString)
-          return pString.split(",") if pString =~ /,/
+          if pString =~ /,/
+            splittedString = pString.split(",")
+            splittedString.each do |element|
+              element.lstrip!
+              element.rstrip!
+            end
+            return splittedString
+          end
           return [pString]
         end
 
