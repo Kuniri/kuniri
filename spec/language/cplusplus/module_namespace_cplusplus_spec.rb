@@ -6,6 +6,49 @@ RSpec.describe Languages::Cplusplus::ModuleNamespaceCplusplus do
     @modules = Languages::Cplusplus::ModuleNamespaceCplusplus.new
   end
 
+  context "Common case of namespace declarations" do
+    it "Module on corner." do
+      capturedModule = @modules.get_module("namespace Abc{")
+      expect(capturedModule.name).to eq("Abc")
+    end
+
+    it "Module with space before." do
+      capturedModule = @modules.get_module("     namespace Xpto")
+      expect(capturedModule.name).to eq("Xpto")
+    end
+
+    it "Module with space after." do
+      capturedModule = @modules.get_module("namespace TestOne       {")
+      expect(capturedModule.name).to eq("TestOne")
+    end
+
+    it "Module with space after, and before." do
+      capturedModule = @modules.get_module("     namespace BeforeAfter      ")
+      expect(capturedModule.name).to eq("BeforeAfter")
+    end
+
+    it "Module with space between keyword and name." do
+      capturedModule = @modules.get_module("namespace       SpaceBetween{")
+      expect(capturedModule.name).to eq("SpaceBetween")
+    end
+
+    it "Module with space between keyword, and before." do
+      capturedModule =
+        @modules.get_module("     namespace     SpaceBetweenBefore{")
+      expect(capturedModule.name).to eq("SpaceBetweenBefore")
+    end
+
+    it "Module with space before keyword, and after." do
+      capturedModule = @modules.get_module("namespace    SpaceBetweenAfter      {")
+      expect(capturedModule.name).to eq("SpaceBetweenAfter")
+    end
+
+    it "Module with space before keyword, between, and after" do
+      capturedModule = @modules.get_module("     namespace  BeforeBetweenAfter  {")
+      expect(capturedModule.name).to eq("BeforeBetweenAfter")
+    end
+  end
+
   after :all do
     @module = nil
   end
