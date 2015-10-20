@@ -16,7 +16,7 @@ module Languages
 
         def detect_end(pLine)
           #TODO: EXTREMELY SIMPLE HANDLING, IT HAVE TO BE IMPROVED!
-          return true if pLine =~ /^\s+end|^end/
+          return true if pLine =~ /^\s+\}|^\}|\s+\};?$/
           return false
         end
 
