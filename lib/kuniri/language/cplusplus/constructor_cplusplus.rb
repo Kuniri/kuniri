@@ -11,18 +11,25 @@ module Languages
 
       public
 
-        def get_constructor(pLine, type = 'public')
+        def get_constructor(pLine, type = 'globalFunction')
+          class_name = get_class(pLine)
           result = get_function(pLine)
           return nil unless result
 
-          if result.name =~ /(\w*)(?:\s*)::(?:\s*)(\w*)(?:\s*)/ and $1 == $2
-            result.name = $2
+          if(class_name == result.name)
             result.type = "CONSTRUCTOR"
-          else
-            return nil
           end
 
           return result
+
+        end
+
+      private
+
+        def get_class(pLine)
+          regexExpression = /\s*(\w+)\s*(::)\s*(\w+)\s*\(.*\)/
+          return nil unless pLine =~ regexExpression
+          return $1
         end
 
     # Class
