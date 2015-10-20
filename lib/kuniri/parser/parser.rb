@@ -12,6 +12,7 @@ module Parser
 
         attr_accessor :language
         attr_reader :fileLanguage
+        attr_reader :filesPath
 
         def initialize(pFilesPath, pLanguage = "ruby")
           @filesPath = pFilesPath
@@ -35,7 +36,6 @@ module Parser
 
       private
 
-        @filesPath
         @log
         @factory
 

@@ -36,7 +36,7 @@ OptionParser.new do |opts|
     if(f)
       options[:filename] = f
     else
-      options[:filename] = 'kuniri.xml'
+      options[:filename] = 'outputKuniri/'
     end
 
     kuniri = Kuniri::Kuniri.new

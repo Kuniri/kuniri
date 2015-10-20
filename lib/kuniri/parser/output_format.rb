@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Parser
 
   class OutputFormat
@@ -19,6 +21,8 @@ module Parser
           return nil
         end
 
+        saveElementTo = "./"
+
         wrapper = self
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
@@ -26,13 +30,15 @@ module Parser
           listOfFile.fileElements.each do |singleElement|
             @outputEngine.kuniri do
               if (singleElement.extern_requirements.length() > 0)
-                wrapper.extern_requirement_generate(singleElement.extern_requirements)
+                wrapper.extern_requirement_generate(
+                        singleElement.extern_requirements)
               end
               if (singleElement.modules.length() > 0)
                 wrapper.module_generate(singleElement.modules)
               end
               if (singleElement.global_variables.length() > 0)
-                wrapper.global_variable_generate(singleElement.global_variables)
+                wrapper.global_variable_generate(
+                        singleElement.global_variables)
               end
               if (singleElement.global_functions.length() > 0)
                 wrapper.function_generate(singleElement.global_functions)
@@ -41,13 +47,19 @@ module Parser
                 wrapper.class_generate(singleElement.classes)
               end
             end
+            saveElementTo = singleElement.name
           end
 
-          # TODO: save the current output, or mix everything in the same file.
-          # DOIT here!
-          File.open("test_out/" + listOfFile.name + ".xml", 'w') do |file|
+          outputDir = File.join(@parserPath, File.dirname(saveElementTo))
+          unless Dir.exists? outputDir
+            FileUtils.mkdir_p(File.join(@parserPath, File.dirname(saveElementTo)))
+          end
+
+          destination = File.join(outputDir, listOfFile.name + ".xml")
+          File.open(destination, "w") do |file|
            file.write(@outputEngine.to_xml)
           end
+
           @outputEngine.reset_engine
         end
 

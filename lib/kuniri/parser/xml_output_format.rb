@@ -7,15 +7,9 @@ module Parser
 
     public
 
-      def initialize(pPath = "kuniri.xml")
+      def initialize(pPath = "outputKuniri/")
         @outputEngine = XMLBuilderEngine.new
         set_path(pPath)
-      end
-
-      # Set path to save the output.
-      # @param pPath Output path.
-      def set_path(pPath)
-        @parser_path = pPath
       end
 
       # @see OutputFormat
