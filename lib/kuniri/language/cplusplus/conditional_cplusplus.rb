@@ -10,6 +10,7 @@ module Languages
       public
 
         def get_conditional(pLine)
+          pLine = remove_unnecessary_information(pLine)
           result = detect_conditional(pLine)
           return nil unless result
 
@@ -27,13 +28,10 @@ module Languages
           regexExp = /^\s*if\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
-          regexExp = /^\s*case\s+(.*)/
+          regexExp = /^\s*switch\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
-          regexExp = /^\s*unless\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*elsif\s+(.*)/
+          regexExp = /^\s*else\s+if\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
           return nil
@@ -43,13 +41,10 @@ module Languages
           regexExp = /^\s+if|^if/
           return "IF" if regexExp =~ pString
 
-          regexExp = /^\s+case|^case/
-          return "CASE" if regexExp =~ pString
+          regexExp = /^\s+switch|^switch/
+          return "SWITCH" if regexExp =~ pString
 
-          regexExp = /^\s+unless|^unless/
-          return "UNLESS" if regexExp =~ pString
-
-          regexExp = /^\s+elsif|^elsif/
+          regexExp = /^\s+else\s+if|^else\s+if/
           return "ELSIF" if regexExp =~ pString
 
           return nil
@@ -59,6 +54,12 @@ module Languages
           leftStrip = pString.lstrip
           rightStrip = leftStrip.rstrip
           return rightStrip
+        end
+
+        def remove_unnecessary_information(pLine)
+          pLine.gsub!(/\s+/, " ") if pLine =~ /\s+/
+          pLine.gsub!(/\(|\)/, "") if pLine =~ /\(|\)/
+          return pLine
         end
 
     # Class
