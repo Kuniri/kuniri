@@ -95,52 +95,93 @@ RSpec.describe Languages::Csharp::ClassCsharp do
   end
 
   context "When with inheritance" do
-    it "Simple public class inheritance." do
+    it "Simple public class name w/ inheritance." do
       classNameCaptured = @classCsharp.get_class("public class Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Simple private class inheritance." do
+    it "Simple public class inheritance." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("public class Xpto : Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Simple private class name w/ inheritance." do
       classNameCaptured = @classCsharp
                           .get_class("private class Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Scopeless class inheritance." do
+    it "Simple private class inheritance." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("private class Xpto : Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Scopeless class name w/ inheritance." do
       classNameCaptured = @classCsharp.get_class("class Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Class inheritance with whitespace in the beginning." do
+    it "Scopeless class inheritance." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("class Xpto : Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Class name w/ inheritance with whitespace in the beginning." do
       classNameCaptured = @classCsharp
                           .get_class("   public  class   Xpto : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Class inheritance with whitespace between <." do
+    it "Class inheritance with with whitespace in the beginning." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("   public  class   Xpto : Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Class name w/ inheritance with whitespace between :." do
       classNameCaptured = @classCsharp
                           .get_class("public class Xpto   : Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Class inheritance with many whitespace." do
+    it "Class inheritance with whitespace between :." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("public class Xpto   : Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Class name w/ inheritance with many whitespace." do
       classNameCaptured = @classCsharp
                           .get_class("  public class   Xpto : Abc ").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Class inheritance with many whitespace between :." do
+    it "Class inheritance with many whitespace." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("  public class   Xpto : Abc ").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Class name w/ inheritance with many whitespace between :." do
       classNameCaptured = @classCsharp
                           .get_class("public class Xpto      :    Abc").name
       expect(classNameCaptured).to eq("Xpto")
     end
 
-    it "Class inheritance with whitespace in the corners." do
+    it "Class inheritance with many whitespace between :." do
+      classInheritanceCaptured = @classCsharp
+                      .get_class("public class Xpto      :    Abc").inheritances
+      expect(classInheritanceCaptured).to eq([["Abc"]])
+    end
+
+    it "Class name w/ inheritance with whitespace in the corners." do
       classNameCaptured = @classCsharp
                           .get_class(" public  class   Xpto : Abc   ").name
       expect(classNameCaptured).to eq("Xpto")
     end
-
   end
 
   after :all do
