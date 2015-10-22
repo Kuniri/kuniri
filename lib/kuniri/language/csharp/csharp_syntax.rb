@@ -45,6 +45,7 @@ module Languages
         #self.analyse_second_step
       end
 
+
     private
 
       attr_accessor :visibility

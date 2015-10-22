@@ -1,4 +1,4 @@
 language:csharp
-source:./sample.cs
+source:./function/simpleFunction.cs
 output:/bin
 extract:uml

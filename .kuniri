@@ -1,0 +1,4 @@
+language:csharp
+source:./spec/samples/csharpSyntaxParts/function/simpleFunction.cs
+output:./bin
+extract:uml

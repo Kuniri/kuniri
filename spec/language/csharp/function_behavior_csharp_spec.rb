@@ -271,7 +271,6 @@ RSpec.describe Languages::Csharp::FunctionBehaviorCsharp do
       expect(methodOne.parameters).to eq([])
     end
   end
-
   after :all do
     @functionBehaviorCsharp = nil
   end
