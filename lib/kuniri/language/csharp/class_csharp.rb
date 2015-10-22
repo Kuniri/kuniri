@@ -26,10 +26,9 @@ module Languages
 
           classCaptured = Languages::ClassData.new
 
-          inheritance = get_inheritance(result)
+          inheritance = get_inheritance(pLine)
           classCaptured.inheritances = inheritance if inheritance
-
-          result = prepare_final_string(result)
+          
           classCaptured.name = result
 
           @log.write_log("Debug: Class: #{classCaptured.name}")
@@ -42,7 +41,7 @@ module Languages
         # Override
         def detect_class(pLine)
           pLine.gsub!(/\s{2,}/," ")
-          regexExpression = /\s?class\s(.*)/
+          regexExpression = /\s?class\s(\w+)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")
         end
@@ -58,15 +57,7 @@ module Languages
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub(/\s*|:|{/, "") if pString =~ /\s|:|{/
-          return pString
-        end
-
-        def prepare_final_string(pString)
-          if pString =~ /\s|:/
-            partial = pString.gsub(/:.*/,"")
-            return remove_unnecessary_information(partial)
-          end
+          return pString.gsub(/\s*|:|\{/, "") if pString =~ /\s|:|\{/
           return pString
         end
 
