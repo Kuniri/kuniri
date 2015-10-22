@@ -16,6 +16,7 @@ module Languages
         end
 
         def get_function(pLine, type = 'globalFunction')
+          pLine.gsub!(/\s{2,}/, " ")
           result = detect_function(pLine)
           return nil unless result
 
@@ -39,61 +40,40 @@ module Languages
       protected
 
         def detect_function(pLine)
-          regexExpression = /^\s*def\b\s*(\w*)\b/
+          access = /(?:(?:public|private|protected|package)\s)/
+          modifier = /(?:(?:abstract|final|static|synchronized)\s)/
+          return_type = /(?:(?:\w+)\s)/
+          regexExpression = /^\s?#{access}?#{modifier}?#{return_type}?(\w+)\s?\(.*\)/
           return nil unless pLine =~ regexExpression
+
           return pLine.scan(regexExpression)[0].join("")
         end
 
-        def handling_default_parameter(pLine)
-          return pLine unless pLine =~ /=/
-
-          if pLine =~ /,/
-            partialParameters = pLine.split(",")
-          else
-            partialParameters = [pLine]
-          end
-
-          newList = []
-          partialParameters.each do |element|
-            if element =~ /=/
-              parameter = element.scan(/(\w*)=/).join("")
-              value = element.scan(/=(\w*)/).join("")
-              defaultParameter = Hash(parameter => value)
-              newList.push(defaultParameter)
-              next
-            end
-            newList.push(element)
-          end
-
-          return newList
-
-        end
-
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
+          return pLine.gsub!(/,\s/, ",") if pLine =~ /\w+,\s\w+/
+          return pLine.gsub!(/\s,/, ",") if pLine =~ /\w+\s,\w+/
+          return pLine.gsub!(/\s,\s/, ",") if pLine =~ /\w+\s,\s\w+/
           return pLine
         end
 
         def handling_parameter(pLine)
-          # Handling with parenthesis and without it.
           if pLine =~ /\(.+\)/
-            partial = get_parameters(pLine, /\(.+\)/)
-          elsif pLine =~ /def\s+\w+[\s]+(.+)/
-            partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
+            partial = get_parameters(pLine, /\((.+)\)/)
           else
             return nil
           end
 
-          return handling_default_parameter(partial) if partial =~ /=/
           return split_string_by_comma(partial)
         end
 
       private
 
         @log
-
+    
         def get_parameters(pLine, pRegex)
           partialParameters = pLine.scan(pRegex).join("")
+          partialParameters.lstrip!
+          partialParameters.rstrip!
           partialParameters = remove_unnecessary_information(partialParameters)
           return partialParameters
         end

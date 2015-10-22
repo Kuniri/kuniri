@@ -12,10 +12,15 @@ module Languages
       public
 
         def get_constructor(pLine, type = 'public')
+          pLine.gsub!(/\s{2,}/, " ")
+          access = /(?:(?:public|private|protected|package)\s)/
+          regexExpression = /^\s?#{access}?(\w+)\s?\(.*\)/
+          return nil unless pLine =~ regexExpression
+
           result = get_function(pLine)
           return nil unless result
 
-          if result.name =~ /initialize/
+          if result.name =~ /\w+/
             result.type = "CONSTRUCTOR"
           else
             return nil
