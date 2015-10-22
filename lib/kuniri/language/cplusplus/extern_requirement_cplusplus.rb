@@ -24,7 +24,7 @@ module Languages
       protected
 
         def detect_extern_requirement(pLine)
-          regexExpression = /^\s*require(?:_relative)?\s+('|")(.*)\1/
+          regexExpression = /^\s*#include\s*(?:<|"|')(.*)(?:>|"|')\s*/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")
         end
