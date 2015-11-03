@@ -50,7 +50,6 @@ RSpec.describe Languages::CsharpSyntax do
       @syntax.analyse_source(path)
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-        puts @syntax.state
     end
 
     it "Correct data capture (global function)" do
@@ -137,7 +136,6 @@ RSpec.describe Languages::CsharpSyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-        puts @syntax.state
       @syntax.analyse_source(path)
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
@@ -166,7 +164,10 @@ RSpec.describe Languages::CsharpSyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+        puts @syntax.state
+        puts "*" * 30
       @syntax.analyse_source(path)
+        puts @syntax.state
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
