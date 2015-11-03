@@ -32,7 +32,8 @@ module Languages
           if result.scan(/,/).count >= 1
             listOfAttributes = handle_multiple_declaration_with_comma(result)
             @log.write_log("Debug: Declared with comma: #{listOfAttributes}")
-          elsif result.scan(/=/).count > 1
+
+          elsif result.scan(/\=/).count > 1
             listOfAttributes = handle_multiple_declaration_with_equal(result)
             @log.write_log("Debug: separed by comma: #{listOfAttributes}")
           else
@@ -47,38 +48,36 @@ module Languages
 
       # Override
       def detect_attribute(pLine)
-        regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
+
+        regexExp = /^\s*(\w*\s+.*;)\s*/
         return nil unless pLine =~ regexExp
         return pLine.scan(regexExp)[0].join("")
       end
 
       # Override
       def remove_unnecessary_information(pString)
-        return pString.gsub!(/\(.*\)/,"") if pString =~ /\(.*\)/
-        return pString
-      end
-
-      # Override
-      def prepare_final_string(pString)
-        if pString =~ /\s+|:|@|=/
-          return pString.gsub!(/\s+|:|@|=/,"")
-        end
+        pString.gsub!(/\s+/," ") if pString =~ /\s+/
+        pString.gsub!(/\=(.*?),/,", ") if pString =~ /\=(.*?),/
+        pString.gsub!(/\=(.*?);/,";") if pString =~ /\=(.*?);/
+        pString.gsub!(/\s*,\s*/,",") if pString =~ /\s*,\s*/
+        pString.gsub!(/\s*;\s*/,"") if pString =~ /\s*;\s*/
         return pString
       end
 
       # Override
       def handle_multiple_declaration_with_comma(pString)
         listOfAttributes = []
+        kind = pString.split(" ")[0] #Get the kind of the variables.
         pString = pString.split(",")
         pString.each do |variable|
-          return nil if variable.scan(/=/).count > 1
+          return nil if variable.scan(/,/).count > 1
 
-          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
+          variable.gsub!(/#{kind}\s/,"") if variable =~ /#{kind}\s/
+          variable = variable.scan(/.*,/).join("") if variable =~ /.*,/
 
           return nil if variable =~ /\./
 
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
+          attribute = Languages::AttributeData.new(kind + " " + variable)
           listOfAttributes.push(attribute)
         end
 
@@ -89,10 +88,11 @@ module Languages
       def handle_multiple_declaration_with_equal(pString)
         listOfAttributes = []
         pString = pString.split("=")
-        pString.each do |variable|
-          return nil if variable =~ /\./
 
-          variable = prepare_final_string(variable)
+        puts "string: " + pString
+        pString.each do |variable|
+          return nil if variable =~ /=/
+
           attribute = Languages::AttributeData.new(variable)
           listOfAttributes.push(attribute)
         end
@@ -110,7 +110,6 @@ module Languages
 
         return nil if pString =~ /\./
 
-        pString = prepare_final_string(pString)
         attribute = Languages::AttributeData.new(pString)
         listOfAttributes.push(attribute)
 
