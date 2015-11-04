@@ -26,13 +26,12 @@ module Kuniri
         #@log.write_log("info: Kuniri object successfully created.")
       end
 
-      def readConfigFile(pPath = ".kuniri")
+      def read_configuration_file(pPath = ".kuniri.yml")
         @settings = Setting.create
-        @settings.initializate_settings(pPath)
         @configurationInfo = @settings.configurationInfo
       end
 
-      def setConfiguration(pSource, pLanguage, pOutput, pLevel)
+      def set_configuration(pSource, pLanguage, pOutput, pLevel)
         @configurationInfo[:source] = pSource
         @configurationInfo[:language] = pLanguage
         @configurationInfo[:output] = pOutput
@@ -47,7 +46,7 @@ module Kuniri
         @filesPathProject = get_project_file(@configurationInfo[:source])
         unless @filesPathProject
           puts "Problem on source path: #{@configurationInfo[:source]}"
-          #@log.write_log("Prolblem when tried to access source folder.")
+          #@log.write_log("Problem when tried to access source folder.")
           return -1
         end
         #@log.write_log("debug: files: #{@filesPathProject.to_s}")

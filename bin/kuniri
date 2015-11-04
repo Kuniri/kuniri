@@ -36,7 +36,21 @@ optionParser = OptionParser.new do |buildOptions|
 
   buildOptions.on("-e", "--export [FILENAME]", "Export XML") do
     |configurationFile|
-      @options[:configurationFile] = configurationFile
+
+    puts "Exporting..."
+
+    if(configurationFile)
+      path = configurationFile
+    else
+      path = 'outputKuniri/'
+    end
+
+    kuniri = Kuniri::Kuniri.new
+    kuniri.read_configuration_file(path)
+    kuniri.run_analysis
+
+    parser = Parser::XMLOutputFormat.new
+    parser.create_all_data kuniri.get_parser()
   end
 
 end.parse!
@@ -50,7 +64,7 @@ def startParser
   end
 
   kuniri = Kuniri::Kuniri.new
-  kuniri.setConfiguration(@options[:source], @options[:languageType],
+  kuniri.set_configuration(@options[:source], @options[:languageType],
                           @options[:output], @options[:optimization])
   kuniri.run_analysis
 
