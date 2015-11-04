@@ -17,34 +17,41 @@ module Kuniri
 
       # @param pPath Receives the path of configuration file. If any element
       #         is given, it tries to find in the current folder.
-      def initialize(pPath = ".kuniri")
+      def initialize
         @configurationInfo = {}
         @filesPathProject = []
         @parserFiles = []
         @parser = nil
 
-        @settings = Setting.create
-        @settings.initializate_settings(pPath)
-        @log = @settings.log
-        @configurationInfo = @settings.configurationInfo
+        #@log.write_log("info: Kuniri object successfully created.")
+      end
 
-        @log.write_log("info: Kuniri object successfully created.")
+      def read_configuration_file(pPath = ".kuniri.yml")
+        @settings = Setting.create
+        @configurationInfo = @settings.configurationInfo
+      end
+
+      def set_configuration(pSource, pLanguage, pOutput, pLevel)
+        @configurationInfo[:source] = pSource
+        @configurationInfo[:language] = pLanguage
+        @configurationInfo[:output] = pOutput
+        @configurationInfo[:level] = pLevel
       end
 
       # Start Kuniri tasks based on configuration file. After read
       # configuration file, find all files in source directory.
       def run_analysis()
-        @log.write_log("info: Start to run analysis.")
-        @log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
-
-        @filesPathProject = get_project_file(@configurationInfo["source"])
+        #@log.write_log("info: Start to run analysis.")
+        #@log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
+        @filesPathProject = get_project_file(@configurationInfo[:source])
         unless @filesPathProject
-          puts "Problem on source path: #{@configurationInfo["source"]}"
-          @log.write_log("Prolblem when tried to access source folder.")
+          puts "Problem on source path: #{@configurationInfo[:source]}"
+          #@log.write_log("Problem when tried to access source folder.")
           return -1
         end
-        @log.write_log("debug: files: #{@filesPathProject.to_s}")
-        @parser = Parser::Parser.new(@filesPathProject)
+        #@log.write_log("debug: files: #{@filesPathProject.to_s}")
+        @parser = Parser::Parser.new(@filesPathProject,
+                                      @configurationInfo[:language])
   	    @parser.start_parser()
       end
 
@@ -74,7 +81,7 @@ module Kuniri
           @filesProject = Dir[File.join(pPath, "**", pLanguage)]
         end
 
-        @log.write_log("Info: Reading all files.")
+        #@log.write_log("Info: Reading all files.")
         return @filesProject
       end
 

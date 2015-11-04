@@ -52,7 +52,8 @@ module Parser
 
           outputDir = File.join(@parserPath, File.dirname(saveElementTo))
           unless Dir.exists? outputDir
-            FileUtils.mkdir_p(File.join(@parserPath, File.dirname(saveElementTo)))
+            FileUtils.mkdir_p(File.join(@parserPath,
+                                        File.dirname(saveElementTo)))
           end
 
           destination = File.join(outputDir, listOfFile.name + ".xml")
