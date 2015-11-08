@@ -12,6 +12,8 @@ module Kuniri
 
     public
 
+      attr_reader :configurationInfo # !@attribute Hash with configuration description
+
       # @param pPath Receives the path of configuration file. If any element
       #         is given, it tries to find in the current folder.
       def initialize

@@ -15,7 +15,6 @@ module Parser
         def initialize(pFilesPath, pLanguage = "ruby")
           @filesPath = pFilesPath
           @fileLanguage = []
-          @log = @settings = Kuniri::Setting.create.log
           @factory = Languages::LanguageFactory.new
           @language = pLanguage
         end
@@ -24,7 +23,6 @@ module Parser
         def start_parser
           raise Error::ConfigurationFileError if(@filesPath.empty?)
 
-          @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
             language = @factory.get_language(@language)
             language.analyse_source(file)
@@ -34,7 +32,6 @@ module Parser
 
       private
 
-        @log
         @factory
 
   # class

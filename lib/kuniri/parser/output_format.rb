@@ -17,11 +17,13 @@ module Parser
       end
 
       def create_all_data(pParser)
+
         unless pParser
           return nil
         end
 
         saveElementTo = "./"
+        info = Kuniri::Setting.create
 
         wrapper = self
         # Go through each file

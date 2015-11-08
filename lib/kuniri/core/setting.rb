@@ -21,14 +21,10 @@ module Kuniri
         return @@settings
       end
 
+      # TODO: Remove parameter and initialize_object. Useless.
       def initializate_settings(pFilePath = ".kuniri.yml")
-        begin
-          @configurationInfo = read_configuration_file(pFilePath)
-          initialize_object
-        rescue Error::ConfigurationFileError
-          puts "You have a syntax problem on your configuration file."
-          abort
-        end
+          #@configurationInfo = read_configuration_file(pFilePath)
+          @configurationInfo = {}
       end
 
       # In this method it is checked the configuration file syntax.
