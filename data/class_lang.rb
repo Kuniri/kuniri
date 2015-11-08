@@ -1,6 +1,5 @@
 require_relative '../abstract_container/structured_and_oo/class.rb'
 require_relative '../container_data/structured_and_oo/class_data.rb'
-require_relative '../../util/html_logger'
 require_relative '../../core/setting'
 
 module Languages
@@ -12,14 +11,11 @@ module Languages
       public
 
         def initialize
-          @log = @settings = Kuniri::Setting.create.log
         end
 
         def get_class(pLine)
           result = detect_class(pLine)
           return nil unless result
-
-          @log.write_log("Info: Detect class")
 
           classCaptured = Languages::ClassData.new
 
@@ -28,8 +24,6 @@ module Languages
 
           result = prepare_final_string(result)
           classCaptured.name = result
-
-          @log.write_log("Debug: Class: #{classCaptured.name}")
 
           return classCaptured
         end
@@ -64,8 +58,6 @@ module Languages
       end
 
     private
-
-      @log
 
     # class
     end

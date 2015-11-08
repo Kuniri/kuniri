@@ -1,6 +1,4 @@
 require_relative '../language/language_factory'
-require_relative '../util/html_logger'
-require_relative '../util/html_logger'
 
 # Module responsible for keeping the parser handler
 module Parser

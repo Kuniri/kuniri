@@ -1,10 +1,5 @@
 require 'yaml'
 require_relative 'configuration/language_available'
-require_relative 'configuration/monitor_available'
-require_relative 'configuration/log_available'
-
-require_relative '../util/html_logger'
-require_relative '../util/txt_logger'
 require_relative '../error/configuration_file_error'
 
 module Kuniri
@@ -16,7 +11,6 @@ module Kuniri
 
       private_class_method :new
       attr_reader :configurationInfo
-      attr_reader :log
 
       def initialize
         initializate_settings
@@ -42,17 +36,23 @@ module Kuniri
       #         configurations.
       # @return [Hash] Return a Hash with the configurations read in ".kuniri",
       #     otherwise, raise an exception.
-      # @raise [type] Raise an syntax error if ".kuniri" has any syntax mistake
-      # @raise [type] Raised in the case of the path is wrong.
       def read_configuration_file(pPath = ".kuniri.yml")
 
         unless File.exists?(pPath)
-          # @log.write_log("Info: Not provide configuration file. Get default")
-          configuration = default_configuration
-          return configuration
+          set_default_configuration
+        else
+          @configurationInfo = YAML.load(File.read(pPath))
+          verify_syntax
         end
-        @configurationInfo = YAML.load(File.read(pPath))
 
+        return @configurationInfo
+      end
+
+      def set_configuration(pSource, pLanguage, pOutput, pLevel)
+        @configurationInfo[:source] = pSource
+        @configurationInfo[:language] = pLanguage
+        @configurationInfo[:output] = pOutput
+        @configurationInfo[:level] = pLevel
         return @configurationInfo
       end
 
@@ -60,23 +60,49 @@ module Kuniri
 
       @@settings = nil
 
-      def default_configuration
-        configuration = {:language => "ruby",
-                         :source => "./",
-                         :output => "./",
-                         :extract => "uml",
-                         :log => "html"}
-        return configuration
+      def set_default_configuration
+        @configurationInfo = {:language => "ruby",
+                               :source => "./",
+                               :output => "./"}
       end
 
-      def initialize_object
-        logType = @configurationInfo["log"]
-        if logType == "html"
-          @log = Util::HtmlLogger.new
-        elsif logType == "txt"
-          @log = Util::TxtLogger.new
+      def verify_syntax
+        unless @configurationInfo.is_a? Hash
+          raise Error::ConfigurationFileError
+        end
+
+        check_source
+        check_output
+        check_language
+      end
+
+      def check_source
+        unless @configurationInfo.has_key?:source
+          raise Error::ConfigurationFileError
         else
-          @log = Util::HtmlLogger.new
+          source = @configurationInfo[:source]
+          result = (File.directory?source) || (File.exists?source)
+          unless result
+            raise Error::ConfigurationFileError
+          end
+        end
+      end
+
+      def check_output
+        unless @configurationInfo.has_key?:output
+          raise Error::ConfigurationFileError
+        end
+      end
+
+      def check_language
+        unless @configurationInfo.has_key?:language
+          raise Error::ConfigurationFileError
+        else
+          result = Configuration::LanguageAvailable::LANGUAGES.include?(
+                                                @configurationInfo[:language])
+          unless result
+            raise Error::ConfigurationFileError
+          end
         end
       end
 

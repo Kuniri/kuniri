@@ -1,9 +1,6 @@
 require_relative '../error/configuration_file_error'
 require_relative '../parser/parser'
-require_relative '../util/logger'
 require_relative 'configuration/language_available'
-require_relative 'configuration/monitor_available'
-require_relative 'configuration/log_available'
 require_relative 'setting'
 
 # Kuniri module connect all the elements and use it in the proper sequence.
@@ -23,33 +20,31 @@ module Kuniri
         @parserFiles = []
         @parser = nil
 
-        #@log.write_log("info: Kuniri object successfully created.")
       end
 
       def read_configuration_file(pPath = ".kuniri.yml")
         @settings = Setting.create
+        @settings.initializate_settings(pPath)
+        @settings.read_configuration_file(pPath)
         @configurationInfo = @settings.configurationInfo
       end
 
       def set_configuration(pSource, pLanguage, pOutput, pLevel)
-        @configurationInfo[:source] = pSource
-        @configurationInfo[:language] = pLanguage
-        @configurationInfo[:output] = pOutput
-        @configurationInfo[:level] = pLevel
+        @settings = Setting.create
+        @settings.initializate_settings
+        @settings.set_configuration(pSource, pLanguage, pOutput, pLanguage)
+        # XXX: Extremely "gambira" PLEASE, REMOVE METHOD BELOW!
+        @configurationInfo = @settings.configurationInfo
       end
 
       # Start Kuniri tasks based on configuration file. After read
       # configuration file, find all files in source directory.
       def run_analysis()
-        #@log.write_log("info: Start to run analysis.")
-        #@log.write_log("debug: ConfigurationInfo: #{@configurationInfo}")
         @filesPathProject = get_project_file(@configurationInfo[:source])
         unless @filesPathProject
           puts "Problem on source path: #{@configurationInfo[:source]}"
-          #@log.write_log("Problem when tried to access source folder.")
           return -1
         end
-        #@log.write_log("debug: files: #{@filesPathProject.to_s}")
         @parser = Parser::Parser.new(@filesPathProject,
                                       @configurationInfo[:language])
   	    @parser.start_parser()
@@ -61,11 +56,9 @@ module Kuniri
 
     private
 
-      @configurationInfo # !@attribute Hash with configuration description
       @filesProject      # !@attribute Array with object reference of all files
       @parser            # !@attribute Execute the parser based on settings.
       @parserFiles       # !@attribute Final output from parser.
-      @log               # !@attribute Log reference.
 
       # !@param pPath Relative path of the project.
       # !@param pLanguage Language extension for make the parser.
@@ -81,7 +74,6 @@ module Kuniri
           @filesProject = Dir[File.join(pPath, "**", pLanguage)]
         end
 
-        #@log.write_log("Info: Reading all files.")
         return @filesProject
       end
 
