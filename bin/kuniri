@@ -6,6 +6,7 @@ require 'kuniri/core/kuniri'
 require 'kuniri/parser/xml_output_format'
 
 @options = {}
+@options[:source] = ARGV[0]
 
 optionParser = OptionParser.new do |buildOptions|
   buildOptions.banner = "Usage: optionParser PATH [OPTIONS]"
@@ -42,7 +43,7 @@ optionParser = OptionParser.new do |buildOptions|
     if(configurationFile)
       path = configurationFile
     else
-      path = 'outputKuniri/'
+      path = '.kuniri.yml'
     end
 
     kuniri = Kuniri::Kuniri.new
@@ -50,12 +51,10 @@ optionParser = OptionParser.new do |buildOptions|
     kuniri.run_analysis
 
     parser = Parser::XMLOutputFormat.new
-    parser.create_all_data kuniri.get_parser()
+    parser.create_all_data(kuniri.get_parser())
   end
 
 end.parse!
-
-@options[:source] = ARGV[0]
 
 def startParser
   puts "Exporting ..."
