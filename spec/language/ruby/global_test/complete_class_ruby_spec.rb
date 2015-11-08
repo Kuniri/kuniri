@@ -1,28 +1,27 @@
-require_relative '../../../../lib/kuniri/core/kuniri'
+require_relative '../../../spec_helper'
 
 RSpec.describe Kuniri::Kuniri do
 
   before :each do
-    @path = "./spec/language/ruby/global_test/.kuniri"
-    @kuniri = Kuniri::Kuniri.new(@path)
+    @path = "./spec/language/ruby/global_test/.kuniri.yml"
+    @kuniri = Kuniri::Kuniri.new
+    @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
-
-    parser = Parser::XMLOutputFormat.new
-    parser.set_path("./spec/language/ruby/global_test/output_test.xml")
-    parser.create_all_data @kuniri.get_parser()
-    @output = File.open("./spec/language/ruby/global_test/output_test.xml", "r")
+    parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
+    parser.create_all_data(@kuniri.get_parser())
+    @output = File.open("./spec/language/ruby/global_test/simpleFullCode.xml", "r")
   end
 
   it "Should contain the class name" do
     @class_name = nil
     @output.each do |line|
-      @class_name = line =~ /\s+<class_data\sname="Abc">/
+      @class_name = line =~ /\s+<classData\sname="Abc"\svisibility="public">/
       break unless @class_name.nil?
     end
     expect(@class_name).not_to be_nil
     @class_end = nil
     @output.each do |line|
-      @class_end = line =~ /\s+<\/class_data>$/
+      @class_end = line =~ /\s+<\/classData>$/
       break unless @class_end.nil?
     end
     expect(@class_end).not_to be_nil
@@ -31,7 +30,7 @@ RSpec.describe Kuniri::Kuniri do
   it "Should contain constructor" do
     @constructor = nil
     @output.each do |line|
-      @class_name = line =~ /\s+<method\sname="initialize"\/?>/
+      @class_name = line =~ /\s+<methodData\sname="initialize"\svisibility="public"\/?>/
       break unless @class_name.nil?
     end
   end
@@ -39,24 +38,24 @@ RSpec.describe Kuniri::Kuniri do
   it "Should contain the method name and visibility" do
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ 
-      /\s+<method\sname="method1"\svisibility="global"\/?>/
+      @method_name = line =~
+      /\s+<methodData\sname="method1"\svisibility="public"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
 
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ 
-      /\s+<method\sname="method2"\svisibility="global"\/?>/
+      @method_name = line =~
+      /\s+<methodData\sname="method2"\svisibility="public"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
 
     @method_name = nil
     @output.each do |line|
-      @method_name = line =~ 
-      /\s+<method\sname="method3"\svisibility="global"\/?>/
+      @method_name = line =~
+      /\s+<methodData\sname="method3"\svisibility="public"\/?>/
       break unless @method_name.nil?
     end
     expect(@method_name).not_to be_nil
@@ -66,7 +65,7 @@ RSpec.describe Kuniri::Kuniri do
     @methods = []
     @output.each do |line|
       line_of_method = line =~ 
-      /\s+<method\sname="method\d"\svisibility="global"\/?>/
+      /\s+<methodData\sname="method\d"\svisibility="public"\/?>/
       @methods << line_of_method unless line_of_method.nil?
     end
     expect(@methods.size).to eq(3)
@@ -75,28 +74,28 @@ RSpec.describe Kuniri::Kuniri do
   it "Should contain the parameter name" do
     @parameter_name = nil
     @output.each do |line|
-      @parameter_name = line =~ /\s+<parameter\sname="x"\/>/
+      @parameter_name = line =~ /\s+<parameterData\sname="x"\/>/
       break unless @parameter_name.nil?
     end
     expect(@parameter_name).not_to be_nil
 
     @parameter_name = nil
     @output.each do |line|
-      @parameter_name = line =~ /\s+<parameter\sname="a"\/>/
+      @parameter_name = line =~ /\s+<parameterData\sname="a"\/>/
       break unless @parameter_name.nil?
     end
     expect(@parameter_name).not_to be_nil
 
     @parameter_name = nil
     @output.each do |line|
-      @parameter_name = line =~ /\s+<parameter\sname="b"\/>/
+      @parameter_name = line =~ /\s+<parameterData\sname="b"\/>/
       break unless @parameter_name.nil?
     end
     expect(@parameter_name).not_to be_nil
 
     @parameter_name = nil
     @output.each do |line|
-      @parameter_name = line =~ /\s+<parameter\sname="c"\/>/
+      @parameter_name = line =~ /\s+<parameterData\sname="c"\/>/
       break unless @parameter_name.nil?
     end
     expect(@parameter_name).not_to be_nil
@@ -106,7 +105,7 @@ RSpec.describe Kuniri::Kuniri do
   it "Should find all parameters" do
     @parameters = []
     @output.each do |line|
-      line_of_parameter = line =~ /\s+<parameter\sname="\w+"\/>/
+      line_of_parameter = line =~ /\s+<parameterData\sname="\w+"\/>/
       @parameters << line_of_parameter unless line_of_parameter.nil?
     end
     expect(@parameters.size).to eq(4)
@@ -120,7 +119,6 @@ RSpec.describe Kuniri::Kuniri do
     end
     expect(@inheritance_name).not_to be_nil
   end
-
 
   it "Should find all inheritances" do
     @inheritance = []
@@ -140,11 +138,9 @@ RSpec.describe Kuniri::Kuniri do
       if line =~ /\s*<\/(\w*)>/
         expect(@stack.last).to eq($1)
         @stack.pop
-
       elsif line =~ /\s*<(\w*)(.*)>/
         @stack.push $1
-      end      
-  
+      end
     end
 
     expect(@stack.size).to eq(0)

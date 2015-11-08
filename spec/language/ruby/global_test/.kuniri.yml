@@ -1,4 +1,4 @@
-language:ruby
-source:./spec/samples/rubySyntaxParts/fullCode/simpleFullCode.rb
-output:./spec
-extract:uml
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/fullCode/simpleFullCode.rb
+:output: ./spec/language/ruby/global_test/simpleFullCode.xml
+:extract: uml
