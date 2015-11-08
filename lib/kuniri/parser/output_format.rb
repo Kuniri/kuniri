@@ -1,5 +1,7 @@
 require 'fileutils'
 
+require_relative '../core/setting'
+
 module Parser
 
   class OutputFormat
@@ -52,15 +54,21 @@ module Parser
             saveElementTo = singleElement.name
           end
 
-          outputDir = File.join(@parserPath, File.dirname(saveElementTo))
-          unless Dir.exists? outputDir
-            FileUtils.mkdir_p(File.join(@parserPath,
-                                        File.dirname(saveElementTo)))
+          # XXX: If is not a file, create a folder. Otherwise, create a file.
+          # this is really, ugly. Fix it!
+          unless File.file?(info.configurationInfo[:source])
+            outputDir = File.join(@parserPath, File.dirname(saveElementTo))
+            unless Dir.exists? outputDir
+              FileUtils.mkdir_p(File.join(@parserPath,
+                                          File.dirname(saveElementTo)))
+            end
+            destination = File.join(outputDir, listOfFile.name + ".xml")
+          else
+            destination = @parserPath
           end
 
-          destination = File.join(outputDir, listOfFile.name + ".xml")
           File.open(destination, "w") do |file|
-           file.write(@outputEngine.to_xml)
+            file.write(@outputEngine.to_xml)
           end
 
           @outputEngine.reset_engine
