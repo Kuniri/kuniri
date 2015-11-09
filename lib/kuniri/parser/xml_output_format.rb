@@ -25,6 +25,9 @@ module Parser
             #singleClass.attributes.each do |singleAttribute|
             #  attribute_generate(singleAttribute)
             #end
+            singleClass.inheritances.each do |singleInheritance|
+              wrapper.inheritance_generate(singleInheritance)
+            end
             singleClass.constructors.each do |singleConstructor|
               wrapper.constructor_generate(singleConstructor)
             end
