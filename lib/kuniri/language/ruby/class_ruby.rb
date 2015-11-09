@@ -43,7 +43,7 @@ module Languages
         # Override
         def get_inheritance(pString)
           if pString =~ /</
-            partial = pString.scan(/<(.*)/)
+            partial = pString.scan(/<\s*(\w+)/)
             return remove_unnecessary_information(partial)
           end
           return nil
