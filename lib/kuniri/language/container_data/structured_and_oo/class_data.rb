@@ -11,6 +11,7 @@ module Languages
     public
 
       attr_accessor :inheritances
+      attr_accessor :aggregation
       attr_reader :attributes
       attr_reader :methods
       attr_reader :constructors
@@ -20,6 +21,7 @@ module Languages
         @attributes = []
         @methods = []
         @constructors = []
+        @aggregation = []
         @visibility = "public"
         @comments = ""
       end
