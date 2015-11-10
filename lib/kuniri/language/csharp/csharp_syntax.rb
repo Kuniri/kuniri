@@ -57,13 +57,13 @@ module Languages
       def handle_semicolon(pLine)
         commentLine = []
 
-        if pLine =~ /^\/\*(.*?)/
+        if pLine =~ /^\/\*(.*)/
           @flagMultipleLineComment = true
         elsif pLine =~ /^\/\*/
           @flagMultipleLineComment = false
         end
 
-        unless @flagMultipleLineComment == true || pLine =~ /\/\/(.*)/
+        unless @flagMultipleLineComment == true || pLine =~ /\/\/(.*)/ || pLine =~ /\s*for\s*/
           return pLine.split(/;/)
         end
         commentLine << pLine
@@ -82,6 +82,7 @@ module Languages
           if !processedLines.nil?
             processedLines.each do |line|
               @state.handle_line(line)
+              # puts line + '---------' + @state.to_s
               fileElement = @state.execute(fileElement, line)
             end
           end

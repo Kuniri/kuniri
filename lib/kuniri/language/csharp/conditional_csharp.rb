@@ -24,13 +24,13 @@ module Languages
       protected
 
         def detect_conditional(pLine)
-          regexExp = /^\s*if\s+\((.*)\)/
+          regexExp = /^\s*if\s*\((.*)\)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
-          regexExp = /^\s*switch\s+\((.*)\)/
+          regexExp = /^\s*switch\s*\((.*)\)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
-          regexExp = /^\s*else\s+if\s+\((.*)\)/
+          regexExp = /^\s*else\s+if\s*\((.*)\)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
           return nil

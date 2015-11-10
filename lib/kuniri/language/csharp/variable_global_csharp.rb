@@ -11,21 +11,23 @@ module Languages
       public
 
         def get_variable(pLine)
-          result = detect_variable(pLine)
-          return nil unless result
+          # result = detect_variable(pLine)
+          # return nil unless result
+          # puts pLine
 
-          listOfVariable = []
+          # listOfVariable = []
 
-          # Separated by comma, equal or the common case
-          if result.split(",").size > 1
-            listOfVariable = handle_multiple_declaration_with_comma(result)
-          elsif result.split("=").size > 1
-            listOfVariable = handle_multiple_declaration_with_equal(result)
-          else
-            listOfVariable = handle_line_declaration(result)
-          end
+          # # Separated by comma, equal or the common case
+          # if result.split(",").size > 1
+          #   listOfVariable = handle_multiple_declaration_with_comma(result)
+          # elsif result.split("=").size > 1
+          #   listOfVariable = handle_multiple_declaration_with_equal(result)
+          # else
+          #   listOfVariable = handle_line_declaration(result)
+          # end
 
-          return listOfVariable
+          # return listOfVariable
+          return nil
         end
 
       protected
@@ -34,7 +36,7 @@ module Languages
           # Check basic case of non variable. Ex.: value x
           pLine.gsub!(/^\s*/, "")
           pLine.gsub!(/\s*$/, "")
-          return nil if pLine =~ /end/
+          # return nil if pLine =~ /end/
           return nil if pLine =~ /^def\s+/
           return pLine if pLine.split(",").size > 1
           return pLine if pLine.split("=").size > 1

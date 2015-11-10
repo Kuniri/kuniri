@@ -10,6 +10,7 @@ module Languages
       public
 
         def get_repetition(pLine)
+          pLine = remove_unnecessary_information(pLine)
           result = detect_repetition(pLine)
           return nil unless result
 
@@ -24,10 +25,10 @@ module Languages
       protected
 
         def detect_repetition(pLine)
-          regexExp = /^\s*while\s+\((.*)\)/
+          regexExp = /^\s*while\s*(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
-          regexExp = /^\s*for\s+\((.*)\)/
+          regexExp = /^\s*for\s*(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
           return nil
@@ -47,6 +48,12 @@ module Languages
           leftStrip = pString.lstrip
           rightStrip = leftStrip.rstrip
           return rightStrip
+        end
+
+        def remove_unnecessary_information(pLine)
+          pLine.gsub!(/\s+/, " ") if pLine =~ /\s+/
+          pLine.gsub!(/\(|\)/, "") if pLine =~ /\(|\)/
+          return pLine
         end
 
     # class

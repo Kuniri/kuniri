@@ -9,6 +9,7 @@ module Languages
       public
 
         def has_end_of_block?(pLine)
+          # puts detect_end(pLine).to_s
           return detect_end(pLine)
         end
 
@@ -16,8 +17,13 @@ module Languages
 
         def detect_end(pLine)
           #TODO: EXTREMELY SIMPLE HANDLING, IT HAVE TO BE IMPROVED!
-          return true if pLine =~ /^\s+\}|^\}|\s+\};?$|(.*)\}/
-          return false
+          if pLine =~ /\/\/\s*\}/
+            return false
+          elsif pLine =~ /^\s*\}|\s+\}\s*;?|(.*)\}/
+            return true
+          else
+            return false
+          end
         end
 
     # Class

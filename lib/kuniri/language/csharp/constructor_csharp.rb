@@ -15,8 +15,10 @@ module Languages
           result = get_function(pLine)
           return nil unless result
           access_regex = /public|private|protected|static/
-          if pLine =~ /^\s*#{access_regex}\s+(\w+)\s*\((.*)\)\s*$/
+          if pLine =~ /^\s*#{access_regex}\s+(\w+)\s*\((?:.*)\)\s*/
             result.type = "CONSTRUCTOR"
+          else 
+            return nil
           end
 
           return result

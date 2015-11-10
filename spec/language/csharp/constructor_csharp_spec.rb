@@ -55,8 +55,8 @@ RSpec.describe Languages::Csharp::ConstructorCsharp do
 
     it "No constructor" do
       input = "public int methodX()"
-      expect(@constructor.get_constructor(input).type)
-             .not_to eq("CONSTRUCTOR")
+      expect(@constructor.get_constructor(input))
+             .to eq(nil)
     end
   end
 

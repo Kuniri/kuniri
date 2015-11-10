@@ -22,15 +22,18 @@ RSpec.describe Languages::CsharpSyntax do
       path = "spec/samples/csharpSyntaxParts/extern/simpleExternRequirement.cs"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].name).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].name).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[0].name)
+        .to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].name)
+        .to eq ("two")
       expect(@syntax.fileElements[0].extern_requirements[2].name)
         .to eq ("three")
       expect(@syntax.fileElements[0].extern_requirements[3].name)
         .to eq ("four")
       expect(@syntax.fileElements[0].extern_requirements[4].name)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].name)
+        .to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements[6].name)
         .to eq ("seven")
       expect(@syntax.fileElements[0].extern_requirements[7].name)
@@ -56,6 +59,8 @@ RSpec.describe Languages::CsharpSyntax do
       path = "spec/samples/csharpSyntaxParts/function/simpleFunction.cs"
 
       @syntax.analyse_source(path)
+
+      puts @syntax.fileElements[0].classes[0]
       expect(@syntax.fileElements[0].global_functions[0].name)
         .to eq("simpleFunction1")
       expect(@syntax.fileElements[0].global_functions[1].name)
@@ -99,36 +104,36 @@ RSpec.describe Languages::CsharpSyntax do
 
   end
 
-  # context "Attribute line" do
-  #   it "Correct state transition." do
-  #     path = "spec/samples/csharpSyntaxParts/attribute/simpleAttribute.cs"
+  # # context "Attribute line" do
+  # #   it "Correct state transition." do
+  # #     path = "spec/samples/csharpSyntaxParts/attribute/simpleAttribute.cs"
 
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #   end
+  # #     expect(@syntax.state)
+  # #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+  # #     @syntax.analyse_source(path)
+  # #     expect(@syntax.state)
+  # #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+  # #   end
 
-  #   it "Correct data capture (attribute)" do
-  #     path = "spec/samples/csharpSyntaxParts/attribute/simpleAttribute.cs"
+  # #   it "Correct data capture (attribute)" do
+  # #     path = "spec/samples/csharpSyntaxParts/attribute/simpleAttribute.cs"
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].attributes[0].name)
-  #       .to eq("attribute1")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[1].name)
-  #       .to eq("attribute2")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[2].name)
-  #       .to eq("attribute3")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[3].name)
-  #       .to eq("attribute4")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[4].name)
-  #       .to eq("attribute5")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[5].name)
-  #       .to eq("attribute6")
+  # #     @syntax.analyse_source(path)
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[0].name)
+  # #       .to eq("attribute1")
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[1].name)
+  # #       .to eq("attribute2")
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[2].name)
+  # #       .to eq("attribute3")
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[3].name)
+  # #       .to eq("attribute4")
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[4].name)
+  # #       .to eq("attribute5")
+  # #     expect(@syntax.fileElements[0].classes[0].attributes[5].name)
+  # #       .to eq("attribute6")
 
-  #   end
-  # end
+  # #   end
+  # # end
 
   context "Method line" do
     it "Correct state transition." do
@@ -145,16 +150,17 @@ RSpec.describe Languages::CsharpSyntax do
       path = "spec/samples/csharpSyntaxParts/method/simpleMethod.cs"
 
       @syntax.analyse_source(path)
+
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
-        .to eq("method1")
+        .to eq("Method1")
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
-        .to eq("method2")
+        .to eq("Method2")
       expect(@syntax.fileElements[0].classes[0].methods[2].name)
-        .to eq("method3")
+        .to eq("Method3")
       expect(@syntax.fileElements[0].classes[0].methods[3].name)
-        .to eq("method4")
+        .to eq("Method4")
       expect(@syntax.fileElements[0].classes[0].methods[4].name)
-        .to eq("method5")
+        .to eq("Method5")
     end
   end
 
@@ -164,10 +170,7 @@ RSpec.describe Languages::CsharpSyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-        puts @syntax.state
-        puts "*" * 30
       @syntax.analyse_source(path)
-        puts @syntax.state
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -183,166 +186,153 @@ RSpec.describe Languages::CsharpSyntax do
     end
   end
 
-  # context "Conditional line" do
-  #   it "Correct state transition (Global function)." do
-  #     path =
-  #       "spec/samples/csharpSyntaxParts/conditionalStatment/simpleConditional.cs"
+  context "Conditional line" do
+    it "Correct state transition (Global function)." do
+      path =
+        "spec/samples/csharpSyntaxParts/conditionalStatment/simpleConditional.cs"
 
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #   end
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
 
-  #   it "Correct data capture (conditional - Global function)" do
-  #      path =
-  #       "spec/samples/csharpSyntaxParts/conditionalStatment/simpleConditional.cs"
+    it "Correct data capture (conditional - Global function)" do
+       path =
+        "spec/samples/csharpSyntaxParts/conditionalStatment/simpleConditional.cs"
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].global_functions[0].name)
-  #       .to eq("simple1")
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].global_functions[0].name)
+        .to eq("simple1")
 
-  #     expect(@syntax.fileElements[0].global_functions[0]
-  #           .conditionals[0].expression).to eq("3 > 2")
-  #     expect(@syntax.fileElements[0].global_functions[0]
-  #           .conditionals[0].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].expression).to eq("3 > 2")
+      expect(@syntax.fileElements[0].global_functions[0]
+            .conditionals[0].type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].global_functions[1].name)
-  #       .to eq("simple2")
-  #     expect(@syntax.fileElements[0].global_functions[1]
-  #           .conditionals[0].expression).to eq("7 > 2")
-  #     expect(@syntax.fileElements[0].global_functions[1]
-  #           .conditionals[0].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[1].name)
+        .to eq("simple2")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].expression).to eq("7 > 2")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[0].type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].global_functions[1]
-  #           .conditionals[1].expression).to eq("\"a\" < \"k\"")
-  #     expect(@syntax.fileElements[0].global_functions[1]
-  #           .conditionals[1].type).to eq("IF")
-  #   end
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[1].expression).to eq("\"a\" < \"k\"")
+      expect(@syntax.fileElements[0].global_functions[1]
+            .conditionals[1].type).to eq("IF")
+    end
 
-  #   it "Correct state transition (Method)." do
-  #     path =
-  #       "spec/samples/csharpSyntaxParts/conditionalStatment/methodConditional.cs"
+    it "Correct state transition (Method)." do
+      path =
+        "spec/samples/csharpSyntaxParts/conditionalStatment/methodConditional.cs"
 
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #   end
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
 
-  #   it "Correct data capture (conditional - method)" do
-  #      path =
-  #       "spec/samples/csharpSyntaxParts/conditionalStatment/methodConditional.cs"
+    it "Correct data capture (conditional - method)" do
+       path =
+        "spec/samples/csharpSyntaxParts/conditionalStatment/methodConditional.cs"
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].name)
-  #       .to eq("method1")
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+        .to eq("method1")
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-  #             .expression).to eq("x > 3")
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-  #             .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
+              .expression).to eq("x > 3")
+      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
+              .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+        .to eq("method2")
+      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
+              .expression).to eq("b && c")
+      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
+              .type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].name)
-  #       .to eq("method2")
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-  #             .expression).to eq("b && c")
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-  #             .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].methods[2].name)
+        .to eq("method3")
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
+              .expression).to eq("b == 3")
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[1]
+              .expression).to eq("b < 7")
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[2].name)
-  #       .to eq("method3")
-  #     expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-  #             .expression).to eq("b == 3")
-  #     expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[1]
-  #             .expression).to eq("b < 7")
+      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
+              .type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-  #             .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].methods[3].name)
+        .to eq("method4")
+      expect(@syntax.fileElements[0].classes[0].methods[3].conditionals[0]
+              .expression).to eq("x")
+    end
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[3].name)
-  #       .to eq("method4")
-  #     expect(@syntax.fileElements[0].classes[0].methods[3].conditionals[0]
-  #             .expression).to eq("x")
-  #   end
+    it "Correct state transition (Constructor)." do
+      path = "spec/samples/csharpSyntaxParts/" +
+              "conditionalStatment/constructorConditional.cs"
 
-  #   it "Correct state transition (Constructor)." do
-  #     path = "spec/samples/csharpSyntaxParts/" +
-  #             "conditionalStatment/constructorConditional.cs"
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+      @syntax.analyse_source(path)
+      expect(@syntax.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
+    end
 
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.state)
-  #       .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-  #   end
+    it "Correct data capture (conditional - method)" do
+       path = "spec/samples/csharpSyntaxParts/" +
+                "conditionalStatment/constructorConditional.cs"
 
-  #   it "Correct data capture (conditional - method)" do
-  #      path = "spec/samples/csharpSyntaxParts/" +
-  #               "conditionalStatment/constructorConditional.cs"
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].constructors[0].name)
+          .to eq("Simple1")
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].name)
-  #         .to eq("initialize")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
+              .expression).to eq("a > b")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
+              .type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-  #             .expression).to eq("a > b")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-  #             .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
+              .expression).to eq("x")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
+              .type).to eq("CASE")
 
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-  #             .expression).to eq("x")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-  #             .type).to eq("CASE")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
+              .expression).to eq("u && y")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
+              .type).to eq("IF")
 
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-  #             .expression).to eq("u && y")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-  #             .type).to eq("IF")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
+              .expression).to eq("u == 1")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
+              .type).to eq("ELSIF")
+    end
 
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-  #             .expression).to eq("u == 1")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-  #             .type).to eq("ELSIF")
-  #   end
+    it "Correct data capture (repetition[while] -  Method)" do
+       path = "spec/samples/csharpSyntaxParts/repetition/simpleRepetition.cs"
 
-  #   it "Correct data capture (repetition[while] -  Method)" do
-  #      path = "spec/samples/csharpSyntaxParts/repetition/simpleRepetition.cs"
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+          .to eq("simple1")
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].name)
-  #         .to eq("simple1")
+      expect(@syntax.fileElements[0].classes[0].methods[0].repetitions[0]
+              .expression).to eq("i < num")
+    end
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].repetitions[0]
-  #             .expression).to eq("i < num")
-  #   end
+    it "Correct data capture (repetition[for] -  Method)" do
+      path = "spec/samples/csharpSyntaxParts/repetition/simpleRepetition.cs"
 
-  #   it "Correct data capture (repetiton[util] - Method)" do
-  #     path = "spec/samples/csharpSyntaxParts/repetition/simpleRepetition.cs"
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].methods[1].name)
+          .to eq("simple2")
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].name)
-  #         .to eq("simple2")
+      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[0]
+              .expression).to eq("int i = 1; i <= 5; i++")
+    end
 
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[0]
-  #             .expression).to eq("i > num")
-
-  #   end
-
-  #   it "Correct data capture (repetition[for] -  Method)" do
-  #     path = "spec/samples/csharpSyntaxParts/repetition/simpleRepetition.cs"
-
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].name)
-  #         .to eq("simple2")
-
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[1]
-  #             .expression).to eq("i in 0..5")
-  #   end
-
-  # end
+  end
 
   # context "Comments" do
 
@@ -414,7 +404,6 @@ RSpec.describe Languages::CsharpSyntax do
   #   end
 
   # end
-
   after :each do
     @syntax = nil
   end

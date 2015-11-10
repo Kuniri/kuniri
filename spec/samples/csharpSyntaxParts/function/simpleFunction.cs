@@ -16,7 +16,7 @@ public int simpleFunction4 (int param){
 
 }
 
-public int simpleFunction5 (int param1, int param2){
+public int simpleFunction5 (int param1, int param2, int param3){
 
 }
 

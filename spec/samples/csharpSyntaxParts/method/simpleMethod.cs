@@ -4,20 +4,20 @@ public class Simple1 : Inheritance{
 
 	}
 
-	int method1(){
+	int Method1(){
 
 	}
 
-	private virtual int method2(int a){
+	private virtual int Method2(int a){
 
 
 
 	}
 
-	private virtual int method3(int a, int b, string c){
+	private virtual int Method3(int a, int b, string c){
 
 	}
 
-	private virtual int method4(int a, int b){};private virtual int method5(){};
+	private virtual int Method4(int a, int b){};private virtual int Method5(){};
 
 }
