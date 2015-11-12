@@ -14,6 +14,7 @@ require_relative 'function_behavior_ruby'
 require_relative 'attribute_ruby'
 require_relative 'comment_ruby'
 require_relative 'method_ruby'
+require_relative 'aggregation_ruby'
 
 module Languages
 
@@ -36,6 +37,7 @@ module Languages
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
+        @aggregationHandler = Languages::Ruby::AggregationRuby.new
         @visibility = "public"
       end
 
