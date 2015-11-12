@@ -15,7 +15,9 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.attributeHandler.get_attribute(pLine)
+        if @language.aggregationHandler.get_aggregation(pLine)
+          aggregation_capture
+        elsif @language.attributeHandler.get_attribute(pLine)
           attribute_capture
         elsif @language.constructorHandler.get_constructor(pLine)
           constructor_capture
