@@ -27,6 +27,21 @@ RSpec.describe StateMachine::OOStructuredFSM::ClassState do
         .to be_instance_of(StateMachine::OOStructuredFSM::MethodState)
     end
 
+    it "Class to aggregation." do
+      @classStateTest.class_capture
+      @classStateTest.aggregation_capture
+      expect(@classStateTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::AggregationState)
+    end
+
+    it "Aggregation to class." do
+      @classStateTest.class_capture
+      @classStateTest.aggregation_capture
+      @classStateTest.class_capture
+      expect(@classStateTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::ClassState)
+    end
+
     it "Method to class." do
       @classStateTest.class_capture
       @classStateTest.method_capture
