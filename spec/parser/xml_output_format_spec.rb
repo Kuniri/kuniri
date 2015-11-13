@@ -11,7 +11,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
    it "::Simple case class" do
       expectedString = @stringHeader
-      expectedString += "<classData name=\"Xpto\" visibility=\"public\">"
+      expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -21,7 +21,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
    it "::Set visibility" do
       expectedString = @stringHeader
-      expectedString += "<classData name=\"Xpto\" visibility=\"private\">"
+      expectedString += "<classData name=\"Xpto\" visibility=\"private\">\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -49,7 +49,7 @@ RSpec.describe Parser::XMLOutputFormat do
     it "::Simple constructor" do
       expectedString = @stringHeader
       expectedString += "<constructorData name=\"initialize\" "
-      expectedString += "visibility=\"public\">"
+      expectedString += "visibility=\"public\">\n"
       expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
       @outputFormat.constructor_generate(constructorTmp)
@@ -105,7 +105,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "::Generate simple method" do
       expectedString = @stringHeader
-      expectedString += "<methodData name=\"xpto\" visibility=\"public\">"
+      expectedString += "<methodData name=\"xpto\" visibility=\"public\">\n"
       expectedString += "</methodData>\n"
       methodTmp = Languages::MethodData.new("xpto")
       @outputFormat.method_generate(methodTmp)
@@ -139,7 +139,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "Generate function" do
       expectedString = @stringHeader
-      expectedString += "<functionData name=\"xpto\">"
+      expectedString += "<functionData name=\"xpto\">\n"
       expectedString += "</functionData>\n"
       functionTmp = Languages::FunctionData.new("xpto")
       @outputFormat.function_generate([functionTmp])

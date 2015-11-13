@@ -160,7 +160,7 @@ RSpec.describe Parser::XMLBuilderEngine do
                 '  <functionData name="xpto" visibility="global">',
                 '  </functionData>',
                 '</kuniri>'].join("\n") + "\n"
-      expect(@builder.to_xml).join("\n") + "\n"
+      expect(@builder.to_xml).to eq(output)
     end
 
     it "Global function with conditional" do
@@ -189,7 +189,7 @@ RSpec.describe Parser::XMLBuilderEngine do
       output = [@basicHeader,
                 '<kuniri>',
                 '  <functionData name="xpto" visibility="global">',
-                '   <repetitionData type="while" expression="(x < 0)"/>',
+                '    <repetitionData type="while" expression="(x < 0)"/>',
                 '  </functionData>',
                 '</kuniri>',].join("\n") + "\n"
       expect(@builder.to_xml).to eq(output)
@@ -242,7 +242,7 @@ RSpec.describe Parser::XMLBuilderEngine do
       output = [@basicHeader,
                 '<kuniri>',
                 '  <globalVariableData name="xpto"/>',
-                '</kunri>'].join("\n") + "\n"
+                '</kuniri>'].join("\n") + "\n"
       expect(@builder.to_xml).to eq(output)
     end
   end

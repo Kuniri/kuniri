@@ -42,7 +42,7 @@ module Parser
         end
 
         if block_given?
-          @tag << ">"
+          @tag << ">\n"
           incrementIdentation
           result = instance_eval(&pBlock)
           if result != '' && result.is_a?(String)
