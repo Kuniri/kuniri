@@ -22,9 +22,9 @@ module Parser
             if singleClass.comments != ""
               wrapper.comment_generate(singleClass.comments)
             end
-            #singleClass.attributes.each do |singleAttribute|
-            #  attribute_generate(singleAttribute)
-            #end
+            unless singleClass.attributes.empty?
+              wrapper.attribute_generate(singleClass.attributes)
+            end
             singleClass.inheritances.each do |singleInheritance|
               wrapper.inheritance_generate(singleInheritance)
             end
@@ -64,8 +64,8 @@ module Parser
           pConstructor.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          #singleConstructor.conditionals.each do |conditional|
-          #  conditional_generate(conditional)
+          #unless singleConstructor.conditionals.empty?
+          #  wrapper.conditional_generate(singleConstructor.conditionals)
           #end
           #singleConstructor.repetitions.each do |repetition|
           #  repetition_generate(repetition)
@@ -84,11 +84,11 @@ module Parser
           pMethod.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          #pMethod.conditionals.each do |conditional|
-          #  conditional_generate(conditional)
-          #end
-          #pMethod.repetitions.each do |repetition|
-          #  repetition_generate(repetition)
+          unless pMethod.conditionals.empty?
+            wrapper.conditional_generate(pMethod.conditionals)
+          end
+          #unless pMethod.repetitions.empty?
+          #  wrapper.repetition_generate(repetitions)
           #end
         end
       end
