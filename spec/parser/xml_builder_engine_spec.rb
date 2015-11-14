@@ -139,7 +139,8 @@ RSpec.describe Parser::XMLBuilderEngine do
                 '<kuniri>',
                 '  <classData name="Xpto" visibility="public">',
                 '    <methodData name="abc" visibility="public">',
-                '      <conditionalData type="unless" expression="(abc > 3) && (kto < 20)"/>',
+                '      <conditionalData type="unless" expression="(abc > 3)' +
+                      ' && (kto < 20)"/>',
                 '    </methodData>',
                 '  </classData>',
                 '</kuniri>'].join("\n") + "\n"
