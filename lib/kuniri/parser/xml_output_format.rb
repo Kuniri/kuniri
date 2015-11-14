@@ -64,12 +64,12 @@ module Parser
           pConstructor.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          #unless singleConstructor.conditionals.empty?
-          #  wrapper.conditional_generate(singleConstructor.conditionals)
-          #end
-          #singleConstructor.repetitions.each do |repetition|
-          #  repetition_generate(repetition)
-          #end
+          unless pConstructor.conditionals.empty?
+            wrapper.conditional_generate(pConstructor.conditionals)
+          end
+          unless pConstructor.repetitions.empty?
+            wrapper.repetition_generate(pConstructor.repetitions)
+          end
         end
       end
 
@@ -87,9 +87,9 @@ module Parser
           unless pMethod.conditionals.empty?
             wrapper.conditional_generate(pMethod.conditionals)
           end
-          #unless pMethod.repetitions.empty?
-          #  wrapper.repetition_generate(repetitions)
-          #end
+          unless pMethod.repetitions.empty?
+            wrapper.repetition_generate(pMethod.repetitions)
+          end
         end
       end
 

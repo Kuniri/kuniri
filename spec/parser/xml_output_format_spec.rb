@@ -56,7 +56,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
-    it "::Constructor with parameters" do
+    it "::Constructor with comment" do
       expectedString = @stringHeader
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
@@ -64,6 +64,70 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
       constructorTmp.comments = "Comment constructor"
+      @outputFormat.constructor_generate(constructorTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
+    end
+
+    it "::Constructor with conditional" do
+      expectedString = @stringHeader
+      expectedString += "<constructorData name=\"initialize\" "
+      expectedString += "visibility=\"public\">\n"
+      expectedString += '  <conditionalData name="nothing" type="IF"' +
+                        ' expression="(x < 3)"/>'
+      expectedString += "\n</constructorData>\n"
+
+      constructorTmp = Languages::ConstructorData.new("initialize")
+      conditionalTmp = Languages::ConditionalData.new
+      conditionalTmp.type = "IF"
+      conditionalTmp.expression = "(x < 3)"
+
+      constructorTmp.add_conditional(conditionalTmp)
+
+      @outputFormat.constructor_generate(constructorTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
+    end
+
+    it "::Constructor with repetition" do
+      expectedString = @stringHeader
+      expectedString += "<constructorData name=\"initialize\" "
+      expectedString += "visibility=\"public\">\n"
+      expectedString += '  <repetitionData name="nothing" type="FOR"' +
+                        ' expression="i in x"/>'
+      expectedString += "\n</constructorData>\n"
+
+      constructorTmp = Languages::ConstructorData.new("initialize")
+      conditionalTmp = Languages::RepetitionData.new
+      conditionalTmp.type = "FOR"
+      conditionalTmp.expression = "i in x"
+
+      constructorTmp.add_repetition(conditionalTmp)
+
+      @outputFormat.constructor_generate(constructorTmp)
+      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
+    end
+
+    it "::Constructor with conditional and repetition" do
+      expectedString = @stringHeader
+      expectedString += "<constructorData name=\"initialize\" "
+      expectedString += "visibility=\"public\">\n"
+      expectedString += '  <conditionalData name="nothing" type="IF"' +
+                        ' expression="(x < 3)"/>' + "\n"
+      expectedString += '  <repetitionData name="nothing" type="FOR"' +
+                        ' expression="i in x"/>'
+      expectedString += "\n</constructorData>\n"
+
+      constructorTmp = Languages::ConstructorData.new("initialize")
+
+      conditionalTmp = Languages::ConditionalData.new
+      conditionalTmp.type = "IF"
+      conditionalTmp.expression = "(x < 3)"
+      constructorTmp.add_conditional(conditionalTmp)
+
+      conditionalTmp = Languages::RepetitionData.new
+      conditionalTmp.type = "FOR"
+      conditionalTmp.expression = "i in x"
+      constructorTmp.add_repetition(conditionalTmp)
+
       @outputFormat.constructor_generate(constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
