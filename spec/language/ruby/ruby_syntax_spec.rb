@@ -497,8 +497,8 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.fileElements[0].classes[0].name).to eq("Foo")
       expect(@syntax.fileElements[0].classes[1].name).to eq("Bar")
-      expect(@syntax.fileElements[0].classes[1].aggregation[0]).to eq("Foo")
-      expect(@syntax.fileElements[0].classes[1].aggregation[1]).to eq("Foo")
+      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Foo")
+      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Foo")
     end
 
     it "Aggregation single line capture in method" do
@@ -510,8 +510,8 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.fileElements[0].classes[0].name).to eq("Test1")
       expect(@syntax.fileElements[0].classes[1].name).to eq("Test2")
-      expect(@syntax.fileElements[0].classes[1].aggregation[0]).to eq("Test1")
-      expect(@syntax.fileElements[0].classes[1].aggregation[1]).to eq("Test1")
+      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Test1")
+      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Test1")
     end
 
     it "Aggregation single line capture in class" do
@@ -523,8 +523,8 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.fileElements[0].classes[0].name).to eq("Class1")
       expect(@syntax.fileElements[0].classes[1].name).to eq("Class2")
-      expect(@syntax.fileElements[0].classes[1].aggregation[0]).to eq("Class1")
-      expect(@syntax.fileElements[0].classes[1].aggregation[1]).to eq("Class1")
+      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Class1")
+      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Class1")
     end
   end
 

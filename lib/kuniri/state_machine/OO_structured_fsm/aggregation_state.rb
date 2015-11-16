@@ -27,7 +27,7 @@ module StateMachine
         aggregationElement = @language.aggregationHandler.get_aggregation(pLine)
 
         if aggregationElement
-            pElementFile.classes.last.aggregation.push aggregationElement
+            pElementFile.classes.last.aggregations.push aggregationElement
         end
 
         class_capture

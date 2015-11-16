@@ -21,8 +21,8 @@ module Parser
                                   :visibility => singleClass.visibility do
             wrapper.comment_generate(singleClass)
 
-            unless singleClass.aggregation.empty?
-              wrapper.aggregation_generate(singleClass.aggregation)
+            unless singleClass.aggregations.empty?
+              wrapper.aggregation_generate(singleClass.aggregations)
             end
             singleClass.inheritances.each do |singleInheritance|
               wrapper.inheritance_generate(singleInheritance)
@@ -135,7 +135,7 @@ module Parser
 
       def aggregation_generate(pAggregation)
         pAggregation.each do |aggregation|
-          @outputEngine.aggregationData :name => aggregation
+          @outputEngine.aggregationData :name => aggregation.name
         end
       end
 

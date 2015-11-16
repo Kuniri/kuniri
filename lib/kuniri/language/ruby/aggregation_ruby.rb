@@ -1,5 +1,6 @@
 require_relative '../abstract_container/structured_and_oo/aggregation'
 require_relative '../../core/setting'
+require_relative '../container_data/structured_and_oo/aggregation_data'
 
 module Languages
 
@@ -11,16 +12,15 @@ module Languages
       public
 
         def initialize
-          @aggregationList = []
         end
 
-        # Get ruby aggregation.
         # @param pLine Verify if line has a ruby aggregation.
         # @return Return string or nil.
         def get_aggregation(pLine)
           result = detect_aggregation(pLine)
           return nil unless result
-          return result
+          aggregationData = Languages::AggregationData.new(result)
+          return aggregationData
         end
 
     protected

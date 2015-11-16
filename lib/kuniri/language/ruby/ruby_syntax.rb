@@ -95,6 +95,55 @@ module Languages
         
       end
 
+      def analyse_second_step
+        allActualAggregation = []
+        allAggregations.each do |element|
+          allActualAggregations<<element if binary_search(allClasses, element)
+        end
+
+        allActualInheritances = []
+        allInheritances.each do |element|
+          allActualInheritances<<element if binary_search(allClasses, element)
+        end
+      end
+
+      def search(vector, lower, upper, element)
+        return nil if lower > upper
+        mid = (lower+upper)/2
+        if (vector[mid] == element)
+          element
+        elsif (element < vector[mid])
+          search(vector, lower, mid-1, element)
+        else
+          search(vector, mid+1, upper, element)
+        end
+      end
+
+      def binary_search(vector,element)
+        search(vector, 0, vector.size-1, element)
+      end
+
+      def get_all_classes(pMetadata)
+        #regexExpression = /REGEXDAORAQUEPEGAASCLASSETUDO/
+        #return nil unless pMetadata =~ regexExpression
+        #classes = pMetadata.scan(regexExpression)[0]
+        return classes.sort!
+      end
+
+      def get_all_aggregations(pMetadata)
+        #regexExpression = /REGEXDAORAQUEPEGAASAGREGACAOTUDO/
+        #return nil unless pMetadata =~ regexExpression
+        #aggregations = pMetadata.scan(regexExpression)[0]
+        return aggregations.sort!.uniq!
+      end
+
+       def get_all_inheritances(pMetadata)
+        #regexExpression = /REGEXDAORAQUEPEGAASHERANCATUDO/
+        #return nil unless pMetadata =~ regexExpression
+        #inheritances = pMetadata.scan(regexExpression)[0]
+        return inheritances.sort!.uniq!
+      end
+
   # Class
   end
 

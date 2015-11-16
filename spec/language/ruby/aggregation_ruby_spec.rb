@@ -10,32 +10,32 @@ RSpec.describe Languages::Ruby::AggregationRuby do
   context "When is a single aggregation with @" do
     it "Simple case with @" do
       captured = @rubyAggr.get_aggregation("abc.new\n")
-      expect(captured).to eq(@singleResult)
+      expect(captured.name).to eq(@singleResult)
     end
 
      it "Whitespace before" do
        captured = @rubyAggr.get_aggregation("       abc.new\n")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "With whitespace before and after" do
        captured = @rubyAggr.get_aggregation("    abc.new  \n")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "Whitespace before dot" do
        captured = @rubyAggr.get_aggregation("abc   .new\n")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "Whitespace after dot" do
        captured = @rubyAggr.get_aggregation("abc.    new\n")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "Between whitespace" do
        captured = @rubyAggr.get_aggregation("abc     .    new\n")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
    end
@@ -44,22 +44,22 @@ RSpec.describe Languages::Ruby::AggregationRuby do
 
      it "With a single parameter" do
        captured = @rubyAggr.get_aggregation("abc.new a")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "With multiple parameters" do
        captured = @rubyAggr.get_aggregation("abc.new a b c")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "With single parameter with parenthesis" do
        captured = @rubyAggr.get_aggregation("abc.new(a)")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
      it "With multiple parameter with parenthesis" do
        captured = @rubyAggr.get_aggregation("abc.new(a,b, c)")
-       expect(captured).to eq(@singleResult)
+       expect(captured.name).to eq(@singleResult)
      end
 
   end
