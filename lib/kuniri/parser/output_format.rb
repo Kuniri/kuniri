@@ -18,16 +18,16 @@ module Parser
         @parserPath = pPath
       end
 
+      # Go through all the data, and generate the output
+      # @param pParser
+      # @return
       def create_all_data(pParser)
-
         unless pParser
           return nil
         end
-
         saveElementTo = "./"
-        info = Kuniri::Setting.create
-
         wrapper = self
+
         # Go through each file
         pParser.fileLanguage.each do |listOfFile|
           # Inspect each element
@@ -54,23 +54,7 @@ module Parser
             saveElementTo = singleElement.name
           end
 
-          # XXX: If is not a file, create a folder. Otherwise, create a file.
-          # this is really, ugly. Fix it!
-          unless File.file?(info.configurationInfo[:source])
-            outputDir = File.join(@parserPath, File.dirname(saveElementTo))
-            unless Dir.exists? outputDir
-              FileUtils.mkdir_p(File.join(@parserPath,
-                                          File.dirname(saveElementTo)))
-            end
-            destination = File.join(outputDir, listOfFile.name + ".xml")
-          else
-            destination = @parserPath
-          end
-
-          File.open(destination, "w") do |file|
-            file.write(@outputEngine.to_xml)
-          end
-
+          write_file(saveElementTo, listOfFile.name)
           @outputEngine.reset_engine
         end
 
@@ -126,6 +110,27 @@ module Parser
 
       def comment_generate(pComment)
         raise NotImplementedError
+      end
+
+    private
+
+      def write_file(pSaveTo, pFileName)
+        info = Kuniri::Setting.create
+        unless File.file?(info.configurationInfo[:source])
+          outputDir = File.join(@parserPath, File.dirname(pSaveTo))
+          unless Dir.exists? outputDir
+            FileUtils.mkdir_p(File.join(@parserPath,
+                                        File.dirname(pSaveTo)))
+          end
+          # TODO: Extension should be flexible
+          destination = File.join(outputDir, pFileName + ".xml")
+        else
+          destination = @parserPath
+        end
+
+        File.open(destination, "w") do |file|
+          file.write(@outputEngine.to_xml)
+        end
       end
 
   # class

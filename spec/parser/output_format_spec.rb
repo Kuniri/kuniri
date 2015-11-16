@@ -6,12 +6,28 @@ RSpec.describe Parser::OutputFormat do
     @outputFormat = Parser::OutputFormat.new
   end
 
-  context "Cannot call unimplemented method." do
+  context "Create all data" do
+    it "Try to add nil as parameter" do
+      allData = @outputFormat.create_all_data(nil)
+      expect(allData).to eq(nil)
+    end
 
-   # it "Create all data" do
-   #   expect{@outputFormat.create_data(nil)}.to raise_error(
-   #           NotImplementedError)
-   # end
+    #it "Run, but raise exception" do
+    #  source =
+    #      "spec/samples/rubySyntaxParts/fullCode/simpleCodeWithConditional.rb"
+    #  output = "./"
+    #  kuniri = Kuniri::Kuniri.new
+    #  kuniri.set_configuration(source, "ruby", output, "O1")
+    #  kuniri.run_analysis
+
+    #  parser = Parser::XMLOutputFormat.new
+    #  parser.set_path(p)
+    #  expect{parser.create_all_data(kuniri.get_parser())}.to raise_error(
+    #          NotImplementedError)
+    #end
+  end
+
+  context "Cannot call unimplemented method." do
 
     it "Generate class" do
       expect{@outputFormat.class_generate(nil)}.to raise_error(
