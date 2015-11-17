@@ -54,6 +54,8 @@ module Languages
       attr_reader :commentHandler
       attr_reader :aggregationHandler
 
+      attr_reader :metadata
+
       attr_accessor :fileElements
 
       # Those values help state machine to understand which place to add
