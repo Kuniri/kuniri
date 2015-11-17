@@ -171,6 +171,23 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[4].name).to eq("Simple5")
     end
 
+    it "All classes in Metadata array" do
+
+      @syntax.metadata.allClasses.clear
+
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allClasses.size).to eq(5)
+      expect(@syntax.metadata.allClasses[0].name).to eq('Simple1')
+      expect(@syntax.metadata.allClasses[1].name).to eq('Simple2')
+      expect(@syntax.metadata.allClasses[2].name).to eq('Simple3')
+      expect(@syntax.metadata.allClasses[3].name).to eq('Simple4')
+      expect(@syntax.metadata.allClasses[4].name).to eq('Simple5')
+    end
+
+
   end
 
   context "Attribute line" do
@@ -526,6 +543,23 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Class1")
       expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Class1")
     end
+
+    it "All aggregations in Metadata array" do
+
+      @syntax.metadata.allAggregations.clear
+
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/classAggregation.rb"
+
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allAggregations.size).to eq(2)
+      expect(@syntax.metadata.allAggregations[0].name).to eq('Class1')
+      expect(@syntax.metadata.allAggregations[1].name).to eq('Class1')
+
+    end
+
   end
 
   after :each do

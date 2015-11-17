@@ -1,5 +1,3 @@
-require 'set'
-
 module Languages
 
   class Metadata
@@ -12,7 +10,7 @@ module Languages
 
       def initialize
         @allClasses = []
-        @allAggregations = Set.new
+        @allAggregations = []
       end
 
       def Metadata.create

@@ -28,7 +28,7 @@ module StateMachine
 
         if aggregationElement
             pElementFile.classes.last.aggregations.push aggregationElement
-            # @metadata.allAggregations.push aggregationElement
+            @language.metadata.allAggregations.push aggregationElement
         end
 
         class_capture
