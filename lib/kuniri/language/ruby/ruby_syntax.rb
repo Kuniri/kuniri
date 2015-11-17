@@ -15,6 +15,7 @@ require_relative 'attribute_ruby'
 require_relative 'comment_ruby'
 require_relative 'method_ruby'
 require_relative 'aggregation_ruby'
+require_relative '../metadata'
 
 module Languages
 
@@ -38,6 +39,7 @@ module Languages
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
         @aggregationHandler = Languages::Ruby::AggregationRuby.new
+        @metadata = Languages::Metadata.create
         @visibility = "public"
       end
 
@@ -47,7 +49,7 @@ module Languages
         @name = File.basename(pPath, ".*")
         @path = File.dirname(pPath)
         analyse_first_step(pPath)
-        #self.analyse_second_step
+        #analyse_second_step
       end
 
     private
@@ -73,7 +75,6 @@ module Languages
         commentLine << pLine
       end
 
-      
       # First step for analyse code, it is responsible for get only basic
       # informations.
       # @param pPath Path of file to be analysed.
@@ -92,7 +93,7 @@ module Languages
         end
 
         @fileElements.push(fileElement)
-        
+
       end
 
       def analyse_second_step

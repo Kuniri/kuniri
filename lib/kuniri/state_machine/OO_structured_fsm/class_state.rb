@@ -75,6 +75,7 @@ module StateMachine
           classElement.comments = @language.string_comment_to_transfer
           @language.string_comment_to_transfer = ""
           pElementFile.add_class(classElement)
+         # @metadata.allClasses.push classElement
         end
  
         if @language.endBlockHandler.has_end_of_block?(pLine)
