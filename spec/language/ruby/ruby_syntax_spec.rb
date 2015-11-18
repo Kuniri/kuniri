@@ -4,6 +4,8 @@ RSpec.describe Languages::RubySyntax do
 
   before :each do
     @syntax = Languages::RubySyntax.new
+    @syntax.metadata.allClasses.clear
+    @syntax.metadata.allAggregations.clear
   end
 
   context "Extern requirement detections." do
@@ -556,11 +558,63 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.metadata.allAggregations.size).to eq(2)
       expect(@syntax.metadata.allAggregations[0].name).to eq('Class1')
-      expect(@syntax.metadata.allAggregations[1].name).to eq('Class1')
+      expect(@syntax.metadata.allAggregations[1].name).to eq('Class2')
 
     end
 
   end
+
+  context 'Second parser' do
+
+    it 'All Classes should be sorted by name' do
+
+       path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+       @syntax.analyse_source(path)
+
+       expect(@syntax.metadata.allClasses.size).to eq(5)
+       expect(@syntax.metadata.allClasses[0].name).to eq('Class1')
+       expect(@syntax.metadata.allClasses[1].name).to eq('Class2')
+       expect(@syntax.metadata.allClasses[2].name).to eq('Class3')
+       expect(@syntax.metadata.allClasses[3].name).to eq('Class4')
+       expect(@syntax.metadata.allClasses[4].name).to eq('Class5')
+
+    end
+
+    it 'All Aggregation should be sorted by name and be unique' do
+
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allAggregations.size).to eq(5)
+      expect(@syntax.metadata.allAggregations[0].name).to eq('Array')
+      expect(@syntax.metadata.allAggregations[1].name).to eq('Class1')
+      expect(@syntax.metadata.allAggregations[2].name).to eq('Class2')
+      expect(@syntax.metadata.allAggregations[3].name).to eq('Class3')
+      expect(@syntax.metadata.allAggregations[4].name).to eq('Set')
+
+    end
+
+
+    it 'Ruby default classes should not be present in Aggregation' do
+
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
+      expect(@syntax.fileElements[0].classes[4].aggregations[0].name).to eq('Class1')
+      expect(@syntax.fileElements[0].classes[4].aggregations[1].name).to eq('Class2')
+      expect(@syntax.fileElements[0].classes[4].aggregations[2].name).to eq('Class3')
+
+    end
+
+  end
+
 
   after :each do
     @syntax = nil

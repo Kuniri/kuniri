@@ -49,7 +49,7 @@ module Languages
         @name = File.basename(pPath, ".*")
         @path = File.dirname(pPath)
         analyse_first_step(pPath)
-        #analyse_second_step
+        analyse_second_step
       end
 
     private
@@ -97,51 +97,46 @@ module Languages
       end
 
       def analyse_second_step
-        allActualAggregation = []
-        allAggregations.each do |element|
-          allActualAggregations<<element if binary_search(allClasses, element)
+
+        sort_all_classes()
+        sort_all_aggregations()
+
+        allActualAggregations = []
+
+        @metadata.allAggregations.each do |element|
+          allActualAggregations<<element if binary_search(@metadata.allClasses, element)
         end
 
-        allActualInheritances = []
-        allInheritances.each do |element|
-          allActualInheritances<<element if binary_search(allClasses, element)
+        @fileElements.each do |fileElement|
+          fileElement.classes.each do |classes|
+              classes.aggregations.delete_if do |aggregation|
+
+                if not allActualAggregations.include? aggregation
+                  true
+                end
+
+              end
+            end
+
         end
+
       end
 
-      def search(vector, lower, upper, element)
-        return nil if lower > upper
-        mid = (lower+upper)/2
-        if (vector[mid] == element)
-          element
-        elsif (element < vector[mid])
-          search(vector, lower, mid-1, element)
-        else
-          search(vector, mid+1, upper, element)
-        end
-      end
 
       def binary_search(vector,element)
-        search(vector, 0, vector.size-1, element)
+        vector.bsearch {|obj| element.name <=> obj.name}
       end
 
-      def get_all_classes(pMetadata)
-        #regexExpression = /REGEXDAORAQUEPEGAASCLASSETUDO/
-        #return nil unless pMetadata =~ regexExpression
-        #classes = pMetadata.scan(regexExpression)[0]
-        return classes.sort!
+      def sort_all_classes()
+        @metadata.allClasses.sort! {|c1, c2| c1.name <=> c2.name}
       end
 
-      def get_all_aggregations(pMetadata)
-        #regexExpression = /REGEXDAORAQUEPEGAASAGREGACAOTUDO/
-        #return nil unless pMetadata =~ regexExpression
-        #aggregations = pMetadata.scan(regexExpression)[0]
-        return aggregations.sort!.uniq!
+      def sort_all_aggregations()
+        @metadata.allAggregations.sort! {|a1, a2| a1.name <=> a2.name}
+        @metadata.allAggregations.uniq! {|a| a.name}
       end
 
        def get_all_inheritances(pMetadata)
-        #regexExpression = /REGEXDAORAQUEPEGAASHERANCATUDO/
-        #return nil unless pMetadata =~ regexExpression
-        #inheritances = pMetadata.scan(regexExpression)[0]
         return inheritances.sort!.uniq!
       end
 
