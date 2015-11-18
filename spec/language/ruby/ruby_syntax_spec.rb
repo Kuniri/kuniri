@@ -514,10 +514,8 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[0].name).to eq("Foo")
-      expect(@syntax.fileElements[0].classes[1].name).to eq("Bar")
-      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Foo")
-      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Foo")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Foo")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Blah")
     end
 
     it "Aggregation single line capture in method" do
@@ -527,10 +525,8 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[0].name).to eq("Test1")
-      expect(@syntax.fileElements[0].classes[1].name).to eq("Test2")
-      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Test1")
-      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Test1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Test1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Test2")
     end
 
     it "Aggregation single line capture in class" do
@@ -540,15 +536,11 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[0].name).to eq("Class1")
-      expect(@syntax.fileElements[0].classes[1].name).to eq("Class2")
-      expect(@syntax.fileElements[0].classes[1].aggregations[0].name).to eq("Class1")
-      expect(@syntax.fileElements[0].classes[1].aggregations[1].name).to eq("Class1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Class1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Class2")
     end
 
     it "All aggregations in Metadata array" do
-
-      @syntax.metadata.allAggregations.clear
 
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/classAggregation.rb"
