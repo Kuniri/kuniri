@@ -52,7 +52,8 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "visibility=\"public\">\n"
       expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
-      @outputFormat.constructor_generate(constructorTmp)
+      @outputFormat.function_behaviour_generate("constructorData",
+                                                constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -64,7 +65,8 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "</constructorData>\n"
       constructorTmp = Languages::ConstructorData.new("initialize")
       constructorTmp.comments = "Comment constructor"
-      @outputFormat.constructor_generate(constructorTmp)
+      @outputFormat.function_behaviour_generate("constructorData",
+                                                constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -83,7 +85,8 @@ RSpec.describe Parser::XMLOutputFormat do
 
       constructorTmp.add_conditional(conditionalTmp)
 
-      @outputFormat.constructor_generate(constructorTmp)
+      @outputFormat.function_behaviour_generate("constructorData",
+                                                constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -102,7 +105,8 @@ RSpec.describe Parser::XMLOutputFormat do
 
       constructorTmp.add_repetition(conditionalTmp)
 
-      @outputFormat.constructor_generate(constructorTmp)
+      @outputFormat.function_behaviour_generate("constructorData",
+                                                constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -128,7 +132,8 @@ RSpec.describe Parser::XMLOutputFormat do
       conditionalTmp.expression = "i in x"
       constructorTmp.add_repetition(conditionalTmp)
 
-      @outputFormat.constructor_generate(constructorTmp)
+      @outputFormat.function_behaviour_generate("constructorData",
+                                                constructorTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -172,7 +177,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "<methodData name=\"xpto\" visibility=\"public\">\n"
       expectedString += "</methodData>\n"
       methodTmp = Languages::MethodData.new("xpto")
-      @outputFormat.method_generate(methodTmp)
+      @outputFormat.function_behaviour_generate("methodData", methodTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -203,10 +208,11 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "Generate function" do
       expectedString = @stringHeader
-      expectedString += "<functionData name=\"xpto\">\n"
-      expectedString += "</functionData>\n"
+      expectedString += '<functionData name="xpto" visibility="global">'
+      expectedString += "\n</functionData>\n"
       functionTmp = Languages::FunctionData.new("xpto")
-      @outputFormat.function_generate([functionTmp])
+      functionTmp.visibility = "global"
+      @outputFormat.function_behaviour_generate("functionData", functionTmp)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 

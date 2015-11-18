@@ -34,18 +34,8 @@ RSpec.describe Parser::OutputFormat do
               NotImplementedError)
     end
 
-    it "Generate constructor" do
-      expect{@outputFormat.constructor_generate(nil)}.to raise_error(
-              NotImplementedError)
-    end
-
     it "Generate inheritance" do
       expect{@outputFormat.inheritance_generate(nil)}.to raise_error(
-              NotImplementedError)
-    end
-
-    it "Generate method" do
-      expect{@outputFormat.method_generate(nil)}.to raise_error(
               NotImplementedError)
     end
 
@@ -60,8 +50,8 @@ RSpec.describe Parser::OutputFormat do
     end
 
     it "Generate function" do
-      expect{@outputFormat.function_generate(nil)}.to raise_error(
-              NotImplementedError)
+      expect{@outputFormat.function_behaviour_generate("x", nil)}
+        .to raise_error(NotImplementedError)
     end
 
     it "Generate global variable" do

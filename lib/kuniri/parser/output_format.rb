@@ -22,9 +22,8 @@ module Parser
       # @param pParser
       # @return
       def create_all_data(pParser)
-        unless pParser
-          return nil
-        end
+        return nil unless pParser
+
         saveElementTo = "./"
         wrapper = self
 
@@ -45,7 +44,8 @@ module Parser
                         singleElement.global_variables)
               end
               if (singleElement.global_functions.length() > 0)
-                wrapper.function_generate(singleElement.global_functions)
+                wrapper.function_behaviour_generate(
+                                              singleElement.global_functions)
               end
               if (singleElement.classes.length() > 0)
                 wrapper.class_generate(singleElement.classes)
@@ -64,15 +64,7 @@ module Parser
         raise NotImplementedError
       end
 
-      def constructor_generate(pConstructor)
-        raise NotImplementedError
-      end
-
       def inheritance_generate(pInheritance)
-        raise NotImplementedError
-      end
-
-      def method_generate(pMethod)
         raise NotImplementedError
       end
 
@@ -84,7 +76,7 @@ module Parser
         raise NotImplementedError
       end
 
-      def function_generate(pFunction)
+      def function_behaviour_generate(pElementName, pFunction)
         raise NotImplementedError
       end
 

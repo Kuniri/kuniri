@@ -19,93 +19,40 @@ module Parser
         pClass.each do |singleClass|
           @outputEngine.classData :name => singleClass.name,
                                   :visibility => singleClass.visibility do
-            if singleClass.comments != ""
-              wrapper.comment_generate(singleClass.comments)
+            wrapper.comment_generate(singleClass)
+
+            singleClass.inheritances.each do |singleInheritance|
+              wrapper.inheritance_generate(singleInheritance)
             end
             unless singleClass.attributes.empty?
               wrapper.attribute_generate(singleClass.attributes)
             end
-            singleClass.inheritances.each do |singleInheritance|
-              wrapper.inheritance_generate(singleInheritance)
-            end
             singleClass.constructors.each do |singleConstructor|
-              wrapper.constructor_generate(singleConstructor)
+              wrapper.function_behaviour_generate("constructorData",
+                                                  singleConstructor)
             end
             singleClass.methods.each do |singleMethod|
-              wrapper.method_generate(singleMethod)
+              wrapper.function_behaviour_generate("methodData" , singleMethod)
             end
           end
         end
       end
 
       # @see OutputFormat
-      def attribute_generate(pAttribute)
-        pAttribute.each do |singleAttribute|
-          @outputEngine.attributeData :name => singleAttribute.name,
-                                      :visibility => singleAttribute.visibility
-        end
-      end
-
-      # @see OutputFormat
-      def inheritance_generate(pInheritances)
-        pInheritances.each do |singleInheritance|
-          @outputEngine.inheritanceData :name => singleInheritance
-        end
-      end
-
-      # @see OutputFormat
-      def constructor_generate(pConstructor)
+      def function_behaviour_generate(pElementName, pFunction)
         wrapper = self
-        @outputEngine.constructorData :name => pConstructor.name,
-                                      :visibility => pConstructor.visibility do
-          if pConstructor.comments != ""
-            wrapper.comment_generate(pConstructor.comments)
-          end
-          pConstructor.parameters.each do |parameter|
+        @outputEngine.send(pElementName, {:name => pFunction.name,
+                                      :visibility => pFunction.visibility}) do
+          wrapper.comment_generate(pFunction)
+
+          pFunction.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          unless pConstructor.conditionals.empty?
-            wrapper.conditional_generate(pConstructor.conditionals)
+          unless pFunction.conditionals.empty?
+            wrapper.conditional_generate(pFunction.conditionals)
           end
-          unless pConstructor.repetitions.empty?
-            wrapper.repetition_generate(pConstructor.repetitions)
-          end
-        end
-      end
-
-      # @see OutputFormat
-      def method_generate(pMethod)
-        wrapper = self
-        @outputEngine.methodData :name => pMethod.name,
-                                  :visibility => pMethod.visibility do
-          if pMethod.comments != ""
-            wrapper.comment_generate(pMethod.comments)
-          end
-          pMethod.parameters.each do |parameter|
-            wrapper.parameters_generate(parameter)
-          end
-          unless pMethod.conditionals.empty?
-            wrapper.conditional_generate(pMethod.conditionals)
-          end
-          unless pMethod.repetitions.empty?
-            wrapper.repetition_generate(pMethod.repetitions)
-          end
-        end
-      end
-
-      # @see OutputFormat
-      def function_generate(pFunction)
-        pFunction.each do |singleFunction|
-          @outputEngine.functionData :name => singleFunction.name do
-            if singleFunction.comments != ""
-              comment_generate(singleFunction.comments)
-            end
-            singleFunction.parameters.each do |parameter|
-              parameters_generate(parameter)
-            end
-            singleFunction.conditionals.each do |conditional|
-              conditional_generate(conditional)
-            end
+          unless pFunction.repetitions.empty?
+            wrapper.repetition_generate(pFunction.repetitions)
           end
         end
       end
@@ -125,6 +72,21 @@ module Parser
       def global_variable_generate(pGlobalVariable)
         pGlobalVariable.each do |globalVar|
           @outputEngine.globalVariableData :name => globalVar.name
+        end
+      end
+
+      # @see OutputFormat
+      def attribute_generate(pAttribute)
+        pAttribute.each do |singleAttribute|
+          @outputEngine.attributeData :name => singleAttribute.name,
+                                      :visibility => singleAttribute.visibility
+        end
+      end
+
+      # @see OutputFormat
+      def inheritance_generate(pInheritances)
+        pInheritances.each do |singleInheritance|
+          @outputEngine.inheritanceData :name => singleInheritance
         end
       end
 
@@ -161,8 +123,10 @@ module Parser
         end
       end
 
-      def comment_generate(pComment)
-        @outputEngine.commentData :text => pComment
+      def comment_generate(pElement)
+        if pElement.comments != ""
+          @outputEngine.commentData :text => pElement.comments
+        end
       end
 
   # class
