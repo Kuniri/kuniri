@@ -35,30 +35,36 @@ RSpec.describe Kuniri::Kuniri do
     end
   end
 
-  it "Should contain the method name and visibility" do
-    @method_name = nil
-    @output.each do |line|
-      @method_name = line =~
-      /\s+<methodData\sname="method1"\svisibility="public"\/?>/
-      break unless @method_name.nil?
+  context "Validade method" do
+    it "Find method1" do
+      @method_name = nil
+      @output.each do |line|
+        @method_name = line =~
+        /\s+<methodData\sname="method1"\svisibility="public"\/?>/
+        break unless @method_name.nil?
+      end
+      expect(@method_name).not_to be_nil
     end
-    expect(@method_name).not_to be_nil
 
-    @method_name = nil
-    @output.each do |line|
-      @method_name = line =~
-      /\s+<methodData\sname="method2"\svisibility="public"\/?>/
-      break unless @method_name.nil?
+    it "Find method2" do
+      @method_name = nil
+      @output.each do |line|
+        @method_name = line =~
+        /\s+<methodData\sname="method2"\svisibility="public"\/?>/
+        break unless @method_name.nil?
+      end
+      expect(@method_name).not_to be_nil
     end
-    expect(@method_name).not_to be_nil
 
-    @method_name = nil
-    @output.each do |line|
-      @method_name = line =~
-      /\s+<methodData\sname="method3"\svisibility="public"\/?>/
-      break unless @method_name.nil?
+    it "Find method3" do
+      @method_name = nil
+      @output.each do |line|
+        @method_name = line =~
+        /\s+<methodData\sname="method3"\svisibility="public"\/?>/
+        break unless @method_name.nil?
+      end
+      expect(@method_name).not_to be_nil
     end
-    expect(@method_name).not_to be_nil
   end
 
   it "Should find all methods" do
