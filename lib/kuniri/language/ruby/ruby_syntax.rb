@@ -104,20 +104,19 @@ module Languages
         allActualAggregations = []
 
         @metadata.allAggregations.each do |element|
-          allActualAggregations<<element if binary_search(@metadata.allClasses, element)
+          if binary_search(@metadata.allClasses, element)
+            allActualAggregations<<element
+          end
         end
 
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
               classes.aggregations.delete_if do |aggregation|
-
                 if not allActualAggregations.include? aggregation
                   true
                 end
-
               end
             end
-
         end
 
       end
