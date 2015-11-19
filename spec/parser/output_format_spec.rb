@@ -74,6 +74,11 @@ RSpec.describe Parser::OutputFormat do
               NotImplementedError)
     end
 
+    it "Generate aggregation" do
+      expect{@outputFormat.aggregation_generate(nil)}.to raise_error(
+              NotImplementedError)
+    end
+
   end
 
   after :all do
