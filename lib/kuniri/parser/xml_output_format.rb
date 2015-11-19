@@ -107,19 +107,20 @@ module Parser
 
       # @see OutputFormat
       def repetition_generate(pRepetition)
-        pRepetition.each do |repetition|
-          @outputEngine.repetitionData :name => repetition.name,
-                                        :type => repetition.type,
-                                        :expression => repetition.expression
-        end
+        simple_element(pRepetition, "repetitionData")
       end
 
       # @see OutputFormat
       def conditional_generate(pConditional)
-        pConditional.each do |conditional|
-          @outputEngine.conditionalData :name => conditional.name,
-                                        :type => conditional.type,
-                                        :expression => conditional.expression
+        simple_element(pConditional, "conditionalData")
+      end
+
+      def simple_element(pElement, pElementName)
+        pElement.each do |element|
+          @outputEngine.send(pElementName,
+                              {:name => element.name,
+                               :type => element.type,
+                               :expression => element.expression})
         end
       end
 
