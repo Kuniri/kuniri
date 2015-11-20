@@ -1,5 +1,6 @@
 require_relative '../abstract_container/structured_and_oo/class'
 require_relative '../container_data/structured_and_oo/class_data'
+require_relative '../container_data/structured_and_oo/inheritance_data'
 require_relative '../../core/setting'
 
 module Languages
@@ -23,7 +24,11 @@ module Languages
           classCaptured = Languages::ClassData.new
 
           inheritance = get_inheritance(result)
-          classCaptured.inheritances = inheritance if inheritance
+
+          if inheritance
+            inheritanceData = Languages::InheritanceData.new(inheritance)
+            classCaptured.inheritances.push(inheritanceData)
+          end
 
           result = prepare_final_string(result)
           classCaptured.name = result
@@ -43,7 +48,7 @@ module Languages
         # Override
         def get_inheritance(pString)
           if pString =~ /</
-            partial = pString.scan(/<\s*(\w+)/)
+            partial = pString.scan(/<\s*(\w+)/).join("")
             return remove_unnecessary_information(partial)
           end
           return nil

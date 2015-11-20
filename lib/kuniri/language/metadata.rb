@@ -12,6 +12,7 @@ module Languages
       def initialize
         @allClasses = []
         @allAggregations = []
+        @allInheritances = []
       end
 
       def Metadata.create

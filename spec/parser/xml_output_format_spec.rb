@@ -153,9 +153,10 @@ RSpec.describe Parser::XMLOutputFormat do
     it "::Simple inheritance" do
       expectedString = @stringHeader
       expectedString += "<inheritanceData name=\"Xpto\"/>\n"
-      inheritanceTmp = Languages::ClassData.new
-      inheritanceTmp.inheritances.push("Xpto")
-      @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      classTmp = Languages::ClassData.new
+      inheritanceTmp = Languages::InheritanceData.new("Xpto")
+      classTmp.inheritances.push(inheritanceTmp)
+      @outputFormat.inheritance_generate(classTmp.inheritances)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -163,10 +164,12 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<inheritanceData name=\"Xpto1\"/>\n\n"
       expectedString += "<inheritanceData name=\"Xpto2\"/>\n"
-      inheritanceTmp = Languages::ClassData.new
-      inheritanceTmp.inheritances.push("Xpto1")
-      inheritanceTmp.inheritances.push("Xpto2")
-      @outputFormat.inheritance_generate(inheritanceTmp.inheritances)
+      classTmp = Languages::ClassData.new
+      inheritanceTmp1 = Languages::InheritanceData.new("Xpto1")
+      inheritanceTmp2 = Languages::InheritanceData.new("Xpto2")
+      classTmp.inheritances.push(inheritanceTmp1)
+      classTmp.inheritances.push(inheritanceTmp2)
+      @outputFormat.inheritance_generate(classTmp.inheritances)
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 

@@ -24,8 +24,8 @@ module Parser
             unless singleClass.aggregations.empty?
               wrapper.aggregation_generate(singleClass.aggregations)
             end
-            singleClass.inheritances.each do |singleInheritance|
-              wrapper.inheritance_generate(singleInheritance)
+            unless singleClass.inheritances.empty?
+              wrapper.inheritance_generate(singleClass.inheritances)
             end
             unless singleClass.attributes.empty?
               wrapper.attribute_generate(singleClass.attributes)
@@ -89,7 +89,7 @@ module Parser
       # @see OutputFormat
       def inheritance_generate(pInheritances)
         pInheritances.each do |singleInheritance|
-          @outputEngine.inheritanceData :name => singleInheritance
+          @outputEngine.inheritanceData :name => singleInheritance.name
         end
       end
 

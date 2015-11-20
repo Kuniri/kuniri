@@ -99,22 +99,22 @@ RSpec.describe Languages::Ruby::ClassRuby do
 
     it "Class inheritance normal case" do
       inheritance = @classRuby.get_class("class Xpto < Abc").inheritances[0]
-      expect(inheritance).to eq(["Abc"])
+      expect(inheritance.name).to eq("Abc")
     end
 
     it "Inheritance with many spaces in the beginning" do
       inheritance = @classRuby.get_class("class Xpto <    Abc").inheritances[0]
-      expect(inheritance).to eq(["Abc"])
+      expect(inheritance.name).to eq("Abc")
     end
 
     it "Inheritance with many spaces in the end" do
       inheritance = @classRuby.get_class("class Xpto < Abc   ").inheritances[0]
-      expect(inheritance).to eq(["Abc"])
+      expect(inheritance.name).to eq("Abc")
     end
 
     it "Inheritance with many spaces in the beginning and in the end" do
       inheritance = @classRuby.get_class("class Xs <   Abc   ").inheritances[0]
-      expect(inheritance).to eq(["Abc"])
+      expect(inheritance.name).to eq("Abc")
 
     end
 

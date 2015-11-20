@@ -3,6 +3,7 @@ require_relative 'attribute_data'
 require_relative 'method_data'
 require_relative 'constructor_data'
 require_relative 'aggregation_data'
+require_relative 'inheritance_data'
 
 module Languages
 
@@ -62,6 +63,14 @@ module Languages
         return nil unless pAggregation.is_a?(Languages::AggregationData)
 
         @aggregations.push(pAggregation)
+      end
+
+      # Add inheritance inside class.
+      # @param pInheritance Object of FunctionData to be added at class.
+      def add_inheritances(pInheritance)
+        return nil unless pInheritance.is_a?(Languages::InheritanceData)
+
+        @inheritances.push(pInheritance)
       end
   # Class
   end

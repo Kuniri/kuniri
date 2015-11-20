@@ -136,6 +136,13 @@ module Languages
         @metadata.allAggregations.uniq! {|a| a.name}
       end
 
+<<<<<<< HEAD
+=======
+      #  def get_all_inheritances(pMetadata)
+      #   return inheritances.sort!.uniq!
+      # end
+
+>>>>>>> Transformed inheritance from string to object
   # Class
   end
 
