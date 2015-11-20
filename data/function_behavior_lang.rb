@@ -12,14 +12,11 @@ module Languages
       public
 
         def initialize
-          @log = @settings = Kuniri::Setting.create.log
         end
 
         def get_function(pLine, type = 'globalFunction')
           result = detect_function(pLine)
           return nil unless result
-
-          @log.write_log("Info: get method")
 
           function{LANG} = Languages::FunctionData.new(result)
 
@@ -30,9 +27,6 @@ module Languages
             end
           end
  
-          @log.write_log("Debug: Method: #{function{LANG}.name}, Parameter:
-                         #{function{LANG}.parameters}")
-
           return function{LANG}
         end
 
@@ -89,8 +83,6 @@ module Languages
         end
 
       private
-
-        @log
 
         def get_parameters(pLine, pRegex)
           partialParameters = pLine.scan(pRegex).join("")

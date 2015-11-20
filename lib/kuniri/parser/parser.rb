@@ -1,6 +1,4 @@
 require_relative '../language/language_factory'
-require_relative '../util/html_logger'
-require_relative '../util/html_logger'
 
 # Module responsible for keeping the parser handler
 module Parser
@@ -12,21 +10,19 @@ module Parser
 
         attr_accessor :language
         attr_reader :fileLanguage
+        attr_reader :filesPath
 
         def initialize(pFilesPath, pLanguage = "ruby")
           @filesPath = pFilesPath
           @fileLanguage = []
-          @log = @settings = Kuniri::Setting.create.log
           @factory = Languages::LanguageFactory.new
           @language = pLanguage
         end
 
         # Start parse in the project.
         def start_parser
-          # TODO: handle the case of filePath is empty
           raise Error::ConfigurationFileError if(@filesPath.empty?)
 
-          @log.write_log("Debug: START FIRST PARSER")
           @filesPath.each do |file|
             language = @factory.get_language(@language)
             language.analyse_source(file)
@@ -36,8 +32,6 @@ module Parser
 
       private
 
-        @filesPath
-        @log
         @factory
 
   # class

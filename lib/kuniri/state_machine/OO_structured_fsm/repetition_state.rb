@@ -10,7 +10,7 @@ module StateMachine
       MAP_STATE =
       {
         StateMachine::METHOD_STATE => StateMachine::METHOD_LABEL,
-        StateMachine::CONSTRUCTOR_STATE => StateMachine::CONSTRUCTOR_STATE,
+        StateMachine::CONSTRUCTOR_STATE => StateMachine::CONSTRUCTOR_LABEL,
         StateMachine::GLOBAL_FUNCTION_STATE => StateMachine::FUNCTION_LABEL
       }
 
@@ -78,9 +78,9 @@ module StateMachine
           end
         end
 
-        def get_add_repetition_lambda(lambdaType)
+        def get_add_repetition_lambda(pLambdaType)
           add_repetition_lambda = lambda do |repetition, pElementFile|
-            element = get_list_of_file(pElementFile, lambdaType).last
+            element = get_list_of_file(pElementFile, pLambdaType).last
             element.add_repetition(repetition) if repetition
           end
 

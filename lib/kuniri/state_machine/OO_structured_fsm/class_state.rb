@@ -15,7 +15,9 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.attributeHandler.get_attribute(pLine)
+        if @language.aggregationHandler.get_aggregation(pLine)
+          aggregation_capture
+        elsif @language.attributeHandler.get_attribute(pLine)
           attribute_capture
         elsif @language.constructorHandler.get_constructor(pLine)
           constructor_capture
@@ -23,6 +25,8 @@ module StateMachine
           method_capture
         elsif @language.moduleHandler.get_module(pLine)
           module_capture
+        elsif @language.aggregationHandler.get_aggregation(pLine)
+          aggregation_capture
         elsif @language.commentHandler.is_single_line_comment?(pLine) ||
               @language.commentHandler.is_multiple_line_comment?(pLine)
           comment_capture
@@ -59,6 +63,10 @@ module StateMachine
         @language.set_state(@language.commentState)
       end
 
+      def aggregation_capture
+        @language.set_state(@language.aggregationState)
+      end
+
       # @see OOStructuredState
       def execute(pElementFile, pLine)
         classElement = @language.classHandler.get_class(pLine)
@@ -67,8 +75,9 @@ module StateMachine
           classElement.comments = @language.string_comment_to_transfer
           @language.string_comment_to_transfer = ""
           pElementFile.add_class(classElement)
+          @language.metadata.allClasses.push(classElement)
         end
- 
+
         if @language.endBlockHandler.has_end_of_block?(pLine)
           previous = @language.previousState.last
 
@@ -90,5 +99,5 @@ module StateMachine
   # End OOStructuredFSM
   end
 
-# 
+# End module
 end

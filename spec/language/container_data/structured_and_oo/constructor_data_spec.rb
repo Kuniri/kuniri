@@ -48,6 +48,27 @@ RSpec.describe Languages::ConstructorData do
     end
   end
 
+  context "Copy from FunctionAbstract to constructor" do
+    it "Simple copy" do
+      lalala = Languages::FunctionAbstract.new("lalala")
+      lalala.comments = "abc"
+
+      condiditonal = Languages::ConditionalData.new
+      condiditonal.type = "IF"
+      condiditonal.expression = "x > 3"
+      lalala.add_conditional(condiditonal)
+
+      @constructorData << lalala
+      expect(@constructorData.name).to eq("lalala")
+      expect(@constructorData.comments).to eq("abc")
+      expect(@constructorData.comments).to eq("abc")
+      expect(@constructorData.conditionals[0].instance_of?(
+              Languages::ConditionalData)).to eq(true)
+      expect(@constructorData.type).to eq("CONSTRUCTOR")
+    end
+
+  end
+
   after :each do
     @constructorData = nil
   end

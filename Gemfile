@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'guard-rspec', '~> 4.2.10'
-  gem 'nokogiri', '~> 1.6.6'
+  gem 'coveralls', require: false
+  gem 'rspec', '~> 3.1.0'
 end
 
 group :test do
