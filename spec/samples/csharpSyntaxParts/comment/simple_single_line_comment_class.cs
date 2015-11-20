@@ -18,6 +18,6 @@ public class Xpto {
   }
 
   // Comment 7: Attribute
-  int a = 1;
+  int a;
 
 }

@@ -28,7 +28,7 @@ module Languages
 
           inheritance = get_inheritance(pLine)
           classCaptured.inheritances = inheritance if inheritance
-          
+
           classCaptured.name = result
 
           @log.write_log("Debug: Class: #{classCaptured.name}")
