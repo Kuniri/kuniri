@@ -3,6 +3,7 @@
 class Abc < Array
 
   def initialize
+    @attribute1 = Array.new
   end
 
   def method1

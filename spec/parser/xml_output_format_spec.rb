@@ -44,7 +44,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
    it "::Set aggregation" do
      expectedString = @stringHeader
-     expectedString += "<aggregationData name=\"Class1\"/>\n"
+     expectedString += "<aggregationData name=\"Class1\" isInProject=\"false\"/>\n"
      aggregationTmp = Languages::AggregationData.new "Class1"
      @outputFormat.aggregation_generate([aggregationTmp])
      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)

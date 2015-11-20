@@ -135,6 +135,24 @@ RSpec.describe Kuniri::Kuniri do
     expect(@inheritance.size).to eq(1)
   end
 
+  it "Should contain the aggregation name" do
+    @aggregation_name = nil
+    @output.each do |line|
+      @aggregation_name = line =~ /\s+<aggregationData\s+name="Array"\s+isInProject="false"\/>/
+      break unless @aggregation_name.nil?
+    end
+    expect(@aggregation_name).not_to be_nil
+  end
+
+  it "Should find all aggregations" do
+    @aggregation = []
+    @output.each do |line|
+      line_of_aggregation = line =~ /\s+<aggregationData\s+name="\w+"\s+isInProject="\w+"\/>/
+      @aggregation << line_of_aggregation unless line_of_aggregation.nil?
+    end
+    expect(@aggregation.size).to eq(1)
+  end
+
   it "Should verify the opening-closing structure" do
     @stack = []
     @output.each do |line|

@@ -136,7 +136,8 @@ module Parser
 
       def aggregation_generate(pAggregation)
         pAggregation.each do |aggregation|
-          @outputEngine.aggregationData :name => aggregation.name
+          @outputEngine.aggregationData :name => aggregation.name,
+                           :isInProject => aggregation.isInProject
         end
       end
 
