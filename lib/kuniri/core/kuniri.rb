@@ -53,8 +53,9 @@ module Kuniri
         if @configurationInfo["language"] == "csharp"
           @language_extension = "**.cs"
         end
-
+        
         @filesPathProject = get_project_file(@configurationInfo["source"],
+
           @language_extension)
         unless @filesPathProject
           puts "Problem on source path: #{@configurationInfo["source"]}"

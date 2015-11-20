@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<kuniri>
+  <class_data name="SimpleClass1">
+    <method name="method1" visibility="global"/>
+    <method name="method2" visibility="global">
+      <parameter name="b"/>
+      <parameter name="c"/>
+    </method>
+    <method name="method3" visibility="global">
+      <parameter name="b"/>
+    </method>
+    <method name="method4" visibility="global">
+      <parameter name="x"/>
+    </method>
+    <method name="method5" visibility="global">
+      <parameter name="y"/>
+    </method>
+  </class_data>
+  <class_data name="simple1">
+    <method name="initialize"/>
+  </class_data>
+  <class_data name="Xpto">
+    <method name="methodOne" visibility="global"/>
+    <method name="methodTwo" visibility="global"/>
+    <method name="initialize"/>
+  </class_data>
+  <class_data name="Xpto">
+    <method name="method_1" visibility="global"/>
+    <method name="method_2" visibility="global">
+      <parameter name="krakatoa"/>
+      <parameter name="abc"/>
+    </method>
+    <method name="initialize"/>
+  </class_data>
+  <class_data name="Simple1">
+    <method name="method1" visibility="global"/>
+    <method name="method2" visibility="global"/>
+    <method name="method3" visibility="global">
+      <parameter name="param"/>
+    </method>
+  </class_data>
+  <class_data name="Simple1">
+    <method name="initialize"/>
+  </class_data>
+  <class_data name="Simple1"/>
+  <class_data name="Simple1"/>
+  <class_data name="Abc">
+    <method name="method1" visibility="global"/>
+    <method name="method2" visibility="global">
+      <parameter name="x"/>
+    </method>
+    <method name="method3" visibility="global">
+      <parameter name="a"/>
+      <parameter name="b"/>
+      <parameter name="c"/>
+    </method>
+    <method name="initialize"/>
+    <inheritance name="Array"/>
+  </class_data>
+  <class_data name="simpleClass">
+    <method name="initalize" visibility="global"/>
+    <method name="method1" visibility="global">
+      <parameter name="a"/>
+      <parameter name="b"/>
+      <parameter name="c"/>
+    </method>
+    <method name="xpto" visibility="global"/>
+  </class_data>
+  <class_data name="SimpleClass">
+    <method name="simple1" visibility="global"/>
+    <method name="simple2" visibility="global">
+      <parameter name="i"/>
+      <parameter name="num"/>
+    </method>
+  </class_data>
+</kuniri>
