@@ -11,16 +11,12 @@ module Languages
 
       public
 
-        def initialize
-        end
-
         # @param pLine Verify if line has a ruby aggregation.
         # @return Return string or nil.
         def get_aggregation(pLine)
           result = detect_aggregation(pLine)
           return nil unless result
-          aggregationData = Languages::AggregationData.new(result)
-          return aggregationData
+          return Languages::AggregationData.new(result)
         end
 
     protected

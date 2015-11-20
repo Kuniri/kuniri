@@ -97,46 +97,43 @@ module Languages
       end
 
       def analyse_second_step
-
-        sort_all_classes()
-        sort_all_aggregations()
+        sort_all_classes
+        sort_all_aggregations
 
         allActualAggregations = []
 
         @metadata.allAggregations.each do |element|
           if binary_search(@metadata.allClasses, element)
-            allActualAggregations<<element
+            allActualAggregations << element
           end
         end
 
+        # TODO: Think how to improve.
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
-              classes.aggregations.delete_if do |aggregation|
-                if not allActualAggregations.include? aggregation
-                  true
-                end
+            classes.aggregations.delete_if do |aggregation|
+              unless allActualAggregations.include? aggregation
+                true
               end
             end
+          end
         end
-
       end
 
-
-      def binary_search(vector,element)
-        vector.bsearch {|obj| element.name <=> obj.name}
+      # TODO: Move it to utils
+      def binary_search(pVector, pElement)
+        pVector.bsearch {|obj| pElement.name <=> obj.name}
       end
 
-      def sort_all_classes()
+      # TODO: Move it to utils
+      def sort_all_classes
         @metadata.allClasses.sort! {|c1, c2| c1.name <=> c2.name}
       end
 
-      def sort_all_aggregations()
+      # TODO: Move it to utils
+      def sort_all_aggregations
         @metadata.allAggregations.sort! {|a1, a2| a1.name <=> a2.name}
         @metadata.allAggregations.uniq! {|a| a.name}
-      end
-
-       def get_all_inheritances(pMetadata)
-        return inheritances.sort!.uniq!
       end
 
   # Class
