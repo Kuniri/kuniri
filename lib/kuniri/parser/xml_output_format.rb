@@ -21,6 +21,9 @@ module Parser
                                   :visibility => singleClass.visibility do
             wrapper.comment_generate(singleClass)
 
+            unless singleClass.aggregations.empty?
+              wrapper.aggregation_generate(singleClass.aggregations)
+            end
             singleClass.inheritances.each do |singleInheritance|
               wrapper.inheritance_generate(singleInheritance)
             end
@@ -127,6 +130,12 @@ module Parser
       def comment_generate(pElement)
         if pElement.comments != ""
           @outputEngine.commentData :text => pElement.comments
+        end
+      end
+
+      def aggregation_generate(pAggregation)
+        pAggregation.each do |aggregation|
+          @outputEngine.aggregationData :name => aggregation.name
         end
       end
 

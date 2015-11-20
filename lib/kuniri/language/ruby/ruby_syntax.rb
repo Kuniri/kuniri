@@ -14,6 +14,8 @@ require_relative 'function_behavior_ruby'
 require_relative 'attribute_ruby'
 require_relative 'comment_ruby'
 require_relative 'method_ruby'
+require_relative 'aggregation_ruby'
+require_relative '../metadata'
 
 module Languages
 
@@ -36,6 +38,8 @@ module Languages
         @conditionalHandler = Languages::Ruby::ConditionalRuby.new
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
+        @aggregationHandler = Languages::Ruby::AggregationRuby.new
+        @metadata = Languages::Metadata.create
         @visibility = "public"
       end
 
@@ -45,7 +49,7 @@ module Languages
         @name = File.basename(pPath, ".*")
         @path = File.dirname(pPath)
         analyse_first_step(pPath)
-        #self.analyse_second_step
+        analyse_second_step
       end
 
     private
@@ -71,7 +75,6 @@ module Languages
         commentLine << pLine
       end
 
-      
       # First step for analyse code, it is responsible for get only basic
       # informations.
       # @param pPath Path of file to be analysed.
@@ -90,7 +93,47 @@ module Languages
         end
 
         @fileElements.push(fileElement)
-        
+
+      end
+
+      def analyse_second_step
+        sort_all_classes
+        sort_all_aggregations
+
+        allActualAggregations = []
+
+        @metadata.allAggregations.each do |element|
+          if binary_search(@metadata.allClasses, element)
+            allActualAggregations << element
+          end
+        end
+
+        # TODO: Think how to improve.
+        @fileElements.each do |fileElement|
+          fileElement.classes.each do |classes|
+            classes.aggregations.delete_if do |aggregation|
+              unless allActualAggregations.include? aggregation
+                true
+              end
+            end
+          end
+        end
+      end
+
+      # TODO: Move it to utils
+      def binary_search(pVector, pElement)
+        pVector.bsearch {|obj| pElement.name <=> obj.name}
+      end
+
+      # TODO: Move it to utils
+      def sort_all_classes
+        @metadata.allClasses.sort! {|c1, c2| c1.name <=> c2.name}
+      end
+
+      # TODO: Move it to utils
+      def sort_all_aggregations
+        @metadata.allAggregations.sort! {|a1, a2| a1.name <=> a2.name}
+        @metadata.allAggregations.uniq! {|a| a.name}
       end
 
   # Class

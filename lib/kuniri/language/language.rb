@@ -11,6 +11,7 @@ require_relative '../state_machine/OO_structured_fsm/oo_structured_state'
 require_relative '../state_machine/OO_structured_fsm/conditional_state'
 require_relative '../state_machine/OO_structured_fsm/repetition_state'
 require_relative '../state_machine/OO_structured_fsm/comment_state'
+require_relative '../state_machine/OO_structured_fsm/aggregation_state'
 
 # Module that keeps the language syntax.
 module Languages
@@ -37,6 +38,7 @@ module Languages
       attr_reader :conditionalState
       attr_reader :repetitionState
       attr_reader :commentState
+      attr_reader :aggregationState
 
       attr_reader :externRequirementHandler
       attr_reader :variableHandler
@@ -50,6 +52,9 @@ module Languages
       attr_reader :conditionalHandler
       attr_reader :repetitionHandler
       attr_reader :commentHandler
+      attr_reader :aggregationHandler
+
+      attr_reader :metadata
 
       attr_accessor :fileElements
 
@@ -78,6 +83,8 @@ module Languages
         @repetitionState =
           StateMachine::OOStructuredFSM::RepetitionState.new(self)
         @commentState = StateMachine::OOStructuredFSM::CommentState.new(self)
+        @aggregationState =
+          StateMachine::OOStructuredFSM::AggregationState.new(self)
 
         @state = @idleState
         @previousState = []
@@ -192,6 +199,11 @@ module Languages
       # Conditional state.
       def conditional_capture
         @state.conditional_capture
+      end
+
+      # Aggregation state.
+      def aggregation_capture
+        @state.aggregation_capture
       end
 
       # keep track of state.
