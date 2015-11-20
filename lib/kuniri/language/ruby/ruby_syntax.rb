@@ -121,6 +121,16 @@ module Languages
 
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
+            classes.inheritance.each do |inheritance|
+              include allActualInheritances.include? inheritance
+                inheritance.isInProject = true
+              end
+            end
+          end
+        end
+
+        @fileElements.each do |fileElement|
+          fileElement.classes.each do |classes|
             classes.aggregations.delete_if do |aggregation|
               unless allActualAggregations.include? aggregation
                 true
