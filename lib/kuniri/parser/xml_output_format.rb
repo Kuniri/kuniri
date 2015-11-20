@@ -89,7 +89,8 @@ module Parser
       # @see OutputFormat
       def inheritance_generate(pInheritances)
         pInheritances.each do |singleInheritance|
-          @outputEngine.inheritanceData :name => singleInheritance.name
+          @outputEngine.inheritanceData :name => singleInheritance.name,
+                           :isInProject => singleInheritance.isInProject
         end
       end
 

@@ -120,7 +120,7 @@ RSpec.describe Kuniri::Kuniri do
   it "Should contain the inheritance name" do
     @inheritance_name = nil
     @output.each do |line|
-      @inheritance_name = line =~ /\s+<inheritanceData\s+name="Array"\/>/
+      @inheritance_name = line =~ /\s+<inheritanceData\s+name="Array"\s+isInProject="false"\/>/
       break unless @inheritance_name.nil?
     end
     expect(@inheritance_name).not_to be_nil
@@ -129,7 +129,7 @@ RSpec.describe Kuniri::Kuniri do
   it "Should find all inheritances" do
     @inheritance = []
     @output.each do |line|
-      line_of_inheritance = line =~ /\s+<inheritanceData\s+name="\w+"\/>/
+      line_of_inheritance = line =~ /\s+<inheritanceData\s+name="\w+"\s+isInProject="\w+"\/>/
       @inheritance << line_of_inheritance unless line_of_inheritance.nil?
     end
     expect(@inheritance.size).to eq(1)

@@ -152,7 +152,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "::Simple inheritance" do
       expectedString = @stringHeader
-      expectedString += "<inheritanceData name=\"Xpto\"/>\n"
+      expectedString += "<inheritanceData name=\"Xpto\" isInProject=\"false\"/>\n"
       classTmp = Languages::ClassData.new
       inheritanceTmp = Languages::InheritanceData.new("Xpto")
       classTmp.inheritances.push(inheritanceTmp)
@@ -162,8 +162,8 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "::Double inheritance" do
       expectedString = @stringHeader
-      expectedString += "<inheritanceData name=\"Xpto1\"/>\n\n"
-      expectedString += "<inheritanceData name=\"Xpto2\"/>\n"
+      expectedString += "<inheritanceData name=\"Xpto1\" isInProject=\"false\"/>\n\n"
+      expectedString += "<inheritanceData name=\"Xpto2\" isInProject=\"false\"/>\n"
       classTmp = Languages::ClassData.new
       inheritanceTmp1 = Languages::InheritanceData.new("Xpto1")
       inheritanceTmp2 = Languages::InheritanceData.new("Xpto2")
