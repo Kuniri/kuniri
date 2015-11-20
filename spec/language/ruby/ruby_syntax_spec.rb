@@ -586,6 +586,22 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.metadata.allAggregations[4].name).to eq('Set')
     end
 
+    it 'All Inheritance should be sorted by name and be unique' do
+
+      path = "spec/samples/rubySyntaxParts/" +
+              "inheritance/multipleInheritance.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allInheritances.size).to eq(5)
+      expect(@syntax.metadata.allInheritances[0].name).to eq('Array')
+      expect(@syntax.metadata.allInheritances[1].name).to eq('Class1')
+      expect(@syntax.metadata.allInheritances[2].name).to eq('Class2')
+      expect(@syntax.metadata.allInheritances[3].name).to eq('Class3')
+      expect(@syntax.metadata.allInheritances[4].name).to eq('Set')
+
+    end
+
     it 'Ruby default classes should not be present in Aggregation' do
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"

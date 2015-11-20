@@ -97,8 +97,10 @@ module Languages
       end
 
       def analyse_second_step
+
         sort_all_classes
         sort_all_aggregations
+        sort_all_inheritances
 
         allActualAggregations = []
 
@@ -136,13 +138,10 @@ module Languages
         @metadata.allAggregations.uniq! {|a| a.name}
       end
 
-<<<<<<< HEAD
-=======
-      #  def get_all_inheritances(pMetadata)
-      #   return inheritances.sort!.uniq!
-      # end
-
->>>>>>> Transformed inheritance from string to object
+      def sort_all_inheritances()
+        @metadata.allInheritances.sort! {|a1, a2| a1.name <=> a2.name}
+        @metadata.allInheritances.uniq! {|a| a.name}
+      end
   # Class
   end
 
