@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 RSpec.describe Languages::Ruby::AggregationRuby do
 
-  before :all do
+  before :each do
     @rubyAggr = Languages::Ruby::AggregationRuby.new
     @singleResult = "abc"
   end
@@ -72,9 +72,9 @@ RSpec.describe Languages::Ruby::AggregationRuby do
      end
   end
 
-  after :all do
+  after :each do
     @rubyAggr = nil
     @singleResult = nil
   end
- 
+
 end

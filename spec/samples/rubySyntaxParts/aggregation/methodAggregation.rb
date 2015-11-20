@@ -1,5 +1,5 @@
 class Test1
-    
+
     attr_accessor :value
 
     def initialize(value)

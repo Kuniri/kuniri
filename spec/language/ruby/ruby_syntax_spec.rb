@@ -174,9 +174,6 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it "All classes in Metadata array" do
-
-      @syntax.metadata.allClasses.clear
-
       path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
 
       @syntax.analyse_source(path)
@@ -508,40 +505,42 @@ RSpec.describe Languages::RubySyntax do
   context "Aggregation" do
 
     it "Aggregation single line capture in constructor" do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/constructorAggregation.rb"
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Foo")
-      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Blah")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Foo")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Blah")
     end
 
     it "Aggregation single line capture in method" do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/methodAggregation.rb"
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Test1")
-      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Test2")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Test1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Test2")
     end
 
     it "Aggregation single line capture in class" do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/classAggregation.rb"
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[2].aggregations[0].name).to eq("Class1")
-      expect(@syntax.fileElements[0].classes[2].aggregations[1].name).to eq("Class2")
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Class1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Class2")
     end
 
     it "All aggregations in Metadata array" do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/classAggregation.rb"
 
@@ -559,7 +558,6 @@ RSpec.describe Languages::RubySyntax do
   context 'Second parser' do
 
     it 'All Classes should be sorted by name' do
-
        path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
@@ -575,7 +573,6 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'All Aggregation should be sorted by name and be unique' do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
@@ -587,26 +584,24 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.metadata.allAggregations[2].name).to eq('Class2')
       expect(@syntax.metadata.allAggregations[3].name).to eq('Class3')
       expect(@syntax.metadata.allAggregations[4].name).to eq('Set')
-
     end
 
-
     it 'Ruby default classes should not be present in Aggregation' do
-
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
       @syntax.analyse_source(path)
 
       expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
-      expect(@syntax.fileElements[0].classes[4].aggregations[0].name).to eq('Class1')
-      expect(@syntax.fileElements[0].classes[4].aggregations[1].name).to eq('Class2')
-      expect(@syntax.fileElements[0].classes[4].aggregations[2].name).to eq('Class3')
-
+      expect(@syntax.fileElements[0].classes[4].aggregations[0].name)
+        .to eq('Class1')
+      expect(@syntax.fileElements[0].classes[4].aggregations[1].name)
+        .to eq('Class2')
+      expect(@syntax.fileElements[0].classes[4].aggregations[2].name)
+        .to eq('Class3')
     end
 
   end
-
 
   after :each do
     @syntax = nil

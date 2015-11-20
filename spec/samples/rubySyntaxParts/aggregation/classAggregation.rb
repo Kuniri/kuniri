@@ -1,5 +1,5 @@
 class Class1
-    
+
     attr_accessor :value
 
     def initialize(value)
@@ -26,7 +26,7 @@ class Class3
 
     @class1 = Class1.new(10)
     @class2 = Class2      .       new 10
-   
+
     def initialize()
     end
 
