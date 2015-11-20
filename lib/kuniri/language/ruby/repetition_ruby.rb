@@ -17,7 +17,7 @@ module Languages
           return nil unless result
 
           repetitionCaptured = Languages::RepetitionData.new
-          repetitionCaptured.type = repetition_type(pLine)
+          repetitionCaptured.type = repetition_type(result)
 
           repetitionCaptured.expression = get_expression(result)
 
@@ -37,6 +37,12 @@ module Languages
           regexExp = /^\s*until\s+(.*)do/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
+          regexExp = /(lambda)\s+do(.*)\s*/
+          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+
+          regexExp = /(\.\s*each)\s+do(.*)\s*/
+          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+
           return nil
         end
 
@@ -47,6 +53,12 @@ module Languages
 
           regexExp = /^\s+for|^for/
           return "FOR" if regexExp =~ pString
+
+          regexExp = /^each\s+/
+          return "EACH" if regexExp =~ pString
+
+          regexExp = /^lambda\s+/
+          return "LAMBDA" if regexExp =~ pString
 
           return nil
         end
