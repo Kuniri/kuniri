@@ -44,8 +44,10 @@ module Parser
                         singleElement.global_variables)
               end
               if (singleElement.global_functions.length() > 0)
-                wrapper.function_behaviour_generate(
-                                              singleElement.global_functions)
+                singleElement.global_functions.each do |globalFunction|
+                  wrapper.function_behaviour_generate("functionData",
+                                                      globalFunction)
+                end
               end
               if (singleElement.classes.length() > 0)
                 wrapper.class_generate(singleElement.classes)
