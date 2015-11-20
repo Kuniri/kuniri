@@ -121,9 +121,11 @@ module Languages
 
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
-            classes.inheritance.each do |inheritance|
-              include allActualInheritances.include? inheritance
-                inheritance.isInProject = true
+            classes.inheritances.each do |inheritance|
+              allActualInheritances.each do |actualInheritances|
+                if actualInheritances.name == inheritance.name
+                  inheritance.isInProject = true
+                end
               end
             end
           end
@@ -131,13 +133,16 @@ module Languages
 
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
-            classes.aggregations.delete_if do |aggregation|
-              unless allActualAggregations.include? aggregation
-                true
+            classes.aggregations.each do |aggregation|
+              allActualAggregations.each do |actualAggregation|
+                if actualAggregation.name == aggregation.name
+                  aggregation.isInProject = true
+                end
               end
             end
           end
         end
+
       end
 
       # TODO: Move it to utils

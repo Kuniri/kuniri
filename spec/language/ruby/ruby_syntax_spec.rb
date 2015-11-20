@@ -621,23 +621,46 @@ RSpec.describe Languages::RubySyntax do
 
     end
 
-    it 'Ruby default classes should not be present in Aggregation' do
+    it 'Ruby default classes should not be actual aggregations' do
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
-      expect(@syntax.fileElements[0].classes[4].aggregations[0].name)
-        .to eq('Class1')
-      expect(@syntax.fileElements[0].classes[4].aggregations[1].name)
-        .to eq('Class2')
-      expect(@syntax.fileElements[0].classes[4].aggregations[2].name)
-        .to eq('Class3')
+      expect(@syntax.fileElements[0].classes[4].aggregations[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[1].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[2].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[3].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[4].aggregations[4].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[4].aggregations[5].isInProject)
+        .to eq(true)
+    end
+
+    it 'Ruby default classes should not be actual inheritances' do
+
+      path = "spec/samples/rubySyntaxParts/" +
+          "inheritance/multipleInheritance.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[0].inheritances[0].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[1].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[2].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[3].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].inheritances[0].isInProject)
+        .to eq(false)
     end
 
   end
-
   after :each do
     @syntax = nil
   end

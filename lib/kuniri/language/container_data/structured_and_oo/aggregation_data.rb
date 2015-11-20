@@ -7,6 +7,8 @@ module Languages
 
     public
 
+      attr_accessor :isInProject
+
       # Basic initialization of aggregation.
       # @param pAggregationName Aggregation name for basic initialization.
       def initialize (pAggregationName)

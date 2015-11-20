@@ -7,6 +7,8 @@ module Languages
 
     public
 
+      attr_accessor :isInProject
+
       # Basic initialization of inheritance.
       # @param pInheritance_name Inheritance name for basic initialization.
       def initialize (pInheritanceName)
