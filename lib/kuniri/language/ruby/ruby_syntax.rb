@@ -111,6 +111,14 @@ module Languages
         end
 
         # TODO: Think how to improve.
+        allActualInheritances = []
+
+        @metadata.allInheritances.each do |element|
+          if binary_search(@metadata.allClasses, element)
+            allActualInheritances<<element
+          end
+        end
+
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
             classes.aggregations.delete_if do |aggregation|

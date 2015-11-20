@@ -186,6 +186,21 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.metadata.allClasses[4].name).to eq('Simple5')
     end
 
+    it "All inheritances in Metadata array" do
+
+      @syntax.metadata.allInheritances.clear
+
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allInheritances.size).to eq(4)
+      expect(@syntax.metadata.allInheritances[0].name).to eq('Simple1')
+      expect(@syntax.metadata.allInheritances[1].name).to eq('Simple2')
+      expect(@syntax.metadata.allInheritances[2].name).to eq('Simple3')
+      expect(@syntax.metadata.allInheritances[3].name).to eq('Simple4')
+    end
+
 
   end
 
@@ -573,6 +588,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'All Aggregation should be sorted by name and be unique' do
+
+      @syntax.metadata.allAggregations.clear
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
@@ -587,6 +604,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'All Inheritance should be sorted by name and be unique' do
+
+      @syntax.metadata.allInheritances.clear
 
       path = "spec/samples/rubySyntaxParts/" +
               "inheritance/multipleInheritance.rb"
