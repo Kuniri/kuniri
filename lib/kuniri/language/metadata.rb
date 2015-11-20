@@ -1,12 +1,13 @@
 module Languages
 
+  # Keep important information for second parser.
   class Metadata
 
     public
 
       private_class_method :new
-      attr_accessor :allClasses
-      attr_accessor :allAggregations
+      attr_accessor :allClasses # !@attribute All classes to be analysed.
+      attr_accessor :allAggregations # !@attribute All aggregation in classes.
 
       def initialize
         @allClasses = []

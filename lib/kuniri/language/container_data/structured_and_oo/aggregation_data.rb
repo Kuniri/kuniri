@@ -8,7 +8,7 @@ module Languages
     public
 
       # Basic initialization of aggregation.
-      # @param pAggregation_name Aggregation name for basic initialization.
+      # @param pAggregationName Aggregation name for basic initialization.
       def initialize (pAggregationName)
         return nil if pAggregationName.nil? or !pAggregationName.is_a? String
 

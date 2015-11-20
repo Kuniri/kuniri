@@ -56,8 +56,8 @@ module Languages
         @constructors.push(pConstructor)
       end
 
-      # Add constructor inside class.
-      # @param pConstructor Object of FunctionData to be added at class.
+      # Add aggregation inside class.
+      # @param pAggregation Object of AggregationData to be added at class.
       def add_aggregation(pAggregation)
         return nil unless pAggregation.is_a?(Languages::AggregationData)
 
