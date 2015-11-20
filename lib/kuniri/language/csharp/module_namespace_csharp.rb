@@ -23,6 +23,7 @@ module Languages
       protected
 
         def detect_module(pLine)
+          return nil if pLine =~ /^\s*?\/\/|^\s*?\/\*/
           regexExpression = /^\s*namespace\s+(.*)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")

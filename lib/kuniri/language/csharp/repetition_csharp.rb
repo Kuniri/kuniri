@@ -25,6 +25,7 @@ module Languages
       protected
 
         def detect_repetition(pLine)
+          return nil if pLine =~ /^\s*?\/\/|^\s*?\/\*/
           regexExp = /^\s*while\s*(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 

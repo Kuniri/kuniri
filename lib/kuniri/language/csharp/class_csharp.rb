@@ -41,6 +41,7 @@ module Languages
         # Override
         def detect_class(pLine)
           pLine.gsub!(/\s{2,}/," ")
+          return nil if pLine =~ /^\s?\/\/|^\s?\/\*/
           regexExpression = /\s?class\s(\w+)/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression)[0].join("")

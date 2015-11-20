@@ -23,6 +23,7 @@ module Languages
       protected
 
         def detect_extern_requirement(pLine)
+          return nil if pLine =~ /^\s*?\/\/|^\s*?\/\*/
           regexExpression = /^\s*using\s+(.+)\s*/
           return nil unless pLine =~ regexExpression
           return pLine.scan(regexExpression).join("")

@@ -17,6 +17,7 @@ module Languages
 
         def get_function(pLine, type = 'globalFunction')
           pLine.gsub!(/\s{2,}/," ")
+          return nil if pLine =~ /^\s?\/\/|^\s?\/\*/
           result = detect_function(pLine)
           return nil unless result
 

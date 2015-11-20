@@ -334,76 +334,47 @@ RSpec.describe Languages::CsharpSyntax do
 
   end
 
-  # context "Comments" do
+  context "Comments" do
 
-  #   it "Correct single line comment capture - Globals" do
+    it "Correct single line comment capture - Class" do
 
-  #     path = "spec/samples/csharpSyntaxParts/" +
-  #             "comment/simple_single_line_comment_global.cs"
+      path = "spec/samples/csharpSyntaxParts/" +
+              "comment/simple_single_line_comment_class.cs"
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].comments).to eq(" First comment\n")
-  #     expect(@syntax.fileElements[0].global_functions[0].comments)
-  #             .to eq(" Comment 2\n")
-  #     expect(@syntax.fileElements[0].global_functions[1].comments)
-  #             .to eq(" Combo comment p1\n Combo comment p2\n")
-  #     expect(@syntax.fileElements[0].global_variables[0].comments)
-  #             .to eq(" Comment 4\n")
-  #   end
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].comments)
+              .to eq(" Comment 1: class\n")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
+              .to eq(" Comment 2: constructor\n")
+      expect(@syntax.fileElements[0].classes[0].methods[0].comments)
+              .to eq(" Comment 3: method\n")
+      expect(@syntax.fileElements[0].classes[0].methods[1].comments)
+              .to eq(" Comment 4: Combo 1\n Comment 5: "+
+                      "Combo 2\n Comment 6: Combo 3; Combo 4\n")
+      #expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
+      #        .to eq (" Comment 7: Attribute\n")
+    end
 
-  #   it "Correct single line comment capture - Class" do
+    it "Correct multiple line comment capture - Class" do
 
-  #     path = "spec/samples/csharpSyntaxParts/" +
-  #             "comment/simple_single_line_comment_class.cs"
+      path = "spec/samples/csharpSyntaxParts/" +
+              "comment/simple_multiple_line_comment_class.cs"
 
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].comments)
-  #             .to eq(" Comment 1: class\n")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
-  #             .to eq(" Comment 2: constructor\n")
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].comments)
-  #             .to eq(" Comment 3: method\n")
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-  #             .to eq(" Comment 4: Combo 1\n Comment 5: "+
-  #                     "Combo 2\n Comment 6: Combo 3; Combo 4\n")
-  #     expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
-  #             .to eq (" Comment 7: Attribute\n")
-  #   end
+      @syntax.analyse_source(path)
+      expect(@syntax.fileElements[0].classes[0].comments)
+              .to eq("This is the\nfirst class\nof this file.\n")
+      expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
+              .to eq("    public Xpto() {}\n")
+      expect(@syntax.fileElements[0].classes[0].methods[0].comments)
+              .to eq("    public int methodOne(){}\n")
+      expect(@syntax.fileElements[0].classes[0].methods[1].comments)
+              .to eq("    if(a<b){}\n")
+      expect(@syntax.fileElements[0].classes[0].methods[2].comments)
+              .to eq("  int a = 4;\n    method;Three\n")
 
-  #   it "Correct multiple line comment capture - Global" do
+    end
 
-  #     path = "spec/samples/csharpSyntaxParts/" +
-  #             "comment/simple_multiple_line_comment_global.cs"
-
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].comments)
-  #       .to eq("Comment 1:\nMultiple line.\n")
-  #     expect(@syntax.fileElements[0].global_functions[0].comments)
-  #             .to eq("Global Function\nnumber one\nmultiple line\n")
-  #     expect(@syntax.fileElements[0].global_variables[0].comments)
-  #             .to eq("global\n")
-  #   end
-
-  #   it "Correct multiple line comment capture - Class" do
-
-  #     path = "spec/samples/csharpSyntaxParts/" +
-  #             "comment/simple_multiple_line_comment_class.cs"
-
-  #     @syntax.analyse_source(path)
-  #     expect(@syntax.fileElements[0].classes[0].comments)
-  #             .to eq("This is the\nfirst class\nof this file.\n")
-  #     expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
-  #             .to eq("    Constructor\n    initialize\n")
-  #     expect(@syntax.fileElements[0].classes[0].methods[0].comments)
-  #             .to eq("    First method\n")
-  #     expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-  #             .to eq("    methodTwo\n")
-  #     expect(@syntax.fileElements[0].classes[0].methods[2].comments)
-  #             .to eq("    method;Three\n")
-
-  #   end
-
-  # end
+  end
   after :each do
     @syntax = nil
   end

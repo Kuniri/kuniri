@@ -57,13 +57,13 @@ module Languages
       def handle_semicolon(pLine)
         commentLine = []
 
-        if pLine =~ /^\/\*(.*)/
+        if pLine =~ /^\s*?\/\*(.*)/
           @flagMultipleLineComment = true
-        elsif pLine =~ /^\/\*/
+        elsif pLine =~ /^\s*?\/\*/
           @flagMultipleLineComment = false
         end
 
-        unless @flagMultipleLineComment == true || pLine =~ /\/\/(.*)/ || pLine =~ /\s*for\s*/
+        unless @flagMultipleLineComment == true || pLine =~ /\s*?\/\/(.*)/ || pLine =~ /\s*for\s*/
           return pLine.split(/;/)
         end
         commentLine << pLine

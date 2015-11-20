@@ -16,6 +16,7 @@ module Languages
       protected
 
         def detect_end(pLine)
+          return false if pLine =~ /^\s*?\/\/|^\s*?\/\*/
           #TODO: EXTREMELY SIMPLE HANDLING, IT HAVE TO BE IMPROVED!
           if pLine =~ /\/\/\s*\}/
             return false

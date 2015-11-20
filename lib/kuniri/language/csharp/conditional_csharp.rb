@@ -24,6 +24,8 @@ module Languages
       protected
 
         def detect_conditional(pLine)
+          return nil if pLine =~ /^\s*?\/\/|^\s*?\/\*/
+
           regexExp = /^\s*if\s*\((.*)\)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
