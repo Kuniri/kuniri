@@ -44,7 +44,8 @@ RSpec.describe Parser::XMLOutputFormat do
 
    it "::Set aggregation" do
      expectedString = @stringHeader
-     expectedString += "<aggregationData name=\"Class1\" isInProject=\"false\"/>\n"
+     expectedString +=
+                    "<aggregationData name=\"Class1\" isInProject=\"false\"/>\n"
      aggregationTmp = Languages::AggregationData.new "Class1"
      @outputFormat.aggregation_generate([aggregationTmp])
      expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
@@ -152,7 +153,8 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "::Simple inheritance" do
       expectedString = @stringHeader
-      expectedString += "<inheritanceData name=\"Xpto\" isInProject=\"false\"/>\n"
+      expectedString +=
+                      "<inheritanceData name=\"Xpto\" isInProject=\"false\"/>\n"
       classTmp = Languages::ClassData.new
       inheritanceTmp = Languages::InheritanceData.new("Xpto")
       classTmp.inheritances.push(inheritanceTmp)
@@ -162,8 +164,10 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "::Double inheritance" do
       expectedString = @stringHeader
-      expectedString += "<inheritanceData name=\"Xpto1\" isInProject=\"false\"/>\n\n"
-      expectedString += "<inheritanceData name=\"Xpto2\" isInProject=\"false\"/>\n"
+      expectedString +=
+                   "<inheritanceData name=\"Xpto1\" isInProject=\"false\"/>\n\n"
+      expectedString +=
+                   "<inheritanceData name=\"Xpto2\" isInProject=\"false\"/>\n"
       classTmp = Languages::ClassData.new
       inheritanceTmp1 = Languages::InheritanceData.new("Xpto1")
       inheritanceTmp2 = Languages::InheritanceData.new("Xpto2")

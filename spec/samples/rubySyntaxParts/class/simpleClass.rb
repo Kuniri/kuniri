@@ -11,7 +11,7 @@ class Simple3 <Simple2
 
 end
 
-    class Simple4         <                    Simple3
+    class Simple4         <                    Simple3          
 end
 
       class             Simple5 <      Simple4

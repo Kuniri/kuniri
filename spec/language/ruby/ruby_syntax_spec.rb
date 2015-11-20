@@ -26,15 +26,18 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/requireRelative.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[0].library)
+        .to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library)
+        .to eq ("two")
       expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
       expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
       expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].library)
+        .to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements.size).to eq (6)
     end
 
@@ -52,15 +55,18 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[0].library)
+        .to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library)
+        .to eq ("two")
       expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
       expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
       expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].library)
+        .to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements[6].library)
         .to eq ("seven")
       expect(@syntax.fileElements[0].extern_requirements[7].library)
