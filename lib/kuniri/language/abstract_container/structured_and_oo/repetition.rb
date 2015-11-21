@@ -30,8 +30,16 @@ module Languages
 
       # Try to extract the expression.
       # @param pString String with conditional expression.
+      # @param pType Loop type.
       # @return Return a partial string.
-      def get_expression(pString)
+      def get_expression(pType, pString)
+        raise NotImplementedError
+      end
+
+      # Take an partial result of string, and remove unnecessary informations.
+      # @param pString Line with string.
+      # @return Return a string without any unnecessary information.
+      def remove_unnecessary_information(pString)
         raise NotImplementedError
       end
 
