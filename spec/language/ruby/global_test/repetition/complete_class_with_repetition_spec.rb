@@ -39,7 +39,7 @@ RSpec.describe Kuniri::Kuniri do
       @method_name = nil
       @output.each do |line|
         @method_name = line =~
-        /\s+<repetitionData\sname="nothing"\stype="WHILE"\sexpression="\$i < \$num"\/>/
+        /\s+<repetitionData\sname="nothing"\stype="WHILE"\sexpression="\$i &lt; \$num"\/>/
         break unless @method_name.nil?
       end
       expect(@method_name).not_to be_nil
@@ -58,7 +58,7 @@ RSpec.describe Kuniri::Kuniri do
       @method_name = nil
       @output.each do |line|
         @method_name = line =~
-        /\s+<repetitionData\sname="nothing"\stype="UNTIL"\sexpression="\$i > \$num"\/>/
+        /\s+<repetitionData\sname="nothing"\stype="UNTIL"\sexpression="\$i &gt; \$num"\/>/
         break unless @method_name.nil?
       end
       expect(@method_name).not_to be_nil

@@ -84,7 +84,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
       expectedString += '  <conditionalData name="nothing" type="IF"' +
-                        ' expression="(x < 3)"/>'
+                        ' expression="(x &lt; 3)"/>'
       expectedString += "\n</constructorData>\n"
 
       constructorTmp = Languages::ConstructorData.new("initialize")
@@ -124,7 +124,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
       expectedString += '  <conditionalData name="nothing" type="IF"' +
-                        ' expression="(x < 3)"/>' + "\n"
+                        ' expression="(x &lt; 3)"/>' + "\n"
       expectedString += '  <repetitionData name="nothing" type="FOR"' +
                         ' expression="i in x"/>'
       expectedString += "\n</constructorData>\n"
@@ -252,7 +252,7 @@ RSpec.describe Parser::XMLOutputFormat do
     it "Generate repetition" do
       expectedString = @stringHeader
       expectedString += "<repetitionData name=\"nothing\" "
-      expectedString += "type=\"while\" expression=\"x>3\"/>\n"
+      expectedString += "type=\"while\" expression=\"x&gt;3\"/>\n"
       repetitionTmp = Languages::RepetitionData.new
       repetitionTmp.type = "while"
       repetitionTmp.expression = "x>3"
@@ -263,7 +263,7 @@ RSpec.describe Parser::XMLOutputFormat do
     it "Generate conditional" do
       expectedString = @stringHeader
       expectedString += "<conditionalData name=\"nothing\" type=\"if\""
-      expectedString += " expression=\"y < 3\"/>\n"
+      expectedString += " expression=\"y &lt; 3\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
       conditionalTmp.type = "if"
       conditionalTmp.expression = "y < 3"
