@@ -92,6 +92,7 @@ module Languages
           end
         end
 
+        @source.close()
         @fileElements.push(fileElement)
 
       end
