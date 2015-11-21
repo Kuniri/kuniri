@@ -120,16 +120,20 @@ module Parser
 
       def simple_element(pElement, pElementName)
         pElement.each do |element|
+          finalExpression = element.expression.gsub('"', "'")
+                                              .gsub('&', '&amp;')
+                                              .gsub('>', '&gt;')
+                                              .gsub('<', '&lt;')
           @outputEngine.send(pElementName,
                               {:name => element.name,
                                :type => element.type,
-                               :expression => element.expression})
+                               :expression => finalExpression})
         end
       end
 
       def comment_generate(pElement)
         if pElement.comments != ""
-          @outputEngine.commentData :text => pElement.comments
+          @outputEngine.commentData :text => pElement.comments.gsub('"', "'")
         end
       end
 
