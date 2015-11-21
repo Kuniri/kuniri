@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/untilLoopInClass.rb
+:output: ./spec/language/ruby/global_test/repetition/untilInClass.xml
+:extract: uml
