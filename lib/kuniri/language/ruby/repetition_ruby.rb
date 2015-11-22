@@ -16,11 +16,13 @@ module Languages
           result = detect_repetition(pLine)
           return nil unless result
 
+          #result = remove_unnecessary_information(result)
           repetitionCaptured = Languages::RepetitionData.new
-          repetitionCaptured.type = repetition_type(pLine)
+          repetitionCaptured.type = repetition_type(result)
 
-          repetitionCaptured.expression = get_expression(result)
-
+          repetitionCaptured.expression = get_expression(
+                                                    repetitionCaptured.type,
+                                                    result)
           return repetitionCaptured
         end
 
@@ -29,13 +31,23 @@ module Languages
         # Override
         def detect_repetition(pLine)
           regexExp = /^\s*while\s+(.*)do/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine[regexExp, 0] if regexExp =~ pLine
 
-          regexExp = /^\s*for\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          regexExp = /^\s*for\s+(\w+)\s+in\s+(.+)/
+          return pLine[regexExp, 0] if regexExp =~ pLine
 
           regexExp = /^\s*until\s+(.*)do/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine[regexExp, 0] if regexExp =~ pLine
+
+          regexExp = /^\s*end\s+while\s+(.*)/
+          return pLine[regexExp, 0] if regexExp =~ pLine
+
+          regexExp = /(lambda)\s+do(.*)\s*/
+          return pLine[regexExp, 0] if regexExp =~ pLine
+
+          # TODO: BUG in this case -> puts "test.each do |x|"
+          regexExp = /\.(\s*\w+)\s+do(.*)\s*/
+          return pLine[regexExp, 0] if regexExp =~ pLine
 
           return nil
         end
@@ -48,14 +60,47 @@ module Languages
           regexExp = /^\s+for|^for/
           return "FOR" if regexExp =~ pString
 
+          regexExp = /^\s+until|^until/
+          return "UNTIL" if regexExp =~ pString
+
+          regexExp = /^\s*end\s+while\s+/
+          return "DOWHILE" if regexExp =~ pString
+
+          regexExp = /^lambda\s+/
+          return "LAMBDA" if regexExp =~ pString
+
+          regexExp = /\.\w+/
+          return pString[/\w+/, 0].upcase if regexExp =~ pString
+
           return nil
         end
 
         # Override
-        def get_expression(pString)
+        def get_expression(pType, pString)
+          if pType == "FOR"
+            pString.slice!("for")
+          elsif pType == "WHILE"
+            pString.slice!("while")
+            pString.slice!("do")
+          elsif pType == "UNTIL"
+            pString.slice!("until")
+            pString.slice!("do")
+          elsif pType == "DOWHILE"
+            pString.slice!("end")
+            pString.slice!("while")
+          else
+            pString.slice!(".")
+          end
           leftStrip = pString.lstrip
           rightStrip = leftStrip.rstrip
+
           return rightStrip
+        end
+
+        # Override
+        def remove_unnecessary_information(pString)
+          return pString.gsub(/\./,"") if pString =~ /\./
+          return pString
         end
 
     # class

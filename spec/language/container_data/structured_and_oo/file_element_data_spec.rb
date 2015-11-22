@@ -70,7 +70,7 @@ RSpec.describe Languages::FileElementData do
   context "When add external files." do
     it "Add one external element." do
       @fileElement.add_extern_requirement(@externFile1)
-      expect(@fileElement.extern_requirements[0].name == "/dir/1").to be true
+      expect(@fileElement.extern_requirements[0].library == "/dir/1").to be true
     end
 
     it "Add two external elements." do
@@ -78,7 +78,7 @@ RSpec.describe Languages::FileElementData do
       @fileElement.add_extern_requirement(@externFile2)
       extern = []
       @fileElement.extern_requirements.each do |externs|
-        extern.push(externs.name)
+        extern.push(externs.library)
       end
       expect(extern).to match_array(["/dir/1", "/dir/2"])
     end

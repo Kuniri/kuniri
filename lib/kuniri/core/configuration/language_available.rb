@@ -1,7 +1,7 @@
 module Configuration
   #Handling the languages available in the system.
-  class Language_Available
+  class LanguageAvailable
     public
-      LANGUAGES = ["ruby", "python", "c++", "c"] #Put here new language.
+      LANGUAGES = ["ruby", "python", "c++", "c", "java"] #Put here new language.
   end
 end
