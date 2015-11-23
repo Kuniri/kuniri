@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/forLoopInClass.rb
+:output: ./spec/language/ruby/global_test/repetition/forLoopInClass.xml
+:extract: uml

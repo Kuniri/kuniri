@@ -10,7 +10,7 @@ RSpec.describe Kuniri::Kuniri do
 
   context "Validate for loop" do
     it "Check for statement" do
-      path = "./spec/language/ruby/global_test/repetition/.kuniri.yml"
+      path = "./spec/language/ruby/global_test/repetition/.kuniri4.yml"
       @kuniri.read_configuration_file(path)
       @kuniri.run_analysis
       parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
