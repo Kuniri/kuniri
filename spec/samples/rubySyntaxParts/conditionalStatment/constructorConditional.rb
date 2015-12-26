@@ -1,4 +1,4 @@
-class simple1
+class Simple1
 
   def initialize
     if a > b
