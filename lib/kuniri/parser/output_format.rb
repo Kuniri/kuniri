@@ -90,15 +90,11 @@ module Parser
         raise NotImplementedError
       end
 
-      def repetition_generate(pRepetition)
+      def basic_structure_generate(pManager)
         raise NotImplementedError
       end
 
       def module_generate(pModule)
-        raise NotImplementedError
-      end
-
-      def conditional_generate(pConditional)
         raise NotImplementedError
       end
 

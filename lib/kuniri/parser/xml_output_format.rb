@@ -51,11 +51,9 @@ module Parser
           pFunction.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          unless pFunction.conditionals.empty?
-            wrapper.conditional_generate(pFunction.conditionals)
-          end
-          unless pFunction.repetitions.empty?
-            wrapper.repetition_generate(pFunction.repetitions)
+          unless pFunction.managerCondAndLoop.basicStructure.empty?
+            wrapper.basic_structure_generate(
+                                  pFunction.managerCondAndLoop.basicStructure)
           end
         end
       end
@@ -109,13 +107,8 @@ module Parser
       end
 
       # @see OutputFormat
-      def repetition_generate(pRepetition)
-        simple_element(pRepetition)
-      end
-
-      # @see OutputFormat
-      def conditional_generate(pConditional)
-        simple_element(pConditional)
+      def basic_structure_generate(pBasicStructure)
+        simple_element(pBasicStructure)
       end
 
       def simple_element(pElement)

@@ -34,8 +34,8 @@ RSpec.describe Languages::ConstructorData do
       condiditonal.type = "IF"
       condiditonal.expression = "x > 3"
       @constructorData.add_conditional(condiditonal)
-      expect(@constructorData.conditionals[0].instance_of?(
-              Languages::ConditionalData)).to eq(true)
+      all = @constructorData.managerCondAndLoop.basicStructure
+      expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
     end
   end
 
@@ -62,8 +62,8 @@ RSpec.describe Languages::ConstructorData do
       expect(@constructorData.name).to eq("lalala")
       expect(@constructorData.comments).to eq("abc")
       expect(@constructorData.comments).to eq("abc")
-      expect(@constructorData.conditionals[0].instance_of?(
-              Languages::ConditionalData)).to eq(true)
+      all = @constructorData.managerCondAndLoop.basicStructure
+      expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
       expect(@constructorData.type).to eq("CONSTRUCTOR")
     end
 

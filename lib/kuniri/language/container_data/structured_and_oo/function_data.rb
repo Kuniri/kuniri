@@ -22,8 +22,7 @@ module Languages
         end
         @name = abstractToGlobalFunction.name
         @parameters = abstractToGlobalFunction.parameters
-        @conditionals = abstractToGlobalFunction.conditionals
-        @repetitions = abstractToGlobalFunction.repetitions
+        @managerCondAndLoop = abstractToGlobalFunction.managerCondAndLoop
         @visibility = abstractToGlobalFunction.visibility
         @comments = abstractToGlobalFunction.comments
         @type = GLOBAL_FUNCTION_DATA

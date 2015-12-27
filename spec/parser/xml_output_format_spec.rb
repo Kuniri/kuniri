@@ -88,7 +88,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
       constructorTmp = Languages::ConstructorData.new("initialize")
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "IF"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "(x < 3)"
 
       constructorTmp.add_conditional(conditionalTmp)
@@ -107,7 +107,7 @@ RSpec.describe Parser::XMLOutputFormat do
 
       constructorTmp = Languages::ConstructorData.new("initialize")
       conditionalTmp = Languages::RepetitionData.new
-      conditionalTmp.type = "FOR"
+      conditionalTmp.type = Languages::FOR_LABEL
       conditionalTmp.expression = "i in x"
 
       constructorTmp.add_repetition(conditionalTmp)
@@ -128,12 +128,12 @@ RSpec.describe Parser::XMLOutputFormat do
       constructorTmp = Languages::ConstructorData.new("initialize")
 
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "IF"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "(x < 3)"
       constructorTmp.add_conditional(conditionalTmp)
 
       conditionalTmp = Languages::RepetitionData.new
-      conditionalTmp.type = "FOR"
+      conditionalTmp.type = Languages::FOR_LABEL
       conditionalTmp.expression = "i in x"
       constructorTmp.add_repetition(conditionalTmp)
 
@@ -249,9 +249,9 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<while expression=\"x&gt;3\" level=\"0\"/>\n"
       repetitionTmp = Languages::RepetitionData.new
-      repetitionTmp.type = "while"
+      repetitionTmp.type = Languages::WHILE_LABEL
       repetitionTmp.expression = "x>3"
-      @outputFormat.repetition_generate([repetitionTmp])
+      @outputFormat.basic_structure_generate([repetitionTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
@@ -259,9 +259,9 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<if expression=\"y &lt; 3\" level=\"0\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "if"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "y < 3"
-      @outputFormat.conditional_generate([conditionalTmp])
+      @outputFormat.basic_structure_generate([conditionalTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 

@@ -30,7 +30,7 @@ RSpec.describe Languages::FunctionData do
       lalala.comments = "abc"
 
       condiditonal = Languages::ConditionalData.new
-      condiditonal.type = "IF"
+      condiditonal.type = Languages::IF_LABEL
       condiditonal.expression = "x > 3"
       lalala.add_conditional(condiditonal)
 
@@ -38,8 +38,8 @@ RSpec.describe Languages::FunctionData do
       expect(@functionData.name).to eq("lalala")
       expect(@functionData.comments).to eq("abc")
       expect(@functionData.comments).to eq("abc")
-      expect(@functionData.conditionals[0].instance_of?(
-              Languages::ConditionalData)).to eq(true)
+      all = @functionData.managerCondAndLoop.basicStructure
+      expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
       expect(@functionData.type).to eq("GLOBALFUNCTION")
     end
   end
