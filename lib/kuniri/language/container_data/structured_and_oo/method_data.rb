@@ -22,8 +22,7 @@ module Languages
         end
         @name = functionAbstractToMethod.name
         @parameters = functionAbstractToMethod.parameters
-        @conditionals = functionAbstractToMethod.conditionals
-        @repetitions = functionAbstractToMethod.repetitions
+        @managerCondAndLoop = functionAbstractToMethod.managerCondAndLoop
         @visibility = functionAbstractToMethod.visibility
         @comments = functionAbstractToMethod.comments
         @type = METHOD_DATA
