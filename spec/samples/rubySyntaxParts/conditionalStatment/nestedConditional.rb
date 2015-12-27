@@ -19,26 +19,26 @@ def nested_conditional
 end
 
 def deeply_nested_conditional
-  if xpto == "xpto"
+  if xpto == "level0"
     k = 55
-    if abc == "abc"
+    if abc == "level1"
       k = 51
-    elsif jkl == 99
+    elsif jkl == "level1"
       k = 200
     else
       k = 0
     end
-  elsif xpto == "arroz"
-    if plus == "feijao"
+  elsif xpto == "level0"
+    if plus == "level1"
       k = 98
-      if myGod == 1
+      if myGod == "level2"
         k = 1
-      elsif arghh
+      elsif myGodd == "level2"
         k = 2
       end
     end
-  elsif godHelp == "God help?"
-    if lala == "lala"
+  elsif godHelp == "level0"
+    if lala == "level1"
       k = 'a'
     end
   end

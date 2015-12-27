@@ -10,6 +10,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
     it "Add simple if." do
       conditional = Languages::ConditionalData.new
       conditional.type = Languages::IF_LABEL
+
       @manager.add_conditional(conditional)
       expect(@manager.basicStructure[0]).to eq(conditional)
     end
