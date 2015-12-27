@@ -22,14 +22,14 @@ module Languages
         # TODO
       end
 
-      # Add nested level, basically, if we have a lot of nested conditional or
-      # repetition we add one level for each nest.
-      def add_level
+      # Up current level
+      def up_level
         # TODO
       end
 
-      # Up current level
-      def up_level
+      # Add nested level, basically, if we have a lot of nested conditional or
+      # repetition we add one level for each nest.
+      def down_level
         # TODO
       end
 
