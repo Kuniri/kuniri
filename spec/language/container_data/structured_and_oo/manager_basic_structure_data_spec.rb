@@ -19,25 +19,29 @@ RSpec.describe Languages::ManagerBasicStructureData do
       conditional.type = Languages::IF_LABEL
       elsifConditional = Languages::ConditionalData.new
       elsifConditional.type = Languages::ELSIF_LABEL
+
       @manager.add_conditional(conditional)
       @manager.add_conditional(elsifConditional)
+
       expect(@manager.basicStructure[0].type).to eq(Languages::IF_LABEL)
       expect(@manager.basicStructure[1].type).to eq(Languages::ELSIF_LABEL)
     end
 
     it "Add a sequence of if, elsif and finish with else." do
-      conditional = Languages::ConditionalData.new
-      conditional.type = Languages::IF_LABEL
-      elsifConditional = Languages::ConditionalData.new
-      elsifConditional = Languages::ELSIF_LABEL
+      conditional1 = Languages::ConditionalData.new
+      conditional1.type = Languages::IF_LABEL
       elsifConditional1 = Languages::ConditionalData.new
       elsifConditional1.type = Languages::ELSIF_LABEL
-      elseConditional = Languages::ConditionalData.new
-      elseConditional.type = Languages::ELSE_LABEL
-      @manager.add_conditional(conditional)
-      @manager.add_conditional(elsifConditional)
+      elsifConditional2 = Languages::ConditionalData.new
+      elsifConditional2.type = Languages::ELSIF_LABEL
+      elseConditional3 = Languages::ConditionalData.new
+      elseConditional3.type = Languages::ELSE_LABEL
+
+      @manager.add_conditional(conditional1)
       @manager.add_conditional(elsifConditional1)
-      @manager.add_conditional(elseConditional)
+      @manager.add_conditional(elsifConditional2)
+      @manager.add_conditional(elseConditional3)
+
       expect(@manager.basicStructure[0].type).to eq(Languages::IF_LABEL)
       expect(@manager.basicStructure[1].type).to eq(Languages::ELSIF_LABEL)
       expect(@manager.basicStructure[2].type).to eq(Languages::ELSIF_LABEL)
