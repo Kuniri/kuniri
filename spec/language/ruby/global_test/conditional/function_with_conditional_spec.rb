@@ -16,7 +16,7 @@ RSpec.describe Kuniri::Kuniri do
     it "Should have simple if" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="x == 99"\/?>/
+        simpleIf = line =~ /\s+<if\sexpression="x == 99" level="0"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
@@ -25,7 +25,7 @@ RSpec.describe Kuniri::Kuniri do
     it "Should have simple if else" do
       simpleIfElse = nil
       @output.each do |line|
-        simpleIfElse = line =~ /\s+<if\sexpression="x == 47"\/?>/
+        simpleIfElse = line =~ /\s+<if\sexpression="x == 47" level="0"\/?>/
         break unless simpleIfElse.nil?
       end
       expect(simpleIfElse).not_to be_nil

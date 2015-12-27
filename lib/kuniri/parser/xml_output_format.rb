@@ -110,24 +110,23 @@ module Parser
 
       # @see OutputFormat
       def repetition_generate(pRepetition)
-        simple_element(pRepetition, "repetitionData")
+        simple_element(pRepetition)
       end
 
       # @see OutputFormat
       def conditional_generate(pConditional)
-        simple_element(pConditional, "conditionalData")
+        simple_element(pConditional)
       end
 
-      def simple_element(pElement, pElementName)
+      def simple_element(pElement)
         pElement.each do |element|
           finalExpression = element.expression.gsub('"', "'")
                                               .gsub('&', '&amp;')
                                               .gsub('>', '&gt;')
                                               .gsub('<', '&lt;')
-          @outputEngine.send(pElementName,
-                              {:name => element.name,
-                               :type => element.type,
-                               :expression => finalExpression})
+          @outputEngine.send(element.type.downcase,
+                              {:expression => finalExpression,
+                               :level => element.level})
         end
       end
 
