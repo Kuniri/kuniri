@@ -1,14 +1,14 @@
 def nested_conditional
-  if xpto == 'b'
+  if xpto == "level0"
     y = 12
-    if abc == 'abc'
+    if abc == "level1"
       puts "wtf?"
     end
   end
 
-  if xyz == 'z'
+  if xyz == "level0"
     k = "bla"
-    if abc == 'lala'
+    if abc == "level1"
       u = "u"
     else
       u = "k"
@@ -45,15 +45,15 @@ def deeply_nested_conditional
 end
 
 def very_nested_conditional
-  if xpto == 33
-    if abc == 25
-      if xyz == 44
-        if arroba == '@'
+  if xpto == "level0"
+    if abc == "level1"
+      if xyz == "level2"
+        if arroba == "level3"
           puts "Finally"
         else
           puts "almost..."
         end
-      elsif jay == "pi"
+      elsif jay == "level2"
         puts "niceeee"
       end
     end
