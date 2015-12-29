@@ -6,6 +6,7 @@ module Languages
   ELSIF_LABEL ||= "ELSIF"
   UNLESS_LABEL ||= "UNLESS"
   CASE_LABEL ||= "CASE"
+  WHEN_LABEL ||= "WHEN"
   WHILE_LABEL ||= "WHILE"
   FOR_LABEL ||= "FOR"
   DO_WHILE_LABEL ||= "DOWHILE"

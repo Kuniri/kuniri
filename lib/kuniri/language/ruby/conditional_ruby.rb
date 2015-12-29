@@ -36,6 +36,9 @@ module Languages
           regexExp = /^\s*case\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
+          regexExp = /^\s*when\s+(.*)/
+          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+
           regexExp = /^\s*unless\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
@@ -55,6 +58,9 @@ module Languages
 
           regexExp = /^\s+case|^case/
           return Languages::CASE_LABEL if regexExp =~ pString
+
+          regexExp = /^\s+when|^when/
+          return Languages::WHEN_LABEL if regexExp =~ pString
 
           regexExp = /^\s+unless|^unless/
           return Languages::UNLESS_LABEL if regexExp =~ pString

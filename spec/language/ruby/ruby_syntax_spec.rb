@@ -376,13 +376,21 @@ RSpec.describe Languages::RubySyntax do
       expect(allConstructor[0].type).to eq(Languages::IF_LABEL)
 
       expect(allConstructor[1].expression).to eq("x")
-      expect(allConstructor[1].type).to eq("CASE")
+      expect(allConstructor[1].type).to eq(Languages::CASE_LABEL)
 
-      expect(allConstructor[2].expression).to eq("u && y")
-      expect(allConstructor[2].type).to eq(Languages::IF_LABEL)
+      expect(allConstructor[2].expression).to eq("3")
+      expect(allConstructor[2].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[3].expression).to eq("8")
+      expect(allConstructor[3].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[4].expression).to eq("90")
+      expect(allConstructor[4].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[5].type).to eq(Languages::ELSE_LABEL)
 
-      expect(allConstructor[3].expression).to eq("u == 1")
-      expect(allConstructor[3].type).to eq(Languages::ELSIF_LABEL)
+      expect(allConstructor[6].expression).to eq("u && y")
+      expect(allConstructor[6].type).to eq(Languages::IF_LABEL)
+
+      expect(allConstructor[7].expression).to eq("u == 1")
+      expect(allConstructor[7].type).to eq(Languages::ELSIF_LABEL)
     end
 
     it "Correct data capture (repetition[while] -  Method)" do

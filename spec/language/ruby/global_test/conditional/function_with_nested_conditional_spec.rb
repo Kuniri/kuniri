@@ -13,40 +13,35 @@ RSpec.describe Kuniri::Kuniri do
   end
 
   context "Simple cases of nested conditional" do
-    it "First nested if" do
+    it "First nested if (xpto)" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="xpto == 'b'" level="0">/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="abc == 'abc'" level="1">/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<\/if>/
+        simpleIf = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
     end
 
-    it "Second nested if" do
+    it "Second nested if (abc)" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="xyz == 'z' level="0"">/
+        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1">\/?>/
+        break unless simpleIf.nil?
+      end
+      expect(simpleIf).not_to be_nil
+    end
+
+    it "Third nested if (xyz)" do
+      simpleIf = nil
+      @output.each do |line|
+        simpleIf = line =~ /\s+<if\sexpression="xyz == 'level0'"\slevel="0">\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
 
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="abc == 'lala'" level="1"\/?>/
+        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'" level="1"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
@@ -58,22 +53,29 @@ RSpec.describe Kuniri::Kuniri do
       end
       expect(simpleIf).not_to be_nil
 
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<\/if>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<else level="0"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
     end
-
   end
+
+  #context "Second cases of nested conditional" do
+
+  #  it "" do
+  #    simpleIf = nil
+  #    @output.each do |line|
+  #      simpleIf = line =~ /\s+<\/if>/
+  #      break unless simpleIf.nil?
+  #    end
+  #    expect(simpleIf).not_to be_nil
+  #  end
+
+  #  it "" do
+  #    simpleIf = nil
+  #    @output.each do |line|
+  #      simpleIf = line =~ /\s+<else level="0"\/?>/
+  #      break unless simpleIf.nil?
+  #    end
+  #    expect(simpleIf).not_to be_nil
+  #  end
+  #end
 
   after :each do
     @kuniri = nil
