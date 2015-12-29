@@ -16,7 +16,7 @@ RSpec.describe Kuniri::Kuniri do
     it "First nested if (xpto)" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
+    simpleIf = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
@@ -25,7 +25,7 @@ RSpec.describe Kuniri::Kuniri do
     it "Second nested if (abc)" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1">\/?>/
+        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
@@ -34,7 +34,7 @@ RSpec.describe Kuniri::Kuniri do
     it "Third nested if (xyz)" do
       simpleIf = nil
       @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="xyz == 'level0'"\slevel="0">\/?>/
+        simpleIf = line =~ /\s+<if\sexpression="xyz == 'level0'"\slevel="0"\/?>/
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
@@ -52,7 +52,6 @@ RSpec.describe Kuniri::Kuniri do
         break unless simpleIf.nil?
       end
       expect(simpleIf).not_to be_nil
-
     end
   end
 

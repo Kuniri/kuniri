@@ -32,7 +32,7 @@ RSpec.describe Kuniri::Kuniri do
 
       simpleIfElse = nil
       @output.each do |line|
-        simpleIfElse = line =~ /\s+<else\/?>/
+        simpleIfElse = line =~ /\s+<else level="0"\/?>/
         break unless simpleIfElse.nil?
       end
       expect(simpleIfElse).not_to be_nil
@@ -41,21 +41,21 @@ RSpec.describe Kuniri::Kuniri do
     it "Should have simple if and elsif" do
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<if\sexpression="x == 555"\/?>/
+        simpleIfElsif = line =~ /\s+<if\sexpression="x == 555"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
 
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<elsif\sexpression="x == 777"\/?>/
+        simpleIfElsif = line =~ /\s+<elsif\sexpression="x == 777"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
 
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<elsif\sexpression="x == 111"\/?>/
+        simpleIfElsif = line =~ /\s+<elsif\sexpression="x == 111"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
@@ -64,28 +64,28 @@ RSpec.describe Kuniri::Kuniri do
     it "Should have simple if, elsif, and else" do
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<if\sexpression="xpto == 778"\/?>/
+        simpleIfElsif = line =~ /\s+<if\sexpression="xpto == 778"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
 
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<elsif\sexpression="abc == 555"\/?>/
+        simpleIfElsif = line =~ /\s+<elsif\sexpression="abc == 555"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
 
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<elsif\sexpression="asdf == 'a'"\/?>/
+        simpleIfElsif = line =~ /\s+<elsif\sexpression="asdf == 'a'"\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil
 
       simpleIfElsif = nil
       @output.each do |line|
-        simpleIfElsif = line =~ /\s+<else\/?>/
+        simpleIfElsif = line =~ /\s+<else\slevel="0"\/?>/
         break unless simpleIfElsif.nil?
       end
       expect(simpleIfElsif).not_to be_nil

@@ -117,9 +117,16 @@ module Parser
                                               .gsub('&', '&amp;')
                                               .gsub('>', '&gt;')
                                               .gsub('<', '&lt;')
-          @outputEngine.send(element.type.downcase,
+          # XXX: PLEASE! REFECTORY IT!
+          if element.type == Languages::ELSE_LABEL
+            @outputEngine.send(element.type.downcase,
+                              {:level => element.level})
+
+          else
+            @outputEngine.send(element.type.downcase,
                               {:expression => finalExpression,
                                :level => element.level})
+          end
         end
       end
 
