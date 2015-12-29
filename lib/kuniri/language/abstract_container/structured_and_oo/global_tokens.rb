@@ -4,6 +4,7 @@ module Languages
   IF_LABEL ||= "IF"
   ELSE_LABEL ||= "ELSE"
   ELSIF_LABEL ||= "ELSIF"
+  UNLESS_LABEL ||= "UNLESS"
   CASE_LABEL ||= "CASE"
   WHILE_LABEL ||= "WHILE"
   FOR_LABEL ||= "FOR"

@@ -1,4 +1,5 @@
 require_relative '../abstract_container/structured_and_oo/conditional'
+require_relative '../abstract_container/structured_and_oo/global_tokens'
 require_relative '../container_data/structured_and_oo/conditional_data'
 
 module Languages
@@ -18,8 +19,9 @@ module Languages
 
           conditionalCaptured = Languages::ConditionalData.new
           conditionalCaptured.type = conditional_type(pLine)
-
-          conditionalCaptured.expression = get_expression(result)
+          unless conditionalCaptured.type == Languages::ELSE_LABEL
+            conditionalCaptured.expression = get_expression(result)
+          end
 
           return conditionalCaptured
         end
@@ -40,22 +42,28 @@ module Languages
           regexExp = /^\s*elsif\s+(.*)/
           return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
 
+          regexExp = /^\s*else\s*/
+          return pLine.scan(regexExp)[0].gsub(" ", "") if regexExp =~ pLine
+
           return nil
         end
 
         # Override
         def conditional_type(pString)
           regexExp = /^\s+if|^if/
-          return "IF" if regexExp =~ pString
+          return Languages::IF_LABEL if regexExp =~ pString
 
           regexExp = /^\s+case|^case/
-          return "CASE" if regexExp =~ pString
+          return Languages::CASE_LABEL if regexExp =~ pString
 
           regexExp = /^\s+unless|^unless/
-          return "UNLESS" if regexExp =~ pString
+          return Languages::UNLESS_LABEL if regexExp =~ pString
 
           regexExp = /^\s+elsif|^elsif/
-          return "ELSIF" if regexExp =~ pString
+          return Languages::ELSIF_LABEL if regexExp =~ pString
+
+          regexExp = /^\s+else|^else/
+          return Languages::ELSE_LABEL if regexExp =~ pString
 
           return nil
         end

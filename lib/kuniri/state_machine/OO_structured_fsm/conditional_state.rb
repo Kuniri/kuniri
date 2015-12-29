@@ -23,8 +23,13 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        if @language.conditionalHandler.get_conditional(pLine)
+        conditional = @language.conditionalHandler.get_conditional(pLine)
+        if conditional
+          if conditional.type == Languages::IF_LABEL ||
+              conditional.type == Languages::CASE_LABEL ||
+              conditional.type == Languages::UNLESS_LABEL
           conditional_capture
+          end
         elsif @language.repetitionHandler.get_repetition(pLine)
           repetition_capture
         # aggregation
@@ -101,8 +106,6 @@ module StateMachine
 
         #if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLine)
         if (@language.endBlockHandler.has_end_of_block?(pLine))
-          @language.rewind_state
-          @language.lessNested
           if flag == StateMachine::GLOBAL_FUNCTION_STATE
             index = pElementFile.global_functions.length - 1
             if @language.isNested?
@@ -121,6 +124,8 @@ module StateMachine
                                             .managerCondAndLoop.up_level
             end
           end
+          @language.rewind_state
+          @language.lessNested
         end
 
         return pElementFile
