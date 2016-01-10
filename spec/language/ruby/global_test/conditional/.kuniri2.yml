@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/conditionalStatment/aLotOfConditionals.rb
+:output: ./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml
+:extract: uml
