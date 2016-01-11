@@ -23,7 +23,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: conditional2 == level1" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<if\sexpression="conditional2 == 'level1'"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -32,7 +32,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: unless conditional3 == level1" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<unless\sexpression="conditional3 == 'level1'"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -41,7 +41,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: if xpto == level0" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
         break unless conditional.nil?
@@ -50,7 +50,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: elsif abc == level0" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<elsif\sexpression="abc == 'level0'"\slevel="0"\/?>/
         break unless conditional.nil?
@@ -59,7 +59,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: elsif banana == level0" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<elsif\sexpression="banana == 'level0'"\slevel="0"\/?>/
         break unless conditional.nil?
@@ -68,7 +68,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: if abc == level1" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -77,7 +77,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: unless moreAndMore == level2" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<unless\sexpression="xpto == 'level2'"\slevel="2"\/?>/
         break unless conditional.nil?
@@ -86,7 +86,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: elsif asdf == level1" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<elsif\sexpression="asdf == 'level1'"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -95,7 +95,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: else level 1" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<else\slevel="1"\/?>/
         break unless conditional.nil?
@@ -104,7 +104,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: else level 0" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<else\slevel="0"\/?>/
         break unless conditional.nil?
@@ -113,7 +113,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: case p" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<case\sexpression="p"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -122,7 +122,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: when 2" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<when\sexpression="2"\slevel="1"\/?>/
         break unless conditional.nil?
@@ -131,7 +131,7 @@ RSpec.describe Kuniri::Kuniri do
     end
 
     it "Find: when 4" do
-      conditional = nil 
+      conditional = nil
       @output.each do |line|
         conditional = line =~ /\s+<when\sexpression="4"\slevel="1"\/?>/
         break unless conditional.nil?

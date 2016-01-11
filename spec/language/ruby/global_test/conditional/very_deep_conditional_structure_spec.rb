@@ -9,7 +9,7 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml", "r")
+    @output = File.open("./spec/language/ruby/global_test/conditional/veryDeepConditionalStructure.xml", "r")
   end
 
   context "Simple cases of nested conditional" do
@@ -43,7 +43,7 @@ RSpec.describe Kuniri::Kuniri do
    it "Find: if conditional15 == level15" do
       conditional = nil
       @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional15 == 'level15'"\slevel="0"\/?>/
+        conditional = line =~ /\s+<if\sexpression="conditional15 == 'level15'"\slevel="15"\/?>/
         break unless conditional.nil?
       end
       expect(conditional).not_to be_nil
