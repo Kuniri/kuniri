@@ -79,7 +79,7 @@ RSpec.describe Kuniri::Kuniri do
     it "Find: unless moreAndMore == level2" do
       conditional = nil
       @output.each do |line|
-        conditional = line =~ /\s+<unless\sexpression="xpto == 'level2'"\slevel="2"\/?>/
+        conditional = line =~ /\s+<unless\sexpression="moreAndMore == 'level2'"\slevel="2"\/?>/
         break unless conditional.nil?
       end
       expect(conditional).not_to be_nil

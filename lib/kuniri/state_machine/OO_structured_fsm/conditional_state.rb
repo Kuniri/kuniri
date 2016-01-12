@@ -28,7 +28,7 @@ module StateMachine
           if conditional.type == Languages::IF_LABEL ||
               conditional.type == Languages::CASE_LABEL ||
               conditional.type == Languages::UNLESS_LABEL
-          conditional_capture
+            conditional_capture
           end
         elsif @language.repetitionHandler.get_repetition(pLine)
           repetition_capture
@@ -77,7 +77,9 @@ module StateMachine
           if flag == StateMachine::GLOBAL_FUNCTION_STATE
             index = pElementFile.global_functions.length - 1
             if (@language.isNested? &&
-                (conditionalType == Languages::IF_LABEL || conditionalType == Languages::CASE_LABEL))
+                (conditionalType == Languages::IF_LABEL ||
+                  conditionalType == Languages::CASE_LABEL ||
+                  conditionalType == Languages::UNLESS_LABEL))
               pElementFile.global_functions[index]
                                             .managerCondAndLoop.down_level
             end
@@ -85,7 +87,9 @@ module StateMachine
           elsif flag == StateMachine::METHOD_STATE
             index = pElementFile.classes[classIndex].methods.length - 1
             if (@language.isNested? &&
-                (conditionalType == Languages::IF_LABEL || conditionalType == Languages::CASE_LABEL))
+                (conditionalType == Languages::IF_LABEL ||
+                  conditionalType == Languages::CASE_LABEL ||
+                  conditionalType == Languages::UNLESS_LABEL))
               pElementFile.classes[classIndex].methods[index]
                                             .managerCondAndLoop.down_level
             end
@@ -94,7 +98,9 @@ module StateMachine
           elsif flag == StateMachine::CONSTRUCTOR_STATE
             index = pElementFile.classes[classIndex].constructors.length - 1
             if (@language.isNested? &&
-                (conditionalType == Languages::IF_LABEL || conditionalType == Languages::CASE_LABEL))
+                (conditionalType == Languages::IF_LABEL ||
+                  conditionalType == Languages::CASE_LABEL ||
+                  conditionalType == Languages::UNLESS_LABEL))
               pElementFile.classes[classIndex].constructors[index]
                                             .managerCondAndLoop.down_level
             end
