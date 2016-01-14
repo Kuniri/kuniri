@@ -48,15 +48,15 @@ module Languages
       #         return nil.
       def add_conditional(pConditional, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pConditional.instance_of?Languages::ConditionalData)
-        # XXX: REFECTORY IT! It is ugly
-        if pBehaviour == Languages::KEEP_LEVEL
-          @managerCondAndLoop.add_conditional(pConditional)
-        elsif pBehaviour == Languages::UP_LEVEL
-          @managerCondAndLoop.up_level
-          @managerCondAndLoop.add_conditional(pConditional)
-        elsif pBehaviour == Languages::DOWN_LEVEL
-          @managerCondAndLoop.down_level
-          @managerCondAndLoop.add_conditional(pConditional)
+        case pBehaviour
+          when Languages::KEEP_LEVEL
+            @managerCondAndLoop.add_conditional(pConditional)
+          when Languages::UP_LEVEL
+            @managerCondAndLoop.up_level
+            @managerCondAndLoop.add_conditional(pConditional)
+          when Languages::DOWN_LEVEL
+            @managerCondAndLoop.down_level
+            @managerCondAndLoop.add_conditional(pConditional)
         end
       end
 

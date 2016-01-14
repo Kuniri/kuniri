@@ -71,56 +71,13 @@ module StateMachine
         flag = @language.flagFunctionBehaviour
         classIndex = pElementFile.classes.length - 1 # We want the index
         if (conditional)
-          conditionalType = conditional.type
-          case flag
-            when StateMachine::GLOBAL_FUNCTION_STATE
-              dynamicAddConditional(pElementFile, conditional,
-                                    conditionalType, "global_functions")
-            when StateMachine::METHOD_STATE
-# TODO: Use dynamicAddConditional here in the same way of GLOBAL_FUNCTION_STATE
-#             t = "classes[#{classIndex}].methods"
-#             dynamicAddConditional(pElementFile, conditional, conditionalType, t, classIndex)
-              index = pElementFile.classes[classIndex].methods.length - 1
-              if (@language.isNested? && isANestedConditional?(conditionalType))
-                pElementFile.classes[classIndex].methods[index]
-                                              .managerCondAndLoop.down_level
-              end
-              pElementFile.classes[classIndex].methods[index]
-                                              .add_conditional(conditional)
-            when StateMachine::CONSTRUCTOR_STATE
-              index = pElementFile.classes[classIndex].constructors.length - 1
-              if (@language.isNested? && isANestedConditional?(conditionalType))
-                pElementFile.classes[classIndex].constructors[index]
-                                              .managerCondAndLoop.down_level
-              end
-              pElementFile.classes[classIndex].constructors[index]
-                                              .add_conditional(conditional)
-          end
+          addConditionalToCorrectElement(conditional, pElementFile,
+                                          classIndex, flag)
         end
 
         #if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLine)
         if (@language.endBlockHandler.has_end_of_block?(pLine))
-          case flag
-            when StateMachine::GLOBAL_FUNCTION_STATE
-              index = pElementFile.global_functions.length - 1
-              if @language.isNested?
-                pElementFile.global_functions[index]
-                                              .managerCondAndLoop.up_level
-              end
-            when StateMachine::METHOD_STATE
-              index = pElementFile.classes[classIndex].methods.length - 1
-              if @language.isNested?
-                pElementFile.classes[classIndex].methods[index]
-                                              .managerCondAndLoop.up_level
-              end
-            when StateMachine::CONSTRUCTOR_STATE
-              if @language.isNested?
-                pElementFile.classes[classIndex].methods[index]
-                                              .managerCondAndLoop.up_level
-              end
-           end
-          @language.rewind_state
-          @language.lessNested
+          updateLevel(flag, pElementFile, classIndex)
         end
 
         return pElementFile
@@ -131,22 +88,61 @@ module StateMachine
         @countNestedConditional
 
         def isANestedConditional?(pType)
-          if pType == Languages::IF_LABEL ||
-              pType == Languages::CASE_LABEL ||
+          if pType == Languages::IF_LABEL || pType == Languages::CASE_LABEL ||
               pType == Languages::UNLESS_LABEL
             return true
           end
           return false
         end
 
+        def addConditionalToCorrectElement(pConditional, pElementFile,
+                                            pClassIndex, pFlag)
+          conditionalType = pConditional.type
+          stringToEval = "classes[#{pClassIndex}]."
+          case pFlag
+            when StateMachine::GLOBAL_FUNCTION_STATE
+              dynamicAddConditional(pElementFile, pConditional,
+                                    conditionalType, "global_functions")
+            when StateMachine::METHOD_STATE
+              dynamicAddConditional(pElementFile, pConditional,
+                                    conditionalType, stringToEval + "methods")
+            when StateMachine::CONSTRUCTOR_STATE
+              dynamicAddConditional(pElementFile, pConditional,
+                                conditionalType, stringToEval + "constructors")
+          end
+        end
+
+        def updateLevel(pFlag, pElementFile, pClassIndex)
+          case pFlag
+            when StateMachine::GLOBAL_FUNCTION_STATE
+              dynamicConditionalLevelUpdate(pElementFile, "global_functions")
+            when StateMachine::METHOD_STATE
+              stringMethod = "classes[#{pClassIndex}].methods"
+              dynamicConditionalLevelUpdate(pElementFile, stringMethod)
+            when StateMachine::CONSTRUCTOR_STATE
+              stringMethod = "classes[#{pClassIndex}].constructors"
+              dynamicConditionalLevelUpdate(pElementFile, stringMethod)
+           end
+          @language.rewind_state
+          @language.lessNested
+        end
+
         def dynamicAddConditional(pElementFile, pConditional, pType, pElement)
           classIndex = pElementFile.classes.length - 1 # We want the index
-          index = pElementFile.send(pElement).length - 1
+          index = eval("pElementFile.#{pElement}.length - 1")
           if (@language.isNested? && isANestedConditional?(pType))
-            pElementFile.send(pElement)[index].managerCondAndLoop.down_level
+            eval("pElementFile.#{pElement}[index]." +
+                  "managerCondAndLoop.down_level")
           end
-          pElementFile.send(pElement)[index].add_conditional(pConditional)
+          eval("pElementFile.#{pElement}[index].add_conditional(pConditional)")
         end
+
+        def dynamicConditionalLevelUpdate(pElementFile, pElement)
+         index = eval("pElementFile.#{pElement}.length - 1")
+         if @language.isNested?
+           eval("pElementFile.#{pElement}[index].managerCondAndLoop.up_level")
+         end
+       end
 
     # End class
     end
