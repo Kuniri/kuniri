@@ -62,6 +62,8 @@ module Languages
       # conditional information and repetition data.
       attr_accessor :flagFunctionBehaviour
 
+      attr_reader :countNestedCondLoop
+
       attr_accessor :string_comment_to_transfer
 
       # This method initialize all the needed states of state machine.
@@ -92,6 +94,7 @@ module Languages
 
         @fileElements = []
         @flagFunctionBehaviour = nil
+        @countNestedCondLoop = 0
 
         @string_comment_to_transfer = ""
       end
@@ -210,6 +213,27 @@ module Languages
       def set_state (pState)
         @previousState.push(@state)
         @state = pState
+      end
+
+      # Increase nested level
+      def moreNested
+        @countNestedCondLoop += 1
+      end
+
+      # Reduce nested level
+      def lessNested
+        @countNestedCondLoop -= 1 if @countNestedCondLoop > 0
+      end
+
+      # Verify if is nested or not
+      def isNested?
+        return true if @countNestedCondLoop > 0
+        return false
+      end
+
+      # Reset nested structure
+      def resetNested
+        @countNestedCondLoop = 0
       end
 
     protected

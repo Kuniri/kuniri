@@ -287,25 +287,20 @@ RSpec.describe Languages::RubySyntax do
         "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].global_functions[0].name)
-        .to eq("simple1")
+      allFuntion0 = @syntax.fileElements[0].global_functions[0]
+                                            .managerCondAndLoop.basicStructure
+      allFuntion1 = @syntax.fileElements[0].global_functions[1]
+                                            .managerCondAndLoop.basicStructure
 
-      expect(@syntax.fileElements[0].global_functions[0]
-            .conditionals[0].expression).to eq("3 > 2")
-      expect(@syntax.fileElements[0].global_functions[0]
-            .conditionals[0].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[0].name).to eq("simple1")
+      expect(allFuntion0[0].expression).to eq("3 > 2")
+      expect(allFuntion0[0].type).to eq(Languages::IF_LABEL)
 
-      expect(@syntax.fileElements[0].global_functions[1].name)
-        .to eq("simple2")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[0].expression).to eq("7 > 2")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[0].type).to eq("IF")
-
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[1].expression).to eq("\"a\" < \"k\"")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[1].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[1].name).to eq("simple2")
+      expect(allFuntion1[0].expression).to eq("7 > 2")
+      expect(allFuntion1[0].type).to eq(Languages::IF_LABEL)
+      expect(allFuntion1[1].expression).to eq("\"a\" < \"k\"")
+      expect(allFuntion1[1].type).to eq(Languages::IF_LABEL)
     end
 
     it "Correct state transition (Method)." do
@@ -324,35 +319,36 @@ RSpec.describe Languages::RubySyntax do
         "spec/samples/rubySyntaxParts/conditionalStatment/methodConditional.rb"
 
       @syntax.analyse_source(path)
+      allMethod0 = @syntax.fileElements[0].classes[0].methods[0]
+                                          .managerCondAndLoop.basicStructure
+      allMethod1 = @syntax.fileElements[0].classes[0].methods[1]
+                                          .managerCondAndLoop.basicStructure
+      allMethod2 = @syntax.fileElements[0].classes[0].methods[2]
+                                          .managerCondAndLoop.basicStructure
+      allMethod3 = @syntax.fileElements[0].classes[0].methods[3]
+                                          .managerCondAndLoop.basicStructure
+
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
         .to eq("method1")
 
-      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-              .expression).to eq("x > 3")
-      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod0[0].expression).to eq("x > 3")
+      expect(allMethod0[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
         .to eq("method2")
-      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-              .expression).to eq("b && c")
-      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod1[0].expression).to eq("b && c")
+      expect(allMethod1[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[2].name)
         .to eq("method3")
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-              .expression).to eq("b == 3")
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[1]
-              .expression).to eq("b < 7")
+      expect(allMethod2[0].expression).to eq("b == 3")
+      expect(allMethod2[1].expression).to eq("b < 7")
 
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod2[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[3].name)
         .to eq("method4")
-      expect(@syntax.fileElements[0].classes[0].methods[3].conditionals[0]
-              .expression).to eq("x")
+      expect(allMethod3[0].expression).to eq("x")
     end
 
     it "Correct state transition (Constructor)." do
@@ -371,39 +367,42 @@ RSpec.describe Languages::RubySyntax do
                 "conditionalStatment/constructorConditional.rb"
 
       @syntax.analyse_source(path)
+      allConstructor = @syntax.fileElements[0].classes[0].constructors[0]
+                                            .managerCondAndLoop.basicStructure
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
           .to eq("initialize")
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-              .expression).to eq("a > b")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-              .type).to eq("IF")
+      expect(allConstructor[0].expression).to eq("a > b")
+      expect(allConstructor[0].type).to eq(Languages::IF_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-              .expression).to eq("x")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-              .type).to eq("CASE")
+      expect(allConstructor[1].expression).to eq("x")
+      expect(allConstructor[1].type).to eq(Languages::CASE_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-              .expression).to eq("u && y")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-              .type).to eq("IF")
+      expect(allConstructor[2].expression).to eq("3")
+      expect(allConstructor[2].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[3].expression).to eq("8")
+      expect(allConstructor[3].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[4].expression).to eq("90")
+      expect(allConstructor[4].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[5].type).to eq(Languages::ELSE_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-              .expression).to eq("u == 1")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-              .type).to eq("ELSIF")
+      expect(allConstructor[6].expression).to eq("u && y")
+      expect(allConstructor[6].type).to eq(Languages::IF_LABEL)
+
+      expect(allConstructor[7].expression).to eq("u == 1")
+      expect(allConstructor[7].type).to eq(Languages::ELSIF_LABEL)
     end
 
     it "Correct data capture (repetition[while] -  Method)" do
        path = "spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].classes[0].methods[0].name)
-          .to eq("simple1")
+      allLoop = @syntax.fileElements[0].classes[0]
+                      .methods[0].managerCondAndLoop.basicStructure
 
-      expect(@syntax.fileElements[0].classes[0].methods[0].repetitions[0]
-              .expression).to eq("i < num")
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+              .to eq("simple1")
+      expect(allLoop[0].expression).to eq("i < num")
     end
 
     it "Correct data capture (repetiton[util] - Method)" do
@@ -413,8 +412,9 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq("simple2")
 
-      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[0]
-              .expression).to eq("i > num")
+      all = @syntax.fileElements[0].classes[0].methods[1]
+                    .managerCondAndLoop.basicStructure
+      expect(all[0].expression).to eq("i > num")
 
     end
 
@@ -425,8 +425,9 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq("simple2")
 
-      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[1]
-              .expression).to eq("i in 0..5")
+      all = @syntax.fileElements[0].classes[0].methods[1]
+                    .managerCondAndLoop.basicStructure
+      expect(all[1].expression).to eq("i in 0..5")
     end
 
   end

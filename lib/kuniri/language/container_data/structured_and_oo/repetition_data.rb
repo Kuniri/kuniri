@@ -9,11 +9,12 @@ module Languages
 
       attr_accessor :type
       attr_accessor :expression
+      attr_accessor :level
 
       def initialize
-        @name = "nothing"
         @type = "none"
         @expression = "empty"
+        @level = 0
       end
 
   # class

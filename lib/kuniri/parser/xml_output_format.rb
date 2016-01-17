@@ -51,11 +51,9 @@ module Parser
           pFunction.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          unless pFunction.conditionals.empty?
-            wrapper.conditional_generate(pFunction.conditionals)
-          end
-          unless pFunction.repetitions.empty?
-            wrapper.repetition_generate(pFunction.repetitions)
+          unless pFunction.managerCondAndLoop.basicStructure.empty?
+            wrapper.basic_structure_generate(
+                                  pFunction.managerCondAndLoop.basicStructure)
           end
         end
       end
@@ -109,25 +107,26 @@ module Parser
       end
 
       # @see OutputFormat
-      def repetition_generate(pRepetition)
-        simple_element(pRepetition, "repetitionData")
+      def basic_structure_generate(pBasicStructure)
+        simple_element(pBasicStructure)
       end
 
-      # @see OutputFormat
-      def conditional_generate(pConditional)
-        simple_element(pConditional, "conditionalData")
-      end
-
-      def simple_element(pElement, pElementName)
+      def simple_element(pElement)
         pElement.each do |element|
           finalExpression = element.expression.gsub('"', "'")
                                               .gsub('&', '&amp;')
                                               .gsub('>', '&gt;')
                                               .gsub('<', '&lt;')
-          @outputEngine.send(pElementName,
-                              {:name => element.name,
-                               :type => element.type,
-                               :expression => finalExpression})
+          # XXX: PLEASE! REFECTORY IT!
+          if element.type == Languages::ELSE_LABEL
+            @outputEngine.send(element.type.downcase,
+                              {:level => element.level})
+
+          else
+            @outputEngine.send(element.type.downcase,
+                              {:expression => finalExpression,
+                               :level => element.level})
+          end
         end
       end
 

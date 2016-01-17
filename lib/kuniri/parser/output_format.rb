@@ -39,10 +39,10 @@ module Parser
               if (singleElement.modules.length() > 0)
                 wrapper.module_generate(singleElement.modules)
               end
-              if (singleElement.global_variables.length() > 0)
-                wrapper.global_variable_generate(
-                        singleElement.global_variables)
-              end
+              #if (singleElement.global_variables.length() > 0)
+              #  wrapper.global_variable_generate(
+              #          singleElement.global_variables)
+              #end
               if (singleElement.global_functions.length() > 0)
                 singleElement.global_functions.each do |globalFunction|
                   wrapper.function_behaviour_generate("functionData",
@@ -90,15 +90,11 @@ module Parser
         raise NotImplementedError
       end
 
-      def repetition_generate(pRepetition)
+      def basic_structure_generate(pManager)
         raise NotImplementedError
       end
 
       def module_generate(pModule)
-        raise NotImplementedError
-      end
-
-      def conditional_generate(pConditional)
         raise NotImplementedError
       end
 

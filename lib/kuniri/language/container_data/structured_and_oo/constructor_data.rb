@@ -21,8 +21,7 @@ module Languages
         end
         @name = functionAbstractToConstructor.name
         @parameters = functionAbstractToConstructor.parameters
-        @conditionals = functionAbstractToConstructor.conditionals
-        @repetitions = functionAbstractToConstructor.repetitions
+        @managerCondAndLoop = functionAbstractToConstructor.managerCondAndLoop
         @visibility = functionAbstractToConstructor.visibility
         @comments = functionAbstractToConstructor.comments
         @type = CONSTRUCTOR_DATA

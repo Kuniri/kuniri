@@ -2,6 +2,7 @@ require_relative 'basic_data'
 require_relative 'conditional_data'
 require_relative 'repetition_data'
 require_relative 'attribute_data'
+require_relative 'manager_basic_structure_data'
 
 module Languages
 
@@ -11,9 +12,8 @@ module Languages
     public
 
       attr_reader :parameters
-      attr_reader :conditionals
-      attr_reader :repetitions
       attr_accessor :type
+      attr_reader :managerCondAndLoop
 
       METHOD_DATA ||= "METHOD"
       CONSTRUCTOR_DATA ||= "CONSTRUCTOR"
@@ -24,11 +24,10 @@ module Languages
 
         @name = pFunctionName
         @parameters = []
-        @conditionals = []
-        @repetitions = []
         @visibility = "public"
         @comments = ""
         @type = "unknown"
+        @managerCondAndLoop = Languages::ManagerBasicStructureData.new
       end
 
       # Add parameters inside function.
@@ -47,17 +46,34 @@ module Languages
       # @param pConditional An object of ConditionalData.
       # @return If pConditional is not an instance of ConditionalData,
       #         return nil.
-      def add_conditional(pConditional)
+      def add_conditional(pConditional, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pConditional.instance_of?Languages::ConditionalData)
-        @conditionals.push(pConditional)
+        case pBehaviour
+          when Languages::KEEP_LEVEL
+            @managerCondAndLoop.add_conditional(pConditional)
+          when Languages::UP_LEVEL
+            @managerCondAndLoop.up_level
+            @managerCondAndLoop.add_conditional(pConditional)
+          when Languages::DOWN_LEVEL
+            @managerCondAndLoop.down_level
+            @managerCondAndLoop.add_conditional(pConditional)
+        end
       end
 
       # Add repetition element inside function.
       # @param pRepetition An object of RepetitionData.
       # @return If pRepetition is not RepetitionData instance return nil.
-      def add_repetition(pRepetition)
+      def add_repetition(pRepetition, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
-        @repetitions.push(pRepetition)
+        if pBehaviour == Languages::KEEP_LEVEL
+          @managerCondAndLoop.add_repetition(pRepetition)
+        elsif pBehaviour == Languages::UP_LEVEL
+          @managerCondAndLoop.up_level
+          @managerCondAndLoop.add_repetition(pRepetition)
+        elsif pBehaviour == Languages::DOWN_LEVEL
+          @managerCondAndLoop.down_level
+          @managerCondAndLoop.add_repetition(pRepetition)
+        end
       end
 
   # class

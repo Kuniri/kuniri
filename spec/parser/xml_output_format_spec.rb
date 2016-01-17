@@ -83,13 +83,12 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
-      expectedString += '  <conditionalData name="nothing" type="IF"' +
-                        ' expression="(x &lt; 3)"/>'
+      expectedString += '  <if expression="(x &lt; 3)" level="0"/>'
       expectedString += "\n</constructorData>\n"
 
       constructorTmp = Languages::ConstructorData.new("initialize")
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "IF"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "(x < 3)"
 
       constructorTmp.add_conditional(conditionalTmp)
@@ -103,13 +102,12 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
-      expectedString += '  <repetitionData name="nothing" type="FOR"' +
-                        ' expression="i in x"/>'
+      expectedString += '  <for expression="i in x" level="0"/>'
       expectedString += "\n</constructorData>\n"
 
       constructorTmp = Languages::ConstructorData.new("initialize")
       conditionalTmp = Languages::RepetitionData.new
-      conditionalTmp.type = "FOR"
+      conditionalTmp.type = Languages::FOR_LABEL
       conditionalTmp.expression = "i in x"
 
       constructorTmp.add_repetition(conditionalTmp)
@@ -123,21 +121,19 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<constructorData name=\"initialize\" "
       expectedString += "visibility=\"public\">\n"
-      expectedString += '  <conditionalData name="nothing" type="IF"' +
-                        ' expression="(x &lt; 3)"/>' + "\n"
-      expectedString += '  <repetitionData name="nothing" type="FOR"' +
-                        ' expression="i in x"/>'
+      expectedString += '  <if expression="(x &lt; 3)" level="0"/>' + "\n"
+      expectedString += '  <for expression="i in x" level="0"/>'
       expectedString += "\n</constructorData>\n"
 
       constructorTmp = Languages::ConstructorData.new("initialize")
 
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "IF"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "(x < 3)"
       constructorTmp.add_conditional(conditionalTmp)
 
       conditionalTmp = Languages::RepetitionData.new
-      conditionalTmp.type = "FOR"
+      conditionalTmp.type = Languages::FOR_LABEL
       conditionalTmp.expression = "i in x"
       constructorTmp.add_repetition(conditionalTmp)
 
@@ -251,23 +247,21 @@ RSpec.describe Parser::XMLOutputFormat do
 
     it "Generate repetition" do
       expectedString = @stringHeader
-      expectedString += "<repetitionData name=\"nothing\" "
-      expectedString += "type=\"while\" expression=\"x&gt;3\"/>\n"
+      expectedString += "<while expression=\"x&gt;3\" level=\"0\"/>\n"
       repetitionTmp = Languages::RepetitionData.new
-      repetitionTmp.type = "while"
+      repetitionTmp.type = Languages::WHILE_LABEL
       repetitionTmp.expression = "x>3"
-      @outputFormat.repetition_generate([repetitionTmp])
+      @outputFormat.basic_structure_generate([repetitionTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
     it "Generate conditional" do
       expectedString = @stringHeader
-      expectedString += "<conditionalData name=\"nothing\" type=\"if\""
-      expectedString += " expression=\"y &lt; 3\"/>\n"
+      expectedString += "<if expression=\"y &lt; 3\" level=\"0\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
-      conditionalTmp.type = "if"
+      conditionalTmp.type = Languages::IF_LABEL
       conditionalTmp.expression = "y < 3"
-      @outputFormat.conditional_generate([conditionalTmp])
+      @outputFormat.basic_structure_generate([conditionalTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 

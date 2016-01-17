@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/conditionalStatment/nestedConditional.rb
+:output: ./spec/language/ruby/global_test/conditional/output1.xml
+:extract: uml

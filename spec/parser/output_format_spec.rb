@@ -64,13 +64,8 @@ RSpec.describe Parser::OutputFormat do
               NotImplementedError)
     end
 
-    it "Generate repetition" do
-      expect{@outputFormat.repetition_generate(nil)}.to raise_error(
-              NotImplementedError)
-    end
-
-    it "Generate conditional" do
-      expect{@outputFormat.conditional_generate(nil)}.to raise_error(
+    it "Generate basic structure" do
+      expect{@outputFormat.basic_structure_generate(nil)}.to raise_error(
               NotImplementedError)
     end
 
