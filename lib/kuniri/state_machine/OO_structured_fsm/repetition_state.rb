@@ -1,4 +1,5 @@
 require_relative 'oo_structured_state'
+require_relative '../../language/abstract_container/structured_and_oo/global_tokens.rb'
 
 module StateMachine
 
@@ -18,74 +19,126 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
+        @language.resetNested
       end
 
       def handle_line(pLine)
+        repetition = @language.repetitionHandler.get_repetition(pLine)
+        if repetition
+          if isNestedRepetition?(repetition.type)
+            repetition_capture
+          end
+        elsif @language.conditionalHandler.get_conditional(pLine)
+          conditional_capture
+        # aggregation
+        end
       end
 
       # @see OOStructuredState
       def method_capture
-        reset_flag
         @language.rewind_state
       end
 
       # @see OOStructuredState
       def constructor_capture
-        reset_flag
         @language.rewind_state
       end
 
       # @see OOStructuredState
       def function_capture
-        reset_flag
         @language.rewind_state
+      end
+
+      # @see OOStructuredState
+      def conditional_capture
+        @language.set_state(@language.conditionalState)
+      end
+
+      # @see OOStructuredState
+      def repetition_capture
+        @language.moreNested
+        @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
         repetition = @language.repetitionHandler.get_repetition(pLine)
-
         flag = @language.flagFunctionBehaviour
-        get_add_repetition_lambda(MAP_STATE[flag]).call(repetition,
-                                                        pElementFile)
+        classIndex = pElementFile.classes.length - 1
+        if (repetition)
+          addRepetitionToCorrectElement(repetition, pElementFile,
+                                        classIndex, flag)
+        end
 
-        has_end_of_block = @language.endBlockHandler.has_end_of_block?(pLine)
-        get_capture_lambda(MAP_STATE[flag]).call(has_end_of_block)
+        if (@language.endBlockHandler.has_end_of_block?(pLine))
+          updateLevel(flag, pElementFile, classIndex)
+        end
 
         return pElementFile
       end
 
       private
 
-        # @see OOStructuredState
-        def reset_flag
-          @language.flagFunctionBehaviour = StateMachine::NONE_HANDLING_STATE
-        end
+        @countNestedRepetition
 
-        def get_capture_lambda(pLambdaType)
-          capture_lambda = lambda do |has_end_of_block|
-            self.send("#{pLambdaType}_capture") if has_end_of_block
+        def isNestedRepetition?(pType)
+          if pType == Languages::WHILE_LABEL || pType == Languages::FOR_LABEL ||
+              pType == Languages::DO_WHILE_LABEL ||
+              pType == Languages::UNTIL_LABEL
+            return true
           end
-
-          return capture_lambda
+          return false
         end
 
-        def get_list_of_file(pElementFile, pElementType)
-          if pElementType == MAP_STATE[StateMachine::GLOBAL_FUNCTION_STATE]
-            return pElementFile.global_functions
-          else
-            return pElementFile.classes.last.send("#{pElementType}s")
+        def addRepetitionToCorrectElement(pRepetition, pElementFile,
+                                          pClassIndex, pFlag)
+          repetitionType = pRepetition.type
+          stringToEval = "classes[#{pClassIndex}]."
+          case pFlag
+            when StateMachine::GLOBAL_FUNCTION_STATE
+              dynamicAddRepetition(pElementFile, pRepetition,
+                                    repetitionType, "global_functions")
+            when StateMachine::METHOD_STATE
+              dynamicAddRepetition(pElementFile, pRepetition,
+                                    repetitionType, stringToEval + "methods")
+            when StateMachine::CONSTRUCTOR_STATE
+              dynamicAddRepetition(pElementFile, pRepetition,
+                                repetitionType, stringToEval + "constructors")
           end
         end
 
-        def get_add_repetition_lambda(pLambdaType)
-          add_repetition_lambda = lambda do |repetition, pElementFile|
-            element = get_list_of_file(pElementFile, pLambdaType).last
-            element.add_repetition(repetition) if repetition
+        def updateLevel(pFlag, pElementFile, pClassIndex)
+          case pFlag
+            when StateMachine::GLOBAL_FUNCTION_STATE
+              dynamicRepetitionLevelUpdate(pElementFile, "global_functions")
+            when StateMachine::METHOD_STATE
+              stringMethod = "classes[#{pClassIndex}].methods"
+              dynamicRepetitionLevelUpdate(pElementFile, stringMethod)
+            when StateMachine::CONSTRUCTOR_STATE
+              stringConstructor = "classes[#{pClassIndex}].constructors"
+              dynamicRepetitionLevelUpdate(pElementFile, stringConstructor)
           end
-
-          add_repetition_lambda
+          @language.rewind_state
+          @language.lessNested
         end
+
+        def dynamicAddRepetition(pElementFile, pRepetition, pType, pElement)
+          classIndex = pElementFile.classes.length - 1 # We want the index
+          index = eval("pElementFile.#{pElement}.length - 1")
+          if (@language.isNested? && isNestedRepetition?(pType))
+            eval("pElementFile.#{pElement}[index]." +
+                  "managerCondAndLoop.down_level")
+          end
+          eval("pElementFile.#{pElement}[index].add_repetition(pRepetition)")
+        end
+
+        def dynamicRepetitionLevelUpdate(pElementFile, pElement)
+         index = eval("pElementFile.#{pElement}.length - 1")
+         if @language.isNested?
+           eval("pElementFile.#{pElement}[index].managerCondAndLoop.up_level")
+         end
+       end
+
     # End class
     end
 

@@ -12,7 +12,7 @@ RSpec.describe "Verify repetition output" do
     @output = File.open("./spec/language/ruby/global_test/repetition/veryMixRepetition.xml", "r")
   end
 
-  RSpec.shared_examples "Multiple verification" do |regex, description|
+  RSpec.shared_examples "Mix multiple verification" do |regex, description|
 
     it "Global Function: #{description}" do
       repetition = nil
@@ -28,27 +28,27 @@ RSpec.describe "Verify repetition output" do
 
     message = "Global Function: for level0 in 0..5"
     regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: until level0 >gt; $num do"
     regex = /\s+<until\sexpression="level0 >gt; \$num"\slevel="0"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: while level0 <lt; $num do"
     regex = /\s+<while\sexpression="level0 <lt; \$num"\slevel="0"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: for level0 in 0..5"
     regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: until level1 >gt; level0 do"
     regex = /\s+<until\sexpression="level1 >gt; level0"\slevel="1"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: while level2 >gt; 8 do"
     regex = /\s+<while\sexpression="level2 >gt; 8"\slevel="2"\/?>/
-    include_examples "Multiple verification" , regex, message
+    include_examples "Mix multiple verification" , regex, message
 
   end
 
