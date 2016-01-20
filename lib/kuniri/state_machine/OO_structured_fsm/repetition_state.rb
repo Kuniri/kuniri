@@ -82,7 +82,8 @@ module StateMachine
         @countNestedRepetition
 
         def isNestedRepetition?(pType)
-          if pType == Languages::WHILE_LABEL || pType == Languages::FOR_LABEL ||
+          if pType == Languages::WHILE_LABEL ||
+              pType == Languages::FOR_LABEL ||
               pType == Languages::DO_WHILE_LABEL ||
               pType == Languages::UNTIL_LABEL
             return true

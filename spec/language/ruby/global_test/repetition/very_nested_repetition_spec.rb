@@ -18,6 +18,7 @@ RSpec.describe "Verify repetition output with a nested conditional" do
       repetition = nil
       @output.each do |line|
         repetition = line =~ regex
+        break unless repetition.nil?
       end
       expect(repetition).not_to be_nil
     end

@@ -1,4 +1,4 @@
 :language: ruby
-:source: ./spec/samples/rubySyntaxParts/repetition/constructorWithVeryNestedRepetition.rb
-:output: ./spec/language/ruby/global_test/repetition/constructorWithNestedRepetition.xml
+:source: ./spec/samples/rubySyntaxParts/repetition/constructorWithMixRepetition.rb
+:output: ./spec/language/ruby/global_test/repetition/constructorWithMixRepetition.xml
 :extract: uml

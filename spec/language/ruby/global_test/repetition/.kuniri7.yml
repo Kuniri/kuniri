@@ -1,4 +1,4 @@
 :language: ruby
-:source: ./spec/samples/rubySyntaxParts/repetition/methodWithVeryNestedRepetition.rb
-:output: ./spec/language/ruby/global_test/repetition/methodWithVeryNestedRepetition.xml
+:source: ./spec/samples/rubySyntaxParts/repetition/methodWithMixRepetition.rb
+:output: ./spec/language/ruby/global_test/repetition/methodWithMixRepetition.xml
 :extract: uml

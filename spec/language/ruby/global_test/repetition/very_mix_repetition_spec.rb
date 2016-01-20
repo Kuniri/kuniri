@@ -18,6 +18,7 @@ RSpec.describe "Verify repetition output" do
       repetition = nil
       @output.each do |line|
         repetition = line =~ regex
+        break unless repetition.nil?
       end
       expect(repetition).not_to be_nil
     end
@@ -27,27 +28,27 @@ RSpec.describe "Verify repetition output" do
   context "Test mix repetition" do
 
     message = "Global Function: for level0 in 0..5"
-    regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
+    regex = /\s+<for\sexpression="level0 in 0\.\.5"\slevel="0"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
-    message = "Global Function: until level0 >gt; $num do"
-    regex = /\s+<until\sexpression="level0 >gt; \$num"\slevel="0"\/?>/
+    message = "Global Function: until level0 &gt; $num do"
+    regex = /\s+<until\sexpression="level0 &gt; \$num"\slevel="0"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
-    message = "Global Function: while level0 <lt; $num do"
-    regex = /\s+<while\sexpression="level0 <lt; \$num"\slevel="0"\/?>/
+    message = "Global Function: while level0 &lt; $num do"
+    regex = /\s+<while\sexpression="level0 &lt; \$num"\slevel="0"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
     message = "Global Function: for level0 in 0..5"
     regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
-    message = "Global Function: until level1 >gt; level0 do"
-    regex = /\s+<until\sexpression="level1 >gt; level0"\slevel="1"\/?>/
+    message = "Global Function: until level1 &gt; level0 do"
+    regex = /\s+<until\sexpression="level1 &gt; level0"\slevel="1"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
-    message = "Global Function: while level2 >gt; 8 do"
-    regex = /\s+<while\sexpression="level2 >gt; 8"\slevel="2"\/?>/
+    message = "Global Function: while level2 &gt; 8 do"
+    regex = /\s+<while\sexpression="level2 &gt; 8"\slevel="2"\/?>/
     include_examples "Mix multiple verification" , regex, message
 
   end

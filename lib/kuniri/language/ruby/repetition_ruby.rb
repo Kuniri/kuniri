@@ -1,3 +1,4 @@
+require_relative '../abstract_container/structured_and_oo/global_tokens'
 require_relative '../abstract_container/structured_and_oo/repetition'
 require_relative '../container_data/structured_and_oo/repetition_data'
 
@@ -19,7 +20,6 @@ module Languages
           #result = remove_unnecessary_information(result)
           repetitionCaptured = Languages::RepetitionData.new
           repetitionCaptured.type = repetition_type(result)
-
           repetitionCaptured.expression = get_expression(
                                                     repetitionCaptured.type,
                                                     result)

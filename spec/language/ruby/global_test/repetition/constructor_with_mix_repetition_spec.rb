@@ -9,7 +9,7 @@ RSpec.describe "Verify repetition output" do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/repetition/constructorWitHvERYmIXrepetition.xml", "r")
+    @output = File.open("./spec/language/ruby/global_test/repetition/constructorWithMixRepetition.xml", "r")
   end
 
   RSpec.shared_examples "Constructor multiple verification" do |regex, description|
@@ -18,6 +18,7 @@ RSpec.describe "Verify repetition output" do
       repetition = nil
       @output.each do |line|
         repetition = line =~ regex
+        break unless repetition.nil?
       end
       expect(repetition).not_to be_nil
     end
@@ -27,27 +28,23 @@ RSpec.describe "Verify repetition output" do
   context "Test mix repetition" do
 
     message = "Constructor: for level0 in 0..5"
-    regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
+    regex = /\s+<for\sexpression="level0 in 0\.\.5"\slevel="0"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
-    message = "Constructor: until level0 >gt; $num do"
-    regex = /\s+<until\sexpression="level0 >gt; \$num"\slevel="0"\/?>/
-    include_examples "Constructor multiple verification" , regex, message
-
-    message = "Constructor: while level0 <lt; $num do"
-    regex = /\s+<while\sexpression="level0 <lt; \$num"\slevel="0"\/?>/
+    message = "Constructor: until level0 &gt; 30 do"
+    regex = /\s+<until\sexpression="level0 &gt; 30"\slevel="0"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
     message = "Constructor: for level0 in 0..5"
-    regex = /\s+<for\sexpression="level0 in 0..5"\slevel="0"\/?>/
+    regex = /\s+<for\sexpression="level0 in 0\.\.5"\slevel="0"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
-    message = "Constructor: until level1 >gt; level0 do"
-    regex = /\s+<until\sexpression="level1 >gt; level0"\slevel="1"\/?>/
+    message = "Constructor: until level1 &gt; level0 do"
+    regex = /\s+<until\sexpression="level1 &gt; 300"\slevel="1"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
-    message = "Constructor: while level2 >gt; 8 do"
-    regex = /\s+<while\sexpression="level2 >gt; 8"\slevel="2"\/?>/
+    message = "Constructor: for level2 in 0..300"
+    regex = /\s+<for\sexpression="level2 in 0\.\.300 do"\slevel="2"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
   end
