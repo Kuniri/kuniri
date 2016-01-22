@@ -5,7 +5,8 @@ module StateMachine
 
   module OOStructuredFSM
 
-    # Class responsible for handling conditional state.
+    # Class responsible for handling Basic structures state. Understand basic
+    # basic structure by conditional and repetitions.
     class BasicStructureState < OOStructuredState
 
       @language
@@ -13,7 +14,7 @@ module StateMachine
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
-        @whoami = "the fu@!+ nobody"
+        @whoAmI = "the fu@!+ nobody"
       end
 
       def handle_line(pLine)
@@ -68,17 +69,28 @@ module StateMachine
 
       protected
 
-        @countNestedConditional
-        @whoami
+        @whoAmI # !@param whoAmI Used for differentiated child class.
 
+        # Add conditional or repetition. It is delegate to child class.
+        # @param pLine Line to analyse
+        # @param pFlag Flag for identify global function, constructor or method
+        # @param pClassIndex Element index to add
+        # @param pElementFile Element with all data
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
           raise NotImplementedError
         end
 
+        # If is a structure which can be nested. It is delegate.
+        # @param pType Constant with type description.
         def isNestedStructure?(pType)
           raise NotImplementedError
         end
 
+        # Add element to correct place, based on the state machine position.
+        # @pElement Specific element, e.g, conditional or repetition object.
+        # @pElementFile All data.
+        # @pFlag Flag with current position in the state machine.
+        # @pClassIndex Index of class.
         def addToCorrectElement(pElement, pElementFile, pFlag, pClassIndex)
           elementType = pElement.type
           stringToEval = "classes[#{pClassIndex}]."
@@ -95,6 +107,10 @@ module StateMachine
           end
         end
 
+        # Update nested level in conditional or repetition.
+        # @param pFlag
+        # @param pElementFile
+        # @param pClassIndex
         def updateLevel(pFlag, pElementFile, pClassIndex)
           case pFlag
             when StateMachine::GLOBAL_FUNCTION_STATE
@@ -110,6 +126,11 @@ module StateMachine
           @language.lessNested
         end
 
+        # Dynamically add based on child class.
+        # @param pElementFile All data inside element.
+        # @param pToAdd Element to add.
+        # @param pType Type of thhe element.
+        # @param pElement Element description.
         def dynamicallyAdd(pElementFile, pToAdd, pType, pElement)
           classIndex = pElementFile.classes.length - 1 # We want the index
           index = eval("pElementFile.#{pElement}.length - 1")
@@ -117,9 +138,12 @@ module StateMachine
             eval("pElementFile.#{pElement}[index]." +
                   "managerCondAndLoop.down_level")
           end
-          eval("pElementFile.#{pElement}[index].add_#{@whoami}(pToAdd)")
+          eval("pElementFile.#{pElement}[index].add_#{@whoAmI}(pToAdd)")
         end
 
+        # Update level of conditional or repetition
+        # @param pElementFile Element with all data.
+        # @param pElement String name of the element.
         def dynamicLevelUpdate(pElementFile, pElement)
          index = eval("pElementFile.#{pElement}.length - 1")
          if @language.isNested?

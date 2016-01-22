@@ -13,7 +13,7 @@ module StateMachine
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
-        @whoami = "repetition"
+        @whoAmI = "repetition"
       end
 
       # @see OOStructuredState
@@ -29,6 +29,7 @@ module StateMachine
 
       protected
 
+        # @see basic_structure_state
         def isNestedStructure?(pType)
           if pType == Languages::WHILE_LABEL ||
               pType == Languages::FOR_LABEL ||
@@ -39,6 +40,7 @@ module StateMachine
           return false
         end
 
+        # @see basic_structure_state
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
           repetition = @language.repetitionHandler.get_repetition(pLine)
           if (repetition)

@@ -5,7 +5,7 @@ module StateMachine
 
   module OOStructuredFSM
 
-    # Class responsible for handling Repetition state.
+    # Class responsible for handling Conditional state.
     class ConditionalState < BasicStructureState
 
       @language
@@ -13,7 +13,7 @@ module StateMachine
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
-        @whoami = "conditional"
+        @whoAmI = "conditional"
       end
 
       # @see OOStructuredState
@@ -29,6 +29,7 @@ module StateMachine
 
       protected
 
+        # @see basic_structure_state
         def isNestedStructure?(pType)
           if pType == Languages::IF_LABEL || pType == Languages::CASE_LABEL ||
               pType == Languages::UNLESS_LABEL
@@ -37,6 +38,7 @@ module StateMachine
           return false
         end
 
+        # @see basic_structure_state
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
           conditional = @language.conditionalHandler.get_conditional(pLine)
           if (conditional)
