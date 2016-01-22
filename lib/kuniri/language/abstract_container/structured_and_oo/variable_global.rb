@@ -25,41 +25,6 @@ module Languages
           raise NotImplementedError
         end
 
-        # Remove unnecessary information.
-        # @param pLine String to be improved.
-        # @return Return an partial string, or the same if no work is needed.
-        def remove_unnecessary_information(pLine)
-          raise NotImplementedError
-        end
-
-        # Make some prunes and adjustments in the string.
-        # @param pLine String to be prepared.
-        # @return Return a string.
-        def prepare_final_string(pLine)
-          raise NotImplementedError
-        end
-
-        # Handling multiple line declaration with comma.
-        # @param pString String with multiple declaration with comma.
-        # @return Return a string.
-        def handle_multiple_declaration_with_comma(pString)
-          raise NotImplementedError
-        end
-
-        # Handling multiple declaration with equal.
-        # @param pString String to be handled.
-        # @return Return an array with all variables.
-        def handle_multiple_declaration_with_equal(pString)
-          raise NotImplementedError
-        end
-
-        # Handling simple line declaration.
-        # @param pString String with simple declaration.
-        # @return Return a string.
-        def handle_line_declaration(pString)
-          raise NotImplementedError
-        end
-
   # class
   end
 
