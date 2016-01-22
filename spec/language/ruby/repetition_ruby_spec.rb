@@ -94,6 +94,12 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       expect(repetitionCaptured).to eq('xpto == "exit"')
     end
 
+    it "Check correct type" do
+      input = 'until xpto == "exit" do'
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
+    end
+
     it "No match" do
       input = 'until xpto == "exit"'
       repetitionCaptured = @repetitionRuby.get_repetition(input)

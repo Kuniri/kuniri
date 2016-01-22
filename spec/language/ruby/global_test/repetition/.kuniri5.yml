@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/veryMixRepetition.rb
+:output: ./spec/language/ruby/global_test/repetition/veryMixRepetition.xml
+:extract: uml

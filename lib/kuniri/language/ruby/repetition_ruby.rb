@@ -1,3 +1,4 @@
+require_relative '../abstract_container/structured_and_oo/global_tokens'
 require_relative '../abstract_container/structured_and_oo/repetition'
 require_relative '../container_data/structured_and_oo/repetition_data'
 
@@ -19,7 +20,6 @@ module Languages
           #result = remove_unnecessary_information(result)
           repetitionCaptured = Languages::RepetitionData.new
           repetitionCaptured.type = repetition_type(result)
-
           repetitionCaptured.expression = get_expression(
                                                     repetitionCaptured.type,
                                                     result)
@@ -55,19 +55,19 @@ module Languages
         # Override
         def repetition_type(pString)
           regexExp = /^\s+while|^while/
-          return "WHILE" if regexExp =~ pString
+          return Languages::WHILE_LABEL if regexExp =~ pString
 
           regexExp = /^\s+for|^for/
-          return "FOR" if regexExp =~ pString
+          return Languages::FOR_LABEL if regexExp =~ pString
 
           regexExp = /^\s+until|^until/
-          return "UNTIL" if regexExp =~ pString
+          return Languages::UNTIL_LABEL if regexExp =~ pString
 
           regexExp = /^\s*end\s+while\s+/
-          return "DOWHILE" if regexExp =~ pString
+          return Languages::DO_WHILE_LABEL if regexExp =~ pString
 
           regexExp = /^lambda\s+/
-          return "LAMBDA" if regexExp =~ pString
+          return Languages::LAMBDA_LABEL if regexExp =~ pString
 
           regexExp = /\.\w+/
           return pString[/\w+/, 0].upcase if regexExp =~ pString
@@ -77,19 +77,20 @@ module Languages
 
         # Override
         def get_expression(pType, pString)
-          if pType == "FOR"
-            pString.slice!("for")
-          elsif pType == "WHILE"
-            pString.slice!("while")
-            pString.slice!("do")
-          elsif pType == "UNTIL"
-            pString.slice!("until")
-            pString.slice!("do")
-          elsif pType == "DOWHILE"
-            pString.slice!("end")
-            pString.slice!("while")
-          else
-            pString.slice!(".")
+          case pType
+            when Languages::FOR_LABEL
+              pString.slice!("for")
+            when Languages::WHILE_LABEL
+              pString.slice!("while")
+              pString.slice!("do")
+            when Languages::UNTIL_LABEL
+              pString.slice!("until")
+              pString.slice!("do")
+            when Languages::DO_WHILE_LABEL
+              pString.slice!("end")
+              pString.slice!("while")
+            else
+              pString.slice!(".")
           end
           leftStrip = pString.lstrip
           rightStrip = leftStrip.rstrip
