@@ -65,16 +65,32 @@ module Languages
       # @return If pRepetition is not RepetitionData instance return nil.
       def add_repetition(pRepetition, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
-        if pBehaviour == Languages::KEEP_LEVEL
-          @managerCondAndLoop.add_repetition(pRepetition)
-        elsif pBehaviour == Languages::UP_LEVEL
-          @managerCondAndLoop.up_level
-          @managerCondAndLoop.add_repetition(pRepetition)
-        elsif pBehaviour == Languages::DOWN_LEVEL
-          @managerCondAndLoop.down_level
-          @managerCondAndLoop.add_repetition(pRepetition)
+        case pBehaviour
+          when Languages::KEEP_LEVEL
+            @managerCondAndLoop.add_repetition(pRepetition)
+          when Languages::UP_LEVEL
+            @managerCondAndLoop.up_level
+            @managerCondAndLoop.add_repetition(pRepetition)
+          when Languages::DOWN_LEVEL
+            @managerCondAndLoop.down_level
+            @managerCondAndLoop.add_repetition(pRepetition)
         end
       end
+
+      # Copy elements from an object of FunctionAbstract to specific element
+      # @param fromTo Reference from FunctionAbstract
+      def << (fromTo)
+        unless fromTo.is_a?(Languages::FunctionAbstract)
+          return nil
+        end
+        @name = fromTo.name
+        @parameters = fromTo.parameters
+        @managerCondAndLoop = fromTo.managerCondAndLoop
+        @visibility = fromTo.visibility
+        @comments = fromTo.comments
+        @type = @type
+      end
+
 
   # class
   end
