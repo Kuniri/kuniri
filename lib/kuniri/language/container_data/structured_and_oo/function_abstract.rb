@@ -48,16 +48,7 @@ module Languages
       #         return nil.
       def add_conditional(pConditional, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pConditional.instance_of?Languages::ConditionalData)
-        case pBehaviour
-          when Languages::KEEP_LEVEL
-            @managerCondAndLoop.add_conditional(pConditional)
-          when Languages::UP_LEVEL
-            @managerCondAndLoop.up_level
-            @managerCondAndLoop.add_conditional(pConditional)
-          when Languages::DOWN_LEVEL
-            @managerCondAndLoop.down_level
-            @managerCondAndLoop.add_conditional(pConditional)
-        end
+        add_with_manager(pConditional, "conditional", pBehaviour)
       end
 
       # Add repetition element inside function.
@@ -65,16 +56,7 @@ module Languages
       # @return If pRepetition is not RepetitionData instance return nil.
       def add_repetition(pRepetition, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
-        case pBehaviour
-          when Languages::KEEP_LEVEL
-            @managerCondAndLoop.add_repetition(pRepetition)
-          when Languages::UP_LEVEL
-            @managerCondAndLoop.up_level
-            @managerCondAndLoop.add_repetition(pRepetition)
-          when Languages::DOWN_LEVEL
-            @managerCondAndLoop.down_level
-            @managerCondAndLoop.add_repetition(pRepetition)
-        end
+        add_with_manager(pRepetition, "repetition", pBehaviour)
       end
 
       # Copy elements from an object of FunctionAbstract to specific element
@@ -91,6 +73,24 @@ module Languages
         @type = @type
       end
 
+      private
+
+        # Add to a manager conditional or repetition.
+        # @param pElementToAdd Element wish we want to add.
+        # @param pMetaData String with name for of element we want to add.
+        # @param pBehaviour Flag with behaviour.
+        def add_with_manager(pElementToAdd, pMetaData, pBehaviour)
+          case pBehaviour
+            when Languages::KEEP_LEVEL
+              @managerCondAndLoop.send("add_#{pMetaData}", pElementToAdd)
+            when Languages::UP_LEVEL
+              @managerCondAndLoop.up_level
+              @managerCondAndLoop.send("add_#{pMetaData}", pElementToAdd)
+            when Languages::DOWN_LEVEL
+              @managerCondAndLoop.down_level
+              @managerCondAndLoop.send("add_#{pMetaData}", pElementToAdd)
+          end
+        end
 
   # class
   end
