@@ -118,7 +118,7 @@ RSpec.describe Parser::XMLBuilderEngine do
                 '<kuniri>',
                 '  <classData name="Xpto" visibility="public">',
                 '    <methodData name="abc" visibility="public">',
-                '      <conditionalData type="if" expression="x > 2"/>',
+                '      <conditionalData type="if" expression="x &gt; 2"/>',
                 '    </methodData>',
                 '  </classData>',
                 '</kuniri>'].join("\n") + "\n"
@@ -130,7 +130,7 @@ RSpec.describe Parser::XMLBuilderEngine do
         classData :name => "Xpto", :visibility => "public" do
           methodData :name => "abc", :visibility => "public" do
             conditionalData :type => "unless",
-                            :expression => "(abc > 3) && (kto < 20)"
+                            :expression => "(abc < 3) && (kto > 20)"
           end
         end
       end
@@ -139,8 +139,8 @@ RSpec.describe Parser::XMLBuilderEngine do
                 '<kuniri>',
                 '  <classData name="Xpto" visibility="public">',
                 '    <methodData name="abc" visibility="public">',
-                '      <conditionalData type="unless" expression="(abc > 3)' +
-                      ' && (kto < 20)"/>',
+                '      <conditionalData type="unless" expression="(abc &lt; 3)' +
+                      ' &amp;&amp; (kto &gt; 20)"/>',
                 '    </methodData>',
                 '  </classData>',
                 '</kuniri>'].join("\n") + "\n"
@@ -190,7 +190,7 @@ RSpec.describe Parser::XMLBuilderEngine do
       output = [@basicHeader,
                 '<kuniri>',
                 '  <functionData name="xpto" visibility="global">',
-                '    <repetitionData type="while" expression="(x < 0)"/>',
+                '    <repetitionData type="while" expression="(x &lt; 0)"/>',
                 '  </functionData>',
                 '</kuniri>',].join("\n") + "\n"
       expect(@builder.to_xml).to eq(output)

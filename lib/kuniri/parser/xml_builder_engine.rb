@@ -36,7 +36,6 @@ module Parser
         @tag += "\n" unless @tag.strip == ''
         currentTagName = "#{@ident}<#{pTagName.to_s}"
         @tag << currentTagName
-
         if pTagParameters.size > 0 and pTagParameters[0].is_a? Hash
           handleArguments(pTagParameters)
         end
@@ -65,8 +64,20 @@ module Parser
 
       def handleArguments(pTagParameters)
         pTagParameters[0].each do |key, value|
-          @tag << " #{key.to_s}=\"#{value.to_s}\""
+          stringValue = handleSpecialCharactersXml(value.to_s)
+          @tag << " #{key.to_s}=\"#{stringValue}\""
         end
+      end
+
+      def handleSpecialCharactersXml(pString)
+        if pString.count('"') > 0 || pString.count("&") > 0 ||
+            pString.count('>') > 0 || pString.count('<') > 0
+            pString = pString.gsub('"', "'")
+                              .gsub('&', '&amp;')
+                              .gsub('>', '&gt;')
+                              .gsub('<', '&lt;')
+          end
+        return pString
       end
 
       def incrementIdentation

@@ -113,18 +113,12 @@ module Parser
 
       def simple_element(pElement)
         pElement.each do |element|
-          finalExpression = element.expression.gsub('"', "'")
-                                              .gsub('&', '&amp;')
-                                              .gsub('>', '&gt;')
-                                              .gsub('<', '&lt;')
-          # XXX: PLEASE! REFECTORY IT!
           if element.type == Languages::ELSE_LABEL
             @outputEngine.send(element.type.downcase,
                               {:level => element.level})
-
           else
             @outputEngine.send(element.type.downcase,
-                              {:expression => finalExpression,
+                              {:expression => element.expression,
                                :level => element.level})
           end
         end
