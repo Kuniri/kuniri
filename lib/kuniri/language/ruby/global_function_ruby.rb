@@ -1,4 +1,3 @@
-require_relative '../abstract_container/structured_and_oo/global_function'
 require_relative '../container_data/structured_and_oo/function_data'
 require_relative 'function_behavior_ruby'
 
