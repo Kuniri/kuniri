@@ -14,20 +14,6 @@ module Languages
         @type = GLOBAL_FUNCTION_DATA
       end
 
-      # Copy elements from an object of FunctionAbstract to Method
-      # @param functionAbstractToMethod Reference from FunctionAbstract
-      def << (abstractToGlobalFunction)
-        unless abstractToGlobalFunction.is_a?(Languages::FunctionAbstract)
-          return nil
-        end
-        @name = abstractToGlobalFunction.name
-        @parameters = abstractToGlobalFunction.parameters
-        @managerCondAndLoop = abstractToGlobalFunction.managerCondAndLoop
-        @visibility = abstractToGlobalFunction.visibility
-        @comments = abstractToGlobalFunction.comments
-        @type = GLOBAL_FUNCTION_DATA
-      end
-
   # class
   end
 

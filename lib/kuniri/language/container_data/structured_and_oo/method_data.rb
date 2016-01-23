@@ -14,20 +14,6 @@ module Languages
         @type = METHOD_DATA
       end
 
-      # Copy elements from an object of FunctionAbstract to Method
-      # @param functionAbstractToMethod Reference from FunctionAbstract
-      def << (functionAbstractToMethod)
-        unless functionAbstractToMethod.is_a?(Languages::FunctionAbstract)
-          return nil
-        end
-        @name = functionAbstractToMethod.name
-        @parameters = functionAbstractToMethod.parameters
-        @managerCondAndLoop = functionAbstractToMethod.managerCondAndLoop
-        @visibility = functionAbstractToMethod.visibility
-        @comments = functionAbstractToMethod.comments
-        @type = METHOD_DATA
-      end
-
   # Class
   end
 
