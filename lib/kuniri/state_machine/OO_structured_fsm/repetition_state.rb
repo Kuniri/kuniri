@@ -16,29 +16,7 @@ module StateMachine
         @whoAmI = "repetition"
       end
 
-      # @see OOStructuredState
-      def conditional_capture
-        @language.set_state(@language.conditionalState)
-      end
-
-      # @see OOStructuredState
-      def repetition_capture
-        @language.moreNested
-        @language.set_state(@language.repetitionState)
-      end
-
       protected
-
-        # @see basic_structure_state
-        def isNestedStructure?(pType)
-          if pType == Languages::WHILE_LABEL ||
-              pType == Languages::FOR_LABEL ||
-              pType == Languages::DO_WHILE_LABEL ||
-              pType == Languages::UNTIL_LABEL
-            return true
-          end
-          return false
-        end
 
         # @see basic_structure_state
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
