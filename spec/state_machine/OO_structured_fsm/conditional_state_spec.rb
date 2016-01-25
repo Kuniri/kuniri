@@ -101,6 +101,28 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
       expect(@conditionalTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
+
+    it "Nested conditional ending with repetition" do
+      @conditionalTest.state.function_capture
+      @conditionalTest.state.conditional_capture
+      @conditionalTest.state.conditional_capture
+      @conditionalTest.state.repetition_capture
+      expect(@conditionalTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::RepetitionState)
+    end
+
+    it "Nested conditional ending with repetition, and going back" do
+      @conditionalTest.state.function_capture
+      @conditionalTest.state.conditional_capture
+      @conditionalTest.state.conditional_capture
+      @conditionalTest.state.repetition_capture
+      @conditionalTest.state.repetition_capture
+      @conditionalTest.rewind_state
+      @conditionalTest.rewind_state
+      expect(@conditionalTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
+    end
+
   end
 
   context "Incorrect flow." do
