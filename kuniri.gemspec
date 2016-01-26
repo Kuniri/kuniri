@@ -3,11 +3,11 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'kuniri/version'
 
-Gem::Specification.new 'kuniri', '0.1' do |spec|
+Gem::Specification.new 'kuniri', '0.2' do |spec|
   spec.name          = "kuniri"
   spec.version       = Kuniri::VERSION
   spec.authors       = ["Gustavo Jaruga", "Rodrigo Siqueira"]
-  spec.email         = ["darksshades@hotmail.com", "rodrigosiqueiramelo@gmail.com"]
+  spec.email         = ["darksshades@hotmail.com", "siqueira@kuniri.org"]
   spec.summary       = %q{Extract class information from code.}
   spec.description   = 'Generic parser'
   spec.homepage      = "http://kuniri.github.io/kuniri/"
