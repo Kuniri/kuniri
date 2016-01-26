@@ -9,72 +9,44 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional/output1.xml", "r")
+    target = "./spec/language/ruby/global_test/conditional/output1.xml"
+    @output = File.open(target, "r")
   end
 
-  context "Simple cases of nested conditional" do
-    it "First nested if (xpto)" do
-      simpleIf = nil
+  RSpec.shared_examples "Nested conditional" do |regex, description|
+    it "Nested: #{description}" do
+      conditional = nil
       @output.each do |line|
-    simpleIf = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
-        break unless simpleIf.nil?
+        conditional = line =~ regex
+        break unless conditional.nil?
       end
-      expect(simpleIf).not_to be_nil
-    end
-
-    it "Second nested if (abc)" do
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-    end
-
-    it "Third nested if (xyz)" do
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="xyz == 'level0'"\slevel="0"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="abc == 'level1'" level="1"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<else level="1"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
+      expect(conditional).not_to be_nil
     end
   end
 
-  #context "Second cases of nested conditional" do
+  context "Function with nested conditional" do
 
-  #  it "" do
-  #    simpleIf = nil
-  #    @output.each do |line|
-  #      simpleIf = line =~ /\s+<\/if>/
-  #      break unless simpleIf.nil?
-  #    end
-  #    expect(simpleIf).not_to be_nil
-  #  end
+    message = "Find: if xpto == 'level0'"
+    regex = /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
+    include_examples "Nested conditional" , regex, message
 
-  #  it "" do
-  #    simpleIf = nil
-  #    @output.each do |line|
-  #      simpleIf = line =~ /\s+<else level="0"\/?>/
-  #      break unless simpleIf.nil?
-  #    end
-  #    expect(simpleIf).not_to be_nil
-  #  end
-  #end
+    message = "Find: if abc == 'level1'"
+    regex = /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
+    include_examples "Nested conditional" , regex, message
+
+    message = "Find: if xyz == 'level0'"
+    regex = /\s+<if\sexpression="xyz == 'level0'"\slevel="0"\/?>/
+    include_examples "Nested conditional" , regex, message
+
+    message = "Find: if abc == 'level1'"
+    regex = /\s+<if\sexpression="abc == 'level1'" level="1"\/?>/
+    include_examples "Nested conditional" , regex, message
+
+    message = "Find: else"
+    regex = /\s+<else level="1"\/?>/
+    include_examples "Nested conditional" , regex, message
+
+  end
 
   after :each do
     @kuniri = nil

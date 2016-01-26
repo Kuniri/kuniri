@@ -9,136 +9,78 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml", "r")
+    str = "./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml"
+    @output = File.open(str, "r")
   end
 
-  context "Simple cases of nested conditional" do
-    it "Find: if conditional1 == level0" do
-      simpleIf = nil
-      @output.each do |line|
-        simpleIf = line =~ /\s+<if\sexpression="conditional1 == 'level0'"\slevel="0"\/?>/
-        break unless simpleIf.nil?
-      end
-      expect(simpleIf).not_to be_nil
-    end
-
-    it "Find: conditional2 == level1" do
+  RSpec.shared_examples "Conditional verification" do |regex, description|
+    it "Method: #{description}" do
       conditional = nil
       @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional2 == 'level1'"\slevel="1"\/?>/
+        conditional = line =~ regex
         break unless conditional.nil?
       end
       expect(conditional).not_to be_nil
     end
+  end
 
-    it "Find: unless conditional3 == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<unless\sexpression="conditional3 == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+  context "Test mix repetition" do
 
-    it "Find: if xpto == level0" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if conditional1 == level0"
+    regex = /\s+<if\sexpression="conditional1 == 'level0'"\slevel="0"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: elsif abc == level0" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="abc == 'level0'"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: conditional2 == level1"
+    regex = /\s+<if\sexpression="conditional2 == 'level1'"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: elsif banana == level0" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="banana == 'level0'"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: unless conditional3 == level1"
+    regex = /\s+<unless\sexpression="conditional3 == 'level1'"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: if abc == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto == level0"
+    regex = /\s+<if\sexpression="xpto == 'level0'"\slevel="0"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: unless moreAndMore == level2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<unless\sexpression="moreAndMore == 'level2'"\slevel="2"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: elsif abc == level0"
+    regex = /\s+<elsif\sexpression="abc == 'level0'"\slevel="0"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: elsif asdf == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="asdf == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: elsif banana == level0"
+    regex = /\s+<elsif\sexpression="banana == 'level0'"\slevel="0"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: else level 1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<else\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if abc == level1"
+    regex = /\s+<if\sexpression="abc == 'level1'"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: else level 0" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<else\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: unless moreAndMore == level2"
+    regex = /\s+<unless\sexpression="moreAndMore == 'level2'"\slevel="2"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: case p" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<case\sexpression="p"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: elsif asdf == level1"
+    regex = /\s+<elsif\sexpression="asdf == 'level1'"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: when 2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="2"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: else level 1"
+    regex = /\s+<else\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
-    it "Find: when 4" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="4"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: else level 0"
+    regex = /\s+<else\slevel="0"\/?>/
+    include_examples "Conditional verification" , regex, message
 
+    message = "Find: case p"
+    regex = /\s+<case\sexpression="p"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
+
+    message = "Find: when 2"
+    regex = /\s+<when\sexpression="2"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
+
+    message = "Find: when 4"
+    regex = /\s+<when\sexpression="4"\slevel="1"\/?>/
+    include_examples "Conditional verification" , regex, message
 
   end
 
