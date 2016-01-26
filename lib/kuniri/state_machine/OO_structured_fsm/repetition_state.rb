@@ -12,7 +12,6 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @language.resetNested
         @whoAmI = "repetition"
       end
 
