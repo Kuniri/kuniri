@@ -9,163 +9,91 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional/veryMixConditional.xml", "r")
+    target = "./spec/language/ruby/global_test/conditional/" +
+              "veryMixConditional.xml"
+    @output = File.open(target, "r")
   end
 
-  context "Very mix conditional" do
-    it "Find: case p" do
+  RSpec.shared_examples "Very mix conditional" do |regex, description|
+    it "Method: #{description}" do
       conditional = nil
       @output.each do |line|
-        conditional = line =~ /\s+<case\sexpression="p"\slevel="0"\/?>/
+        conditional = line =~ regex
         break unless conditional.nil?
       end
       expect(conditional).not_to be_nil
     end
+  end
 
-    it "Find: when 2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="2"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+  context "Very mix with conditional" do
 
-    it "Find: if xpto == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: case p"
+    regex = /\s+<case\sexpression="p"\slevel="0"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: else" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<else\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: when 2"
+    regex = /\s+<when\sexpression="2"\slevel="0"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: when 4" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="4"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto == 'level1'"
+    regex = /\s+<if\sexpression="xpto == 'level1'"\slevel="1"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: if xpto1 == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto1 == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: else"
+    regex = /\s+<else\slevel="1"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: if xpto2 == level2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto2 == 'level2'"\slevel="2"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: when 4"
+    regex = /\s+<when\sexpression="4"\slevel="0"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: if xpto3 == level3" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto3 == 'level3'"\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto1 == 'level1'"
+    regex = /\s+<if\sexpression="xpto1 == 'level1'"\slevel="1"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: elsif abc == level3" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="abc == 'level3'"\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto2 == 'level2'"
+    regex = /\s+<if\sexpression="xpto2 == 'level2'"\slevel="2"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: elsif level3" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<else\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto3 == 'level3'"
+    regex = /\s+<if\sexpression="xpto3 == 'level3'"\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: elsif banana == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="banana == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: elsif abc == 'level3'"
+    regex = /\s+<elsif\sexpression="abc == 'level3'"\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: when 7" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="7"\slevel="0"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: else"
+    regex = /\s+<else\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: unless abc == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<unless\sexpression="abc == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: elsif banana == 'level1'"
+    regex = /\s+<elsif\sexpression="banana == 'level1'"\slevel="1"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: if xpto == level2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="xpto == 'level2'"\slevel="2"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: when 7"
+    regex = /\s+<when\sexpression="7"\slevel="0"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: case x" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<case\sexpression="x"\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: unless abc == 'level1'"
+    regex = /\s+<unless\sexpression="abc == 'level1'"\slevel="1"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: when 6" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="6"\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if xpto == 'level2'"
+    regex = /\s+<if\sexpression="xpto == 'level2'"\slevel="2"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
-    it "Find: when 7" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<when\sexpression="7"\slevel="3"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: case x"
+    regex = /\s+<case\sexpression="x"\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
+    message = "Find: when 6"
+    regex = /\s+<when\sexpression="6"\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
+
+    message = "Find: when 7"
+    regex = /\s+<when\sexpression="7"\slevel="3"\/?>/
+    include_examples "Very mix conditional" , regex, message
 
   end
 

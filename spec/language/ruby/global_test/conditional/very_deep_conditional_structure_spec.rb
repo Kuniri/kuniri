@@ -9,66 +9,49 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional/veryDeepConditionalStructure.xml", "r")
+    target = "./spec/language/ruby/global_test/conditional/" +
+              "veryDeepConditionalStructure.xml"
+    @output = File.open(target, "r")
   end
 
-  context "Simple cases of nested conditional" do
-    it "Find: if conditional0 == level0" do
+  RSpec.shared_examples "Deep conditional" do |regex, description|
+    it "Method: #{description}" do
       conditional = nil
       @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional0 == 'level0'"\slevel="0"\/?>/
+        conditional = line =~ regex
         break unless conditional.nil?
       end
       expect(conditional).not_to be_nil
     end
+  end
 
-    it "Find: if conditional1 == level1" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional1 == 'level1'"\slevel="1"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+  context "Very deep conditional" do
 
-   it "Find: if conditional2 == level2" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional2 == 'level2'"\slevel="2"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if conditional0 == 'level0'"
+    regex = /\s+<if\sexpression="conditional0 == 'level0'"\slevel="0"\/?>/
+    include_examples "Constructor with conditional" , regex, message
 
-   it "Find: if conditional15 == level15" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional15 == 'level15'"\slevel="15"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if conditional1 == 'level1'"
+    regex = /\s+<if\sexpression="conditional1 == 'level1'"\slevel="1"\/?>/
+    include_examples "Constructor with conditional" , regex, message
 
-   it "Find: if conditional19 == level19" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<if\sexpression="conditional19 == 'level19'"\slevel="19"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if conditional2 == 'level2'"
+    regex = /\s+<if\sexpression="conditional2 == 'level2'"\slevel="2"\/?>/
+    include_examples "Constructor with conditional" , regex, message
 
-   it "Find: elsif firstElse == level19" do
-      conditional = nil
-      @output.each do |line|
-        conditional = line =~ /\s+<elsif\sexpression="firstElse == 'level19'"\slevel="19"\/?>/
-        break unless conditional.nil?
-      end
-      expect(conditional).not_to be_nil
-    end
+    message = "Find: if conditional2 == 'level2'"
+    regex = /\s+<if\sexpression="conditional15 == 'level15'"\slevel="15"\/?>/
+    include_examples "Constructor with conditional" , regex, message
 
+    message = "Find: if conditional19 == 'level19'"
+    regex = /\s+<if\sexpression="conditional19 == 'level19'"\slevel="19"\/?>/
+    include_examples "Constructor with conditional" , regex, message
 
-  end 
+    message = "Find: elsif firstElse == 'level19'"
+    regex = /\s+<elsif\sexpression="firstElse == 'level19'"\slevel="19"\/?>/
+    include_examples "Constructor with conditional" , regex, message
+
+  end
 
   after :each do
     @kuniri = nil
