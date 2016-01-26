@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/whileLoopInClass.rb
+:output: ./spec/language/ruby/global_test/repetition/whileLoopInClass.xml
+:extract: uml

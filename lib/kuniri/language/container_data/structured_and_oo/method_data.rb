@@ -7,10 +7,11 @@ module Languages
 
     public
 
-      attr_reader :parameters
-
+      # Initialize Method object, based on name.
+      # @param pMethodName Method name.
       def initialize(pMethodName)
         super(pMethodName)
+        @type = METHOD_DATA
       end
 
   # Class

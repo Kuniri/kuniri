@@ -4,7 +4,8 @@ RSpec.describe Kuniri::Kuniri do
 
   context "When path for run_analysis is wrong." do
     it "Wrong path to " do
-      @kuniriTest = Kuniri::Kuniri.new("wrong/path")
+      @kuniriTest = Kuniri::Kuniri.new
+      @kuniriTest.read_configuration_file('./wrong/path')
       defaultPath = @kuniriTest.run_analysis
       folderFiles = Dir[File.join("./", "**", "**.rb")]
       expect(defaultPath).to match_array(folderFiles)

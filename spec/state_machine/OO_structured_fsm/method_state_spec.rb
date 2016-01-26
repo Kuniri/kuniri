@@ -23,6 +23,24 @@ RSpec.describe StateMachine::OOStructuredFSM::MethodState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ClassState)
     end
 
+    it "Method to aggregation" do
+      @rubyTest.class_capture
+      @rubyTest.method_capture
+      @rubyTest.aggregation_capture
+      expect(@rubyTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::AggregationState)
+    end
+
+    it "Aggregation to method" do
+      @rubyTest.class_capture
+      @rubyTest.method_capture
+      @rubyTest.aggregation_capture
+      @rubyTest.class_capture
+      expect(@rubyTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::MethodState)
+    end
+
+
   end
 
   context "Incorrect flow." do

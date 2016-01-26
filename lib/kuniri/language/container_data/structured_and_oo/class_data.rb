@@ -2,6 +2,7 @@ require_relative 'basic_data'
 require_relative 'attribute_data'
 require_relative 'method_data'
 require_relative 'constructor_data'
+require_relative 'aggregation_data'
 
 module Languages
 
@@ -11,6 +12,7 @@ module Languages
     public
 
       attr_accessor :inheritances
+      attr_accessor :aggregations
       attr_reader :attributes
       attr_reader :methods
       attr_reader :constructors
@@ -20,7 +22,9 @@ module Languages
         @attributes = []
         @methods = []
         @constructors = []
+        @aggregations = []
         @visibility = "public"
+        @comments = ""
       end
 
       # Add attribute to class data, notice the possibility of call this
@@ -39,7 +43,7 @@ module Languages
       # @param pMethod It is an object of FunctionData with the method
       #         informations.
       def add_method(pMethod)
-        return nil unless pMethod.is_a?(Languages::FunctionData)
+        return nil unless pMethod.is_a?(Languages::MethodData)
 
         @methods.push(pMethod)
       end
@@ -47,11 +51,18 @@ module Languages
       # Add constructor inside class.
       # @param pConstructor Object of FunctionData to be added at class.
       def add_constructor(pConstructor)
-        return nil unless pConstructor.is_a?(Languages::FunctionData)
+        return nil unless pConstructor.is_a?(Languages::ConstructorData)
 
         @constructors.push(pConstructor)
       end
 
+      # Add aggregation inside class.
+      # @param pAggregation Object of AggregationData to be added at class.
+      def add_aggregation(pAggregation)
+        return nil unless pAggregation.is_a?(Languages::AggregationData)
+
+        @aggregations.push(pAggregation)
+      end
   # Class
   end
 

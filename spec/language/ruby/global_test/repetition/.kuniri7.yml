@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/methodWithMixRepetition.rb
+:output: ./spec/language/ruby/global_test/repetition/methodWithMixRepetition.xml
+:extract: uml

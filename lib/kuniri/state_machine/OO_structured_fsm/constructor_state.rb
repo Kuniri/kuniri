@@ -1,22 +1,18 @@
 require_relative 'oo_structured_state'
-require_relative 'method_state'
+require_relative 'function_behaviour_state'
 
 module StateMachine
 
   module OOStructuredFSM
 
     # Class responsible for handling constructor state.
-    class ConstructorState < MethodState
-
-      CLASS_TYPE = StateMachine::CONSTRUCTOR_LABEL
-      METHOD_TYPE = "constructor"
+    class ConstructorState < FunctionBehaviourState
 
       def initialize(pLanguage)
         super(
           pLanguage,
-          state: StateMachine::CONSTRUCTOR_STATE,
-          classType: ConstructorState::CLASS_TYPE,
-          methodType: ConstructorState::METHOD_TYPE
+          flagState: StateMachine::CONSTRUCTOR_STATE,
+          functionId: StateMachine::CONSTRUCTOR_LABEL
         )
       end
 

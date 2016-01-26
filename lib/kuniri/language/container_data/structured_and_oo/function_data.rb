@@ -7,11 +7,11 @@ module Languages
 
     public
 
-      attr_reader :parameters
-
+      # Initialize function data based on name.
+      # @param pFunctionName name string.
       def initialize(pFunctionName)
         super(pFunctionName)
-        @visibility = "global"
+        @type = GLOBAL_FUNCTION_DATA
       end
 
   # class

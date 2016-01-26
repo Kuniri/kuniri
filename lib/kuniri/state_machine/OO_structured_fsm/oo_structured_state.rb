@@ -64,6 +64,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Handling aggregation state
+      def aggregation_capture
+        raise NotImplementedError
+      end
+
       # Handling repetition state
       def repetition_capture
         raise NotImplementedError

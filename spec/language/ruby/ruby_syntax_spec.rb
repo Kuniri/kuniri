@@ -4,6 +4,8 @@ RSpec.describe Languages::RubySyntax do
 
   before :each do
     @syntax = Languages::RubySyntax.new
+    @syntax.metadata.allClasses.clear
+    @syntax.metadata.allAggregations.clear
   end
 
   context "Extern requirement detections." do
@@ -24,15 +26,15 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/requireRelative.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].name).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].name).to eq ("two")
-      expect(@syntax.fileElements[0].extern_requirements[2].name)
+      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
-      expect(@syntax.fileElements[0].extern_requirements[3].name)
+      expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
-      expect(@syntax.fileElements[0].extern_requirements[4].name)
+      expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements.size).to eq (6)
     end
 
@@ -50,20 +52,20 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].name).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].name).to eq ("two")
-      expect(@syntax.fileElements[0].extern_requirements[2].name)
+      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
-      expect(@syntax.fileElements[0].extern_requirements[3].name)
+      expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
-      expect(@syntax.fileElements[0].extern_requirements[4].name)
+      expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].name).to eq ("six")
-      expect(@syntax.fileElements[0].extern_requirements[6].name)
+      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[6].library)
         .to eq ("seven")
-      expect(@syntax.fileElements[0].extern_requirements[7].name)
+      expect(@syntax.fileElements[0].extern_requirements[7].library)
         .to eq ("eight")
-      expect(@syntax.fileElements[0].extern_requirements[8].name)
+      expect(@syntax.fileElements[0].extern_requirements[8].library)
         .to eq ("nine")
       expect(@syntax.fileElements[0].extern_requirements.size).to eq (9)
     end
@@ -171,6 +173,20 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[4].name).to eq("Simple5")
     end
 
+    it "All classes in Metadata array" do
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allClasses.size).to eq(5)
+      expect(@syntax.metadata.allClasses[0].name).to eq('Simple1')
+      expect(@syntax.metadata.allClasses[1].name).to eq('Simple2')
+      expect(@syntax.metadata.allClasses[2].name).to eq('Simple3')
+      expect(@syntax.metadata.allClasses[3].name).to eq('Simple4')
+      expect(@syntax.metadata.allClasses[4].name).to eq('Simple5')
+    end
+
+
   end
 
   context "Attribute line" do
@@ -271,25 +287,20 @@ RSpec.describe Languages::RubySyntax do
         "spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].global_functions[0].name)
-        .to eq("simple1")
+      allFuntion0 = @syntax.fileElements[0].global_functions[0]
+                                            .managerCondAndLoop.basicStructure
+      allFuntion1 = @syntax.fileElements[0].global_functions[1]
+                                            .managerCondAndLoop.basicStructure
 
-      expect(@syntax.fileElements[0].global_functions[0]
-            .conditionals[0].expression).to eq("3 > 2")
-      expect(@syntax.fileElements[0].global_functions[0]
-            .conditionals[0].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[0].name).to eq("simple1")
+      expect(allFuntion0[0].expression).to eq("3 > 2")
+      expect(allFuntion0[0].type).to eq(Languages::IF_LABEL)
 
-      expect(@syntax.fileElements[0].global_functions[1].name)
-        .to eq("simple2")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[0].expression).to eq("7 > 2")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[0].type).to eq("IF")
-
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[1].expression).to eq("\"a\" < \"k\"")
-      expect(@syntax.fileElements[0].global_functions[1]
-            .conditionals[1].type).to eq("IF")
+      expect(@syntax.fileElements[0].global_functions[1].name).to eq("simple2")
+      expect(allFuntion1[0].expression).to eq("7 > 2")
+      expect(allFuntion1[0].type).to eq(Languages::IF_LABEL)
+      expect(allFuntion1[1].expression).to eq("\"a\" < \"k\"")
+      expect(allFuntion1[1].type).to eq(Languages::IF_LABEL)
     end
 
     it "Correct state transition (Method)." do
@@ -308,35 +319,36 @@ RSpec.describe Languages::RubySyntax do
         "spec/samples/rubySyntaxParts/conditionalStatment/methodConditional.rb"
 
       @syntax.analyse_source(path)
+      allMethod0 = @syntax.fileElements[0].classes[0].methods[0]
+                                          .managerCondAndLoop.basicStructure
+      allMethod1 = @syntax.fileElements[0].classes[0].methods[1]
+                                          .managerCondAndLoop.basicStructure
+      allMethod2 = @syntax.fileElements[0].classes[0].methods[2]
+                                          .managerCondAndLoop.basicStructure
+      allMethod3 = @syntax.fileElements[0].classes[0].methods[3]
+                                          .managerCondAndLoop.basicStructure
+
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
         .to eq("method1")
 
-      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-              .expression).to eq("x > 3")
-      expect(@syntax.fileElements[0].classes[0].methods[0].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod0[0].expression).to eq("x > 3")
+      expect(allMethod0[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
         .to eq("method2")
-      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-              .expression).to eq("b && c")
-      expect(@syntax.fileElements[0].classes[0].methods[1].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod1[0].expression).to eq("b && c")
+      expect(allMethod1[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[2].name)
         .to eq("method3")
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-              .expression).to eq("b == 3")
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[1]
-              .expression).to eq("b < 7")
+      expect(allMethod2[0].expression).to eq("b == 3")
+      expect(allMethod2[1].expression).to eq("b < 7")
 
-      expect(@syntax.fileElements[0].classes[0].methods[2].conditionals[0]
-              .type).to eq("IF")
+      expect(allMethod2[0].type).to eq(Languages::IF_LABEL)
 
       expect(@syntax.fileElements[0].classes[0].methods[3].name)
         .to eq("method4")
-      expect(@syntax.fileElements[0].classes[0].methods[3].conditionals[0]
-              .expression).to eq("x")
+      expect(allMethod3[0].expression).to eq("x")
     end
 
     it "Correct state transition (Constructor)." do
@@ -355,39 +367,42 @@ RSpec.describe Languages::RubySyntax do
                 "conditionalStatment/constructorConditional.rb"
 
       @syntax.analyse_source(path)
+      allConstructor = @syntax.fileElements[0].classes[0].constructors[0]
+                                            .managerCondAndLoop.basicStructure
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
           .to eq("initialize")
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-              .expression).to eq("a > b")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[0]
-              .type).to eq("IF")
+      expect(allConstructor[0].expression).to eq("a > b")
+      expect(allConstructor[0].type).to eq(Languages::IF_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-              .expression).to eq("x")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[1]
-              .type).to eq("CASE")
+      expect(allConstructor[1].expression).to eq("x")
+      expect(allConstructor[1].type).to eq(Languages::CASE_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-              .expression).to eq("u && y")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[2]
-              .type).to eq("IF")
+      expect(allConstructor[2].expression).to eq("3")
+      expect(allConstructor[2].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[3].expression).to eq("8")
+      expect(allConstructor[3].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[4].expression).to eq("90")
+      expect(allConstructor[4].type).to eq(Languages::WHEN_LABEL)
+      expect(allConstructor[5].type).to eq(Languages::ELSE_LABEL)
 
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-              .expression).to eq("u == 1")
-      expect(@syntax.fileElements[0].classes[0].constructors[0].conditionals[3]
-              .type).to eq("ELSIF")
+      expect(allConstructor[6].expression).to eq("u && y")
+      expect(allConstructor[6].type).to eq(Languages::IF_LABEL)
+
+      expect(allConstructor[7].expression).to eq("u == 1")
+      expect(allConstructor[7].type).to eq(Languages::ELSIF_LABEL)
     end
 
     it "Correct data capture (repetition[while] -  Method)" do
        path = "spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].classes[0].methods[0].name)
-          .to eq("simple1")
+      allLoop = @syntax.fileElements[0].classes[0]
+                      .methods[0].managerCondAndLoop.basicStructure
 
-      expect(@syntax.fileElements[0].classes[0].methods[0].repetitions[0]
-              .expression).to eq("i < num")
+      expect(@syntax.fileElements[0].classes[0].methods[0].name)
+              .to eq("simple1")
+      expect(allLoop[0].expression).to eq("i < num")
     end
 
     it "Correct data capture (repetiton[util] - Method)" do
@@ -397,8 +412,9 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq("simple2")
 
-      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[0]
-              .expression).to eq("i > num")
+      all = @syntax.fileElements[0].classes[0].methods[1]
+                    .managerCondAndLoop.basicStructure
+      expect(all[0].expression).to eq("i > num")
 
     end
 
@@ -409,8 +425,9 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq("simple2")
 
-      expect(@syntax.fileElements[0].classes[0].methods[1].repetitions[1]
-              .expression).to eq("i in 0..5")
+      all = @syntax.fileElements[0].classes[0].methods[1]
+                    .managerCondAndLoop.basicStructure
+      expect(all[1].expression).to eq("i in 0..5")
     end
 
   end
@@ -482,6 +499,107 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.fileElements[0].classes[0].methods[2].comments)
               .to eq("    method;Three\n")
 
+    end
+
+  end
+
+  context "Aggregation" do
+
+    it "Aggregation single line capture in constructor" do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/constructorAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Foo")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Blah")
+    end
+
+    it "Aggregation single line capture in method" do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/methodAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Test1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Test2")
+    end
+
+    it "Aggregation single line capture in class" do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/classAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
+        .to eq("Class1")
+      expect(@syntax.fileElements[0].classes[2].aggregations[1].name)
+        .to eq("Class2")
+    end
+
+    it "All aggregations in Metadata array" do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/classAggregation.rb"
+
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allAggregations.size).to eq(2)
+      expect(@syntax.metadata.allAggregations[0].name).to eq('Class1')
+      expect(@syntax.metadata.allAggregations[1].name).to eq('Class2')
+
+    end
+
+  end
+
+  context 'Second parser' do
+
+    it 'All Classes should be sorted by name' do
+       path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+       @syntax.analyse_source(path)
+
+       expect(@syntax.metadata.allClasses.size).to eq(5)
+       expect(@syntax.metadata.allClasses[0].name).to eq('Class1')
+       expect(@syntax.metadata.allClasses[1].name).to eq('Class2')
+       expect(@syntax.metadata.allClasses[2].name).to eq('Class3')
+       expect(@syntax.metadata.allClasses[3].name).to eq('Class4')
+       expect(@syntax.metadata.allClasses[4].name).to eq('Class5')
+
+    end
+
+    it 'All Aggregation should be sorted by name and be unique' do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allAggregations.size).to eq(5)
+      expect(@syntax.metadata.allAggregations[0].name).to eq('Array')
+      expect(@syntax.metadata.allAggregations[1].name).to eq('Class1')
+      expect(@syntax.metadata.allAggregations[2].name).to eq('Class2')
+      expect(@syntax.metadata.allAggregations[3].name).to eq('Class3')
+      expect(@syntax.metadata.allAggregations[4].name).to eq('Set')
+    end
+
+    it 'Ruby default classes should not be present in Aggregation' do
+      path = "spec/samples/rubySyntaxParts/" +
+              "aggregation/multipleAggregation.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
+      expect(@syntax.fileElements[0].classes[4].aggregations[0].name)
+        .to eq('Class1')
+      expect(@syntax.fileElements[0].classes[4].aggregations[1].name)
+        .to eq('Class2')
+      expect(@syntax.fileElements[0].classes[4].aggregations[2].name)
+        .to eq('Class3')
     end
 
   end

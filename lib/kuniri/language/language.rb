@@ -11,6 +11,7 @@ require_relative '../state_machine/OO_structured_fsm/oo_structured_state'
 require_relative '../state_machine/OO_structured_fsm/conditional_state'
 require_relative '../state_machine/OO_structured_fsm/repetition_state'
 require_relative '../state_machine/OO_structured_fsm/comment_state'
+require_relative '../state_machine/OO_structured_fsm/aggregation_state'
 
 # Module that keeps the language syntax.
 module Languages
@@ -37,6 +38,7 @@ module Languages
       attr_reader :conditionalState
       attr_reader :repetitionState
       attr_reader :commentState
+      attr_reader :aggregationState
 
       attr_reader :externRequirementHandler
       attr_reader :variableHandler
@@ -50,12 +52,17 @@ module Languages
       attr_reader :conditionalHandler
       attr_reader :repetitionHandler
       attr_reader :commentHandler
+      attr_reader :aggregationHandler
+
+      attr_reader :metadata
 
       attr_accessor :fileElements
 
       # Those values help state machine to understand which place to add
       # conditional information and repetition data.
       attr_accessor :flagFunctionBehaviour
+
+      attr_reader :countNestedCondLoop
 
       attr_accessor :string_comment_to_transfer
 
@@ -78,6 +85,8 @@ module Languages
         @repetitionState =
           StateMachine::OOStructuredFSM::RepetitionState.new(self)
         @commentState = StateMachine::OOStructuredFSM::CommentState.new(self)
+        @aggregationState =
+          StateMachine::OOStructuredFSM::AggregationState.new(self)
 
         @state = @idleState
         @previousState = []
@@ -85,6 +94,7 @@ module Languages
 
         @fileElements = []
         @flagFunctionBehaviour = nil
+        @countNestedCondLoop = 0
 
         @string_comment_to_transfer = ""
       end
@@ -194,10 +204,36 @@ module Languages
         @state.conditional_capture
       end
 
+      # Aggregation state.
+      def aggregation_capture
+        @state.aggregation_capture
+      end
+
       # keep track of state.
       def set_state (pState)
         @previousState.push(@state)
         @state = pState
+      end
+
+      # Increase nested level
+      def moreNested
+        @countNestedCondLoop += 1
+      end
+
+      # Reduce nested level
+      def lessNested
+        @countNestedCondLoop -= 1 if @countNestedCondLoop > 0
+      end
+
+      # Verify if is nested or not
+      def isNested?
+        return true if @countNestedCondLoop > 0
+        return false
+      end
+
+      # Reset nested structure
+      def resetNested
+        @countNestedCondLoop = 0
       end
 
     protected

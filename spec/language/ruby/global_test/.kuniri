@@ -1,4 +1,0 @@
-language:ruby
-source:./spec/samples/rubySyntaxParts/fullCode/simpleFullCode.rb
-output:./spec
-extract:uml

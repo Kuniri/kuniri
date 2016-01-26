@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/conditionalStatment/veryMixConditional.rb
+:output: ./spec/language/ruby/global_test/conditional/veryMixConditional.xml
+:extract: uml

@@ -3,51 +3,75 @@
 require 'kuniri'
 require 'optparse'
 require 'kuniri/core/kuniri'
-require 'kuniri/parser/parser_xml'
+require 'kuniri/parser/xml_output_format'
 
-options = {}
+@options = {}
+@options[:source] = ARGV[0]
 
-OptionParser.new do |opts|
-  opts.banner = "Usage: example.rb [options]"
-  opts.version = Kuniri::VERSION
+optionParser = OptionParser.new do |buildOptions|
+  buildOptions.banner = "Usage: optionParser PATH [OPTIONS]"
+  buildOptions.version = Kuniri::VERSION
 
-  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-    options[:verbose] = v
+  buildOptions.on("-v", "--[no-]verbose", "Run verbosely") do |verboseMode|
+    @options[:verbose] = verboseMode
   end
 
-  opts.on("--version", "Show Kuniri version") do |v|
-    puts opts.ver
+  buildOptions.on("--version", "Show Kuniri version") do |version|
+    puts buildOptions.version
     exit
   end
 
-  opts.on("-i", "Iterative mode") do |v|
-    puts "Iterative mode..."
-    kuniri = Kuniri::Kuniri.new
-    kuniri.run_analysis
-    kuniri.start_navigation_mode
+  buildOptions.on("-o", "--output [DEST]", "Export") do |dest|
+    @options[:output] = dest
   end
 
-  opts.on("-p", "Parse project") do |v|
-    puts "PARSER..."
+  buildOptions.on("-O1", "--optimization 1,2,3", "Optimize", Numeric) do
+    |optimization|
+      @options[:optimization] = optimization
   end
 
-  opts.on("-e", "--export [FILENAME]", "Export XML") do |f|
-    puts "Exporting XML..."
-    if(f)
-      options[:filename] = f
+  buildOptions.on("-l", "--language [languageType]", "Define language") do
+    |languageType|
+    @options[:languageType] = languageType
+  end
+
+  buildOptions.on("-e", "--export [FILENAME]", "Export XML") do
+    |configurationFile|
+
+    puts "Exporting..."
+
+    if(configurationFile)
+      path = configurationFile
     else
-      options[:filename] = 'kuniri.xml'
+      path = '.kuniri.yml'
     end
 
     kuniri = Kuniri::Kuniri.new
+    kuniri.read_configuration_file(path)
     kuniri.run_analysis
 
-    parser = Parser::XML.new
-    parser.set_path(options[:filename])
-    parser.create_all_data kuniri.get_parser()
+    parser = Parser::XMLOutputFormat.new
+    parser.create_all_data(kuniri.get_parser())
   end
 
 end.parse!
 
-p options
-p ARGV
+def startParser
+  puts "Exporting ..."
+  unless (@options[:output])
+    @options[:output] = 'outputKuniri/'
+  end
+
+  kuniri = Kuniri::Kuniri.new
+  kuniri.set_configuration(@options[:source], @options[:languageType],
+                          @options[:output], @options[:optimization])
+  kuniri.run_analysis
+
+  parser = Parser::XMLOutputFormat.new
+  parser.set_path(@options[:output])
+  parser.create_all_data(kuniri.get_parser())
+end
+
+if @options[:source] && @options[:output]
+  startParser
+end

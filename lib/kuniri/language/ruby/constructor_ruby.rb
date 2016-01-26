@@ -1,4 +1,3 @@
-require_relative '../abstract_container/structured_and_oo/constructor'
 require_relative '../container_data/structured_and_oo/constructor_data'
 require_relative 'function_behavior_ruby'
 
@@ -16,14 +15,13 @@ module Languages
         def get_constructor(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result
+          return nil unless result.name =~ /initialize/
 
-          if result.name =~ /initialize/
-            result.type = "CONSTRUCTOR"
-          else
-            return nil
-          end
+          constructorData = ConstructorData.new(result.name)
+          constructorData << result
 
-          return result
+          return constructorData
+
         end
 
     # Class
