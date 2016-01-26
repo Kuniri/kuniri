@@ -45,8 +45,14 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       expect(repetitionCaptured.type).to eq('WHILE')
     end
 
-    it "No match" do
+    it "'Do' is not mandatory" do
       input = "while x > 3"
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.type).to eq('WHILE')
+    end
+
+    it "Not match" do
+      input = "whiles x > 3"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured).to eq(nil)
     end
@@ -79,6 +85,13 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured).to eq(nil)
     end
+
+    it "We can have 'do' or not at the end" do
+      input = "for i in 0..5 do"
+      repetitionCaptured = @repetitionRuby.get_repetition(input).expression
+      expect(repetitionCaptured).to eq("i in 0..5")
+    end
+
   end
 
   context "Until loop" do
@@ -100,11 +113,18 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
     end
 
-    it "No match" do
+    it "'Do' is not mandatory with until" do
       input = 'until xpto == "exit"'
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
+    end
+
+    it "Not match" do
+      input = 'untils xpto == "exit"'
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured).to eq(nil)
     end
+
   end
 
   context "Do while" do
@@ -119,6 +139,7 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured).to eq(nil)
     end
+
   end
 
   context "Iterators loop" do
