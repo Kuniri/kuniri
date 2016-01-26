@@ -1,19 +1,19 @@
 require_relative '../../../../spec_helper'
 
-RSpec.describe Kuniri::Kuniri do
+RSpec.describe "Verify class with while loop" do
 
   before :each do
-    @path = "./spec/language/ruby/global_test/repetition/.kuniri4.yml"
+    @path = "./spec/language/ruby/global_test/repetition/.kuniri2.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    target = "./spec/language/ruby/global_test/repetition/forLoopInClass.xml"
+    target = "./spec/language/ruby/global_test/repetition/whileLoopInClass.xml"
     @output = File.open(target, "r")
   end
 
-  RSpec.shared_examples "Complete class with repetition" do |regex, description|
+  RSpec.shared_examples "Class with while" do |regex, description|
 
     it "Method: #{description}" do
       repetition = nil
@@ -26,11 +26,11 @@ RSpec.describe Kuniri::Kuniri do
 
   end
 
-  context "Validate for loop" do
+  context "Test mix repetition" do
 
-    message = "Method: for i in 0..5"
-    regex = /\s+<for\sexpression="i in 0\.\.5" level="0"\/>/
-    include_examples "Complete class with repetition", regex, message
+    message = "Method: for level0 in 0..300"
+    regex = /\s+<while\sexpression="\$i &lt; \$num" level="0"\/>/
+    include_examples "Class with while" , regex, message
 
   end
 
@@ -38,5 +38,4 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri = nil
     @output = nil
   end
-
 end
