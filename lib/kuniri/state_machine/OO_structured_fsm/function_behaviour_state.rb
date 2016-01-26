@@ -70,7 +70,7 @@ module StateMachine
         end
 
         if (@language.endBlockHandler.has_end_of_block?(pLine))
-          class_capture
+          @language.rewind_state
         end
 
         return pElementFile

@@ -9,7 +9,9 @@ RSpec.describe "Verify repetition output" do
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/repetition/methodWithMixRepetition.xml", "r")
+    target = "./spec/language/ruby/global_test/repetition/" +
+              "methodWithMixRepetition.xml"
+    @output = File.open(target, "r")
   end
 
   RSpec.shared_examples "Method multiple verification" do |regex, description|
