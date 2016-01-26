@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/repetition/mixConditionalRepetition.rb
+:output: ./spec/language/ruby/global_test/conditionalAndRepetition/mixConditionalRepetition.xml
+:extract: uml

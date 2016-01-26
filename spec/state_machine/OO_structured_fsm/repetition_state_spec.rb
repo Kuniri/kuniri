@@ -61,6 +61,33 @@ RSpec.describe StateMachine::OOStructuredFSM::RepetitionState do
     end
   end
 
+  context "Repetition to conditional and vice versa" do
+    it "Loops to conditional" do
+      @repetitionTest.state.function_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.conditional_capture
+      @repetitionTest.state.conditional_capture
+      expect(@repetitionTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
+    end
+
+    it "Loops to conditional" do
+      @repetitionTest.state.function_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.conditional_capture
+      @repetitionTest.state.conditional_capture
+      @repetitionTest.rewind_state
+      @repetitionTest.rewind_state
+      expect(@repetitionTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::RepetitionState)
+    end
+
+  end
+
   context "Incorrect flow." do
     it "Try to access IdleState, to ConditionalState." do
       expect{@repetitionTest.state.repetition_capture}

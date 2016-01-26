@@ -43,6 +43,18 @@ module StateMachine
       end
 
       # @see OOStructuredState
+      def conditional_capture
+        @language.moreNested
+        @language.set_state(@language.conditionalState)
+      end
+
+      # @see OOStructuredState
+      def repetition_capture
+        @language.moreNested
+        @language.set_state(@language.repetitionState)
+      end
+
+      # @see OOStructuredState
       def function_capture
         @language.rewind_state
       end
@@ -63,7 +75,6 @@ module StateMachine
         if (@language.endBlockHandler.has_end_of_block?(pLine))
           updateLevel(flag, pElementFile, classIndex)
         end
-
         return pElementFile
       end
 
@@ -83,7 +94,17 @@ module StateMachine
         # If is a structure which can be nested. It is delegate.
         # @param pType Constant with type description.
         def isNestedStructure?(pType)
-          raise NotImplementedError
+          if pType == Languages::WHILE_LABEL ||
+              pType == Languages::FOR_LABEL ||
+              pType == Languages::DO_WHILE_LABEL ||
+              pType == Languages::UNTIL_LABEL ||
+              pType == Languages::IF_LABEL ||
+              pType == Languages::CASE_LABEL ||
+              pType == Languages::UNLESS_LABEL
+            return true
+          end
+          return false
+
         end
 
         # Add element to correct place, based on the state machine position.
