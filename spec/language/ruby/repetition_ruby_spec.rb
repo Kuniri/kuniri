@@ -88,8 +88,14 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
 
     it "We can have 'do' or not at the end" do
       input = "for i in 0..5 do"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).expression
-      expect(repetitionCaptured).to eq("i in 0..5")
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.expression).to eq("i in 0..5")
+    end
+
+    it "For with 'do' and space in the end" do
+      input = "for i in 0..5 do              "
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.expression).to eq("i in 0..5")
     end
 
   end
@@ -119,6 +125,18 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
     end
 
+    it "Until without 'do' and with space at the end" do
+      input = 'until xpto == "exit"                                  '
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
+    end
+
+    it "Until without 'do' and with space at the begin and the end" do
+      input = '    until xpto == "exit"                                  '
+      repetitionCaptured = @repetitionRuby.get_repetition(input)
+      expect(repetitionCaptured.type).to eq(Languages::UNTIL_LABEL)
+    end
+
     it "Not match" do
       input = 'untils xpto == "exit"'
       repetitionCaptured = @repetitionRuby.get_repetition(input)
@@ -135,10 +153,16 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
     end
 
     it "No match" do
-      input = "while $xpto > 23"
+      input = "end whiles $xpto > 23 do"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured).to eq(nil)
     end
+
+   # it "No match" do
+   #   input = "end while $xpto > 23 do"
+   #   repetitionCaptured = @repetitionRuby.get_repetition(input)
+   #   expect(repetitionCaptured).to eq(nil)
+   # end
 
   end
 

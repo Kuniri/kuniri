@@ -28,7 +28,7 @@ RSpec.describe "Mix conditional and repetition in the same code" do
   context "Test repetition and conditional together" do
 
     message = "Global Function: for level0 in 8..19"
-    regex = /\s+<for\sexpression="level0 in 8\.\.19 do"\slevel="0"\/?>/
+    regex = /\s+<for\sexpression="level0 in 8\.\.19"\slevel="0"\/?>/
     include_examples "Multiple verification" , regex, message
 
     message = "Global Function: if level1 > 10"

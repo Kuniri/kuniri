@@ -16,7 +16,6 @@ module Languages
         def get_repetition(pLine)
           result = detect_repetition(pLine)
           return nil unless result
-
           #result = remove_unnecessary_information(result)
           repetitionCaptured = Languages::RepetitionData.new
           repetitionCaptured.type = repetition_type(result)
@@ -30,16 +29,16 @@ module Languages
 
         # Override
         def detect_repetition(pLine)
-          regexExp = /^\s*while\s+(.*)do/
+          regexExp = /^\s*while\s+(.*)/
           return pLine[regexExp, 0] if regexExp =~ pLine
 
-          regexExp = /^\s*for\s+(\w+)\s+in\s+(.+)/
+          regexExp = /^\s*for\s+(\w+)\s+in\s+(.+)(\bdo\b)?/
           return pLine[regexExp, 0] if regexExp =~ pLine
 
-          regexExp = /^\s*until\s+(.*)do/
+          regexExp = /^\s*until\s+(.*)(\bdo\b)?/
           return pLine[regexExp, 0] if regexExp =~ pLine
 
-          regexExp = /^\s*end\s+while\s+(.*)/
+          regexExp = /^\s*end\s+while\s+(.+)/
           return pLine[regexExp, 0] if regexExp =~ pLine
 
           regexExp = /(lambda)\s+do(.*)\s*/
@@ -80,6 +79,7 @@ module Languages
           case pType
             when Languages::FOR_LABEL
               pString.slice!("for")
+              pString.slice!("do")
             when Languages::WHILE_LABEL
               pString.slice!("while")
               pString.slice!("do")
