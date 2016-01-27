@@ -44,7 +44,7 @@ RSpec.describe "Verify repetition output" do
     include_examples "Constructor multiple verification" , regex, message
 
     message = "Constructor: for level2 in 0..300"
-    regex = /\s+<for\sexpression="level2 in 0\.\.300 do"\slevel="2"\/?>/
+    regex = /\s+<for\sexpression="level2 in 0\.\.300"\slevel="2"\/?>/
     include_examples "Constructor multiple verification" , regex, message
 
   end
