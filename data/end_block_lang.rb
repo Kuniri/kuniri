@@ -4,26 +4,27 @@ module Languages
 
   module {LANG}
 
-    class EndBlockRuby < Languages::EndBlock
+    # Class responsible for handling {LANG} end of block.
+    class EndBlock{LANG} < Languages::EndBlock
 
       public
 
+        # Verify {LANG} end of block.
+        # @see EndBlock
         def has_end_of_block?(pLine)
-          return detect_end(pLine)
+          # YOUR CODE HERE
         end
 
       protected
 
         def detect_end(pLine)
-          #TODO: EXTREMELY SIMPLE HANDLING, IT HAVE TO BE IMPROVED!
-          return true if pLine =~ /^\s+end|^end/
-          return false
+          # YOUR CODE HERE
         end
 
     # Class
     end
 
-  # {LANG}
+  # Module
   end
 
 # Module

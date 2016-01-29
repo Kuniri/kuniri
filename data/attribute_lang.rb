@@ -1,118 +1,53 @@
-require_relative '../abstract_container/structured_and_oo/attribute.rb'
-require_relative '../container_data/structured_and_oo/attribute_data.rb'
+require_relative '../abstract_container/structured_and_oo/attribute'
+require_relative '../container_data/structured_and_oo/attribute_data'
 require_relative '../../core/setting'
 
 module Languages
-  # @module {LANG} Handling {LANG} attributes
+
   module {LANG}
 
-    # Handle {LANG} attribute
+    # Handling {LANG} attributes
     class Attribute{LANG} < Languages::Attribute
 
       public
 
         def initialize
-          @attributeList = []
+          # YOUR CODE HERE
         end
 
+        # Get {LANG} attribute.
+        # @param pLine Verify if line has a {LANG} attribute.
+        # @return Return AttributeData or nil.
         def get_attribute(pLine)
-          result = detect_attribute(pLine)
-          return nil unless result
-
-          listOfAttributes = []
-
-          # Has comma? Split string by comma
-          result = remove_unnecessary_information(result)
-
-          # Separated by comma, equal or the common case
-          if result.scan(/,/).count >= 1
-            listOfAttributes = handle_multiple_declaration_with_comma(result)
-          elsif result.scan(/=/).count > 1
-            listOfAttributes = handle_multiple_declaration_with_equal(result)
-          else
-            listOfAttributes = handle_line_declaration(result)
-          end
-
-          return listOfAttributes
+          # YOUR CODE HERE
         end
 
     protected
 
       # Override
       def detect_attribute(pLine)
-        regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
-        return nil unless pLine =~ regexExp
-        return pLine.scan(regexExp)[0].join("")
+        # YOUR CODE HERE
       end
 
       # Override
       def remove_unnecessary_information(pString)
-        return pString.gsub!(/\(.*\)/,"") if pString =~ /\(.*\)/
-        return pString
+        # YOUR CODE HERE
       end
 
       # Override
       def prepare_final_string(pString)
-        if pString =~ /\s+|:|@|=/
-          return pString.gsub!(/\s+|:|@|=/,"")
-        end
-        return pString
+        # YOUR CODE HERE
       end
 
       # Override
       def handle_multiple_declaration_with_comma(pString)
-        listOfAttributes = []
-        pString = pString.split(",")
-        pString.each do |variable|
-          return nil if variable.scan(/=/).count > 1
-
-          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
-
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
-        end
-
-        return listOfAttributes
+        # YOUR CODE HERE
       end
 
       # Override
       def handle_multiple_declaration_with_equal(pString)
-        listOfAttributes = []
-        pString = pString.split("=")
-        pString.each do |variable|
-          return nil if variable =~ /\./
-
-          variable = prepare_final_string(variable)
-          attribute = Languages::AttributeData.new(variable)
-          listOfAttributes.push(attribute)
-        end
-
-        return listOfAttributes
+        # YOUR CODE HERE
       end
-
-      # Override
-      def handle_line_declaration(pString)
-        listOfAttributes = []
-        if pString =~ /=/
-          pString = pString.scan(/.*=/).join("")
-          return nil if pString =~ /\./
-        end
-
-        return nil if pString =~ /\./
-
-        pString = prepare_final_string(pString)
-        attribute = Languages::AttributeData.new(pString)
-        listOfAttributes.push(attribute)
-
-        return listOfAttributes
-      end
-
-    private
-
-      @attributeList
 
     #Class
     end

@@ -12,6 +12,10 @@ require_relative 'conditional_{lang}'
 require_relative 'repetition_{lang}'
 require_relative 'function_behavior_{lang}'
 require_relative 'attribute_{lang}'
+require_relative 'comment_{lang}'
+require_relative 'method_{lang}'
+require_relative 'aggregation_{lang}'
+require_relative '../metadata'
 
 module Languages
 
@@ -29,82 +33,111 @@ module Languages
         @classHandler = Languages::{LANG}::Class{LANG}.new
         @attributeHandler = Languages::{LANG}::Attribute{LANG}.new
         @endBlockHandler = Languages::{LANG}::EndBlock{LANG}.new
-        @methodHandler = Languages::{LANG}::FunctionBehavior{LANG}.new
+        @methodHandler = Languages::{LANG}::Method{LANG}.new
         @constructorHandler = Languages::{LANG}::Constructor{LANG}.new
         @conditionalHandler = Languages::{LANG}::Conditional{LANG}.new
         @repetitionHandler = Languages::{LANG}::Repetition{LANG}.new
+        @commentHandler = Languages::{LANG}::Comment{LANG}.new
+        @aggregationHandler = Languages::{LANG}::Aggregation{LANG}.new
+        @metadata = Languages::Metadata.create
         @visibility = "public"
       end
 
+      # Analyse source code.
+      # @param pPath Path of file to be analysed.
       def analyse_source(pPath)
         @name = File.basename(pPath, ".*")
         @path = File.dirname(pPath)
         analyse_first_step(pPath)
-        #self.analyse_second_step
-      end
-
-      # Extract all the comments from the source.
-      # @param source [String] Source code to analys.
-      def comment_extract
-        all_comments = Array.new
-        #Find a simple {LANG} comment with '#'
-        @source.scan(/#(.*)/).each do |comments|
-          all_comments.push(comments[0])
-        end
-        #Find multiple line comment.
-        @source.scan(/^=begin(.*?)^=end/m).each do |comment|
-          all_comments.push(comment[0].lstrip)
-        end
-        return all_comments
-      end
-
-      # Extract all method from the source.
-      # @param source [String]
-      def method_extract
-        return @currentClass.get_methods
-      end
-
-      # Extract all the class declared in the source.
-      # @param source [String]
-      def class_extract
-        return @currentClass
-      end
-
-      # @param source [String]
-      def attribute_extract
-        return @currentClass.get_attributes
-      end
-
-      # @param source [String]
-      def global_variable_extract
-        raise NotImplementedError
-      end
-
-      def extern_requirement_extract
-        return @externRequirements
-      end
-
-      def get_classes
+        analyse_second_step
       end
 
     private
 
       attr_accessor :visibility
       @source
+      @flagMultipleLineComment = false
 
+      # Puts every statement in a single line
+      # @param pLine Line of the file to be analysed.
+      def handle_semicolon(pLine)
+        commentLine = []
+
+        if pLine =~ /^=begin(.*?)/
+          @flagMultipleLineComment = true
+        elsif pLine =~ /^=end/
+          @flagMultipleLineComment = false
+        end
+
+        unless @flagMultipleLineComment == true || pLine =~ /#(.*)/
+          return pLine.split(/;/)
+        end
+        commentLine << pLine
+      end
+
+      # First step for analyse code, it is responsible for get only basic
+      # informations.
+      # @param pPath Path of file to be analysed.
       def analyse_first_step(pPath)
         fileElement = Languages::FileElementData.new(pPath)
         @source = File.open(pPath, "rb")
         @source.each do |line|
           next if line.gsub(/\s+/,"").size == 0
-          # Special token for class
-          @state.handle_line(line)
-          fileElement = @state.execute(fileElement, line)
+          processedLines = handle_semicolon(line)
+          if !processedLines.nil?
+            processedLines.each do |line|
+              @state.handle_line(line)
+              fileElement = @state.execute(fileElement, line)
+            end
+          end
         end
+
+        @source.close()
         @fileElements.push(fileElement)
+
       end
 
-  # {LANG}
+      def analyse_second_step
+        sort_all_classes
+        sort_all_aggregations
+
+        allActualAggregations = []
+
+        @metadata.allAggregations.each do |element|
+          if binary_search(@metadata.allClasses, element)
+            allActualAggregations << element
+          end
+        end
+
+        # TODO: Think how to improve.
+        @fileElements.each do |fileElement|
+          fileElement.classes.each do |classes|
+            classes.aggregations.delete_if do |aggregation|
+              unless allActualAggregations.include? aggregation
+                true
+              end
+            end
+          end
+        end
+      end
+
+      # TODO: Move it to utils
+      def binary_search(pVector, pElement)
+        pVector.bsearch {|obj| pElement.name <=> obj.name}
+      end
+
+      # TODO: Move it to utils
+      def sort_all_classes
+        @metadata.allClasses.sort! {|c1, c2| c1.name <=> c2.name}
+      end
+
+      # TODO: Move it to utils
+      def sort_all_aggregations
+        @metadata.allAggregations.sort! {|a1, a2| a1.name <=> a2.name}
+        @metadata.allAggregations.uniq! {|a| a.name}
+      end
+
+  # Class
   end
 
 # Module
