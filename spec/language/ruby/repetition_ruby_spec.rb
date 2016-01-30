@@ -11,7 +11,7 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       input = "while gets do"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured.expression).to eq("gets")
-      expect(repetitionCaptured.type).to eq("WHILE")
+      expect(repetitionCaptured.type).to eq(Languages::WHILE_LABEL)
     end
 
     it "Numerical statement" do
@@ -42,13 +42,13 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       input = '         while x == "abc" do'
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured.expression).to eq('x == "abc"')
-      expect(repetitionCaptured.type).to eq('WHILE')
+      expect(repetitionCaptured.type).to eq(Languages::WHILE_LABEL)
     end
 
     it "'Do' is not mandatory" do
       input = "while x > 3"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
-      expect(repetitionCaptured.type).to eq('WHILE')
+      expect(repetitionCaptured.type).to eq(Languages::WHILE_LABEL)
     end
 
     it "Not match" do
@@ -70,14 +70,14 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
       input = "              for i in 0..5"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured.expression).to eq("i in 0..5")
-      expect(repetitionCaptured.type).to eq("FOR")
+      expect(repetitionCaptured.type).to eq(Languages::FOR_LABEL)
     end
 
     it "Multiple spaces between of for and expression" do
       input = "              for      i in 0..5"
       repetitionCaptured = @repetitionRuby.get_repetition(input)
       expect(repetitionCaptured.expression).to eq("i in 0..5")
-      expect(repetitionCaptured.type).to eq("FOR")
+      expect(repetitionCaptured.type).to eq(Languages::FOR_LABEL)
     end
 
     it "No match" do

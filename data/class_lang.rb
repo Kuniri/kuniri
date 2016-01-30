@@ -1,63 +1,49 @@
-require_relative '../abstract_container/structured_and_oo/class.rb'
-require_relative '../container_data/structured_and_oo/class_data.rb'
+require_relative '../abstract_container/structured_and_oo/class'
+require_relative '../container_data/structured_and_oo/class_data'
 require_relative '../../core/setting'
 
 module Languages
 
   module {LANG}
 
+    # Class responsible for handling {LANG} classes.
     class Class{LANG} < Languages::Class
 
       public
 
         def initialize
+          # YOUR CODE HERE
         end
 
+        # Get {LANG} class.
+        # @see Languages::Class
         def get_class(pLine)
-          result = detect_class(pLine)
-          return nil unless result
-
-          classCaptured = Languages::ClassData.new
-
-          inheritance = get_inheritance(result)
-          classCaptured.inheritances = inheritance if inheritance
-
-          result = prepare_final_string(result)
-          classCaptured.name = result
-
-          return classCaptured
+          # YOUR CODE HERE
         end
 
       protected
 
+        # Override
         def detect_class(pLine)
-          regexExpression = /^\s*class\s+(.*)/
-          return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression)[0].join("")
+          # YOUR CODE HERE
         end
 
+        # Override
         def get_inheritance(pString)
-          if pString =~ /</
-            partial = pString.scan(/<(.*)/)
-            return remove_unnecessary_information(partial)
-          end
-          return nil
+          # YOUR CODE HERE
         end
 
-      def remove_unnecessary_information(pString)
-        return pString.gsub(/\s|</, "") if pString =~ /\s|</
-        return pString
-      end
-
-      def prepare_final_string(pString)
-        if pString =~ /\s|</
-          partial = pString.gsub(/<.*/,"")
-          return remove_unnecessary_information(partial)
+        # Override
+        def remove_unnecessary_information(pString)
+          # YOUR CODE HERE
         end
-        return pString
-      end
 
-    private
+        def prepare_final_string(pString)
+          # YOUR CODE HERE
+        end
+
+      private
+        # YOU CAN HAVE CODE HERE...
 
     # class
     end

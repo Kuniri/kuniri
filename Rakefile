@@ -8,6 +8,7 @@ RSpec::Core::RakeTask.new('spec')
 task :default => :spec
 
 namespace :parser do |args|
+
   desc 'Creates a new parser for kuniri with parser:create'
   task :create do
     options = {}
@@ -22,7 +23,8 @@ namespace :parser do |args|
     parsername = ARGV[1]
 
     if File.directory?("lib/kuniri/language/#{parsername.downcase}") then
-      puts "Error: A folder for this parser code already exists at lib/kuniri/language/#{parsername.downcase}"
+      puts "Error: A folder for this parser code already exists at" +
+            "lib/kuniri/language/#{parsername.downcase}"
       exit 1
     end
 

@@ -1,70 +1,43 @@
-require_relative '../abstract_container/structured_and_oo/conditional.rb'
-require_relative '../container_data/structured_and_oo/conditional_data.rb'
+require_relative '../abstract_container/structured_and_oo/conditional'
+require_relative '../abstract_container/structured_and_oo/global_tokens'
+require_relative '../container_data/structured_and_oo/conditional_data'
 
 module Languages
 
   module {LANG}
 
+    # Class responsible for handling {LANG} conditional statements.
     class Conditional{LANG} < Languages::Conditional
 
       public
 
+        # Get {LANG} conditional.
+        # @see Languages::Conditional
         def get_conditional(pLine)
-          result = detect_conditional(pLine)
-          return nil unless result
-
-          conditionalCaptured = Languages::ConditionalData.new
-          conditionalCaptured.type = conditional_type(pLine)
-
-          conditionalCaptured.expression = get_expression(result)
-
-          return conditionalCaptured
+          # YOUR CODE HERE
         end
 
       protected
 
+        # Override.
         def detect_conditional(pLine)
-          regexExp = /^\s*if\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*case\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*unless\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*elsif\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          return nil
+          # YOUR CODE HERE
         end
 
+        # Override
         def conditional_type(pString)
-          regexExp = /^\s+if|^if/
-          return "IF" if regexExp =~ pString
-
-          regexExp = /^\s+case|^case/
-          return "CASE" if regexExp =~ pString
-
-          regexExp = /^\s+unless|^unless/
-          return "UNLESS" if regexExp =~ pString
-
-          regexExp = /^\s+elsif|^elsif/
-          return "ELSIF" if regexExp =~ pString
-
-          return nil
+          # YOUR CODE HERE
         end
 
+        # Override
         def get_expression(pString)
-          leftStrip = pString.lstrip
-          rightStrip = leftStrip.rstrip
-          return rightStrip
+          # YOUR CODE HERE
         end
 
     # Class
     end
 
-  # {LANG}
+  # Module
   end
 
 # Module

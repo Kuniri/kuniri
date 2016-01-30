@@ -10,33 +10,28 @@ module Languages
 
       public
 
+        # Get {LANG} module.
+        # @see Languages::ModuleNamespace
         def get_module(pLine)
-          result = detect_module(pLine)
-          return nil unless result
-
-          result = remove_unnecessary_information(result)
-          moduleCaptured = Languages::ModuleNamespaceData.new(result)
-
-          return moduleCaptured
+          # YOUR CODE HERE
         end
 
       protected
 
+        # Override
         def detect_module(pLine)
-          regexExpression = /^\s*module\s+(.*)/
-          return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression).join("")
+          # YOUR CODE HERE
         end
 
+        # Override
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s/, "") if pLine =~ /\s/
-          return pLine
+          # YOUR CODE HERE
         end
 
     # class
     end
 
-  # {LANG}
+  # module
   end
 
 # module
