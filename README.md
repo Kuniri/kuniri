@@ -43,77 +43,90 @@ traceability, code quality and others.
 ----
 # Development
 
-* System Dependencies (Kubuntu/Ubuntu)
+* System Dependencies
  * YARD 0.8
  * RSpec 3.1.7
  * Rake 10.4
  * Guard-rspec 4.2
 * Ruby version: 2.1
-* Run test suit
- * rake or spec
-* YARD documentation
- * yardoc
 
 ----
 # Install
 
-First of all, you have to install RVM. Instructions can be found on
-https://rvm.io/rvm/install
+> Kuniri can be installed with:
 
-After this, you have to install the desired Ruby version with:
-```
-rvm install <version>
-``` 
-
-You can change the using ruby version with:
-```
-rvm use <version>
-```
-
-Then, install bundler with:
-```
-gem install bundler
-```
-
-Then, you have to install all the required gems with:
-```
-bundle install
-```
-
-Kuniri can be installed with:
 ```
 rake install
 ```
 
-After installing you can check the commands with:
+> After installing you can check the commands with:
+
 ```
 kuniri -h
 ```
 
+> Or you can install the stable version with:
+
+```
+gem install kuniri
+```
+
 ----
 # How to use
-If you want to use kuniri in your project, first you have to create the ".kuniri"
-file. The example below shows the basic syntax:
+
+> You have two different approaches to using kuniri: command line and
+configuration file.
+
+## Command line
+
+> Command line is the practical and easy way to use kuniri. You just have to
+use a similar command as the one described below:
 
 ```
-language:ruby
-source:lib/
-output:bin/
-extract:uml
+kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby
 ```
 
-Finally, you can run Kuniri in your project and extract the information with:
+> First parameter is the source code path. ***"-o"***, means ***"output"*** and
+you can indicate the path that you want to put the final output. Finally
+***-l***, indicate which kind of language your project is.
+
+## Using configuration file
+
+> If you chose to use a configuration file, first you have to create
+".kuniri.yml" file. The example below shows the basic syntax:
+
+```
+:language: ruby
+:source: lib/
+:output: bin/
+```
+
+> First parameter, ***"language"***, indicates what kind of language kuniri
+will parse (unfortunately, we just have ruby language now). Second parameter
+is ***"source"***, and it is used for specifying the target folder to be parsed
+by kuniri. Finally the third parameter is ***"output"***, and you can use it to
+indicate which folder kuniri will put the final output.
+
+> Finally, you can execute kuniri with the command below:
 
 ```
 kuniri -e [file_name_output.xml]
 ```
 
--e means "extract mode".
+***-e*** means "extract mode".
+
+# How to contact us?
+
+You can contact us by:
+
+1. Mailing list: https://groups.google.com/forum/#!forum/kuniri
+2. Gitter: https://gitter.im/rodrigosiqueira/kuniri
+3. Irc: Connect to freenode, at kuniri
 
 ----
 # Author
 
 * Rodrigo Siqueira de Melo
- * rodrigosiqueiramelo@gmail.com
+ * siqueira@kuniri.org
 * Gustavo Jaruga
- * darksshades@hotmail.com
+ * jaruga@kuniri.org
