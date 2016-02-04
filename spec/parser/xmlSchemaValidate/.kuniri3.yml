@@ -1,0 +1,3 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/function/simpleFunction.rb
+:output: ./spec/parser/xmlSchemaValidate/simpleFunction.xml

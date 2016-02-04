@@ -9,6 +9,7 @@ end
 
 group :test do
   gem 'coveralls', require: false
-  gem "codeclimate-test-reporter", group: :test, require: nil
+  gem 'codeclimate-test-reporter', group: :test, require: nil
   gem 'rspec', '~> 3.1.0'
+  gem 'libxml-ruby'
 end
