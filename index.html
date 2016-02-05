@@ -3,204 +3,228 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Kuniri by rodrigosiqueira</title>
+    <title>Kuniri by Kuniri</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, user-scalable=no">
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  </head>
   <body>
 
-    <header>
-      <h1>Kuniri</h1>
-      <p>kuniri</p>
-    </header>
+      <header>
+        <h1>Kuniri</h1>
+        <p>kuniri</p>
+      </header>
 
-    <div id="banner">
-      <span id="logo"></span>
+      <div id="banner">
+        <span id="logo"></span>
 
-        <a href="./doc/index.html" class="button fork">
-          <strong>API Documentation</strong>
-        </a>
-
+        <a href="https://github.com/Kuniri/kuniri" class="button fork"><strong>View On GitHub</strong></a>
         <div class="downloads">
-          <span>Code:</span>
+          <span>Downloads:</span>
           <ul>
-            <li>
-              <a href="https://github.com/Kuniri/kuniri/wiki"
-                class="button">
-                Wiki
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/kuniri/kuniri/tarball/master"
-                class="button">
-                GEM
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/kuniri/kuniri"
-                class="button">
-                <strong>View On GitHub</strong>
-              </a>
-            </li>
+            <li><a href="https://github.com/Kuniri/kuniri/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/Kuniri/kuniri/tarball/master" class="button">TAR</a></li>
           </ul>
         </div>
-      </div>
-      <!-- end banner -->
+      </div><!-- end banner -->
 
     <div class="wrapper">
       <nav>
         <ul></ul>
       </nav>
       <section>
-        <h3>
-          <a id="welcome-to-github-pages" class="anchor"
-            href="#welcome-to-github-pages" aria-hidden="true">
-            <span class="octicon octicon-link"></span>
-            </a>
-        </h3>
+        <h1>
+<a id="kuniri" class="anchor" href="#kuniri" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>KUNIRI</h1>
 
-<!-- BEGIN OF CONTENT -->
+<hr>
 
-    <h1>What is Kuniri?</h1>
+<p><a href="https://gitter.im/rodrigosiqueira/kuniri?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/rodrigosiqueira/kuniri"></a></p>
 
-      <blockquote>
-      <p>
-        Briefly, the main goal of Kuniri is: parse any kind of language, and
-        generate a common model file with code information. We believe that
-        Kuniri can be a base tool for other tools, like diagram generator,
-        traceability, code quality, documentation, and so forth. Initially,
-        the main objective of Kuniri was to provide a way to dynamically
-        generate diagrams and traceability based on code. However, the parser
-        proved much more useful for many other kinds of applications; thus,
-        the focus shifted to the parser creation.
-      </p>
+<p><a href="https://travis-ci.org/Kuniri/kuniri"><img src="https://travis-ci.org/Kuniri/kuniri.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/Kuniri/kuniri"><img src="https://codeclimate.com/github/Kuniri/kuniri/badges/gpa.svg" alt="Code Climate"></a>
+<a href="http://waffle.io/Kuniri/kuniri"><img src="https://badge.waffle.io/Kuniri/kuniri.svg?label=ready&amp;title=Ready" alt="Stories in Ready"></a>
+<a href="https://coveralls.io/github/Kuniri/kuniri?branch=master"><img src="https://coveralls.io/repos/Kuniri/kuniri/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a>
+<a href="http://inch-ci.org/github/Kuniri/kuniri"><img src="http://inch-ci.org/github/Kuniri/kuniri.svg?branch=master" alt="Inline docs"></a>
+<a href="http://badge.fury.io/rb/kuniri"><img src="https://badge.fury.io/rb/kuniri.svg" alt="Gem Version"></a>
+<a href="https://github.com/Kuniri/kuniri/blob/master/COPYING"><img src="https://img.shields.io/badge/license-LGPLv3-green.svg" alt="License"></a></p>
 
-      <p>
-        Kuniri will inspect the source code, and extract information to
-        generate a final output. This file is a XML file (and other types in 
-        the near future), and follows a strong pattern. This feature gives
-        flexibility to other tools read the file and process anything they
-        want.
-      </p>
+<hr>
 
-      <p>
-        Additionally, Kuniri was designed to grow to two main directions:
-        support for different languages, and provide ways to select which kind
-        of information to extract from the code.
-      </p>
-      </blockquote>
+<h1>
+<a id="what-is-kuniri" class="anchor" href="#what-is-kuniri" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Kuniri?</h1>
 
-    <hr>
+<p><img src="https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png" alt="Kuniri" align="left"></p>
 
-    <h2>What is the the meaning of &quot;kuniri&quot;?</h2>
+<blockquote>
+<p>Briefly, the main goal of Kuniri is: parse any kind of language, and generate
+a common model file with code information. We believe that Kuniri can be a base
+tool for other tools, like a diagram generator, traceability, code quality,
+documentation, and so forth. Initially, the main objective of Kuniri was to
+provide a way to dynamically generate diagrams and traceability based on code.
+However, the parser proved much more useful for many other kinds of
+applications; thus, the focus shifted to the parser creation.</p>
 
-    <blockquote>
-      <p>
-        Kuniri is an Esperanto word, that means &quot;go with&quot; or
-        &quot;follow&quot;. This name was chosen because of the idea to keep
-        following your code project with diagrams, traceability, code quality
-        and others.
-      </p>
-    </blockquote>
+<p>Kuniri will inspect the source code, and extract information to generate a
+final output. This file is a XML file (and other types in the near future), and
+follows a strong pattern. This feature gives flexibility to other tools read the
+file and process anything they want.</p>
 
-    <hr>
+<p>Additionally, Kuniri was designed to grow to two main directions: support for
+different languages, and provide ways to select which kind of information to
+extract from the code.</p>
+</blockquote>
 
-    <h1>Development</h1>
+<hr>
 
-      <ul>
-        <li>System Dependencies (Kubuntu/Ubuntu)
-          <ul>
-            <li>YARD 0.8</li>
-            <li>RSpec 3.1.7</li>
-            <li>Rake 10.4</li>
-            <li>Guard-rspec 4.2</li>
-            <li>nokogiri 1.6.6</li>
-          </ul>
-        </li>
-      <li>Ruby version: 2.1</li>
-      <li>Run test suit
-        <ul>
-          <li>rake or spec</li>
-        </ul>
-      </li>
-      <li>YARD documentation
-        <ul>
-          <li>yardoc</li>
-        </ul>
-      </li>
-    </ul>
+<h2>
+<a id="what-is-the-the-meaning-of-kuniri" class="anchor" href="#what-is-the-the-meaning-of-kuniri" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is the the meaning of "kuniri"?</h2>
 
-    <hr>
+<blockquote>
+<p>Kuniri is an Esperanto word which means "go with" or "follow". This name was
+chosen because of the idea to keep following your code project with diagrams,
+traceability, code quality and others.</p>
+</blockquote>
 
-    <h1>Install</h1>
+<hr>
 
-      <p>
-        First of all, you have to install all the required gems.
-      </p>
+<h1>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h1>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
-</code></pre>
+<ul>
+<li>System Dependencies
 
+<ul>
+<li>YARD 0.8</li>
+<li>RSpec 3.1.7</li>
+<li>Rake 10.4</li>
+<li>Guard-rspec 4.2</li>
+</ul>
+</li>
+<li>Ruby version: 2.1</li>
+</ul>
+
+<hr>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h1>
+
+<blockquote>
 <p>Kuniri can be installed with:</p>
+</blockquote>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_install'>install</span>
+<pre><code>rake install
 </code></pre>
 
-<p>After installing you can check the commands with</p>
+<blockquote>
+<p>After installing you can check the commands with:</p>
+</blockquote>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_kuniri'>kuniri</span> <span class='op'>-</span><span class='id identifier rubyid_h'>h</span>
+<pre><code>kuniri -h
+</code></pre>
+
+<blockquote>
+<p>Or you can install the stable version with:</p>
+</blockquote>
+
+<pre><code>gem install kuniri
 </code></pre>
 
 <hr>
 
-<h1>How to use</h1>
+<h1>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use</h1>
 
-<p>If you want to use kuniri in your project, first you have to create &quot;.kuniri&quot;
-file. The example below show the basic syntax:</p>
+<blockquote>
+<p>You have two different approaches to using kuniri: command line and
+configuration file.</p>
+</blockquote>
 
-<pre class="code ruby"><code class="ruby">language:ruby
-source:lib/
-output:bin/
-extract:uml
+<h2>
+<a id="command-line" class="anchor" href="#command-line" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command line</h2>
+
+<blockquote>
+<p>Command line is the practical and easy way to use kuniri. You just have to
+use a similar command as the one described below:</p>
+</blockquote>
+
+<pre><code>kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby
 </code></pre>
 
-<p>Finally, you can run Kuniri in your project and extract the information with:</p>
+<blockquote>
+<p>First parameter is the source code path. <strong><em>"-o"</em></strong>, means <strong><em>"output"</em></strong> and
+you can indicate the path that you want to put the final output. Finally
+<strong><em>-l</em></strong>, indicate which kind of language your project is.</p>
+</blockquote>
 
-<pre class="code ruby"><code class="ruby">kuniri -e [file_name_output.xml]
+<h2>
+<a id="using-configuration-file" class="anchor" href="#using-configuration-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using configuration file</h2>
+
+<blockquote>
+<p>If you chose to use a configuration file, first you have to create
+".kuniri.yml" file. The example below shows the basic syntax:</p>
+</blockquote>
+
+<pre><code>:language: ruby
+:source: lib/
+:output: bin/
 </code></pre>
 
-<p>-e means &quot;extract mode&quot;. After you entered into iterative mode you can type:</p>
+<blockquote>
+<p>First parameter, <strong><em>"language"</em></strong>, indicates what kind of language kuniri
+will parse (unfortunately, we just have ruby language now). Second parameter
+is <strong><em>"source"</em></strong>, and it is used for specifying the target folder to be parsed
+by kuniri. Finally the third parameter is <strong><em>"output"</em></strong>, and you can use it to
+indicate which folder kuniri will put the final output.</p>
+
+<p>Finally, you can execute kuniri with the command below:</p>
+</blockquote>
+
+<pre><code>kuniri -e [file_name_output.xml]
+</code></pre>
+
+<p><strong><em>-e</em></strong> means "extract mode".</p>
+
+<h1>
+<a id="how-to-contact-us" class="anchor" href="#how-to-contact-us" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to contact us?</h1>
+
+<p>You can contact us by:</p>
+
+<ol>
+<li>Mailing list: <a href="https://groups.google.com/forum/#!forum/kuniri">https://groups.google.com/forum/#!forum/kuniri</a>
+</li>
+<li>Gitter: <a href="https://gitter.im/rodrigosiqueira/kuniri">https://gitter.im/rodrigosiqueira/kuniri</a>
+</li>
+<li>Irc: Connect to freenode, at kuniri</li>
+</ol>
 
 <hr>
 
-<h1>Author</h1>
+<h1>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author</h1>
 
 <ul>
 <li>Rodrigo Siqueira de Melo
 
 <ul>
-<li><a href="mailto:rodrigosiqueiramelo@gmail.com">rodrigosiqueiramelo@gmail.com</a></li>
-</ul></li>
+<li><a href="mailto:siqueira@kuniri.org">siqueira@kuniri.org</a></li>
+</ul>
+</li>
 <li>Gustavo Jaruga
 
 <ul>
-<li><a href="mailto:darksshades@hotmail.com">darksshades@hotmail.com</a></li>
-</ul></li>
+<li><a href="mailto:jaruga@kuniri.org">jaruga@kuniri.org</a></li>
 </ul>
-</div></div>
-		<!-- END OF CONTENT -->
+</li>
+</ul>
       </section>
       <footer>
-        <p>Project maintained by <a href="https://github.com/kuniri">rodrigosiqueira</a></p>
+        <p>Project maintained by <a href="https://github.com/Kuniri">Kuniri</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
