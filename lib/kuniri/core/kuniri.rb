@@ -49,7 +49,7 @@ module Kuniri
         end
         @parser = Parser::Parser.new(@filesPathProject,
                                       @configurationInfo[:language])
-  	    @parser.start_parser()
+  	    @parser.start_parser
       end
 
       def get_parser
