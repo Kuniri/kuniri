@@ -26,7 +26,7 @@ module Kuniri
 
       def read_configuration_file(pPath = ".kuniri.yml")
         @settings = Setting.create
-        @settings.initializate_settings(pPath)
+        @settings.initializate_settings
         @settings.read_configuration_file(pPath)
         @configurationInfo = @settings.configurationInfo
       end
@@ -34,9 +34,12 @@ module Kuniri
       def set_configuration(pSource, pLanguage, pOutput, pLevel)
         @settings = Setting.create
         @settings.initializate_settings
-        @settings.set_configuration(pSource, pLanguage, pOutput, pLanguage)
-        # XXX: Extremely "gambira" PLEASE, REMOVE METHOD BELOW!
-        @configurationInfo = @settings.configurationInfo
+        @configurationInfo =  {:language => pLanguage,
+                               :source => pSource,
+                               :output => pOutput,
+                               :pLevel => pLevel}
+
+        @settings.set_configuration(@configurationInfo)
       end
 
       # Start Kuniri tasks based on configuration file. After read
@@ -49,7 +52,7 @@ module Kuniri
         end
         @parser = Parser::Parser.new(@filesPathProject,
                                       @configurationInfo[:language])
-  	    @parser.start_parser
+  	    @parser.start_parser()
       end
 
       def get_parser

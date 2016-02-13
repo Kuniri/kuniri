@@ -21,7 +21,7 @@ module Parser
 
         # Start parse in the project.
         def start_parser
-          raise Error::ConfigurationFileError, "Source path not have #{language} files." if(@filesPath.empty?)
+          raise Error::ConfigurationFileError, "Source path not have #{@language} files." if(@filesPath.empty?)
 
           @filesPath.each do |file|
             language = @factory.get_language(@language)
