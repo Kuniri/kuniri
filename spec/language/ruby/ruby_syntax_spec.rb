@@ -26,15 +26,18 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/requireRelative.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[0].library)
+        .to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library)
+        .to eq ("two")
       expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
       expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
       expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].library)
+        .to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements.size).to eq (6)
     end
 
@@ -52,15 +55,18 @@ RSpec.describe Languages::RubySyntax do
       path = "spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ("one")
-      expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ("two")
+      expect(@syntax.fileElements[0].extern_requirements[0].library)
+        .to eq ("one")
+      expect(@syntax.fileElements[0].extern_requirements[1].library)
+        .to eq ("two")
       expect(@syntax.fileElements[0].extern_requirements[2].library)
         .to eq ("three")
       expect(@syntax.fileElements[0].extern_requirements[3].library)
         .to eq ("four")
       expect(@syntax.fileElements[0].extern_requirements[4].library)
         .to eq ("five")
-      expect(@syntax.fileElements[0].extern_requirements[5].library).to eq ("six")
+      expect(@syntax.fileElements[0].extern_requirements[5].library)
+        .to eq ("six")
       expect(@syntax.fileElements[0].extern_requirements[6].library)
         .to eq ("seven")
       expect(@syntax.fileElements[0].extern_requirements[7].library)
@@ -184,6 +190,21 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.metadata.allClasses[2].name).to eq('Simple3')
       expect(@syntax.metadata.allClasses[3].name).to eq('Simple4')
       expect(@syntax.metadata.allClasses[4].name).to eq('Simple5')
+    end
+
+    it "All inheritances in Metadata array" do
+
+      @syntax.metadata.allInheritances.clear
+
+      path = "spec/samples/rubySyntaxParts/class/simpleClass.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allInheritances.size).to eq(4)
+      expect(@syntax.metadata.allInheritances[0].name).to eq('Simple1')
+      expect(@syntax.metadata.allInheritances[1].name).to eq('Simple2')
+      expect(@syntax.metadata.allInheritances[2].name).to eq('Simple3')
+      expect(@syntax.metadata.allInheritances[3].name).to eq('Simple4')
     end
 
 
@@ -574,6 +595,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'All Aggregation should be sorted by name and be unique' do
+
+      @syntax.metadata.allAggregations.clear
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
@@ -587,23 +610,64 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.metadata.allAggregations[4].name).to eq('Set')
     end
 
-    it 'Ruby default classes should not be present in Aggregation' do
+    it 'All Inheritance should be sorted by name and be unique' do
+
+      @syntax.metadata.allInheritances.clear
+
+      path = "spec/samples/rubySyntaxParts/" +
+              "inheritance/multipleInheritance.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.metadata.allInheritances.size).to eq(5)
+      expect(@syntax.metadata.allInheritances[0].name).to eq('Array')
+      expect(@syntax.metadata.allInheritances[1].name).to eq('Class1')
+      expect(@syntax.metadata.allInheritances[2].name).to eq('Class2')
+      expect(@syntax.metadata.allInheritances[3].name).to eq('Class3')
+      expect(@syntax.metadata.allInheritances[4].name).to eq('Set')
+
+    end
+
+    it 'Ruby default classes should not be actual aggregations' do
       path = "spec/samples/rubySyntaxParts/" +
               "aggregation/multipleAggregation.rb"
 
       @syntax.analyse_source(path)
 
-      expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
-      expect(@syntax.fileElements[0].classes[4].aggregations[0].name)
-        .to eq('Class1')
-      expect(@syntax.fileElements[0].classes[4].aggregations[1].name)
-        .to eq('Class2')
-      expect(@syntax.fileElements[0].classes[4].aggregations[2].name)
-        .to eq('Class3')
+      expect(@syntax.fileElements[0].classes[4].aggregations[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[1].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[2].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].aggregations[3].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[4].aggregations[4].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[4].aggregations[5].isInProject)
+        .to eq(true)
+    end
+
+    it 'Ruby default classes should not be actual inheritances' do
+
+      path = "spec/samples/rubySyntaxParts/" +
+          "inheritance/multipleInheritance.rb"
+
+      @syntax.analyse_source(path)
+
+      expect(@syntax.fileElements[0].classes[0].inheritances[0].isInProject)
+        .to eq(false)
+      expect(@syntax.fileElements[0].classes[1].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[2].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[3].inheritances[0].isInProject)
+        .to eq(true)
+      expect(@syntax.fileElements[0].classes[4].inheritances[0].isInProject)
+        .to eq(false)
     end
 
   end
-
   after :each do
     @syntax = nil
   end

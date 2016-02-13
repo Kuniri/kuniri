@@ -76,6 +76,11 @@ module StateMachine
           @language.string_comment_to_transfer = ""
           pElementFile.add_class(classElement)
           @language.metadata.allClasses.push(classElement)
+          unless classElement.inheritances == []
+            classElement.inheritances.each do |element|
+              @language.metadata.allInheritances.push element
+            end
+          end
         end
 
         if @language.endBlockHandler.has_end_of_block?(pLine)

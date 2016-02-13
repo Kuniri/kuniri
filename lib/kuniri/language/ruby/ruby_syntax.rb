@@ -98,8 +98,10 @@ module Languages
       end
 
       def analyse_second_step
+
         sort_all_classes
         sort_all_aggregations
+        sort_all_inheritances
 
         allActualAggregations = []
 
@@ -110,15 +112,38 @@ module Languages
         end
 
         # TODO: Think how to improve.
+        allActualInheritances = []
+
+        @metadata.allInheritances.each do |element|
+          if binary_search(@metadata.allClasses, element)
+            allActualInheritances<<element
+          end
+        end
+
         @fileElements.each do |fileElement|
           fileElement.classes.each do |classes|
-            classes.aggregations.delete_if do |aggregation|
-              unless allActualAggregations.include? aggregation
-                true
+            classes.inheritances.each do |inheritance|
+              allActualInheritances.each do |actualInheritances|
+                if actualInheritances.name == inheritance.name
+                  inheritance.isInProject = true
+                end
               end
             end
           end
         end
+
+        @fileElements.each do |fileElement|
+          fileElement.classes.each do |classes|
+            classes.aggregations.each do |aggregation|
+              allActualAggregations.each do |actualAggregation|
+                if actualAggregation.name == aggregation.name
+                  aggregation.isInProject = true
+                end
+              end
+            end
+          end
+        end
+
       end
 
       # TODO: Move it to utils
@@ -137,6 +162,10 @@ module Languages
         @metadata.allAggregations.uniq! {|a| a.name}
       end
 
+      def sort_all_inheritances()
+        @metadata.allInheritances.sort! {|a1, a2| a1.name <=> a2.name}
+        @metadata.allInheritances.uniq! {|a| a.name}
+      end
   # Class
   end
 
