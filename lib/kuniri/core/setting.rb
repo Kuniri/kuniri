@@ -22,8 +22,7 @@ module Kuniri
       end
 
       # TODO: Remove parameter and initialize_object. Useless.
-      def initializate_settings(pFilePath = ".kuniri.yml")
-          #@configurationInfo = read_configuration_file(pFilePath)
+      def initializate_settings
           @configurationInfo = {}
       end
 
@@ -44,12 +43,8 @@ module Kuniri
         return @configurationInfo
       end
 
-      def set_configuration(pSource, pLanguage, pOutput, pLevel)
-        @configurationInfo[:source] = pSource
-        @configurationInfo[:language] = pLanguage
-        @configurationInfo[:output] = pOutput
-        @configurationInfo[:level] = pLevel
-        return @configurationInfo
+      def set_configuration(configurationInfo)
+        @configurationInfo = configurationInfo
       end
 
     private
