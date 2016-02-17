@@ -43,7 +43,7 @@ module Languages
 
       # Override
       def detect_attribute(pLine)
-        regexExp = /^\s*(?:@|attr_(?:accessor|read|write))(.*)$/
+        regexExp = /^\s*(?:@|attr_(?:accessor|reader|writer))(.*)$/
         return nil unless pLine =~ regexExp
         return pLine.scan(regexExp)[0].join("")
       end
