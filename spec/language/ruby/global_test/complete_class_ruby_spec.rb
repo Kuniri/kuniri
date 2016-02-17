@@ -135,6 +135,43 @@ RSpec.describe Kuniri::Kuniri do
     expect(@inheritance.size).to eq(1)
   end
 
+  it "Should find attribute1" do
+    @attribute1 = []
+    @output.each do |line|
+      attr_line = line =~ /\s+<attributeData\s+name="attribute1"\s+visibility="public"\/>/
+      @attribute1 << attr_line unless attr_line.nil?
+    end
+    expect(@attribute1.size).to eq(1)
+  end
+
+  it "Should find attribute2" do
+    @attribute2 = []
+    @output.each do |line|
+      attr_line = line =~ /\s+<attributeData\s+name="attribute2"\s+visibility="public"\/>/
+      @attribute2 << attr_line unless attr_line.nil?
+    end
+    expect(@attribute2.size).to eq(1)
+  end
+
+  it "Should find attribute3" do
+    @attribute3 = []
+    @output.each do |line|
+      attr_line = line =~ /\s+<attributeData\s+name="attribute3"\s+visibility="public"\/>/
+      @attribute3 << attr_line unless attr_line.nil?
+    end
+    expect(@attribute3.size).to eq(1)
+  end
+
+  it "Should find attribute4" do
+    @attribute4 = []
+    @output.each do |line|
+      attr_line = line =~ /\s+<attributeData\s+name="attribute4"\s+visibility="public"\/>/
+      @attribute4 << attr_line unless attr_line.nil?
+    end
+    expect(@attribute4.size).to eq(1)
+  end
+
+
   it "Should verify the opening-closing structure" do
     @stack = []
     @output.each do |line|

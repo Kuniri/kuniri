@@ -24,4 +24,8 @@ class Abc < Array
 
   @attribute1
 
+  attr_reader :attribute2
+  attr_writer :attribute3
+  attr_accessor :attribute4
+
 end

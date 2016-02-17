@@ -25,14 +25,14 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     end
   end
 
-  context "When is a single attribute with attr_e" do
-    it "With attr_write" do
-      captured = @rubyAttr.get_attribute("attr_write :value")[0]
+  context "When is a single attribute with attr_" do
+    it "With attr_writer" do
+      captured = @rubyAttr.get_attribute("attr_writer :value")[0]
       expect(captured.name).to eq(@singleResult)
     end
 
-    it "With attr_read" do
-      captured = @rubyAttr.get_attribute("attr_read :value")[0]
+    it "With attr_reader" do
+      captured = @rubyAttr.get_attribute("attr_reader :value")[0]
       expect(captured.name).to eq(@singleResult)
     end
 
@@ -41,20 +41,36 @@ RSpec.describe Languages::Ruby::AttributeRuby do
       expect(captured.name).to eq(@singleResult)
     end
 
-    it "With whitespace before attr_write" do
-      captured = @rubyAttr.get_attribute("    attr_write :value")[0]
+    it "With whitespace before attr_writer" do
+      captured = @rubyAttr.get_attribute("    attr_writer :value")[0]
       expect(captured.name).to eq(@singleResult)
     end
 
-    it "With whitespace before attr_write" do
-      captured = @rubyAttr.get_attribute("  attr_write :value")[0]
+    it "With whitespace before attr_writer" do
+      captured = @rubyAttr.get_attribute("  attr_writer :value")[0]
       expect(captured.name).to eq(@singleResult)
     end
 
-    it "With whitespace before and after attr_read" do
-      captured = @rubyAttr.get_attribute("  attr_read :value  ")[0]
+    it "With whitespace before and after attr_reader" do
+      captured = @rubyAttr.get_attribute("  attr_reader :value  ")[0]
       expect(captured.name).to eq(@singleResult)
     end
+
+    it "Typo attr_read instead of attr_reader" do
+      captured = @rubyAttr.get_attribute("  attr_read :value  ")
+      expect(captured).to eq(nil)
+    end
+
+    it "Typo attr_write instead of attr_writer" do
+      captured = @rubyAttr.get_attribute("  attr_write :value  ")
+      expect(captured).to eq(nil)
+    end
+
+    it "Typo attr_accesso instead of attr_accessor" do
+      captured = @rubyAttr.get_attribute("  attr_accesso :value  ")
+      expect(captured).to eq(nil)
+    end
+
   end
 
   RSpec.shared_examples "Multiple declaration" do |input, description|
