@@ -29,8 +29,17 @@ module Languages
 
       # Override
       def detect_blocks(pLine)
-        regexExp = /\.(\s*\w+)\s+do\s+\|\s*(.*)\|\s*/
-        return pLine[regexExp, 0] if regexExp =~ pLine
+        regexExp = /(\s*\w+\s*)*\.(\s*\w+)\s+do\s+\|\s*(.*)\|\s*/
+        if regexExp =~ pLine
+          return pLine[regexExp, 0] unless among_quotes?pLine
+        end
+        return nil
+      end
+
+      def among_quotes?(pLine)
+        quotes_regex = /["'].*["']/
+        return true if quotes_regex =~ pLine
+        return false
       end
 
       #Override

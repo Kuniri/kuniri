@@ -98,11 +98,32 @@ RSpec.describe Languages::Ruby::BlocksRuby do
       expect(captured).to eq(nil)
     end
 
-    it "Code inside quotas" do
-      captured = @blockRuby.get_blocks("'xpto,each do |x|'")
+    it "Code inside simple quotas" do
+      captured = @blockRuby.get_blocks("'xpto.each do |x|'")
       expect(captured).to eq(nil)
     end
 
+    it "Code inside double quotes" do
+      captured = @blockRuby.get_blocks("\"xpto.each do |x|\"")
+      expect(captured).to eq(nil)
+    end
+
+    it "Code inside double quotes with spaces" do
+      captured = @blockRuby.get_blocks("    \"      xpto.each do |x|\"   ")
+      expect(captured).to eq(nil)
+    end
+
+    it "Block inside puts" do
+      captured = @blockRuby.get_blocks("puts 'something_like_block.each do |number|'")
+      captured.inspect
+      expect(captured).to eq(nil)
+    end
+
+    it "Block inside puts with spaces" do
+      captured = @blockRuby.get_blocks("   puts  '   something_like_block.each do |number|'")
+      captured.inspect
+      expect(captured).to eq(nil)
+    end
 
   end
 
