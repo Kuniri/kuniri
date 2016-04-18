@@ -1,5 +1,6 @@
 require_relative '../abstract_container/structured_and_oo/block'
 require_relative '../container_data/structured_and_oo/blocks_data'
+require_relative '../abstract_container/structured_and_oo/global_tokens'
 
 module Languages
 
@@ -10,17 +11,14 @@ module Languages
 
       public
 
-        def initialize
-        end
-
         # Get ruby blocks.
         # @param pLine Verify if line has a ruby blocks.
         # @return Return BlockData or nil.
         def get_blocks(pLine)
           result = detect_blocks(pLine)
           return nil unless result
-
           blockData = Languages::BlocksData.new(result)
+          blockData.type = Languages::BLOCK_LABEL
           blockData.name = capture_block_name(result)
           return blockData
         end

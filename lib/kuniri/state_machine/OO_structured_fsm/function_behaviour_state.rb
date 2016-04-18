@@ -29,6 +29,8 @@ module StateMachine
           repetition_capture
         elsif @language.aggregationHandler.get_aggregation(pLine)
           aggregation_capture
+        elsif @language.blockHandler.get_blocks(pLine)
+          block_capture
         else
           return
         end
@@ -49,6 +51,12 @@ module StateMachine
       def repetition_capture
         @language.flagFunctionBehaviour = @flagState
         @language.set_state(@language.repetitionState)
+      end
+
+      # @see OOStructuredState
+      def block_capture
+        @language.flagFunctionBehaviour = @flagState
+        @language.set_state(@language.blockState)
       end
 
       # @see OOStructuredState

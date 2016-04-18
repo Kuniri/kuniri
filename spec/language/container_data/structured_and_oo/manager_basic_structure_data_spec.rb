@@ -143,6 +143,32 @@ RSpec.describe Languages::ManagerBasicStructureData do
     end
   end
 
+  context "Simple block" do
+    it "Simple block." do
+      block = Languages::BlocksData.new
+      block.type = Languages::BLOCK_LABEL
+      @manager.add_block(block)
+      expect(@manager.basicStructure[0].type).to eq(Languages::BLOCK_LABEL)
+    end
+  end
+
+  context "Nested blocks." do
+    it "Simple blocks." do
+      block1 = Languages::BlocksData.new
+      block1.type = Languages::BLOCK_LABEL
+
+      block2 = Languages::BlocksData.new
+      block2.type = Languages::BLOCK_LABEL
+
+      @manager.add_block(block1)
+      @manager.down_level
+      @manager.add_block(block2)
+
+      expect(@manager.basicStructure[0].level).to eq(0)
+      expect(@manager.basicStructure[1].level).to eq(1)
+    end
+  end
+
   after :each do
     @manager = nil
   end

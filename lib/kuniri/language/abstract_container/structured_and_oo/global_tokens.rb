@@ -12,6 +12,7 @@ module Languages
   DO_WHILE_LABEL ||= "DOWHILE"
   UNTIL_LABEL ||= "UNTIL"
   LAMBDA_LABEL ||= "LAMBDA"
+  BLOCK_LABEL ||= "BLOCK"
   # Handle nested conditional and loops
   UP_LEVEL ||= -1
   DOWN_LEVEL ||= 1

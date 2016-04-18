@@ -10,6 +10,7 @@ require_relative 'constructor_ruby'
 require_relative 'class_ruby'
 require_relative 'conditional_ruby'
 require_relative 'repetition_ruby'
+require_relative 'blocks_ruby'
 require_relative 'function_behavior_ruby'
 require_relative 'attribute_ruby'
 require_relative 'comment_ruby'
@@ -39,6 +40,7 @@ module Languages
         @repetitionHandler = Languages::Ruby::RepetitionRuby.new
         @commentHandler = Languages::Ruby::CommentRuby.new
         @aggregationHandler = Languages::Ruby::AggregationRuby.new
+        @blockHandler = Languages::Ruby::BlocksRuby.new
         @metadata = Languages::Metadata.create
         @visibility = "public"
       end

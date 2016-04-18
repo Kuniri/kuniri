@@ -1,4 +1,5 @@
 require_relative 'oo_structured_state'
+require_relative 'token_state_machine'
 require_relative 'function_behaviour_state'
 
 module StateMachine

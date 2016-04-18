@@ -1,15 +1,15 @@
-require_relative 'basic_data'
+require_relative 'basic_structure'
 
 module Languages
 
   # BlockData handling extern requirements
-  class BlocksData < Languages::BasicData
+  class BlocksData < Languages::BasicStructure
 
     public
 
       attr_accessor :blockDescription
 
-      def initialize(pBlock)
+      def initialize(pBlock = "block")
         @blockDescription = pBlock
       end
 

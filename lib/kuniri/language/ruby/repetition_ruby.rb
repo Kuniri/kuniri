@@ -44,10 +44,6 @@ module Languages
           regexExp = /(lambda)\s+do(.*)\s*/
           return pLine[regexExp, 0] if regexExp =~ pLine
 
-          # TODO: BUG in this case -> puts "test.each do |x|"
-          regexExp = /\.(\s*\w+)\s+do(.*)\s*/
-          return pLine[regexExp, 0] if regexExp =~ pLine
-
           return nil
         end
 
@@ -67,9 +63,6 @@ module Languages
 
           regexExp = /^lambda\s+/
           return Languages::LAMBDA_LABEL if regexExp =~ pString
-
-          regexExp = /\.\w+/
-          return pString[/\w+/, 0].upcase if regexExp =~ pString
 
           return nil
         end

@@ -23,7 +23,6 @@ module Parser
         def start_parser
           raise Error::ConfigurationFileError,
             "Source path not have #{@language} files." if(@filesPath.empty?)
-
           @filesPath.each do |file|
             language = @factory.get_language(@language)
             language.analyse_source(file)

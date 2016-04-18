@@ -20,6 +20,7 @@ module StateMachine
       def handle_line(pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
         repetition = @language.repetitionHandler.get_repetition(pLine)
+        block = @language.blockHandler.get_blocks(pLine)
         if conditional
           if isNestedStructure?(conditional.type)
             conditional_capture
@@ -27,6 +28,10 @@ module StateMachine
         elsif repetition
           if isNestedStructure?(repetition.type)
             repetition_capture
+          end
+        elsif block
+          if isNestedStructure?(block.type)
+            block_capture
           end
         # aggregation
         end
@@ -52,6 +57,12 @@ module StateMachine
       def repetition_capture
         @language.moreNested
         @language.set_state(@language.repetitionState)
+      end
+
+      # @see OOStructuredState
+      def block_capture
+        @language.moreNested
+        @language.set_state(@language.blockState)
       end
 
       # @see OOStructuredState
@@ -100,7 +111,8 @@ module StateMachine
               pType == Languages::UNTIL_LABEL ||
               pType == Languages::IF_LABEL ||
               pType == Languages::CASE_LABEL ||
-              pType == Languages::UNLESS_LABEL
+              pType == Languages::UNLESS_LABEL ||
+              pType == Languages::BLOCK_LABEL
             return true
           end
           return false

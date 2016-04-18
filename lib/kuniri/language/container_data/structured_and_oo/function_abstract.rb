@@ -2,6 +2,7 @@ require_relative 'basic_data'
 require_relative 'conditional_data'
 require_relative 'repetition_data'
 require_relative 'attribute_data'
+require_relative 'blocks_data'
 require_relative 'manager_basic_structure_data'
 
 module Languages
@@ -57,6 +58,14 @@ module Languages
       def add_repetition(pRepetition, pBehaviour = Languages::KEEP_LEVEL)
         return nil unless (pRepetition.instance_of?Languages::RepetitionData)
         add_with_manager(pRepetition, "repetition", pBehaviour)
+      end
+
+      # Add block element inside function.
+      # @param pBlock An object of BlockData.
+      # @return If pBlock is not pBlockData instance return nil.
+      def add_block(pBlock, pBehaviour = Languages::KEEP_LEVEL)
+        return nil unless (pBlock.instance_of?Languages::BlocksData)
+        add_with_manager(pBlock, "block", pBehaviour)
       end
 
       # Copy elements from an object of FunctionAbstract to specific element

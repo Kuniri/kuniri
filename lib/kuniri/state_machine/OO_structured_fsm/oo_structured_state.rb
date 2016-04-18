@@ -74,6 +74,11 @@ module StateMachine
         raise NotImplementedError
       end
 
+      # Handling block state
+      def block_capture
+        raise NotImplementedError
+      end
+
       # Handling comment
       def comment_capture
         raise NotImplementedError

@@ -10,6 +10,7 @@ require_relative '../state_machine/OO_structured_fsm/variable_state'
 require_relative '../state_machine/OO_structured_fsm/oo_structured_state'
 require_relative '../state_machine/OO_structured_fsm/conditional_state'
 require_relative '../state_machine/OO_structured_fsm/repetition_state'
+require_relative '../state_machine/OO_structured_fsm/block_state'
 require_relative '../state_machine/OO_structured_fsm/comment_state'
 require_relative '../state_machine/OO_structured_fsm/aggregation_state'
 
@@ -37,6 +38,7 @@ module Languages
       attr_reader :variableState
       attr_reader :conditionalState
       attr_reader :repetitionState
+      attr_reader :blockState
       attr_reader :commentState
       attr_reader :aggregationState
 
@@ -51,6 +53,7 @@ module Languages
       attr_reader :constructorHandler
       attr_reader :conditionalHandler
       attr_reader :repetitionHandler
+      attr_reader :blockHandler
       attr_reader :commentHandler
       attr_reader :aggregationHandler
 
@@ -84,6 +87,7 @@ module Languages
           StateMachine::OOStructuredFSM::ConditionalState.new(self)
         @repetitionState =
           StateMachine::OOStructuredFSM::RepetitionState.new(self)
+        @blockState = StateMachine::OOStructuredFSM::BlockState.new(self)
         @commentState = StateMachine::OOStructuredFSM::CommentState.new(self)
         @aggregationState =
           StateMachine::OOStructuredFSM::AggregationState.new(self)
@@ -202,6 +206,11 @@ module Languages
       # Conditional state.
       def conditional_capture
         @state.conditional_capture
+      end
+
+      # Block state.
+      def block_capture
+        @state.block_capture
       end
 
       # Aggregation state.
