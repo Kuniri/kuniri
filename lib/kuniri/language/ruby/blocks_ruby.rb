@@ -23,31 +23,31 @@ module Languages
           return blockData
         end
 
-    protected
+      protected
 
-      # Override
-      def detect_blocks(pLine)
-        regexExp = /(\s*\w+\s*)*\.(\s*\w+)\s+do\s+\|\s*(.*)\|\s*/
-        if regexExp =~ pLine
-          return pLine[regexExp, 0] unless among_quotes?pLine
+        # Override
+        def detect_blocks(pLine)
+          regexExp = /([a-zA-Z_]\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
+          if regexExp =~ pLine
+            return pLine[regexExp, 0] unless among_quotes?pLine
+          end
+          return nil
         end
-        return nil
-      end
 
-      def among_quotes?(pLine)
-        quotes_regex = /["'].*["']/
-        return true if quotes_regex =~ pLine
-        return false
-      end
+        def among_quotes?(pLine)
+          quotes_regex = /["'].*["']/
+          return true if quotes_regex =~ pLine
+          return false
+        end
 
-      #Override
-      def capture_block_name(pString)
-        regexExp = /\.(\s*\w+)\s+do/
-        partialString = pString[regexExp, 1]
-        partialString.strip!
-        partialString.upcase!
-        return partialString
-      end
+        #Override
+        def capture_block_name(pString)
+          regexExp = /\.(\s*\w+)\s+do/
+          partialString = pString[regexExp, 1]
+          partialString.strip!
+          partialString.upcase!
+          return partialString
+        end
 
     #Class
     end

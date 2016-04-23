@@ -162,7 +162,7 @@ module StateMachine
         # Dynamically add based on child class.
         # @param pElementFile All data inside element.
         # @param pToAdd Element to add.
-        # @param pType Type of thhe element.
+        # @param pType Type of the element.
         # @param pElement Element description.
         def dynamicallyAdd(pElementFile, pToAdd, pType, pElement)
           classIndex = pElementFile.classes.length - 1 # We want the index
