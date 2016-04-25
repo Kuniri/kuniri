@@ -32,6 +32,13 @@ module Languages
         raise NotImplementedError
       end
 
+      # Extract expression from the captured string.
+      # @param pString Full string.
+      # @return String with name expression.
+      def capture_expression(pString)
+        raise NotImplementedError
+      end
+
   # End class
   end
 

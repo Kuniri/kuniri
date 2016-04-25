@@ -19,7 +19,8 @@ module Languages
           return nil unless result
           blockData = Languages::BlocksData.new(result)
           blockData.type = Languages::BLOCK_LABEL
-          blockData.name = capture_block_name(result)
+          blockData.expression = capture_block_name(result)
+          #blockData.name = capture_expression(result)
           return blockData
         end
 
@@ -47,6 +48,10 @@ module Languages
           partialString.strip!
           partialString.upcase!
           return partialString
+        end
+
+        def capture_expression(pString)
+          return "NO EXPRESSION INSIDE BLOCK"
         end
 
     #Class
