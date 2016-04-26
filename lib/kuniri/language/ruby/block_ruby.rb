@@ -1,33 +1,32 @@
 require_relative '../abstract_container/structured_and_oo/block'
-require_relative '../container_data/structured_and_oo/blocks_data'
+require_relative '../container_data/structured_and_oo/block_data'
 require_relative '../abstract_container/structured_and_oo/global_tokens'
 
 module Languages
 
   module Ruby
 
-    # Ruby Handling Ruby blocks
-    class BlocksRuby < Languages::Block
+    # Ruby Handling Ruby block
+    class BlockRuby < Languages::Block
 
       public
 
-        # Get ruby blocks.
-        # @param pLine Verify if line has a ruby blocks.
+        # Get ruby block.
+        # @param pLine Verify if line has a ruby block.
         # @return Return BlockData or nil.
-        def get_blocks(pLine)
-          result = detect_blocks(pLine)
+        def get_block(pLine)
+          result = detect_block(pLine)
           return nil unless result
-          blockData = Languages::BlocksData.new(result)
+          blockData = Languages::BlockData.new
           blockData.type = Languages::BLOCK_LABEL
           blockData.expression = capture_block_name(result)
-          #blockData.name = capture_expression(result)
           return blockData
         end
 
       protected
 
         # Override
-        def detect_blocks(pLine)
+        def detect_block(pLine)
           regexExp = /([a-zA-Z_0-9]\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
           if regexExp =~ pLine
             return pLine[regexExp, 0] unless among_quotes?pLine

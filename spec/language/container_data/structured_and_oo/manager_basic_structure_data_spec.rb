@@ -145,7 +145,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
 
   context "Simple block" do
     it "Simple block." do
-      block = Languages::BlocksData.new
+      block = Languages::BlockData.new
       block.type = Languages::BLOCK_LABEL
       @manager.add_block(block)
       expect(@manager.basicStructure[0].type).to eq(Languages::BLOCK_LABEL)
@@ -154,10 +154,10 @@ RSpec.describe Languages::ManagerBasicStructureData do
 
   context "Nested blocks." do
     it "Simple blocks." do
-      block1 = Languages::BlocksData.new
+      block1 = Languages::BlockData.new
       block1.type = Languages::BLOCK_LABEL
 
-      block2 = Languages::BlocksData.new
+      block2 = Languages::BlockData.new
       block2.type = Languages::BLOCK_LABEL
 
       @manager.add_block(block1)

@@ -1,7 +1,7 @@
 require_relative 'basic_data'
 require_relative 'conditional_data'
 require_relative 'repetition_data'
-require_relative 'blocks_data'
+require_relative 'block_data'
 
 module Languages
 
@@ -37,7 +37,7 @@ module Languages
       # Add block to basicStructure
       # @param pBlock BlockData to add inside basicStructure
       def add_block(pBlock)
-        return nil unless pBlock.is_a?(Languages::BlocksData)
+        return nil unless pBlock.is_a?(Languages::BlockData)
         pBlock.level = @currentLevel
         @basicStructure.push(pBlock)
       end

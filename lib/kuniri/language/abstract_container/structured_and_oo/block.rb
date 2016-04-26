@@ -1,6 +1,6 @@
 module Languages
 
-  # @abstract Class responsible for handling blocks.
+  # @abstract Class responsible for handling block.
   class Block
 
     public
@@ -9,7 +9,7 @@ module Languages
       # @param pLine An line to be analysed for find block.
       # @return Return on filled object of BlockData if it find an
       #         block, otherwise it returns nil.
-      def get_blocks(pLine)
+      def get_block(pLine)
         raise NotImplementedError
       end
 
@@ -18,7 +18,7 @@ module Languages
       # Method with a regex to check if line has a block.
       # @param pLine String with potential block inside.
       # @return Partial string with detection, otherwise return nil.
-      def detect_blocks(pLine)
+      def detect_block(pLine)
         raise NotImplementedError
       end
 

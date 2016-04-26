@@ -2,7 +2,7 @@ require_relative 'basic_data'
 require_relative 'conditional_data'
 require_relative 'repetition_data'
 require_relative 'attribute_data'
-require_relative 'blocks_data'
+require_relative 'block_data'
 require_relative 'manager_basic_structure_data'
 
 module Languages
@@ -64,7 +64,7 @@ module Languages
       # @param pBlock An object of BlockData.
       # @return If pBlock is not pBlockData instance return nil.
       def add_block(pBlock, pBehaviour = Languages::KEEP_LEVEL)
-        return nil unless (pBlock.instance_of?Languages::BlocksData)
+        return nil unless (pBlock.instance_of?Languages::BlockData)
         add_with_manager(pBlock, "block", pBehaviour)
       end
 

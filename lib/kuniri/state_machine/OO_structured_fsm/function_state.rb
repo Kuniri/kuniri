@@ -21,7 +21,7 @@ module StateMachine
           conditional_capture
         elsif @language.repetitionHandler.get_repetition(pLine)
           repetition_capture
-        elsif @language.blockHandler.get_blocks(pLine)
+        elsif @language.blockHandler.get_block(pLine)
           block_capture
         else
           return

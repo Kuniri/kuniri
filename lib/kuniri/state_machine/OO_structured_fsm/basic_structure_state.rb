@@ -20,7 +20,7 @@ module StateMachine
       def handle_line(pLine)
         conditional = @language.conditionalHandler.get_conditional(pLine)
         repetition = @language.repetitionHandler.get_repetition(pLine)
-        block = @language.blockHandler.get_blocks(pLine)
+        block = @language.blockHandler.get_block(pLine)
         if conditional
           if isNestedStructure?(conditional.type)
             conditional_capture

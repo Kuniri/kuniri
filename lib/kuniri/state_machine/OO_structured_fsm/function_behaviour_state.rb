@@ -29,7 +29,7 @@ module StateMachine
           repetition_capture
         elsif @language.aggregationHandler.get_aggregation(pLine)
           aggregation_capture
-        elsif @language.blockHandler.get_blocks(pLine)
+        elsif @language.blockHandler.get_block(pLine)
           block_capture
         else
           return
