@@ -77,6 +77,19 @@ RSpec.describe Languages::Ruby::BlocksRuby do
 
   end
 
+  context "Different but valid way to call iterators" do
+    it "With number" do
+      captured = @blockRuby.get_blocks("3.times do |lalala|")
+      expect(captured.expression).to eq("TIMES")
+    end
+
+    it "With big number" do
+      captured = @blockRuby.get_blocks("332432.times do |lalala|")
+      expect(captured.expression).to eq("TIMES")
+    end
+
+  end
+
   context "Should not detect:" do
     it "Only iterator" do
       captured = @blockRuby.get_blocks("each do |y|")

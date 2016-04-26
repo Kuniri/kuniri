@@ -166,33 +166,6 @@ RSpec.describe Languages::Ruby::RepetitionRuby do
 
   end
 
-  context "Iterators loop" do
-    it "Simple each iterator" do
-      input = "abc.each do |something|"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).type
-      expect(repetitionCaptured).to eq("EACH")
-    end
-
-    it "Simple each_with_index iterator" do
-      input = "abc.each_with_index do |something|"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).type
-      expect(repetitionCaptured).to eq("EACH_WITH_INDEX")
-    end
-
-    it "Simple collect iterator" do
-      input = "abc.collect do |something|"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).type
-      expect(repetitionCaptured).to eq("COLLECT")
-    end
-
-    it "Simple collect iterator" do
-      input = "abc.map do |something|"
-      repetitionCaptured = @repetitionRuby.get_repetition(input).type
-      expect(repetitionCaptured).to eq("MAP")
-    end
-
-  end
-
   after :each do
     @repetitionRuby = nil
   end
