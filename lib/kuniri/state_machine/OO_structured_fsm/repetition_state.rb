@@ -15,17 +15,6 @@ module StateMachine
         @whoAmI = "repetition"
       end
 
-      protected
-
-        # @see basic_structure_state
-        def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          repetition = @language.repetitionHandler.get_repetition(pLine)
-          if (repetition)
-            addToCorrectElement(repetition, pElementFile, pFlag, pClassIndex)
-          end
-        end
-
-
     # End class
     end
 

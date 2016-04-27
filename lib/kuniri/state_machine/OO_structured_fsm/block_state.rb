@@ -15,16 +15,6 @@ module StateMachine
         @whoAmI = "block"
       end
 
-      protected
-
-        # @see basic_structure_state
-        def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          block = @language.blockHandler.get_block(pLine)
-          if (block)
-            addToCorrectElement(block, pElementFile, pFlag, pClassIndex)
-          end
-        end
-
     # End class
     end
 

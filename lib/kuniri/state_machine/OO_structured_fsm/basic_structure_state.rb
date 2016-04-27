@@ -99,7 +99,10 @@ module StateMachine
         # @param pClassIndex Element index to add
         # @param pElementFile Element with all data
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          raise NotImplementedError
+          element = eval("@language.#{@whoAmI}Handler.get_#{@whoAmI}(pLine)")
+          if (element)
+            addToCorrectElement(element, pElementFile, pFlag, pClassIndex)
+          end
         end
 
         # If is a structure which can be nested. It is delegate.
