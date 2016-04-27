@@ -92,15 +92,8 @@ module Languages
         @aggregationState =
           StateMachine::OOStructuredFSM::AggregationState.new(self)
 
-        @state = @idleState
-        @previousState = []
-        @previousState.push (@state)
-
-        @fileElements = []
-        @flagFunctionBehaviour = nil
-        @countNestedCondLoop = 0
-
-        @string_comment_to_transfer = ""
+        initialize_fsm
+        initialize_elements
       end
 
       # Set the source code to by analysed.
@@ -249,6 +242,24 @@ module Languages
 
       @languageType
       @source
+
+    private
+
+      # Initialize state machine attributes.
+      def initialize_fsm
+        @state = @idleState
+        @previousState = []
+        @previousState.push (@state)
+        @flagFunctionBehaviour = nil
+        @countNestedCondLoop = 0
+      end
+
+      # Initialize basic elements.
+      def initialize_elements
+        @fileElements = []
+        @string_comment_to_transfer = ""
+      end
+
 
   # End class
   end
