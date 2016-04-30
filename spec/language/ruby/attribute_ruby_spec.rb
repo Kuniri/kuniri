@@ -136,6 +136,18 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     include_examples "Multiple declaration", input.gsub(/=/, "   =  "), message
   end
 
+  context "When is a single attribute with @ and value" do
+    it "Simple case with @ and value" do
+      captured = @rubyAttr.get_attribute('@attribute = 13')[0]
+      expect(captured.value).to eq('13')
+    end
+
+    it "attr_accessor cannot accept value" do
+      captured = @rubyAttr.get_attribute('@attribute = 12')[0]
+      expect(captured.value).to eq(@singleResult)
+    end
+  end
+
   after :all do
     @rubyAttr = nil
   end

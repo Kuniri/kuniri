@@ -46,6 +46,100 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
   end
 
+  context "Verify value assignment to simple global variable." do
+    it "Simple case: without @, @@ or $" do
+      variable = @variableRuby.get_variable('yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('     yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   yesImVerySimpe = 12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('yesImVerySimpe   = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('yesImVerySimpe   =   12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   yesImVerySimpe   =   12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   yesImVerySimpe   =   \"yes\"   ')
+      expect(variable[0].value).to eq('yes')
+    end
+
+    it "Value after variable with @" do
+      variable = @variableRuby.get_variable('@yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('     @yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   @yesImVerySimpe = 12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('@yesImVerySimpe   = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('@yesImVerySimpe   =   12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   @yesImVerySimpe   =   12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable(' @yesImVerySimpe  =   \"yes\"   ')
+      expect(variable[0].value).to eq('yes')
+    end
+
+    it "Value after variable with @@" do
+      variable = @variableRuby.get_variable('@@yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('     @@yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   @@yesImVerySimpe = 12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('@@yesImVerySimpe   = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('@@yesImVerySimpe   =   12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   @@yesImVerySimpe   =   12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('  @@yesImVerySimpe   =  \"yes\" ')
+      expect(variable[0].value).to eq('yes')
+    end
+
+    it "Value after variable with $" do
+      variable = @variableRuby.get_variable('$yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('     $yesImVerySimpe = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   $yesImVerySimpe = 12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('$yesImVerySimpe   = 12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('$yesImVerySimpe   =   12')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable('   $yesImVerySimpe   =   12   ')
+      expect(variable[0].value).to eq('12')
+
+      variable = @variableRuby.get_variable(' $yesImVerySimpe   =  \"yes\" ')
+      expect(variable[0].value).to eq('yes')
+    end
+  end
+
   context "Special case" do
 
     it "Ruby multiple line comment - =begin" do
