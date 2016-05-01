@@ -72,7 +72,12 @@ module Parser
       # @see OutputFormat
       def global_variable_generate(pGlobalVariable)
         pGlobalVariable.each do |globalVar|
-          @outputEngine.globalVariableData :name => globalVar.name
+          if globalVar.value != 'nothing'
+            @outputEngine.globalVariableData :name => globalVar.name,
+                                              :value => globalVar.value
+          else
+            @outputEngine.globalVariableData :name => globalVar.name
+          end
         end
       end
 

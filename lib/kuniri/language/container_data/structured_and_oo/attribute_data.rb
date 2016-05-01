@@ -7,6 +7,9 @@ module Languages
 
     public
 
+      attr_accessor :value
+      attr_accessor :type
+
       # Basic initialization of attribute.
       # @param pAttribute_name Attribute name for basic initialization.
       def initialize (pAttributeName)

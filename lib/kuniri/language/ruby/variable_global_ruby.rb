@@ -21,7 +21,7 @@ module Languages
           # Separated by comma, equal or the common case
           if result.split(",").size > 1
             listOfVariable = handle_multiple_declaration_with_comma(result)
-          elsif result.split("=").size > 1
+          elsif result.split("=").size > 2
             listOfVariable = handle_multiple_declaration_with_equal(result)
           else
             listOfVariable = handle_line_declaration(result)
@@ -98,7 +98,9 @@ module Languages
         # Override
         def handle_line_declaration(pString)
           listOfVariable = []
+          value = 'nothing'
           if pString =~ /=/
+            value = handle_value(pString)
             pString = pString.scan(/.*=/).join("")
             return nil if pString =~ /\./
           end
@@ -107,11 +109,19 @@ module Languages
 
           pString = prepare_final_string(pString)
           globalVariable = Languages::VariableGlobalData.new(pString)
+          globalVariable.value = value
           listOfVariable.push(globalVariable)
 
           return listOfVariable
         end
 
+        def handle_value(pString)
+          value = pString.scan(/=(.*)/).join("")
+          value = value.lstrip
+          value = value.rstrip
+          value = value.gsub(/'|\"/,"")
+          return value
+        end
 
     # Class
     end

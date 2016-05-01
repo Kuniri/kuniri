@@ -25,6 +25,13 @@ module Languages
           raise NotImplementedError
         end
 
+        # Handling value to assign to global variable.
+        # @param pString String with value.
+        # @return Return string.
+        def handle_value(pString)
+          raise NotImplementedError
+        end
+
   # class
   end
 
