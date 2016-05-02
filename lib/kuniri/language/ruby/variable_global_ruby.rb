@@ -66,13 +66,17 @@ module Languages
           pString = pString.split(",")
           pString.each do |variable|
             return nil if variable.split("=").size > 2
-
-            variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
-
+            value = 'nothing'
+            if variable =~ /=/
+              value = handle_value(variable)
+              variable = variable.scan(/.*=/).join("")
+              return nil if pString =~ /\./
+            end
             return nil if variable =~ /\./
 
             variable = prepare_final_string(variable)
             globalVariable = Languages::VariableGlobalData.new(variable)
+            globalVariable.value = value
             listOfVariable.push(globalVariable)
           end
 
@@ -83,11 +87,13 @@ module Languages
         def handle_multiple_declaration_with_equal(pString)
           listOfVariable = []
           pString = pString.split("=")
+          value = handle_value(pString.last)
           pString.each do |variable|
             return nil if variable =~ /\./
 
             variable = prepare_final_string(variable)
             globalVariable = Languages::VariableGlobalData.new(variable)
+            globalVariable.value = value
             listOfVariable.push(globalVariable)
           end
           value = listOfVariable.pop
@@ -116,7 +122,8 @@ module Languages
         end
 
         def handle_value(pString)
-          value = pString.scan(/=(.*)/).join("")
+          value = pString
+          value = pString.scan(/=(.*)/).join("") if pString =~ /=/
           value = value.lstrip
           value = value.rstrip
           value = value.gsub(/'|\"/,"")

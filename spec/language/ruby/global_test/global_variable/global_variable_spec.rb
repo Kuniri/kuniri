@@ -27,11 +27,11 @@ RSpec.describe Kuniri::Kuniri do
   context "Simple cases of global variable" do
 
     message = "instance global variable"
-    regex = /\s+<globalVariableData\sname="two" visibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="two"\/>/
     include_examples "global variable" , regex, message
 
     message = "class variable"
-    regex = /\s+<globalVariableData\sname="trhee" visibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="three"\/>/
     include_examples "global variable" , regex, message
 
   end
@@ -39,15 +39,15 @@ RSpec.describe Kuniri::Kuniri do
   context "Global variable with assignment" do
 
     message = "instance global variable with value"
-    regex = /\s+<globalVariableData\sname="five"\svalue="8"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="five"\svalue="8"\/>/
     include_examples "global variable" , regex, message
 
     message = "class variable with value"
-    regex = /\s+<globalVariableData\sname="eight"\svalue="#"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="eight"\svalue="#"\/>/
     include_examples "global variable" , regex, message
 
     message = "Normal global variable with value"
-    regex = /\s+<globalVariableData\sname="four"\svalue="\[\]"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="four"\svalue="\[\]"\/>/
     include_examples "global variable" , regex, message
 
   end
@@ -55,15 +55,15 @@ RSpec.describe Kuniri::Kuniri do
   context "Global variable complex assignment" do
 
     message = "instance global variable with value"
-    regex = /\s+<globalVariableData\sname="fourteen"\svalue="14 + 15"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="fourteen"\svalue="14 \+ 15"\/>/
     include_examples "global variable" , regex, message
 
     message = "class variable with value"
-    regex = /\s+<globalVariableData\sname="thirteen"\svalue="2"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="thirteen"\svalue="2"\/>/
     include_examples "global variable" , regex, message
 
     message = "Normal global variable with value"
-    regex = /\s+<globalVariableData\sname="ten"\svalue="ten"\svisibility="public"\/?>/
+    regex = /\s+<globalVariableData\sname="ten"\svalue="ten"\/>/
     include_examples "global variable" , regex, message
 
   end

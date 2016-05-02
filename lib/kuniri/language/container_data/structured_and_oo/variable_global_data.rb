@@ -15,6 +15,7 @@ module Languages
 
         @name = pName
         @visibility = "global"
+        @value = 'nothing'
       end
 
   # Class

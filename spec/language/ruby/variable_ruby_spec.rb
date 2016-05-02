@@ -66,7 +66,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       variable = @variableRuby.get_variable('   yesImVerySimpe   =   12   ')
       expect(variable[0].value).to eq('12')
 
-      variable = @variableRuby.get_variable('   yesImVerySimpe   =   \"yes\"   ')
+      variable = @variableRuby.get_variable('   yesImVerySimpe   =   "yes"   ')
       expect(variable[0].value).to eq('yes')
     end
 
@@ -89,7 +89,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       variable = @variableRuby.get_variable('   @yesImVerySimpe   =   12   ')
       expect(variable[0].value).to eq('12')
 
-      variable = @variableRuby.get_variable(' @yesImVerySimpe  =   \"yes\"   ')
+      variable = @variableRuby.get_variable(' @yesImVerySimpe  =   "yes"   ')
       expect(variable[0].value).to eq('yes')
     end
 
@@ -112,7 +112,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       variable = @variableRuby.get_variable('   @@yesImVerySimpe   =   12   ')
       expect(variable[0].value).to eq('12')
 
-      variable = @variableRuby.get_variable('  @@yesImVerySimpe   =  \"yes\" ')
+      variable = @variableRuby.get_variable('  @@yesImVerySimpe   =  "yes" ')
       expect(variable[0].value).to eq('yes')
     end
 
@@ -135,7 +135,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       variable = @variableRuby.get_variable('   $yesImVerySimpe   =   12   ')
       expect(variable[0].value).to eq('12')
 
-      variable = @variableRuby.get_variable(' $yesImVerySimpe   =  \"yes\" ')
+      variable = @variableRuby.get_variable(' $yesImVerySimpe   =  "yes" ')
       expect(variable[0].value).to eq('yes')
     end
   end
