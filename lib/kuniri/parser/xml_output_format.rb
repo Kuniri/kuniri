@@ -84,8 +84,14 @@ module Parser
       # @see OutputFormat
       def attribute_generate(pAttribute)
         pAttribute.each do |singleAttribute|
-          @outputEngine.attributeData :name => singleAttribute.name,
+          if singleAttribute.value != 'nothing'
+            @outputEngine.attributeData :name => singleAttribute.name,
+                                    :value => singleAttribute.value,
+                                    :visibility => singleAttribute.visibility
+          else
+            @outputEngine.attributeData :name => singleAttribute.name,
                                       :visibility => singleAttribute.visibility
+          end
         end
       end
 

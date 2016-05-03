@@ -144,10 +144,25 @@ RSpec.describe Languages::Ruby::AttributeRuby do
 
     it "attr_accessor cannot accept value" do
       captured = @rubyAttr.get_attribute('@attribute = 12')[0]
-      expect(captured.value).to eq(@singleResult)
+      expect(captured.value).to eq('12')
     end
   end
 
+  context "When is a multiple attribute separated by =, with @ and value" do
+    it "Simple case with @ and value" do
+      captured = @rubyAttr.get_attribute('@attribute = @attribute2 = 13')
+      expect(captured[0].value).to eq('13')
+      expect(captured[1].value).to eq('13')
+    end
+  end
+
+  context "When is a multiple attribute separated by ,, with @ and value" do
+    it "Simple case with @ and value" do
+      captured = @rubyAttr.get_attribute('@attribute, @attribute2 = 13')
+      expect(captured[0].value).to eq('nothing')
+      expect(captured[1].value).to eq('13')
+    end
+  end
   after :all do
     @rubyAttr = nil
   end

@@ -64,15 +64,19 @@ module Languages
 
       # Override
       def handle_multiple_declaration_with_comma(pString)
-        return handle_multiple_declaration(pString, ",") do |variable|
-          variable = variable.scan(/.*=/).join("") if variable =~ /.*=/
+        return handle_multiple_declaration(pString, ',') do |variable|
+          if variable =~ /.*=/
+            variable = variable.scan(/.*=/).join('')
+          end
           variable
         end
       end
 
       # Override
       def handle_multiple_declaration_with_equal(pString)
-        return handle_multiple_declaration(pString, "="){ |variable| variable }
+        tmp  = pString.split('=')
+        value = handle_value(tmp.last) if pString =~ /=/
+        return handle_multiple_declaration(pString, '=', value){ |variable| variable }
       end
 
     private
@@ -80,11 +84,13 @@ module Languages
       @attributeList
 
       def handle_line_declaration(pString)
-        return handle_line(pString){ |pString| pString }
+        value = handle_value(pString) if pString =~ /=/
+        return handle_line(pString, value){ |pString| pString }
       end
 
-      def handle_line(pString)
+      def handle_line(pString, value = 'nothing')
         if pString =~ /=/
+          value = handle_value(pString)
           pString = pString.scan(/.*=/).join("")
           return nil if pString =~ /\./
         end
@@ -95,20 +101,35 @@ module Languages
 
         pString = prepare_final_string(pString)
         attribute = Languages::AttributeData.new(pString)
+        attribute.value = value
 
         return [attribute]
       end
 
-      def handle_multiple_declaration(pString, pSplitChar)
+      def handle_multiple_declaration(pString, pSplitChar, value = 'nothing')
         listOfAttributes = []
         pString = pString.split(pSplitChar)
         pString.each do |variable|
-          attribute = handle_line(variable) { |pString| yield(pString) }
+          if pSplitChar == '='
+            attribute = handle_line(variable, value) { |pString| yield(pString) }
+          else
+            attribute = handle_line(variable) { |pString| yield(pString) }
+          end
           listOfAttributes.concat(attribute) if attribute
         end
 
         return listOfAttributes
       end
+
+      def handle_value(pString)
+        value = pString
+        value = pString.scan(/=(.*)/).join("") if pString =~ /=/
+        value = value.lstrip
+        value = value.rstrip
+        value = value.gsub(/'|\"/,"")
+        return value
+      end
+
 
     #Class
     end
