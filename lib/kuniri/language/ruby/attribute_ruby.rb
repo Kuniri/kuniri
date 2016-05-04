@@ -75,6 +75,7 @@ module Languages
       # Override
       def handle_multiple_declaration_with_equal(pString)
         tmp  = pString.split('=')
+        value = 'nothing'
         value = handle_value(tmp.last) if pString =~ /=/
         return handle_multiple_declaration(pString, '=', value){ |variable| variable }
       end
@@ -84,6 +85,7 @@ module Languages
       @attributeList
 
       def handle_line_declaration(pString)
+        value = 'nothing'
         value = handle_value(pString) if pString =~ /=/
         return handle_line(pString, value){ |pString| pString }
       end

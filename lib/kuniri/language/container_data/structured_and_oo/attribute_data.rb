@@ -17,6 +17,7 @@ module Languages
 
         @name = pAttributeName
         @visibility = "public"
+        @value = 'nothing'
       end
 
     private
