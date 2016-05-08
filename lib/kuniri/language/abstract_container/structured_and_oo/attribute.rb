@@ -5,6 +5,12 @@ module Languages
 
     public
 
+      def initialize(pVariableBehaviour, pRegex)
+        @whoAmI = 'attribute'
+        @detectRegex = pRegex
+        @variableBehaviour = pVariableBehaviour
+      end
+
       # Verify if a line has an attribute. If it has attribute, firstly, the
       # function capture all lines and removes specific language declaration
       # (for instance, in ruby it is:  "@" or ":" and whitespace), finally
@@ -14,17 +20,14 @@ module Languages
       # @return Return on filled object of AttributeData if it find an
       #         attribute, otherwise it returns nil.
       def get_attribute(pLine)
-        raise NotImplementedError
+        @variableBehaviour.common_declaration(pLine, @detectRegex)
       end
 
     protected
 
-      # Detect if line has attribute.
-      # @param pLine Line with potential attribute.
-      # @return Return a matched STRING or nil if not found.
-      def detect_attribute(pLine)
-        raise NotImplementedError
-      end
+      @whoAmI
+      @detectRegex
+      @variableBehaviour
 
   # Class
   end

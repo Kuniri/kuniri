@@ -5,6 +5,12 @@ module Languages
 
       public
 
+        def initialize(pVariableBehaviour, pRegex)
+          @whoAmI = 'variable'
+          @detectRegex = pRegex
+          @variableBehaviour = pVariableBehaviour
+        end
+
         # This method is the main interface for extract data from specific
         # code and convert it to a common representation.
         # @param pLine Line to be inspected.
@@ -12,23 +18,19 @@ module Languages
         #       VariableGlobalData. Otherwise returns nil.
         # @see variable_global_data.rb
         def get_variable(pLine)
-          raise NotImplementedError
+          @variableBehaviour.common_declaration(pLine, @detectRegex)
         end
 
       protected
 
-        # Verify if line has a variable.
-        # @param pLine String to be analysed.
-        # @return Returns a partial string, if it can be a variable. Otherwise
-        #       return nil.
-        def detect_variable(pLine)
-          raise NotImplementedError
-        end
+        @whoAmI
+        @variableBehaviour
+        @detectRegex
 
-        # Handling value to assign to global variable.
-        # @param pString String with value.
-        # @return Return string.
-        def handle_value(pString)
+        # Detect if line has attribute.
+        # @param pLine Line with potential attribute.
+        # @return Return a matched STRING or nil if not found.
+        def detect_variable(pLine)
           raise NotImplementedError
         end
 
