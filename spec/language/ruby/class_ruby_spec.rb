@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 RSpec.describe Languages::Ruby::ClassRuby do
 
-  before :all do 
+  before :all do
     @classRuby = Languages::Ruby::ClassRuby.new
   end
 

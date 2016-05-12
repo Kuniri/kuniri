@@ -11,9 +11,11 @@ module Languages
       public
 
         def initialize
+          super
           detectRegex = /^\s*(?:@|attr_(?:accessor|reader|writer))(.*)$/
-          # XXX: KLUDGE, REMOVE 'Attribute' and make it in the right way
-          super(Languages::Ruby::VariableBehaviourRuby.new('Attribute'), detectRegex)
+
+          ref = Languages::Ruby::VariableBehaviourRuby.new(@whoAmI.capitalize)
+          setup_attribute(ref, detectRegex)
         end
 
     #Class

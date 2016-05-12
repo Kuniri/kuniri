@@ -11,10 +11,11 @@ module Languages
       attr_accessor :type  # !@attribute Type of the attribute (default = nil).
 
       def initialize(pName)
-        return nil if pName.nil? or !pName.is_a? String
+        pName = 'fakeName' if pName.nil? or !pName.is_a? String
 
         @name = pName
         @value = 'nothing'
+        @type = ''
       end
 
   # Class

@@ -5,10 +5,8 @@ module Languages
 
       public
 
-        def initialize(pVariableBehaviour, pRegex)
+        def initialize
           @whoAmI = 'variable'
-          @detectRegex = pRegex
-          @variableBehaviour = pVariableBehaviour
         end
 
         # This method is the main interface for extract data from specific
@@ -21,17 +19,19 @@ module Languages
           @variableBehaviour.common_declaration(pLine, @detectRegex)
         end
 
+        def setup_attribute(pVariableBehaviour, pRegex)
+          @detectRegex = pRegex if is_regex?(pRegex)
+          @variableBehaviour = pVariableBehaviour
+        end
+
       protected
 
         @whoAmI
         @variableBehaviour
         @detectRegex
 
-        # Detect if line has attribute.
-        # @param pLine Line with potential attribute.
-        # @return Return a matched STRING or nil if not found.
-        def detect_variable(pLine)
-          raise NotImplementedError
+        def is_regex?(pRegex)
+          return pRegex.instance_of?Regexp
         end
 
   # class
