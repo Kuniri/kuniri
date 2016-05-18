@@ -12,7 +12,7 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @whoAmI = "conditional"
+        @whoAmI = 'conditional'
       end
 
     # End class

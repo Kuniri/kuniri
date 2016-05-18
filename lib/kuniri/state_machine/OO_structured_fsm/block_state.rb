@@ -12,7 +12,7 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @whoAmI = "block"
+        @whoAmI = 'block'
       end
 
     # End class

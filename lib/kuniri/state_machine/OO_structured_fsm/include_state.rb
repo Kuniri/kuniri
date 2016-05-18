@@ -32,17 +32,17 @@ module StateMachine
       # @see OOStructuredState
       def execute(pElementFile, pLine)
 
-        requirement = @language.externRequirementHandler.get_requirement(pLine)
+        requirement = @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
 
         if requirement
-         pElementFile.add_extern_requirement(requirement)
+          pElementFile.add_extern_requirement(requirement)
         end
 
         idle_capture
 
         if (@language.state.is_a? StateMachine::OOStructuredFSM::IdleState)
           pElementFile.comments = @language.string_comment_to_transfer
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
         end
 
         return pElementFile

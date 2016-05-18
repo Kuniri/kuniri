@@ -17,11 +17,11 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.conditionalHandler.get_conditional(pLine)
+        if @language.line_inspect(CONDITIONAL_ID, pLine)
           conditional_capture
-        elsif @language.repetitionHandler.get_repetition(pLine)
+        elsif @language.line_inspect(REPETITION_ID, pLine)
           repetition_capture
-        elsif @language.blockHandler.get_block(pLine)
+        elsif @language.line_inspect(BLOCK_ID, pLine)
           block_capture
         else
           return
@@ -58,11 +58,11 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        function = @language.functionHandler.get_function(pLine)
+        function = @language.line_inspect(FUNCTION_ID, pLine)
 
         if function
           function.comments = @language.string_comment_to_transfer
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
           pElementFile.add_global_function(function)
         end
 

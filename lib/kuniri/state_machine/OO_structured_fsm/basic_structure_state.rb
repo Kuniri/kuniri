@@ -14,13 +14,13 @@ module StateMachine
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
-        @whoAmI = "the fu@!+ nobody"
+        @whoAmI = 'the fu@!+ nobody'
       end
 
       def handle_line(pLine)
-        conditional = @language.conditionalHandler.get_conditional(pLine)
-        repetition = @language.repetitionHandler.get_repetition(pLine)
-        block = @language.blockHandler.get_block(pLine)
+        conditional = @language.line_inspect(CONDITIONAL_ID, pLine)
+        repetition = @language.line_inspect(REPETITION_ID, pLine)
+        block = @language.line_inspect(BLOCK_ID, pLine)
         if conditional
           if isNestedStructure?(conditional.type)
             conditional_capture

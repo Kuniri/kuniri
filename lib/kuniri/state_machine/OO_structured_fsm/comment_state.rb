@@ -13,7 +13,7 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @multipleLineComment = ""
+        @multipleLineComment = ''
         @enableMultipleLine = false
       end
 
@@ -48,7 +48,7 @@ module StateMachine
       private
 
         def handling_single_line(pLine)
-          comment_string = @language.commentHandler.get_comment(pLine)
+          comment_string = @language.line_inspect(COMMENT_ID, pLine)
           comment_string += "\n"
           @language.string_comment_to_transfer += comment_string
           @language.rewind_state
@@ -57,12 +57,12 @@ module StateMachine
         def handling_multiple_line
           @enableMultipleLine = false
           @language.string_comment_to_transfer = @multipleLineComment
-          @multipleLineComment = ""
+          @multipleLineComment = ''
           @language.rewind_state
         end
 
         def capture_multiple_line_comment(pLine)
-          comment_string = @language.commentHandler.get_comment(pLine)
+          comment_string = @language.line_inspect(COMMENT_ID, pLine)
           @multipleLineComment += comment_string
         end
 
