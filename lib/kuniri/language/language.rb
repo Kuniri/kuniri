@@ -13,6 +13,7 @@ require_relative '../state_machine/OO_structured_fsm/repetition_state'
 require_relative '../state_machine/OO_structured_fsm/block_state'
 require_relative '../state_machine/OO_structured_fsm/comment_state'
 require_relative '../state_machine/OO_structured_fsm/aggregation_state'
+require_relative '../state_machine/OO_structured_fsm/token_state_machine'
 
 # Module that keeps the language syntax.
 module Languages
@@ -107,36 +108,6 @@ module Languages
       # method, work like a hook for give more flexibility to implements any
       # needed steps.
       def analyse_source
-        raise NotImplementedError
-      end
-
-      # Extract all the comments from the source.
-      def comment_extract
-        raise NotImplementedError
-      end
-
-      # Extract all the method/function from the source.
-      def method_extract
-        raise NotImplementedError
-      end
-
-      # Extract all the class declared in the source.
-      def class_extract
-        raise NotImplementedError
-      end
-
-      # Extract the attribute from source file.
-      def attribute_extract
-        raise NotImplementedError
-      end
-
-      # Extract global variables.
-      def global_variable_extract
-        raise NotImplementedError
-      end
-
-      # Take all the extern requirements
-      def extern_requirement_extract
         raise NotImplementedError
       end
 
@@ -238,6 +209,37 @@ module Languages
         @countNestedCondLoop = 0
       end
 
+      def line_inspect(pTarget, pLine)
+        case pTarget
+          when StateMachine::METHOD_ID
+            return @methodHandler.get_method(pLine)
+          when StateMachine::CONSTRUCTOR_ID
+            return @constructorHandler.get_constructor(pLine)
+          when StateMachine::FUNCTION_ID
+            return @functionHandler.get_function(pLine)
+          when StateMachine::COMMENT_ID
+            return @commentHandler.get_comment(pLine)
+          when StateMachine::VARIABLE_ID
+            return @variableHandler.get_variable(pLine)
+          when StateMachine::MODULE_ID
+            return @moduleHandler.get_module(pLine)
+          when StateMachine::CLASS_ID
+            return @classHandler.get_class(pLine)
+          when StateMachine::REPETITION_ID
+            return @repetitionHandler.get_repetition(pLine)
+          when StateMachine::CONDITIONAL_ID
+            return @conditionalHandler.get_conditional(pLine)
+          when StateMachine::ATTRIBUTE_ID
+            return @attributeHandler.get_attribute(pLine)
+          when StateMachine::BLOCK_ID
+            return @blockHandler.get_block(pLine)
+          when StateMachine::AGGREGATION_ID
+            return @aggregationHandler.get_aggregation(pLine)
+          when StateMachine::EXTERN_REQUIREMENT_ID
+            return @externRequirementHandler.get_requirement(pLine)
+        end
+      end
+
     protected
 
       @languageType
@@ -259,7 +261,6 @@ module Languages
         @fileElements = []
         @string_comment_to_transfer = ""
       end
-
 
   # End class
   end

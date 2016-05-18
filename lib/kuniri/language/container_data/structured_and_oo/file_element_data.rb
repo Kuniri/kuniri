@@ -28,7 +28,7 @@ module Languages
         @classes = []
         @modules = []
         @name = pName
-        @comments = ""
+        @comments = ''
       end
 
       # Add global function to the file.
@@ -70,6 +70,12 @@ module Languages
         return nil unless pModule.is_a?(Languages::ModuleNamespaceData)
 
         @modules.push(pModule)
+      end
+
+      # Add attribute to classf
+      # @param pAttributeElement Add an attribute to the last class
+      def add_attribute_to_last_class(pAttributeElement)
+        classes.last.add_attribute(pAttributeElement)
       end
 
   # Class

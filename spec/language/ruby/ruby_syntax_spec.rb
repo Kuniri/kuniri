@@ -604,6 +604,64 @@ RSpec.describe Languages::RubySyntax do
 
   end
 
+  context 'Verify line_inspect' do
+    it 'get an object method' do
+      object = @syntax.line_inspect(StateMachine::METHOD_ID, 'def yes_i_am')
+      expect(object).to be_a Languages::MethodData
+    end
+
+    it 'get an object constructor' do
+      object = @syntax.line_inspect(StateMachine::CONSTRUCTOR_ID, 'def initialize')
+      expect(object).to be_a Languages::ConstructorData
+    end
+
+    it 'get an object function' do
+      object = @syntax.line_inspect(StateMachine::FUNCTION_ID, 'def blabla')
+      expect(object).to be_a Languages::FunctionData
+    end
+
+    it 'get an object variable' do
+      object = @syntax.line_inspect(StateMachine::VARIABLE_ID, 'xpto = 1')
+      expect(object).to be_a Array
+    end
+
+    it 'get an object module' do
+      object = @syntax.line_inspect(StateMachine::MODULE_ID, 'module Xpto')
+      expect(object).to be_a Languages::ModuleNamespaceData
+    end
+
+    it 'get an object class' do
+      object = @syntax.line_inspect(StateMachine::CLASS_ID, 'class Xpto')
+      expect(object).to be_a Languages::ClassData
+    end
+
+    it 'get an object repetition' do
+      object = @syntax.line_inspect(StateMachine::REPETITION_ID, 'while $i < $num  do')
+      expect(object).to be_a Languages::RepetitionData
+    end
+
+    it 'get an object conditional' do
+      object = @syntax.line_inspect(StateMachine::CONDITIONAL_ID, 'if 3 > 2')
+      expect(object).to be_a Languages::ConditionalData
+    end
+
+    it 'get an object attribute' do
+      object = @syntax.line_inspect(StateMachine::ATTRIBUTE_ID, '@abc')
+      expect(object).to be_a Array
+    end
+
+    it 'get an object block' do
+      object = @syntax.line_inspect(StateMachine::BLOCK_ID, 'abc.each do |x|')
+      expect(object).to be_a Languages::BlockData
+    end
+
+    it 'get an object extern requirement' do
+      object = @syntax.line_inspect(StateMachine::EXTERN_REQUIREMENT_ID, 'require \'xpto\'')
+      expect(object).to be_a Languages::ExternRequirementData
+    end
+
+  end
+
   after :each do
     @syntax = nil
   end
