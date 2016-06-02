@@ -1,9 +1,13 @@
+require_relative 'variable_behaviour_helpers'
+
 module Languages
 
   # @abstract Abstract class for handling attribute.
   class Attribute
 
     public
+
+      include Languages::VariableBehaviourHelpers
 
       def initialize
         @whoAmI = 'attribute'
@@ -21,24 +25,11 @@ module Languages
         @variableBehaviour.common_declaration(pLine, @detectRegex)
       end
 
-      # Setup basic configurations for make attribute work correctly. It is
-      # mandatory to call it with the correct parameters in the child class.
-      # @param pVariableBehaviour Reference to a variable behaviour.
-      # @param pRegex Regex to detect if is an attribute.
-      def setup_attribute(pVariableBehaviour, pRegex)
-        @detectRegex = pRegex if is_regex?(pRegex)
-        @variableBehaviour = pVariableBehaviour
-      end
-
     protected
 
       @whoAmI
       @detectRegex
       @variableBehaviour
-
-      def is_regex?(pRegex)
-        return pRegex.instance_of?Regexp
-      end
 
   # Class
   end

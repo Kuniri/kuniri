@@ -1,9 +1,13 @@
+require_relative 'variable_behaviour_helpers'
+
 module Languages
 
   # @abstract Any global variable should be handler here.
   class VariableGlobal
 
       public
+
+        include Languages::VariableBehaviourHelpers
 
         def initialize
           @whoAmI = 'variable'
@@ -19,20 +23,11 @@ module Languages
           @variableBehaviour.common_declaration(pLine, @detectRegex)
         end
 
-        def setup_attribute(pVariableBehaviour, pRegex)
-          @detectRegex = pRegex if is_regex?(pRegex)
-          @variableBehaviour = pVariableBehaviour
-        end
-
       protected
 
         @whoAmI
         @variableBehaviour
         @detectRegex
-
-        def is_regex?(pRegex)
-          return pRegex.instance_of?Regexp
-        end
 
   # class
   end
