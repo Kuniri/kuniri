@@ -78,7 +78,7 @@ module StateMachine
       # @see OOStructuredState
       def execute(pElementFile, pLine)
         flag = @language.flagFunctionBehaviour
-        classIndex = pElementFile.classes.length - 1 # We want the index
+        classIndex = pElementFile.get_last_class_index
 
         addBasicStructure(pLine, flag, classIndex, pElementFile)
 
@@ -133,13 +133,13 @@ module StateMachine
           case pFlag
             when StateMachine::GLOBAL_FUNCTION_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                    elementType, "global_functions")
+                                    elementType, 'global_functions')
             when StateMachine::METHOD_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                    elementType, stringToEval + "methods")
+                                    elementType, stringToEval + 'methods')
             when StateMachine::CONSTRUCTOR_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                elementType, stringToEval + "constructors")
+                                elementType, stringToEval + 'constructors')
           end
         end
 
@@ -168,7 +168,7 @@ module StateMachine
         # @param pType Type of the element.
         # @param pElement Element description.
         def dynamicallyAdd(pElementFile, pToAdd, pType, pElement)
-          classIndex = pElementFile.classes.length - 1 # We want the index
+          classIndex = pElementFile.get_last_class_index
           index = eval("pElementFile.#{pElement}.length - 1")
           if (@language.isNested? && isNestedStructure?(pType))
             eval("pElementFile.#{pElement}[index]." +

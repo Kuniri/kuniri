@@ -70,7 +70,7 @@ module StateMachine
                                    .send("get_#{@functionIdentifier}", pLine)
 
         if (functionElement)
-          lastIndex = pElementFile.classes.length - 1 # We want the index
+          lastIndex = pElementFile.get_last_class_index
           functionElement.comments = @language.string_comment_to_transfer
           @language.string_comment_to_transfer = ""
           pElementFile.classes[lastIndex].send("add_#{@functionIdentifier}",

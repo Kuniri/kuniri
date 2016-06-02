@@ -40,9 +40,8 @@ module StateMachine
         if @enableMultipleLine
           capture_multiple_line_comment(pLine)
         end
- 
-        return pElementFile
 
+        return pElementFile
       end
 
       private

@@ -7,8 +7,8 @@ require_relative 'class_data'
 
 module Languages
 
-  # FileElementData is the upper element related with container data, this class
-  # refers to file.
+  # FileElementData is the upper element related with container data, this
+  # class refers to file.
   class FileElementData < Languages::BasicData
 
     public
@@ -72,10 +72,16 @@ module Languages
         @modules.push(pModule)
       end
 
-      # Add attribute to classf
+      # Add attribute to class
       # @param pAttributeElement Add an attribute to the last class
       def add_attribute_to_last_class(pAttributeElement)
         classes.last.add_attribute(pAttributeElement)
+      end
+
+      # Get index from the last class.
+      # @return Integer representing the last index from classes.
+      def get_last_class_index
+        return classes.length - 1
       end
 
   # Class

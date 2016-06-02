@@ -99,13 +99,20 @@ RSpec.describe Languages::FileElementData do
     end
   end
 
-  context 'Add attribute to last class' do
-    it '@' do
+  context 'Helpers from file elements' do
+    it 'Add attribute to last class' do
       @fileElement.add_class(@class1)
       attribute = Languages::AttributeData.new('justAtest')
       @fileElement.add_attribute_to_last_class([attribute])
       expect(@fileElement.classes.last).to eq(@class1)
       expect(@fileElement.classes.last.attributes[0]).to eq(attribute)
+    end
+
+    it 'Get index from the last class' do
+      @fileElement.add_class(@class1)
+      expect(@fileElement.get_last_class_index).to eq(0)
+      @fileElement.add_class(@class1)
+      expect(@fileElement.get_last_class_index).to eq(1)
     end
   end
 
