@@ -7,11 +7,7 @@ module Languages
 
     public
 
-      include Languages::VariableBehaviourHelpers
-
-      def initialize
-        @whoAmI = 'attribute'
-      end
+      include VariableBehaviourHelpers
 
       # Verify if a line has an attribute. If it has attribute, firstly, the
       # function capture all lines and removes specific language declaration
@@ -27,7 +23,6 @@ module Languages
 
     protected
 
-      @whoAmI
       @detectRegex
       @variableBehaviour
 

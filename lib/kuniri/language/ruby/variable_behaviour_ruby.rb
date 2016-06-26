@@ -10,7 +10,7 @@ module Languages
     class VariableBehaviourRuby < Languages::VariableBehaviour
 
       def initialize(pWhoAmIHelping)
-        super(pWhoAmIHelping)
+        @whoAmIHelping = pWhoAmIHelping
       end
 
       protected
@@ -70,7 +70,7 @@ module Languages
         def handle_line(pString, value = 'nothing')
          if pString =~ /=/
             value = handle_value(pString)
-            pString = pString.scan(/.*=/).join("")
+            pString = pString.scan(/.*=/).join('')
             return nil if pString =~ /\./
           end
 
@@ -88,10 +88,10 @@ module Languages
 
         def handle_value(pString)
           value = pString
-          value = pString.scan(/=(.*)/).join("") if pString =~ /=/
+          value = pString.scan(/=(.*)/).join('') if pString =~ /=/
           value = value.lstrip
           value = value.rstrip
-          value = value.gsub(/'|\"/,"")
+          value = value.gsub(/'|\"/,'')
           return value
         end
 

@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 RSpec.describe Languages::VariableBehaviour do
 
   before :all do
-    @variableBehaviour = Languages::VariableBehaviour.new('me')
+    @variableBehaviour = Languages::VariableBehaviour.new
   end
 
   context "Call common declaration" do

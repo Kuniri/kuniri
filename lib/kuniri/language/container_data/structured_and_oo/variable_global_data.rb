@@ -9,7 +9,7 @@ module Languages
 
       def initialize(pName)
         super
-        @visibility = "global"
+        @visibility = 'global'
       end
 
   # Class

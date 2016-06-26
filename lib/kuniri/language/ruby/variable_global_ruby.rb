@@ -13,10 +13,7 @@ module Languages
         def initialize
           super
           detectRegex = /^\s*(?:@|@@|\$)(.*)|(\w+\s+=.*)$/
-
-          variableGlobal = @whoAmI.capitalize.concat('Global')
-          ref = Languages::Ruby::VariableBehaviourRuby.new(variableGlobal)
-          setup_attribute(ref, detectRegex)
+          setup_variable_behaviour(detectRegex)
         end
 
     # Class

@@ -5,10 +5,6 @@ module Languages
   # variables and attributes that have some similarities.
   class VariableBehaviour
 
-    def initialize(pWhoAmIHelping)
-      @whoAmIHelping = pWhoAmIHelping
-    end
-
     def common_declaration(pLine, pRegex)
       result = detect_variable_element(pLine, pRegex)
       return nil unless result
@@ -34,15 +30,15 @@ module Languages
 
       def detect_variable_element(pLine, pRegex)
         return nil unless pLine =~ pRegex
-        return pLine.scan(pRegex)[0].join("")
+        return pLine.scan(pRegex)[0].join('')
       end
 
-      def normalize_elements(elements)
+      def normalize_elements(pElements)
         remove_index = []
-        elements.each_with_index do |element, index|
-          elements.delete_at(index) if is_number?(element.name)
+        pElements.each_with_index do |element, index|
+          pElements.delete_at(index) if is_number?(element.name)
         end
-        return elements
+        return pElements
       end
 
       def is_number? (pString)

@@ -13,9 +13,7 @@ module Languages
         def initialize
           super
           detectRegex = /^\s*(?:@|attr_(?:accessor|reader|writer))(.*)$/
-
-          ref = Languages::Ruby::VariableBehaviourRuby.new(@whoAmI.capitalize)
-          setup_attribute(ref, detectRegex)
+          setup_variable_behaviour(detectRegex)
         end
 
     #Class
