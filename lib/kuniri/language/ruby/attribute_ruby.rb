@@ -18,7 +18,6 @@ module Languages
 
     #Class
     end
-
   # Ruby
   end
 #Language

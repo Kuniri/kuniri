@@ -28,7 +28,7 @@ module Languages
     def type_of_language
       self.class.name.split('::')[1]
     end
-
+  # Module
   end
-
+# Module
 end
