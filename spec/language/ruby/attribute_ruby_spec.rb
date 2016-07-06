@@ -25,9 +25,9 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     end
   end
 
-  context "When is a single attribute with attr_" do
-    it "With attr_writer" do
-      captured = @rubyAttr.get_attribute("attr_writer :value")[0]
+  context 'When is a single attribute with attr_' do
+    it 'With attr_writer' do
+      captured = @rubyAttr.get_attribute('attr_writer :value')[0]
       expect(captured.name).to eq(@singleResult)
     end
 

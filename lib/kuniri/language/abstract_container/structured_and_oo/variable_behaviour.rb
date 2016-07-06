@@ -21,16 +21,13 @@ module Languages
         elements = handle_line_declaration(result)
       end
 
-      return nil if elements.nil?
-      return normalize_elements(elements)
-
+      elements.nil? ? nil : normalize_elements(elements)
     end
 
     protected
 
       def detect_variable_element(pLine, pRegex)
-        return nil unless pLine =~ pRegex
-        return pLine.scan(pRegex)[0].join('')
+        pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
       end
 
       def normalize_elements(pElements)
@@ -91,9 +88,7 @@ module Languages
       def handle_value(pString)
         raise NotImplementedError
       end
-
   # Class
   end
-
 # Language
 end
