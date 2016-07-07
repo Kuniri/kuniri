@@ -17,9 +17,7 @@ module Languages
         @value = 'nothing'
         @type = ''
       end
-
   # Class
   end
-
 # Languages
 end

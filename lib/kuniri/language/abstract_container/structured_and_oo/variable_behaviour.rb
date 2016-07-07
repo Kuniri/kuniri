@@ -30,15 +30,17 @@ module Languages
         pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
       end
 
+      # Sometimes, Kuniri has handling expressions like 'xpto = lalala = 7' and
+      # treat 7 like a variable name. Hence, a normalize function is required
+      # because it removes this kind of problem.
+      # @param pElements Reference to an array to change.
       def normalize_elements(pElements)
-        remove_index = []
         pElements.each_with_index do |element, index|
           pElements.delete_at(index) if is_number?(element.name)
         end
-        return pElements
       end
 
-      def is_number? (pString)
+      def is_number?(pString)
         true if Float(pString) rescue false
       end
 

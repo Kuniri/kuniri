@@ -7,9 +7,9 @@ module Languages
 
     public
 
-      def initialize (pAttributeName)
+      def initialize(pAttributeName)
         super
-        @visibility = "public"
+        @visibility = 'public'
       end
 
   # Class

@@ -17,16 +17,13 @@ module Languages
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub!(/\(.*\)/,"") if pString =~ /\(.*\)/
-          return pString
+          pString =~ /\(.*\)/ ? pString.gsub!(/\(.*\)/,'') : pString
         end
 
         # Override
         def prepare_final_string(pString)
-          if pString =~ /\s+|:|@|=/
-            return pString.gsub!(/\s+|:|@|=/,"")
-          end
-          return pString
+          regex = /\s+|:|@|=/
+          pString =~ regex ? pString.gsub!(regex,'') : pString
         end
 
         # Override
@@ -68,7 +65,7 @@ module Languages
         end
 
         def handle_line(pString, value = 'nothing')
-         if pString =~ /=/
+          if pString =~ /=/
             value = handle_value(pString)
             pString = pString.scan(/.*=/).join('')
             return nil if pString =~ /\./
@@ -94,10 +91,8 @@ module Languages
           value = value.gsub(/'|\"/,'')
           return value
         end
-
     #Class
     end
-
   # Ruby
   end
 #Language
