@@ -2,7 +2,28 @@ require_relative '../../spec_helper'
 
 RSpec.describe Languages::VariableBehaviourHelpers do
 
-  context 'Normal flow behaviour' do
+  context 'Normal flow' do
+    module DummyModule
+      class ParentDummy; end
+      class DummyClass < ParentDummy; end
+    end
+
+    before :each do
+      @dummy_class = DummyModule::DummyClass.new
+      @dummy_class.extend(Languages::VariableBehaviourHelpers)
+    end
+
+    it 'Verify correct behaviour inside who_am_i' do
+      expect(@dummy_class.who_am_i).to eq('ParentDummy')
+    end
+
+    it 'Verify regex' do
+      expect(@dummy_class.is_regex?(//)).to eq(true)
+      expect(@dummy_class.is_regex?(Array.new)).to eq(false)
+    end
+  end
+
+  context 'Testing using Attribute context (real)' do
     before :each do
       @test = Languages::Ruby::AttributeRuby.new
     end

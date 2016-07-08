@@ -1,6 +1,10 @@
 module Languages
 
+  # Mixin to automatically add behaviour inside attribute and variables.
   module VariableBehaviourHelpers
+
+    MODULEBASE = 'Languages::'
+    VARIABLECLASS = '::VariableBehaviour'
 
     # Setup basic configurations for make attribute work correctly. It is
     # mandatory to call it with the correct parameters in the child class.
@@ -8,9 +12,14 @@ module Languages
     # @param pRegex Regex to detect if is an attribute.
     def setup_variable_behaviour(pRegex)
       @detectRegex = pRegex if is_regex?(pRegex)
-      expression = 'Languages::' + type_of_language + '::VariableBehaviour' +
-                   type_of_language + '.new '
-      @variableBehaviour = eval(expression + '"' + who_am_i + '"')
+      expression = MODULEBASE + type_of_language + VARIABLECLASS +
+                   type_of_language
+      begin
+        clazz = Object.const_get(expression)
+        @variableBehaviour = clazz.new(who_am_i)
+      rescue NameError
+        puts 'Error on class name'
+      end
     end
 
     def is_regex?(pRegex)
