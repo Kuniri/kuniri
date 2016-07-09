@@ -11,7 +11,7 @@ module Languages
 
     public
 
-      attr_accessor :inheritances
+      attr_reader :inheritances
       attr_accessor :aggregations
       attr_reader :attributes
       attr_reader :methods
@@ -23,8 +23,8 @@ module Languages
         @methods = []
         @constructors = []
         @aggregations = []
-        @visibility = "public"
-        @comments = ""
+        @visibility = 'public'
+        @comments = ''
       end
 
       # Add attribute to class data, notice the possibility of call this
@@ -63,9 +63,18 @@ module Languages
 
         @aggregations.push(pAggregation)
       end
+
+      # Add inheritance belongs to class. Only accept string, and unique name.
+      # @pInheritance Expected string to add inside inheritances array.
+      def add_inheritance(pInheritance)
+        if !pInheritance.is_a?(String) || @inheritances.include?(pInheritance)
+          return nil
+        end
+
+        @inheritances.push(pInheritance)
+      end
   # Class
   end
-
 # Module
 end
 

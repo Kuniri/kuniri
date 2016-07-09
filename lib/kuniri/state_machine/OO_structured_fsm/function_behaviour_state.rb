@@ -23,13 +23,13 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.conditionalHandler.get_conditional(pLine)
+        if @language.line_inspect(CONDITIONAL_ID, pLine)
           conditional_capture
-        elsif @language.repetitionHandler.get_repetition(pLine)
+        elsif @language.line_inspect(REPETITION_ID, pLine)
           repetition_capture
-        elsif @language.aggregationHandler.get_aggregation(pLine)
+        elsif @language.line_inspect(AGGREGATION_ID, pLine)
           aggregation_capture
-        elsif @language.blockHandler.get_block(pLine)
+        elsif @language.line_inspect(BLOCK_ID, pLine)
           block_capture
         else
           return
@@ -70,7 +70,7 @@ module StateMachine
                                    .send("get_#{@functionIdentifier}", pLine)
 
         if (functionElement)
-          lastIndex = pElementFile.classes.length - 1 # We want the index
+          lastIndex = pElementFile.get_last_class_index
           functionElement.comments = @language.string_comment_to_transfer
           @language.string_comment_to_transfer = ""
           pElementFile.classes[lastIndex].send("add_#{@functionIdentifier}",

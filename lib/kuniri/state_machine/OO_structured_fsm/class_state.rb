@@ -15,18 +15,16 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.aggregationHandler.get_aggregation(pLine)
+        if @language.line_inspect(AGGREGATION_ID, pLine)
           aggregation_capture
-        elsif @language.attributeHandler.get_attribute(pLine)
+        elsif @language.line_inspect(ATTRIBUTE_ID, pLine)
           attribute_capture
-        elsif @language.constructorHandler.get_constructor(pLine)
+        elsif @language.line_inspect(CONSTRUCTOR_ID, pLine)
           constructor_capture
         elsif @language.methodHandler.get_function(pLine)
           method_capture
-        elsif @language.moduleHandler.get_module(pLine)
+        elsif @language.line_inspect(MODULE_ID, pLine)
           module_capture
-        elsif @language.aggregationHandler.get_aggregation(pLine)
-          aggregation_capture
         elsif @language.commentHandler.is_single_line_comment?(pLine) ||
               @language.commentHandler.is_multiple_line_comment?(pLine)
           comment_capture
@@ -69,11 +67,11 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        classElement = @language.classHandler.get_class(pLine)
+        classElement = @language.line_inspect(CLASS_ID, pLine)
 
         if classElement
           classElement.comments = @language.string_comment_to_transfer
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
           pElementFile.add_class(classElement)
           @language.metadata.allClasses.push(classElement)
         end

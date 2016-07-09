@@ -3,13 +3,13 @@ require_relative '../../../../spec_helper'
 RSpec.describe "Mix conditional and repetition in the same code" do
 
   before :each do
-    @path = "./spec/language/ruby/global_test/conditionalAndRepetition/.kuniri.yml"
+    @path = "./spec/language/ruby/global_test/conditional_and_repetition/.kuniri.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditionalAndRepetition/mixConditionalRepetition.xml", "r")
+    @output = File.open("./spec/language/ruby/global_test/conditional_and_repetition/mixConditionalRepetition.xml", "r")
   end
 
   RSpec.shared_examples "Multiple verification" do |regex, description|

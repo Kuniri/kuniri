@@ -13,48 +13,6 @@ RSpec.describe Languages::Language do
     end
   end
 
-  context 'When try to call comment_extract' do
-    it "Try to call comment_extract in abstract class." do
-      expect{@abstractLanguage.comment_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
-  context 'When try to call method_extract' do
-    it "Try to call method_extract" do
-      expect{@abstractLanguage.method_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
-  context "When try to call class_extract" do
-    it "Try to call class_extract" do
-      expect{@abstractLanguage.class_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
-  context "When try to call attribute_extract" do
-    it "Try to call attribute_extract" do
-      expect{@abstractLanguage.attribute_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
-  context "When try to call global_variable_extract" do
-    it "Try to call global_variable_extract." do
-      expect{@abstractLanguage.global_variable_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
-  context "When try to call extern_requirement_extract" do
-    it "Try to call extern_requirement_extract" do
-      expect{@abstractLanguage.extern_requirement_extract}.to raise_error(
-        NotImplementedError)
-    end
-  end
-
   context "Handling nested conditional and repetitions" do
     it "Make it more nested" do
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
@@ -101,6 +59,13 @@ RSpec.describe Languages::Language do
       expect(@abstractLanguage.countNestedCondLoop).to eq(1)
       @abstractLanguage.resetNested
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
+    end
+  end
+
+  context 'Verify line_inpect' do
+    it 'check method object' do
+      expect{@abstractLanguage.line_inspect(StateMachine::METHOD_ID, 'something')}.to raise_error(
+              NoMethodError)
     end
   end
 

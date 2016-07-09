@@ -54,6 +54,5 @@ module Languages
 
     # Module
   end
-
 # Language
 end

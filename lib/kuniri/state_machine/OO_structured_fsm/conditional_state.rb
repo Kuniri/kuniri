@@ -12,18 +12,8 @@ module StateMachine
 
       def initialize(pLanguage)
         @language = pLanguage
-        @whoAmI = "conditional"
+        @whoAmI = 'conditional'
       end
-
-      protected
-
-        # @see basic_structure_state
-        def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          conditional = @language.conditionalHandler.get_conditional(pLine)
-          if (conditional)
-            addToCorrectElement(conditional, pElementFile, pFlag, pClassIndex)
-          end
-        end
 
     # End class
     end

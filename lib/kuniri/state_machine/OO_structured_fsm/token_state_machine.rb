@@ -5,8 +5,28 @@ module StateMachine
   CONSTRUCTOR_STATE         ||= 2       # Constructor state track.
   METHOD_STATE              ||= 3       # Method state track.
 
-  METHOD_LABEL          ||= "method"
-  CONSTRUCTOR_LABEL     ||= "constructor"
-  FUNCTION_LABEL        ||= "function"
+  METHOD_ID             ||= 1
+  CONSTRUCTOR_ID        ||= 2
+  FUNCTION_ID           ||= 3
+  COMMENT_ID            ||= 4
+  VARIABLE_ID           ||= 5
+  MODULE_ID             ||= 6
+  CLASS_ID              ||= 7
+  REPETITION_ID         ||= 8
+  CONDITIONAL_ID        ||= 9
+  ATTRIBUTE_ID          ||= 10
+  BLOCK_ID              ||= 11
+  AGGREGATION_ID        ||= 12
+  EXTERN_REQUIREMENT_ID ||= 13
+
+  METHOD_LABEL          ||= 'method'
+  CONSTRUCTOR_LABEL     ||= 'constructor'
+  FUNCTION_LABEL        ||= 'function'
+  COMMENT_LABEL         ||= 'comment'
+  VARIABLE_LABEL        ||= 'variable'
+  MODULE_LABEL          ||= 'module'
+  CLASS_LABEL           ||= 'class'
+  REPETITION_LABEL      ||= 'repetition'
+  CONDITIONAL_LABEL     ||= 'conditional'
 
 end

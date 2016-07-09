@@ -11,9 +11,6 @@ module Languages
 
       public
 
-        def initialize
-        end
-
         # Get ruby class.
         # @see Languages::Class
         def get_class(pLine)
@@ -23,7 +20,7 @@ module Languages
           classCaptured = Languages::ClassData.new
 
           inheritance = get_inheritance(result)
-          classCaptured.inheritances = inheritance if inheritance
+          classCaptured.add_inheritance(inheritance) if inheritance
 
           result = prepare_final_string(result)
           classCaptured.name = result
@@ -35,41 +32,37 @@ module Languages
 
         # Override
         def detect_class(pLine)
-          regexExpression = /^\s*class\s+(.*)/
-          return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression)[0].join("")
+          regex = /^\s*class\s+(.*)/
+          pLine =~ regex ? pLine[regex, 1] : nil
         end
 
         # Override
         def get_inheritance(pString)
           if pString =~ /</
-            partial = pString.scan(/<\s*(\w+)/)
-            return remove_unnecessary_information(partial)
+            partial = pString.split('<').last.strip
+            partial = partial.split('::').last.strip
+            return partial
           end
+
           return nil
         end
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub(/\s|</, "") if pString =~ /\s|</
-          return pString
+          regex = /\s|</
+          pString =~ regex ? pString.gsub(regex, '') : pString
         end
 
         def prepare_final_string(pString)
           if pString =~ /\s|</
-            partial = pString.gsub(/<.*/,"")
+            partial = pString.gsub(/<.*/,'')
             return remove_unnecessary_information(partial)
           end
           return pString
         end
-
-    private
-
     # class
     end
-
   # Ruby
   end
-
 # Languages
 end

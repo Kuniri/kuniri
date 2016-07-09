@@ -14,13 +14,13 @@ module StateMachine
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
-        @whoAmI = "the fu@!+ nobody"
+        @whoAmI = 'the fu@!+ nobody'
       end
 
       def handle_line(pLine)
-        conditional = @language.conditionalHandler.get_conditional(pLine)
-        repetition = @language.repetitionHandler.get_repetition(pLine)
-        block = @language.blockHandler.get_block(pLine)
+        conditional = @language.line_inspect(CONDITIONAL_ID, pLine)
+        repetition = @language.line_inspect(REPETITION_ID, pLine)
+        block = @language.line_inspect(BLOCK_ID, pLine)
         if conditional
           if isNestedStructure?(conditional.type)
             conditional_capture
@@ -78,7 +78,7 @@ module StateMachine
       # @see OOStructuredState
       def execute(pElementFile, pLine)
         flag = @language.flagFunctionBehaviour
-        classIndex = pElementFile.classes.length - 1 # We want the index
+        classIndex = pElementFile.get_last_class_index
 
         addBasicStructure(pLine, flag, classIndex, pElementFile)
 
@@ -99,7 +99,10 @@ module StateMachine
         # @param pClassIndex Element index to add
         # @param pElementFile Element with all data
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          raise NotImplementedError
+          element = eval("@language.#{@whoAmI}Handler.get_#{@whoAmI}(pLine)")
+          if (element)
+            addToCorrectElement(element, pElementFile, pFlag, pClassIndex)
+          end
         end
 
         # If is a structure which can be nested. It is delegate.
@@ -130,13 +133,13 @@ module StateMachine
           case pFlag
             when StateMachine::GLOBAL_FUNCTION_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                    elementType, "global_functions")
+                                    elementType, 'global_functions')
             when StateMachine::METHOD_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                    elementType, stringToEval + "methods")
+                                    elementType, stringToEval + 'methods')
             when StateMachine::CONSTRUCTOR_STATE
               dynamicallyAdd(pElementFile, pElement,
-                                elementType, stringToEval + "constructors")
+                                elementType, stringToEval + 'constructors')
           end
         end
 
@@ -165,7 +168,7 @@ module StateMachine
         # @param pType Type of the element.
         # @param pElement Element description.
         def dynamicallyAdd(pElementFile, pToAdd, pType, pElement)
-          classIndex = pElementFile.classes.length - 1 # We want the index
+          classIndex = pElementFile.get_last_class_index
           index = eval("pElementFile.#{pElement}.length - 1")
           if (@language.isNested? && isNestedStructure?(pType))
             eval("pElementFile.#{pElement}[index]." +

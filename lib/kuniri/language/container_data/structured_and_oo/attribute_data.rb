@@ -1,25 +1,16 @@
-require_relative 'basic_data'
+require_relative 'variable_abstract'
 
 module Languages
 
   # Handling attributes data.
-  class AttributeData < Languages::BasicData
+  class AttributeData < Languages::VariableAbstract
 
     public
 
-      # Basic initialization of attribute.
-      # @param pAttribute_name Attribute name for basic initialization.
-      def initialize (pAttributeName)
-        return nil if pAttributeName.nil? or !pAttributeName.is_a? String
-
-        @name = pAttributeName
-        @visibility = "public"
+      def initialize(pAttributeName)
+        super
+        @visibility = 'public'
       end
-
-    private
-
-      # Type of the attribute.
-      @type
 
   # Class
   end

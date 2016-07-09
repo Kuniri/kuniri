@@ -15,15 +15,15 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.externRequirementHandler.get_requirement(pLine)
+        if @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
           include_capture
-        elsif @language.variableHandler.get_variable(pLine)
+        elsif @language.line_inspect(VARIABLE_ID, pLine)
           variable_capture
-        elsif @language.functionHandler.get_function(pLine)
+        elsif @language.line_inspect(FUNCTION_ID, pLine)
           function_capture
-        elsif @language.moduleHandler.get_module(pLine)
+        elsif @language.line_inspect(MODULE_ID, pLine)
           module_capture
-        elsif @language.classHandler.get_class(pLine)
+        elsif @language.line_inspect(CLASS_ID, pLine)
           class_capture
         elsif ((@language.commentHandler.is_single_line_comment?(pLine)) || 
                 (@language.commentHandler.is_multiple_line_comment?(pLine)))

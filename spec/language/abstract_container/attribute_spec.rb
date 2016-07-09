@@ -2,12 +2,18 @@ require_relative '../../spec_helper'
 
 RSpec.describe Languages::Attribute do
 
-  context "When not implemented" do
-    it "Get attribute" do
-      attributeAbstract = Languages::Attribute.new
-      expect{attributeAbstract.get_attribute("nothing")}.to raise_error(
-              NotImplementedError)
+  before :all do
+    @attribute = Languages::Attribute.new
+  end
+
+  context "Call to get_attribute" do
+    it "Expect to raise error" do
+      expect{@attribute.get_attribute('@attribute')}.to raise_error
     end
+  end
+
+  after :all do
+    @attribute = nil
   end
 
 end

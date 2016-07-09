@@ -25,12 +25,12 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        variableList = @language.variableHandler.get_variable(pLine)
+        variableList = @language.line_inspect(VARIABLE_ID, pLine)
         if variableList
           variableList.each do |variable|
             variable.comments = @language.string_comment_to_transfer
           end
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
           pElementFile.add_global_variable(variableList)
         end
 

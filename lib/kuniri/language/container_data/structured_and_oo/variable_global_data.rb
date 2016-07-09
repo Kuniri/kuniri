@@ -1,20 +1,15 @@
-require_relative 'basic_data'
+require_relative 'variable_abstract'
 
 module Languages
 
   # Class responsible for handling global variables.
-  class VariableGlobalData < Languages::BasicData
+  class VariableGlobalData < Languages::VariableAbstract
 
     public
 
-      attr_accessor :value
-      attr_accessor :type
-
       def initialize(pName)
-        return nil if pName.nil? or !pName.is_a? String
-
-        @name = pName
-        @visibility = "global"
+        super
+        @visibility = 'global'
       end
 
   # Class

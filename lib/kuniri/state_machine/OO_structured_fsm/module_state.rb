@@ -18,11 +18,11 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.classHandler.get_class(pLine)
+        if @language.line_inspect(CLASS_ID, pLine)
           class_capture
-        elsif @language.functionHandler.get_function(pLine)
+        elsif @language.line_inspect(FUNCTION_ID, pLine)
           function_capture
-        elsif @language.variableHandler.get_variable(pLine)
+        elsif @language.line_inspect(VARIABLE_ID, pLine)
           variable_capture
         end
       end
@@ -50,7 +50,7 @@ module StateMachine
       # @see OOStructuredState
       def execute(pElementFile, pLine)
 
-        moduleElement = @language.moduleHandler.get_module(pLine)
+        moduleElement = @language.line_inspect(MODULE_ID, pLine)
 
         if moduleElement
           pElementFile.add_modules(moduleElement)

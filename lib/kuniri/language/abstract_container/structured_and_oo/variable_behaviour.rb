@@ -5,7 +5,44 @@ module Languages
   # variables and attributes that have some similarities.
   class VariableBehaviour
 
+    def common_declaration(pLine, pRegex)
+      result = detect_variable_element(pLine, pRegex)
+      return nil unless result
+
+      result = remove_unnecessary_information(result)
+      elements = []
+
+      # Separated by comma, equal or the common case
+      if result.scan(/,/).size >= 1
+        elements = handle_multiple_declaration_with_comma(result)
+      elsif result.scan(/=/).size > 1
+        elements = handle_multiple_declaration_with_equal(result)
+      else
+        elements = handle_line_declaration(result)
+      end
+
+      elements.nil? ? nil : normalize_elements(elements)
+    end
+
     protected
+
+      def detect_variable_element(pLine, pRegex)
+        pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
+      end
+
+      # Sometimes, Kuniri has handling expressions like 'xpto = lalala = 7' and
+      # treat 7 like a variable name. Hence, a normalize function is required
+      # because it removes this kind of problem.
+      # @param pElements Reference to an array to change.
+      def normalize_elements(pElements)
+        pElements.each_with_index do |element, index|
+          pElements.delete_at(index) if is_number?(element.name)
+        end
+      end
+
+      def is_number?(pString)
+        true if Float(pString) rescue false
+      end
 
       # Remove unnecessary information from line. For example, remove
       # everything into parenthesis or line comment.
@@ -46,8 +83,14 @@ module Languages
         raise NotImplementedError
       end
 
+      def handle_multiple_declaration
+        raise NotImplementedError
+      end
+
+      def handle_value(pString)
+        raise NotImplementedError
+      end
   # Class
   end
-
 # Language
 end
