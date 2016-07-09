@@ -32,9 +32,8 @@ module Languages
 
         # Override
         def detect_class(pLine)
-          regexExpression = /^\s*class\s+(.*)/
-          return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression)[0].join("")
+          regex = /^\s*class\s+(.*)/
+          pLine =~ regex ? pLine[regex, 1] : nil
         end
 
         # Override
@@ -50,25 +49,20 @@ module Languages
 
         # Override
         def remove_unnecessary_information(pString)
-          return pString.gsub(/\s|</, "") if pString =~ /\s|</
-          return pString
+          regex = /\s|</
+          pString =~ regex ? pString.gsub(regex, '') : pString
         end
 
         def prepare_final_string(pString)
           if pString =~ /\s|</
-            partial = pString.gsub(/<.*/,"")
+            partial = pString.gsub(/<.*/,'')
             return remove_unnecessary_information(partial)
           end
           return pString
         end
-
-    private
-
     # class
     end
-
   # Ruby
   end
-
 # Languages
 end

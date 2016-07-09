@@ -67,8 +67,9 @@ module Languages
       # Add inheritance belongs to class. Only accept string, and unique name.
       # @pInheritance Expected string to add inside inheritances array.
       def add_inheritance(pInheritance)
-        return nil unless pInheritance.is_a?(String)
-        return nil if @inheritances.include? pInheritance
+        if !pInheritance.is_a?(String) || @inheritances.include?(pInheritance)
+          return nil
+        end
 
         @inheritances.push(pInheritance)
       end

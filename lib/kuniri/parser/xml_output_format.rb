@@ -144,9 +144,7 @@ module Parser
           @outputEngine.aggregationData :name => aggregation.name
         end
       end
-
   # class
   end
-
 # module
 end
