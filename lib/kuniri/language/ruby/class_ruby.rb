@@ -11,9 +11,6 @@ module Languages
 
       public
 
-        def initialize
-        end
-
         # Get ruby class.
         # @see Languages::Class
         def get_class(pLine)
@@ -43,9 +40,11 @@ module Languages
         # Override
         def get_inheritance(pString)
           if pString =~ /</
-            partial = pString.scan(/<\s*(\w+)/)
-            return remove_unnecessary_information(partial)
+            partial = pString.split('<').last.strip
+            partial = partial.split('::').last.strip
+            return [[partial]]
           end
+
           return nil
         end
 
