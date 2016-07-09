@@ -1,13 +1,13 @@
 require_relative '../../spec_helper'
-require "xml"
+require 'xml'
 
 RSpec.describe 'Xml Schema Validate' do
 
   before :all do
-    @targetFolder = "./spec/parser/xmlSchemaValidate/"
+    @targetFolder = './spec/parser/xmlSchemaValidate/'
   end
 
-  RSpec.shared_examples "Multiple validation" do |config, xmlOutput, xsdFile, description|
+  RSpec.shared_examples 'Multiple validation' do |config, xmlOutput, xsdFile, description|
 
     it "Validate XSD: #{description}" do
       kuniri = Kuniri::Kuniri.new
@@ -23,25 +23,25 @@ RSpec.describe 'Xml Schema Validate' do
 
   end
 
-  context "When have support to the parser." do
+  context 'When have support to the parser.' do
 
     config = '.kuniri1.yml'
     xsd = 'fullCodeTwo.xsd'
     xml = 'fullCodeTwo.xml'
     description = 'Check simple class'
-    include_examples "Multiple validation", config, xml, xsd, description
+    include_examples 'Multiple validation', config, xml, xsd, description
 
     config = '.kuniri2.yml'
     xsd = 'fullCodeWithComments.xsd'
     xml = 'fullCodeWithComments.xml'
     description = 'Check class with comments'
-    include_examples "Multiple validation", config, xml, xsd, description
+    include_examples 'Multiple validation', config, xml, xsd, description
 
     config = '.kuniri3.yml'
     xsd = 'simpleFunction.xsd'
     xml = 'simpleFunction.xml'
     description = 'Check simple function'
-    include_examples "Multiple validation", config, xml, xsd, description
+    include_examples 'Multiple validation', config, xml, xsd, description
 
   end
 

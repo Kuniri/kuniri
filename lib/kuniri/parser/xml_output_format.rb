@@ -7,7 +7,7 @@ module Parser
 
     public
 
-      def initialize(pPath = "outputKuniri/")
+      def initialize(pPath = 'outputKuniri/')
         @outputEngine = XMLBuilderEngine.new
         set_path(pPath)
       end
@@ -24,18 +24,16 @@ module Parser
             unless singleClass.aggregations.empty?
               wrapper.aggregation_generate(singleClass.aggregations)
             end
-            singleClass.inheritances.each do |singleInheritance|
-              wrapper.inheritance_generate(singleInheritance)
-            end
+            wrapper.inheritance_generate(singleClass.inheritances)
             unless singleClass.attributes.empty?
               wrapper.attribute_generate(singleClass.attributes)
             end
             singleClass.constructors.each do |singleConstructor|
-              wrapper.function_behaviour_generate("constructorData",
+              wrapper.function_behaviour_generate('constructorData',
                                                   singleConstructor)
             end
             singleClass.methods.each do |singleMethod|
-              wrapper.function_behaviour_generate("methodData" , singleMethod)
+              wrapper.function_behaviour_generate('methodData' , singleMethod)
             end
           end
         end
@@ -136,7 +134,7 @@ module Parser
       end
 
       def comment_generate(pElement)
-        if pElement.comments != ""
+        if pElement.comments != ''
           @outputEngine.commentData :text => pElement.comments.gsub('"', "'")
         end
       end
