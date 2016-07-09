@@ -71,7 +71,7 @@ RSpec.describe Languages::Ruby::ClassRuby do
 
     it 'Simple class inheritance.' do
       classNameCaptured = @classRuby.get_class('class Xpto < Abc').inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class name w/ inheritance with whitespace in the beginning.' do
@@ -79,35 +79,35 @@ RSpec.describe Languages::Ruby::ClassRuby do
       expect(classNameCaptured).to eq('Xpto')
     end
 
-    it 'Class inheritance with whitespace in the beginning.' do
+    it 'Class inheritance with white space in the beginning.' do
       classNameCaptured = @classRuby.get_class('     class   Xpto < Abc')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
-    it 'Class name w/ inheritance with whitespace between <.' do
+    it 'Class name w/ inheritance with white space between <.' do
       classNameCaptured = @classRuby.get_class('class Xpto   < Abc').name
       expect(classNameCaptured).to eq('Xpto')
     end
 
-    it 'Class inheritance with whitespace between <.' do
-      classNameCaptured = @classRuby.get_class('class Xpto   < Abc')
+    it 'Class inheritance with white space between <.' do
+      listOfInheritance = @classRuby.get_class('class Xpto   < Abc')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(listOfInheritance).to match_array(['Abc'])
     end
 
-    it 'Class name w/ inheritance with many whitespace.' do
+    it 'Class name w/ inheritance with many white space.' do
       classNameCaptured = @classRuby.get_class('   class   Xpto < Abc ').name
       expect(classNameCaptured).to eq('Xpto')
     end
 
-    it 'Class inheritance with many whitespace.' do
+    it 'Class inheritance with many white space.' do
       classNameCaptured = @classRuby.get_class('   class   Xpto < Abc ')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
-    it 'Class name w/ inheritance with many whitespace between <.' do
+    it 'Class name w/ inheritance with many white space between <.' do
       classNameCaptured = @classRuby.get_class('class Xpto      <    Abc').name
       expect(classNameCaptured).to eq('Xpto')
     end
@@ -115,7 +115,7 @@ RSpec.describe Languages::Ruby::ClassRuby do
     it 'Class inheritance with many whitespace between <.' do
       classNameCaptured = @classRuby.get_class('class Xpto      <    Abc')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class name w/ inheritance with whitespace in the corners.' do
@@ -126,31 +126,31 @@ RSpec.describe Languages::Ruby::ClassRuby do
     it 'Class inheritance with whitespace in the corners.' do
       classNameCaptured = @classRuby.get_class('  class   Xpto < Abc   ')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class inheritance with module namespace' do
       classNameCaptured = @classRuby.get_class('class Xpto < lalala::Abc')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class inheritance with multiple module namespace' do
       classNameCaptured = @classRuby.get_class('class Xpto < lu::la::lo::Abc')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class inheritance with module namespace and spaces' do
       classNameCaptured = @classRuby.get_class(' class Xpto < lalala::Abc  ')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
 
     it 'Class inheritance with module namespace and spaces before module' do
       classNameCaptured = @classRuby.get_class(' class Xpto  <   lalala::Abc ')
                                     .inheritances
-      expect(classNameCaptured).to eq([['Abc']])
+      expect(classNameCaptured).to match_array(['Abc'])
     end
   end
 
@@ -158,22 +158,22 @@ RSpec.describe Languages::Ruby::ClassRuby do
 
     it 'Class inheritance normal case' do
       inheritance = @classRuby.get_class('class Xpto < Abc').inheritances[0]
-      expect(inheritance).to eq(['Abc'])
+      expect(inheritance).to eq('Abc')
     end
 
     it 'Inheritance with many spaces in the beginning' do
       inheritance = @classRuby.get_class('class Xpto <    Abc').inheritances[0]
-      expect(inheritance).to eq(['Abc'])
+      expect(inheritance).to eq('Abc')
     end
 
     it 'Inheritance with many spaces in the end' do
       inheritance = @classRuby.get_class('class Xpto < Abc   ').inheritances[0]
-      expect(inheritance).to eq(['Abc'])
+      expect(inheritance).to eq('Abc')
     end
 
     it 'Inheritance with many spaces in the beginning and in the end' do
       inheritance = @classRuby.get_class('class Xs <   Abc   ').inheritances[0]
-      expect(inheritance).to eq(['Abc'])
+      expect(inheritance).to eq('Abc')
 
     end
 

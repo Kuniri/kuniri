@@ -20,7 +20,7 @@ module Languages
           classCaptured = Languages::ClassData.new
 
           inheritance = get_inheritance(result)
-          classCaptured.inheritances = inheritance if inheritance
+          classCaptured.add_inheritance(inheritance) if inheritance
 
           result = prepare_final_string(result)
           classCaptured.name = result
@@ -42,7 +42,7 @@ module Languages
           if pString =~ /</
             partial = pString.split('<').last.strip
             partial = partial.split('::').last.strip
-            return [[partial]]
+            return partial
           end
 
           return nil
