@@ -21,14 +21,10 @@ module Languages
           constructorData << result
 
           return constructorData
-
         end
-
     # Class
     end
-
   # Ruby
   end
-
 # Language
 end
