@@ -15,7 +15,6 @@ module Languages
         def get_method(pLine, type = 'public')
           result = get_function(pLine)
           return nil unless result
-          return nil if result.name =~ /initialize/
 
           methodData = MethodData.new(result.name)
           methodData << result
@@ -25,9 +24,7 @@ module Languages
 
     # Class
     end
-
   # Ruby
   end
-
 # Language
 end

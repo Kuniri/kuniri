@@ -11,9 +11,6 @@ module Languages
 
       public
 
-        def initialize
-        end
-
         # Get Ruby function.
         def get_function(pLine, type = 'globalFunction')
           result = detect_function(pLine)
@@ -27,7 +24,6 @@ module Languages
               functionRuby.add_parameters(parameter)
             end
           end
-
           return functionRuby
         end
 
@@ -37,7 +33,7 @@ module Languages
         def detect_function(pLine)
           regexExpression = /^\s*def\b\s*(\w*)\b/
           return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression)[0].join("")
+          return pLine.scan(regexExpression)[0].join('')
         end
 
         # Override
@@ -45,7 +41,7 @@ module Languages
           return pLine unless pLine =~ /=/
 
           if pLine =~ /,/
-            partialParameters = pLine.split(",")
+            partialParameters = pLine.split(',')
           else
             partialParameters = [pLine]
           end
@@ -53,8 +49,8 @@ module Languages
           newList = []
           partialParameters.each do |element|
             if element =~ /=/
-              parameter = element.scan(/(\w*)=/).join("")
-              value = element.scan(/=(\w*)/).join("")
+              parameter = element.scan(/(\w*)=/).join('')
+              value = element.scan(/=(\w*)/).join('')
               defaultParameter = {parameter => value}
               newList.push(defaultParameter)
               next
@@ -63,12 +59,11 @@ module Languages
           end
 
           return newList
-
         end
 
         # Override
         def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s+|\(|\)/,"") if pLine =~ /\s+|\(|\)/
+          return pLine.gsub(/\s+|\(|\)/, '') if pLine =~ /\s+|\(|\)/
           return pLine
         end
 
@@ -91,22 +86,19 @@ module Languages
 
         # Override
         def get_parameters(pLine, pRegex)
-          partialParameters = pLine.scan(pRegex).join("")
+          partialParameters = pLine.scan(pRegex).join('')
           partialParameters = remove_unnecessary_information(partialParameters)
           return partialParameters
         end
 
         # Override
         def split_string_by_comma(pString)
-          return pString.split(",") if pString =~ /,/
+          return pString.split(',') if pString =~ /,/
           return [pString]
         end
-
     # Class
     end
-
   # Ruby
   end
-
 # Language
 end

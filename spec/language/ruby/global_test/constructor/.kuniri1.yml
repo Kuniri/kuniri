@@ -1,0 +1,3 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/constructor/constructor_with_extra_code.rb
+:output: ./spec/language/ruby/global_test/constructor/different_constructors.xml
