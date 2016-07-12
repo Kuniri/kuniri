@@ -25,6 +25,10 @@ module StateMachine
           module_capture
         elsif @language.line_inspect(CLASS_ID, pLine)
           class_capture
+        elsif @language.line_inspect(CONDITIONAL_ID, pLine)
+          conditional_capture
+        elsif @language.line_inspect(REPETITION_ID, pLine)
+          repetition_capture
         elsif ((@language.commentHandler.is_single_line_comment?(pLine)) || 
                 (@language.commentHandler.is_multiple_line_comment?(pLine)))
           comment_capture
@@ -61,6 +65,16 @@ module StateMachine
       # @see OOStructuredState
       def comment_capture
         @language.set_state(@language.commentState)
+      end
+
+      # @see OOStructuredState
+      def conditional_capture
+        @language.set_state(@language.conditionalState)
+      end
+
+      # @see OOStructuredState
+      def repetition_capture
+        @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
