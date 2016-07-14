@@ -144,6 +144,14 @@ module Parser
           @outputEngine.aggregationData :name => aggregation.name
         end
       end
+
+      def conditional_generate(pConditional)
+        # TODO
+      end
+
+      def repetition_generate(pRepetition)
+        # TODO
+      end
   # class
   end
 # module
