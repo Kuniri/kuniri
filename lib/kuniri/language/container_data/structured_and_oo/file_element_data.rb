@@ -18,6 +18,8 @@ module Languages
       attr_reader :extern_requirements
       attr_reader :classes
       attr_reader :modules
+      attr_reader :conditionals
+      attr_reader :repetitions
 
       def initialize(pName)
         return nil if pName.nil? or !pName.is_a? String
@@ -27,6 +29,8 @@ module Languages
         @extern_requirements = []
         @classes = []
         @modules = []
+        @conditionals = []
+        @repetitions = []
         @name = pName
         @comments = ''
       end
@@ -72,6 +76,22 @@ module Languages
         @modules.push(pModule)
       end
 
+      # Add a conditional inside file.
+      # @param pConditional Add an object of ConditionalData
+      def add_conditional(pConditional)
+        return nil unless pConditional.is_a?(Languages::ConditionalData)
+
+        @conditionals.push(pConditional)
+      end
+
+      # Add a repetition inside file.
+      # @param pRepetition Add an object of RepetitionData
+      def add_repetition(pRepetition)
+        return nil unless pRepetition.is_a?(Languages::RepetitionData)
+
+        @repetitions.push(pRepetition)
+      end
+
       # Add attribute to class
       # @param pAttributeElement Add an attribute to the last class
       def add_attribute_to_last_class(pAttributeElement)
@@ -83,9 +103,7 @@ module Languages
       def get_last_class_index
         return classes.length - 1
       end
-
   # Class
   end
-
 # Module
 end
