@@ -255,14 +255,38 @@ RSpec.describe Parser::XMLOutputFormat do
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
-    it "Generate conditional" do
+  end
+
+  context 'Output conditional' do
+    it 'Generate conditional' do
       expectedString = @stringHeader
       expectedString += "<if expression=\"y &lt; 3\" level=\"0\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
       conditionalTmp.type = Languages::IF_LABEL
-      conditionalTmp.expression = "y < 3"
+      conditionalTmp.expression = 'y < 3'
       @outputFormat.basic_structure_generate([conditionalTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
+    end
+  end
+
+  context 'Full test of the output' do
+    before :each do
+      @path = './spec/parser/.kuniri.yml'
+      @kuniri = Kuniri::Kuniri.new
+      @kuniri.read_configuration_file(@path)
+      @kuniri.run_analysis
+      parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
+      parser.create_all_data(@kuniri.get_parser())
+      @output = File.open('./spec/parser/fullCode.xml', 'r')
+    end
+
+    it 'Find first conditional directly in the file_element structure' do
+      @conditional_name = nil
+      @output.each do |line|
+        @conditional_name = line =~ /\s+<if\sexpression="$abc > 3"\slevel="0"\/?>/
+        break unless @conditional_name.nil?
+      end
+      expect(@conditional_name).not_to be_nil
     end
 
   end
@@ -270,5 +294,4 @@ RSpec.describe Parser::XMLOutputFormat do
   after :each do
     @outputFormat = nil
   end
-
 end

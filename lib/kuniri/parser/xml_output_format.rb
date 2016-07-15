@@ -117,11 +117,7 @@ module Parser
 
       # @see OutputFormat
       def basic_structure_generate(pBasicStructure)
-        simple_element(pBasicStructure)
-      end
-
-      def simple_element(pElement)
-        pElement.each do |element|
+        pBasicStructure.each do |element|
           if element.type == Languages::ELSE_LABEL
             @outputEngine.send(element.type.downcase,
                               {:level => element.level})
@@ -143,14 +139,6 @@ module Parser
         pAggregation.each do |aggregation|
           @outputEngine.aggregationData :name => aggregation.name
         end
-      end
-
-      def conditional_generate(pConditional)
-        # TODO
-      end
-
-      def repetition_generate(pRepetition)
-        # TODO
       end
   # class
   end

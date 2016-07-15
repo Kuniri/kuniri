@@ -50,10 +50,16 @@ RSpec.describe Kuniri::Kuniri do
     regex = /\s+<globalVariableData\sname="four"\svalue="\[\]"\/>/
     include_examples "global variable" , regex, message
 
+    message = "Assign an array with preset values"
+    regex = /\s+<globalVariableData\sname="y"\svalue="\[1,2,3,4,5,6,8\]"\/>/
+    include_examples "global variable" , regex, message
+
+    message = "Assign an array with preset values, big string"
+    regex = /\s+<globalVariableData\sname="yyyy"\svalue="\[1,2,3,4,5,6,8\]"\/>/
+    include_examples "global variable" , regex, message
   end
 
   context "Global variable complex assignment" do
-
     message = "instance global variable with value"
     regex = /\s+<globalVariableData\sname="fourteen"\svalue="14 \+ 15"\/>/
     include_examples "global variable" , regex, message
@@ -65,7 +71,12 @@ RSpec.describe Kuniri::Kuniri do
     message = "Normal global variable with value"
     regex = /\s+<globalVariableData\sname="ten"\svalue="ten"\/>/
     include_examples "global variable" , regex, message
+  end
 
+  context 'Global variable with $' do
+    message = 'Real global variable with $ and value assignment'
+    regex = /\s+<globalVariableData\sname="you"\svalue="3"\/>/
+    include_examples 'global variable' , regex, message
   end
 
   context "Verify xml syntax" do

@@ -44,10 +44,10 @@ module Parser
                         singleElement.global_variables)
               end
               if (singleElement.conditionals.length() > 0)
-                wrapper.conditional_generate(singleElement.conditionals)
+                wrapper.basic_structure_generate(singleElement.conditionals)
               end
               if (singleElement.repetitions.length() > 0)
-                wrapper.conditional_generate(singleElement.repetitions)
+                wrapper.basic_structure_generate(singleElement.repetitions)
               end
               if (singleElement.global_functions.length() > 0)
                 singleElement.global_functions.each do |globalFunction|
