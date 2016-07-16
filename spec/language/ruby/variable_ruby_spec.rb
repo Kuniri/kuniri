@@ -140,6 +140,92 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
     end
   end
 
+  context 'Global variable with many different types of assignment' do
+    it 'Variable global with array assignment' do
+      variable = @variableRuby.get_variable('$y = [1,2,3,4,5,6,7]')
+      expect(variable[0].name).to eq('y')
+      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
+
+      variable = @variableRuby.get_variable('$you = ["abc", "zxy", "you"]')
+      expect(variable[0].name).to eq('you')
+      expect(variable[0].value).to eq('["abc", "zxy",    "you"]')
+    end
+
+    it 'Variable global with array assignment, with spaces' do
+      variable = @variableRuby.get_variable(' $y   =   [1,2,  3,4,5,6, 7 ] ')
+      expect(variable[0].name).to eq('y')
+      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
+
+      variable = @variableRuby.get_variable('$you=   [ "abc", "zxy", "you"]')
+      expect(variable[0].name).to eq('you')
+      expect(variable[0].value).to eq('[ "abc", "zxy", "you"]')
+    end
+
+    it 'Variable global with array assignment, without spaces' do
+      variable = @variableRuby.get_variable('$y=[1,2,3,4,5,6,7]')
+      expect(variable[0].name).to eq('y')
+      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
+
+      variable = @variableRuby.get_variable('$you=["abc","zxy","you"]')
+      expect(variable[0].name).to eq('you')
+      expect(variable[0].value).to eq('["abc","zxy","you"]')
+    end
+
+    it 'Variable global with hash assignment' do
+      variable = @variableRuby.get_variable('@@one = {}')
+      expect(variable[0].name).to eq('one')
+      expect(variable[0].value).to eq('{}')
+
+      variable = @variableRuby.get_variable('$twoo = {"x" => 3, "yk" => 7}')
+      expect(variable[0].name).to eq('twoo')
+      expect(variable[0].value).to eq('{"x" => 3, "yk" => 7}')
+
+      variable = @variableRuby.get_variable('@@one={}')
+      expect(variable[0].name).to eq('one')
+      expect(variable[0].value).to eq('{}')
+    end
+
+    it 'Variable global with hash assignment and spaces' do
+      variable = @variableRuby.get_variable('     @@one   =   {}  ')
+      expect(variable[0].name).to eq('one')
+      expect(variable[0].value).to eq('{}')
+
+      variable = @variableRuby.get_variable(' $twoo  = {"x" => 3,    "yk" => 7 } ')
+      expect(variable[0].name).to eq('twoo')
+      expect(variable[0].value).to eq('{"x" => 3, "yk" => 7}')
+    end
+
+    it 'Variable global with object' do
+      variable = @variableRuby.get_variable('$joe = Xpto.new')
+      expect(variable[0].name).to eq('joe')
+      expect(variable[0].value).to eq('Xpto.new')
+    end
+
+    it 'Variable global with object and spaces' do
+      variable = @variableRuby.get_variable('$joe    =  Xpto.new  ')
+      expect(variable[0].name).to eq('joe')
+      expect(variable[0].value).to eq('Xpto.new')
+    end
+
+    it 'Variable global with method call' do
+      variable = @variableRuby.get_variable('$mee = abc.mymethod')
+      expect(variable[0].name).to eq('mee')
+      expect(variable[0].value).to eq('abc.mymethod')
+    end
+
+    it 'Variable global with method call and parameters' do
+      variable = @variableRuby.get_variable('$mee = abc.mymethod (1, "tres")')
+      expect(variable[0].name).to eq('mee')
+      expect(variable[0].value).to eq('abc.mymethod (1, "tres")')
+    end
+
+    it 'Variable global with method call, with parameters and no spaces' do
+      variable = @variableRuby.get_variable('$mee=abc.mymethod(1,"tres")')
+      expect(variable[0].name).to eq('mee')
+      expect(variable[0].value).to eq('abc.mymethod(1,"tres")')
+    end
+  end
+
   context 'Special case' do
 
     it 'Ruby multiple line comment - =begin' do
