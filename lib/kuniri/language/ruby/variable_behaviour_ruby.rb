@@ -41,6 +41,7 @@ return
 
         TMP_TOKEN_COMMA = "<comma>"
         TMP_TOKEN_EQUAL = "<equal>"
+        TMP_HASH_SIMBOL = "<hash>"
 
         # TODO: Make it as a template pattern
         def pre_process(pLine)
@@ -67,13 +68,16 @@ return
 
           inside_braces = /\{([^\}]+)\}/
           pLine = replace_based_on_regex(pLine, inside_braces)
+          pLine = replace_based_on_regex(pLine, inside_braces, '=>',
+                                         TMP_HASH_SIMBOL)
           return pLine
         end
 
-        def replace_based_on_regex(pLine, regex, replace_by=TMP_TOKEN_COMMA)
+        def replace_based_on_regex(pLine, regex, find_to_replace = ',',
+                                   replace_by=TMP_TOKEN_COMMA)
           if pLine =~ regex
             pLine.gsub!(regex) do |match|
-              match.gsub(',', replace_by)
+              match.gsub(find_to_replace, replace_by)
             end
           end
           return pLine
@@ -97,6 +101,8 @@ return
             # First case: with equals
             if var_candidate.include?(TMP_TOKEN_EQUAL)
               variables.merge!(handle_equals(var_candidate, pStringsValues))
+            else
+              variables[var_candidate.lstrip.rstrip] = 'unknow'
             end
           end
           return variables
@@ -109,11 +115,26 @@ return
           value = value.delete('<>').lstrip.rstrip
           value = pStrings[value] if pStrings.has_key?value
           if partialVariable.size >= 2
-            partialVariable.each { |var| variables[var] = value }
+            partialVariable.each { |var| variables[var.lstrip.rstrip] = value }
           else
-            variables[partialVariable.first] = value
+            variables[partialVariable.first.lstrip.rstrip] = value
           end
           return variables
+        end
+
+        # Override
+        def normalize_elements(pVariables)
+          pVariables.each do |key, values|
+            newKey = remove_unnecessary_information(key)
+            pVariables[newKey] = values
+            pVariables.delete(key)
+          end
+          return pVariables
+        end
+
+        # Override
+        def remove_unnecessary_information(pString)
+          return pString.lstrip.rstrip
         end
 
         # Override
@@ -122,20 +143,8 @@ return
         end
 
         # Override
-        def normalize_elements(pElements)
-          pElements.each_with_index do |element, index|
-            pElements.delete_at(index) if is_number?(element.name)
-          end
-        end
-
-        # Override
         def is_number?(pString)
           true if Float(pString) rescue false
-        end
-
-        # Override
-        def remove_unnecessary_information(pString)
-          pString =~ /\(.*\)/ ? pString.gsub!(/\(.*\)/,'') : pString
         end
 
         # Override
