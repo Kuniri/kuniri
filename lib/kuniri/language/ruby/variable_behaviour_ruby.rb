@@ -13,7 +13,87 @@ module Languages
         @whoAmIHelping = pWhoAmIHelping
       end
 
+      # Override
+      def common_declaration(pLine, pRegex)
+        result = pre_process(pLine)
+# TODO: Incomplete
+return
+        return nil unless result
+
+        result = remove_unnecessary_information(result)
+        elements = []
+
+        # Separated by comma, equal or the common case
+        if result.scan(/,/).size >= 1
+          elements = handle_multiple_declaration_with_comma(result)
+        elsif result.scan(/=/).size > 1
+          elements = handle_multiple_declaration_with_equal(result)
+        else
+          elements = handle_line_declaration(result)
+        end
+
+        elements.nil? ? nil : normalize_elements(elements)
+      end
+
       protected
+
+        TMP_TOKEN_COMMA = "<comma>"
+        TMP_TOKEN_EQUAL = "<equal>"
+
+        # TODO: Make it as a template pattern
+        def pre_process(pLine)
+          pLine = replace_commas_inside_brackets_and_braces(pLine)
+          pLine = replace_equals(pLine)
+          pLine = break_string_line(pLine)
+          return pLine
+        end
+
+        def replace_commas_inside_brackets_and_braces(pLine)
+          inside_brackets = /\[([^\]]+)\]/
+          pLine = replace_based_on_regex(pLine, inside_brackets)
+
+          inside_braces = /\{([^\}]+)\}/
+          pLine = replace_based_on_regex(pLine, inside_braces)
+          return pLine
+        end
+
+        def replace_based_on_regex(pLine, regex, replace_by=TMP_TOKEN_COMMA)
+          if pLine =~ regex
+            pLine.gsub!(regex) do |match|
+              match.gsub(',', replace_by)
+            end
+          end
+          return pLine
+        end
+
+        def replace_equals(pLine)
+          find_equal = /[=]/
+          if pLine =~ find_equal
+            pLine.gsub!(find_equal, TMP_TOKEN_EQUAL)
+          end
+          return pLine
+        end
+
+        def break_string_line(pLine)
+          return pLine.split(',')
+        end
+
+        # Override
+        def detect_variable_element(pLine, pRegex)
+          pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
+        end
+
+        # Override
+        def normalize_elements(pElements)
+          pElements.each_with_index do |element, index|
+            pElements.delete_at(index) if is_number?(element.name)
+          end
+        end
+
+        # Override
+        def is_number?(pString)
+          true if Float(pString) rescue false
+        end
 
         # Override
         def remove_unnecessary_information(pString)

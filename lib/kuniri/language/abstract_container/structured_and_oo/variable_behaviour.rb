@@ -6,28 +6,13 @@ module Languages
   class VariableBehaviour
 
     def common_declaration(pLine, pRegex)
-      result = detect_variable_element(pLine, pRegex)
-      return nil unless result
-
-      result = remove_unnecessary_information(result)
-      elements = []
-
-      # Separated by comma, equal or the common case
-      if result.scan(/,/).size >= 1
-        elements = handle_multiple_declaration_with_comma(result)
-      elsif result.scan(/=/).size > 1
-        elements = handle_multiple_declaration_with_equal(result)
-      else
-        elements = handle_line_declaration(result)
-      end
-
-      elements.nil? ? nil : normalize_elements(elements)
+      raise NotImplementedError
     end
 
     protected
 
       def detect_variable_element(pLine, pRegex)
-        pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
+        raise NotImplementedError
       end
 
       # Sometimes, Kuniri has handling expressions like 'xpto = lalala = 7' and
@@ -35,13 +20,11 @@ module Languages
       # because it removes this kind of problem.
       # @param pElements Reference to an array to change.
       def normalize_elements(pElements)
-        pElements.each_with_index do |element, index|
-          pElements.delete_at(index) if is_number?(element.name)
-        end
+        raise NotImplementedError
       end
 
       def is_number?(pString)
-        true if Float(pString) rescue false
+        raise NotImplementedError
       end
 
       # Remove unnecessary information from line. For example, remove

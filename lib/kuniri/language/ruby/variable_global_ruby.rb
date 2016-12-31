@@ -12,15 +12,12 @@ module Languages
 
         def initialize
           super
-          detectRegex = /^\s*(?:@|@@|\$)(.*)|(\w+\s+=[^=].*)$/
+          detectRegex = /^\s*(?:@|@@|\$)(.*)|(\w+\s*=[^=].*)$/
           setup_variable_behaviour(detectRegex)
         end
-
     # Class
     end
-
   # Module
   end
-
 # Module
 end
