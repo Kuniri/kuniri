@@ -15,7 +15,7 @@ module Languages
 
       # Override
       def common_declaration(pLine, pRegex)
-        result = pre_process(pLine)
+        result, hash_of_strings = pre_process(pLine)
 # TODO: Incomplete
 return
         return nil unless result
@@ -42,10 +42,21 @@ return
 
         # TODO: Make it as a template pattern
         def pre_process(pLine)
+          pLine, hash_of_strings = replace_strings(pLine)
           pLine = replace_commas_inside_brackets_and_braces(pLine)
           pLine = replace_equals(pLine)
           pLine = break_string_line(pLine)
-          return pLine
+          return pLine, hash_of_strings
+        end
+
+        def replace_strings(pLine)
+          hash_of_string = {}
+          inside_quotes = /["|']([^["|']]+)["|']/
+          pLine.gsub!(inside_quotes).with_index do |match, index|
+            hash_of_string["str#{index}"] = match
+            match = "<str#{index}>"
+          end
+          return pLine, hash_of_string
         end
 
         def replace_commas_inside_brackets_and_braces(pLine)
