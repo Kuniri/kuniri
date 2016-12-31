@@ -14,8 +14,10 @@ module Languages
       end
 
       # Override
+      # FIXME: It has a problem with: a = {'a' => 'lala'}. '=>' it's a problem
       def common_declaration(pLine, pRegex)
         result, hash_of_strings = pre_process(pLine)
+        variables = build_hash_of_variables_and_values(result, hash_of_strings)
 # TODO: Incomplete
 return
         return nil unless result
@@ -87,6 +89,31 @@ return
 
         def break_string_line(pLine)
           return pLine.split(',')
+        end
+
+        def build_hash_of_variables_and_values(pVariablesList, pStringsValues)
+          variables = {}
+          pVariablesList.each do |var_candidate|
+            # First case: with equals
+            if var_candidate.include?(TMP_TOKEN_EQUAL)
+              variables.merge!(handle_equals(var_candidate, pStringsValues))
+            end
+          end
+          return variables
+        end
+
+        def handle_equals(pStringWithVariables, pStrings)
+          variables = {}
+          partialVariable = pStringWithVariables.split(TMP_TOKEN_EQUAL)
+          value = partialVariable.pop
+          value = value.delete('<>').lstrip.rstrip
+          value = pStrings[value] if pStrings.has_key?value
+          if partialVariable.size >= 2
+            partialVariable.each { |var| variables[var] = value }
+          else
+            variables[partialVariable.first] = value
+          end
+          return variables
         end
 
         # Override
