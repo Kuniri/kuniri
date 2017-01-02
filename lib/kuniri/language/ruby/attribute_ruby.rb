@@ -17,38 +17,16 @@ module Languages
         end
 
         def get_attribute(pLine)
-          attributes_candiates = @variableBehaviour.common_declaration(pLine, 'useless')
-          return nil if attributes_candiates.empty?
+          attrCandidates = @variableBehaviour.common_declaration(pLine, 'useless')
+          return nil if attrCandidates.empty?
 
           attributes = []
 
-          # Handling variables with @
-          attributes_candiates.each do |variable, value|
-            if variable =~ /^\s*(?:@|@@)\w+/
-              attribute = create_attribute_data(variable.delete('@'), value)
-              attributes.push(attribute)
-              attributes_candiates.delete(variable)
-            else
-              next
-            end
-          end
-          # Handling variables with attr
-          attributes_candiates.each do |variable, value|
-            # attr_* :llala
-            if variable =~ /^\s*(?:(?:attr_(?:accessor|reader|writer))\s+:\w+)/
-              var = variable.split(" ").last
-              attribute = create_attribute_data(var.delete(':'))
-              attributes.push(attribute)
-              attributes_candiates.delete(variable)
-              next
-            end
-            # :lala, :luele
-            if variable =~ /^\s*(?::\w+)/
-              attribute = create_attribute_data(variable.delete(':'))
-              attributes.push(attribute)
-              attributes_candiates.delete(variable)
-            end
-          end
+          newCandidate, tmpAttrAt = handle_attributes_with_at(attrCandidates)
+          attributes.concat(tmpAttrAt)
+
+          newCandidate, tmpAttr = handle_attribute_with_attr(attrCandidates)
+          attributes.concat(tmpAttr)
 
           return nil if attributes.empty?
           return attributes
@@ -60,6 +38,42 @@ module Languages
           attribute = AttributeData.new(variable)
           attribute.value = value.strip unless value.empty?
           return attribute
+        end
+
+        def handle_attributes_with_at(pAttributeCandidates)
+          attributes = []
+          pAttributeCandidates.each do |variable, value|
+            if variable =~ /^\s*(?:@|@@)\w+/
+              variable = variable.delete('@')
+              attribute = create_attribute_data(variable, value)
+              attributes.push(attribute)
+              pAttributeCandidates.delete(variable)
+            else
+              next
+            end
+          end
+          return pAttributeCandidates, attributes
+        end
+
+        def handle_attribute_with_attr(pAttributeCandidates)
+          attributes = []
+          pAttributeCandidates.each do |variable, value|
+            if variable =~ /^\s*(?:(?:attr_(?:accessor|reader|writer))\s+:\w+)/
+              var = variable.split(' ').last
+              var = var.delete(':')
+              attribute = create_attribute_data(var)
+              attributes.push(attribute)
+              pAttributeCandidates.delete(variable)
+              next
+            end
+            if variable =~ /^\s*(?::\w+)/
+              variable = variable.delete(':')
+              attribute = create_attribute_data(variable)
+              attributes.push(attribute)
+              pAttributeCandidates.delete(variable)
+            end
+          end
+          return pAttributeCandidates, attributes
         end
 
     #Class
