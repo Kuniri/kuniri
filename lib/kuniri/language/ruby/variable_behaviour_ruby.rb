@@ -81,7 +81,10 @@ module Languages
             if var_candidate.include?(TMP_TOKEN_EQUAL)
               variables.merge!(handle_equals(var_candidate, pStringsValues))
             else
-              variables[var_candidate.lstrip.rstrip] = 'unknow'
+              # TODO: Remove 'nothing' and put it in a token class
+              if is_variable?(var_candidate)
+                variables[var_candidate.strip] = 'nothing'
+              end
             end
           end
           return variables
@@ -93,15 +96,26 @@ module Languages
           value = partialVariable.pop
           value = process_value(value, pStrings)
           if partialVariable.size >= 2
-            partialVariable.each { |var| variables[var.lstrip.rstrip] = value }
+            partialVariable.each do |var|
+              next unless is_variable?(var)
+              variables[var.strip] = value
+            end
           else
-            variables[partialVariable.first.lstrip.rstrip] = value
+            if is_variable?(partialVariable.first)
+              variables[partialVariable.first.strip] = value
+            end
           end
           return variables
         end
 
+        # TODO: Verify if is a keyword
+        def is_variable?(pVariable)
+          return false if pVariable.include?('.')
+          return true
+        end
+
         def process_value(pValue, pStrings)
-          simpleValue = pValue.delete('<>').lstrip.rstrip
+          simpleValue = pValue.delete('<>').strip
 
           return pStrings[simpleValue] if pStrings.has_key?simpleValue
 
