@@ -14,27 +14,11 @@ module Languages
       end
 
       # Override
-      # FIXME: It has a problem with: a = {'a' => 'lala'}. '=>' it's a problem
       def common_declaration(pLine, pRegex)
         result, hash_of_strings = pre_process(pLine)
         variables = build_hash_of_variables_and_values(result, hash_of_strings)
-# TODO: Incomplete
-return
-        return nil unless result
 
-        result = remove_unnecessary_information(result)
-        elements = []
-
-        # Separated by comma, equal or the common case
-        if result.scan(/,/).size >= 1
-          elements = handle_multiple_declaration_with_comma(result)
-        elsif result.scan(/=/).size > 1
-          elements = handle_multiple_declaration_with_equal(result)
-        else
-          elements = handle_line_declaration(result)
-        end
-
-        elements.nil? ? nil : normalize_elements(elements)
+        return variables
       end
 
       protected
@@ -76,18 +60,14 @@ return
         def replace_based_on_regex(pLine, regex, find_to_replace = ',',
                                    replace_by=TMP_TOKEN_COMMA)
           if pLine =~ regex
-            pLine.gsub!(regex) do |match|
-              match.gsub(find_to_replace, replace_by)
-            end
+            pLine.gsub!(regex) {|match| match.gsub(find_to_replace, replace_by)}
           end
           return pLine
         end
 
         def replace_equals(pLine)
           find_equal = /[=]/
-          if pLine =~ find_equal
-            pLine.gsub!(find_equal, TMP_TOKEN_EQUAL)
-          end
+          pLine.gsub!(find_equal, TMP_TOKEN_EQUAL) if pLine =~ find_equal
           return pLine
         end
 
@@ -98,7 +78,6 @@ return
         def build_hash_of_variables_and_values(pVariablesList, pStringsValues)
           variables = {}
           pVariablesList.each do |var_candidate|
-            # First case: with equals
             if var_candidate.include?(TMP_TOKEN_EQUAL)
               variables.merge!(handle_equals(var_candidate, pStringsValues))
             else
@@ -112,8 +91,7 @@ return
           variables = {}
           partialVariable = pStringWithVariables.split(TMP_TOKEN_EQUAL)
           value = partialVariable.pop
-          value = value.delete('<>').lstrip.rstrip
-          value = pStrings[value] if pStrings.has_key?value
+          value = process_value(value, pStrings)
           if partialVariable.size >= 2
             partialVariable.each { |var| variables[var.lstrip.rstrip] = value }
           else
@@ -122,6 +100,20 @@ return
           return variables
         end
 
+        def process_value(pValue, pStrings)
+          simpleValue = pValue.delete('<>').lstrip.rstrip
+
+          return pStrings[simpleValue] if pStrings.has_key?simpleValue
+
+          if pValue =~ /\{([^\}]+)\}/
+            # TODO: $1 can be dangerous if add parallelization
+            pValue.gsub!(/\s*<(str\d+)>/) {|match| match = pStrings[$1]}
+          end
+
+          return pValue
+        end
+
+#TODO: Death code! Remove it.
         # Override
         def normalize_elements(pVariables)
           pVariables.each do |key, values|
