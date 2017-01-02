@@ -119,7 +119,7 @@ RSpec.describe Languages::Ruby::AttributeRuby do
  end
 
   context "# Multiple declaration (equal)" do
-    input = "@value1 = @value2 = @value3 = @value4"
+    input = "@value1 = @value2 = @value3 = @value4 = 3"
     message = "Separated by equal."
     include_examples "Multiple declaration", input, message
 
