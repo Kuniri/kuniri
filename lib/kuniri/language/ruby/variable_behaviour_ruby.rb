@@ -31,17 +31,19 @@ module Languages
 
         # TODO: Make it as a template pattern
         def pre_process(pLine)
-          pLine, hash_of_strings = replace_strings(pLine)
+          pLine, hash_of_strings = replace_strings_and_params(pLine)
           pLine = replace_commas_inside_brackets_and_braces(pLine)
           pLine = replace_equals(pLine)
           return nil, nil unless pLine # Case of ==, stop immediately
           pLine = break_string_line(pLine)
+
           return pLine, hash_of_strings
         end
 
-        def replace_strings(pLine)
+        def replace_strings_and_params(pLine)
           hash_of_string = {}
-          inside_quotes = /["|']([^["|']]+)["|']/
+          # FIXME: it has to handle the case of: method p1, p2
+          inside_quotes = /["|']([^["|']]+)["|']|[(]([^[)]]+)[)]/
           pLine.gsub!(inside_quotes).with_index do |match, index|
             hash_of_string["str#{index}"] = match
             match = "<str#{index}>"
@@ -72,6 +74,8 @@ module Languages
           find_equal = /[=]/
           # Verify the case of == or ===. Stop immediately
           return nil if pLine =~ /(=)\1/
+          # Case of '=' in the beginning
+          return nil if pLine =~ /\s*^=/
           pLine.gsub!(find_equal, TMP_TOKEN_EQUAL) if pLine =~ find_equal
           return pLine
         end
@@ -125,9 +129,8 @@ module Languages
           return pStrings[simpleValue] if pStrings.has_key?simpleValue
 
           # TODO: $1 can be dangerous if add parallelization
-          if pValue =~ /\{([^\}]+)\}/ || pValue =~ /\[([^\]]+)\]/
-            pValue.gsub!(/\s*<(str\d+)>/) {|match| match = pStrings[$1]}
-          end
+          # TODO: Think about add space after each replace
+          pValue.gsub!(/\s*<(str\d+)>/) {|match| match = pStrings[$1]}
 
           return pValue
         end
