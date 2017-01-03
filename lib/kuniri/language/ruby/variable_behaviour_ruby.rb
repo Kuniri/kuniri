@@ -124,24 +124,26 @@ module Languages
 
           return pStrings[simpleValue] if pStrings.has_key?simpleValue
 
-          if pValue =~ /\{([^\}]+)\}/
-            # TODO: $1 can be dangerous if add parallelization
+          # TODO: $1 can be dangerous if add parallelization
+          if pValue =~ /\{([^\}]+)\}/ || pValue =~ /\[([^\]]+)\]/
             pValue.gsub!(/\s*<(str\d+)>/) {|match| match = pStrings[$1]}
           end
 
           return pValue
         end
 
-#TODO: Death code! Remove it.
         # Override
         def normalize_elements(pVariables)
           pVariables.each do |key, values|
-            newKey = remove_unnecessary_information(key)
-            pVariables[newKey] = values
-            pVariables.delete(key)
+            values.gsub!(/\s*<comma>\s*/, ',')
+            values.gsub!(/\s*<hash>\s*/, '=>')
+            values.strip!
+            pVariables[key] = values
           end
           return pVariables
         end
+
+#TODO: Death code! Remove it.
 
         # Override
         def remove_unnecessary_information(pString)
