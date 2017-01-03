@@ -16,7 +16,9 @@ module Languages
       # Override
       def common_declaration(pLine, pRegex)
         result, hash_of_strings = pre_process(pLine)
+        return {} unless result
         variables = build_hash_of_variables_and_values(result, hash_of_strings)
+        variables = normalize_elements(variables)
 
         return variables
       end
@@ -32,6 +34,7 @@ module Languages
           pLine, hash_of_strings = replace_strings(pLine)
           pLine = replace_commas_inside_brackets_and_braces(pLine)
           pLine = replace_equals(pLine)
+          return nil, nil unless pLine # Case of ==, stop immediately
           pLine = break_string_line(pLine)
           return pLine, hash_of_strings
         end
@@ -67,6 +70,8 @@ module Languages
 
         def replace_equals(pLine)
           find_equal = /[=]/
+          # Verify the case of == or ===. Stop immediately
+          return nil if pLine =~ /(=)\1/
           pLine.gsub!(find_equal, TMP_TOKEN_EQUAL) if pLine =~ find_equal
           return pLine
         end
