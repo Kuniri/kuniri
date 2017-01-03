@@ -15,11 +15,6 @@ RSpec.describe Languages::VariableBehaviour do
       expect{variable_object.common_declaration(one_var, regex_one_var)}
             .to raise_error(NotImplementedError)
     end
-
-    it 'Cannot pass through the first step' do
-      result = variable_object.common_declaration('xpto = 5', /xpto = 7/)
-      expect(result).to eq(nil)
-    end
   end
 
   context 'Raise error after remove_unnecessary_information' do
@@ -65,41 +60,5 @@ RSpec.describe Languages::VariableBehaviour do
     before :each do
       @variable = Languages::VariableBehaviour.new
     end
-
-    it 'Call normalize, and do nothing' do
-      not_normalize = ['la', 'lala', 'lalala', 'lalalala']
-      array_to_send = []
-      not_normalize.each do |element|
-        array_to_send.push(Languages::AttributeData.new(element))
-      end
-      normalized = @variable.send(:normalize_elements, array_to_send)
-      expect(normalized).to match_array(array_to_send)
-    end
-
-    it 'Call normalize, and remove number' do
-      normalize = ['la', 'lala', 'lalala', 'lalalala', '89']
-      array_to_send = []
-      normalize.each do |element|
-        array_to_send.push(Languages::AttributeData.new(element))
-      end
-      normalized = @variable.send(:normalize_elements, array_to_send.dup)
-      expect(normalized).to_not match_array(array_to_send)
-    end
-
-    it 'String number, should be recognized' do
-      expect(@variable.send(:is_number?, '1')).to eq(true)
-      expect(@variable.send(:is_number?, '0')).to eq(true)
-      expect(@variable.send(:is_number?, '01')).to eq(true)
-      expect(@variable.send(:is_number?, '-1')).to eq(true)
-      expect(@variable.send(:is_number?, '987987123')).to eq(true)
-    end
-
-    it 'String name, should be recognized' do
-      expect(@variable.send(:is_number?, 'a')).to eq(false)
-      expect(@variable.send(:is_number?, 'ab0')).to eq(false)
-      expect(@variable.send(:is_number?, 'lala1a')).to eq(false)
-      expect(@variable.send(:is_number?, 'jalkjslifjlskfjaoi')).to eq(false)
-    end
-
   end
 end

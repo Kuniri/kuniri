@@ -13,20 +13,19 @@ RSpec.describe Languages::Ruby::VariableBehaviourRuby do
 
     it 'Capture simple variable.' do
       var = @varRuby.common_declaration('one = 1', @varRegex)
-      expect(var[0].name).to eq('one')
-      expect(var[0].value).to eq('1')
+      expect(var['one']).to eq('1')
     end
 
     it 'Capture simple attribute' do
-      attr = @attrRuby.common_declaration('attr_accessor off', @attrRegex)
-      expect(attr[0].name).to eq('off')
+      attr = @attrRuby.common_declaration('@off', @attrRegex)
+      expect(attr['@off']).to eq('nothing')
     end
   end
 
   context 'Do not detect' do
-    it 'Wrong parameters' do
-      var = @varRuby.common_declaration('xpto', @varRegex)
-      expect(var).to be_nil
+    it 'Should not detect string with equal in the begining' do
+      var = @varRuby.common_declaration('=begin', @varRegex)
+      expect(var).to eq({})
     end
   end
 

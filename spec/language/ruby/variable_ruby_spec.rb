@@ -19,7 +19,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
       variable = @variableRuby.get_variable('three = "three_value"')
       expect(variable[0].name).to eq('three')
-      expect(variable[0].value).to eq('three_value')
+      expect(variable[0].value).to eq('"three_value"')
 
       variable = @variableRuby.get_variable('four = []')
       expect(variable[0].name).to eq('four')
@@ -32,7 +32,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
       variable = @variableRuby.get_variable('@four = "four_value"')
       expect(variable[0].name).to eq('four')
-      expect(variable[0].value).to eq('four_value')
+      expect(variable[0].value).to eq('"four_value"')
 
       variable = @variableRuby.get_variable('   @five = 5')
       expect(variable[0].name).to eq('five')
@@ -67,7 +67,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       expect(variable[0].value).to eq('12')
 
       variable = @variableRuby.get_variable('   yesImVerySimpe   =   "yes"   ')
-      expect(variable[0].value).to eq('yes')
+      expect(variable[0].value).to eq('"yes"')
     end
 
     it 'Value after variable with @' do
@@ -90,7 +90,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       expect(variable[0].value).to eq('12')
 
       variable = @variableRuby.get_variable(' @yesImVerySimpe  =   "yes"   ')
-      expect(variable[0].value).to eq('yes')
+      expect(variable[0].value).to eq('"yes"')
     end
 
     it 'Value after variable with @@' do
@@ -113,7 +113,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       expect(variable[0].value).to eq('12')
 
       variable = @variableRuby.get_variable('  @@yesImVerySimpe   =  "yes" ')
-      expect(variable[0].value).to eq('yes')
+      expect(variable[0].value).to eq('"yes"')
     end
 
     it 'Value after variable with $' do
@@ -136,7 +136,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
       expect(variable[0].value).to eq('12')
 
       variable = @variableRuby.get_variable(' $yesImVerySimpe   =  "yes" ')
-      expect(variable[0].value).to eq('yes')
+      expect(variable[0].value).to eq('"yes"')
     end
   end
 
@@ -148,17 +148,17 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
       variable = @variableRuby.get_variable('$you = ["abc", "zxy", "you"]')
       expect(variable[0].name).to eq('you')
-      expect(variable[0].value).to eq('["abc", "zxy",    "you"]')
+      expect(variable[0].value).to match(/\s*[\s*"abc"\s*,\s*"zxy",\s*"you"\s*]\s*/)
     end
 
     it 'Variable global with array assignment, with spaces' do
       variable = @variableRuby.get_variable(' $y   =   [1,2,  3,4,5,6, 7 ] ')
       expect(variable[0].name).to eq('y')
-      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
+      expect(variable[0].value).to match(/\s*[\s*1\s*,\s*2\s*,\s*3\s*,\s*4\s*,\s*5\s*,\s*6\s*,\s*7\s*]\s*/)
 
       variable = @variableRuby.get_variable('$you=   [ "abc", "zxy", "you"]')
       expect(variable[0].name).to eq('you')
-      expect(variable[0].value).to eq('[ "abc", "zxy", "you"]')
+      expect(variable[0].value).to match(/\s*[\s*"abc"\s*,\s*"zxy",\s*"you"\s*]\s*/)
     end
 
     it 'Variable global with array assignment, without spaces' do
@@ -178,7 +178,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
       variable = @variableRuby.get_variable('$twoo = {"x" => 3, "yk" => 7}')
       expect(variable[0].name).to eq('twoo')
-      expect(variable[0].value).to eq('{"x" => 3, "yk" => 7}')
+      expect(variable[0].value).to match(/\s*\{\s*"x"\s*=>\s*3\s*,\s*"yk"\s*=>\s*7\s*\}\s*/)
 
       variable = @variableRuby.get_variable('@@one={}')
       expect(variable[0].name).to eq('one')
@@ -192,7 +192,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
       variable = @variableRuby.get_variable(' $twoo  = {"x" => 3,    "yk" => 7 } ')
       expect(variable[0].name).to eq('twoo')
-      expect(variable[0].value).to eq('{"x" => 3, "yk" => 7}')
+      expect(variable[0].value).to match(/\s*\{\s*"x"\s*=>\s*3\s*,\s*"yk"\s*=>\s*7\s*\}\s*/)
     end
 
     it 'Variable global with object' do
@@ -216,7 +216,7 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
     it 'Variable global with method call and parameters' do
       variable = @variableRuby.get_variable('$mee = abc.mymethod (1, "tres")')
       expect(variable[0].name).to eq('mee')
-      expect(variable[0].value).to eq('abc.mymethod (1, "tres")')
+      expect(variable[0].value).to match(/\s*abc.mymethod\s*\(\s*1\s*,\s*"tres"\s*\)\s*/)
     end
 
     it 'Variable global with method call, with parameters and no spaces' do
