@@ -43,7 +43,7 @@ RSpec.describe Kuniri::Kuniri do
     include_examples "global variable" , regex, message
 
     message = "class variable with value"
-    regex = /\s+<globalVariableData\sname="eight"\svalue="#"\/>/
+    regex = /\s+<globalVariableData\sname="eight"\svalue="'#'"\/>/
     include_examples "global variable" , regex, message
 
     message = "Normal global variable with value"
@@ -68,8 +68,8 @@ RSpec.describe Kuniri::Kuniri do
     regex = /\s+<globalVariableData\sname="thirteen"\svalue="2"\/>/
     include_examples "global variable" , regex, message
 
-    message = "Normal global variable with value"
-    regex = /\s+<globalVariableData\sname="ten"\svalue="ten"\/>/
+    message = "Normal global variable with value (ten)"
+    regex = /\s+<globalVariableData\sname="ten"\svalue="'ten'"\/>/
     include_examples "global variable" , regex, message
   end
 

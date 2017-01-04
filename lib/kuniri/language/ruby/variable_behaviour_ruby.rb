@@ -15,11 +15,11 @@ module Languages
 
       # Override
       def common_declaration(pLine, pRegex)
-        result, hash_of_strings = pre_process(pLine)
+        line = pLine.dup
+        result, hash_of_strings = pre_process(line)
         return {} unless result
         variables = build_hash_of_variables_and_values(result, hash_of_strings)
         variables = normalize_elements(variables)
-
         return variables
       end
 
