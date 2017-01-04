@@ -12,12 +12,11 @@ module Languages
 
         def initialize
           super
-          @detectRegex = /^\s*(?:@|attr_(?:accessor|reader|writer))(.*)$/
-          setup_variable_behaviour(@detectRegex)
+          setup_variable_behaviour
         end
 
         def get_attribute(pLine)
-          attrCandidates = @variableBehaviour.common_declaration(pLine, 'useless')
+          attrCandidates = @variableBehaviour.common_declaration(pLine)
           return nil if attrCandidates.empty?
 
           attributes = []

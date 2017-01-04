@@ -9,9 +9,7 @@ module Languages
     # Setup basic configurations for make attribute work correctly. It is
     # mandatory to call it with the correct parameters in the child class.
     # @param pVariableBehaviour Reference to a variable behaviour.
-    # @param pRegex Regex to detect if is an attribute.
-    def setup_variable_behaviour(pRegex)
-      @detectRegex = pRegex if is_regex?(pRegex)
+    def setup_variable_behaviour
       expression = MODULEBASE + type_of_language + VARIABLECLASS +
                    type_of_language
       begin
@@ -20,10 +18,6 @@ module Languages
       rescue NameError
         puts 'Error on class name'
       end
-    end
-
-    def is_regex?(pRegex)
-      pRegex.instance_of?Regexp
     end
 
     # Usually this module can be inserted in some abstract class, hence it is

@@ -23,7 +23,6 @@ module Languages
 
     protected
 
-      @detectRegex
       @variableBehaviour
 
   # Class

@@ -12,12 +12,11 @@ module Languages
 
         def initialize
           super
-          @detectRegex = /^\s*(?:@|@@|\$)(.*)|(\w+\s*=[^=].*)$/
-          setup_variable_behaviour(@detectRegex)
+          setup_variable_behaviour
         end
 
         def get_variable(pLine)
-          varCandidates = @variableBehaviour.common_declaration(pLine, 'useless')
+          varCandidates = @variableBehaviour.common_declaration(pLine)
           return nil if varCandidates.empty?
 
           globalVariables = []

@@ -5,7 +5,7 @@ module Languages
   # variables and attributes that have some similarities.
   class VariableBehaviour
 
-    def common_declaration(pLine, pRegex)
+    def common_declaration(pLine)
       raise NotImplementedError
     end
 

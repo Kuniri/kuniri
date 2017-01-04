@@ -22,7 +22,6 @@ module Languages
     protected
 
       @variableBehaviour
-      @detectRegex
 
   # class
   end

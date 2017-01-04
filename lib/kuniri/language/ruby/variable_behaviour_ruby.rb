@@ -14,7 +14,7 @@ module Languages
       end
 
       # Override
-      def common_declaration(pLine, pRegex)
+      def common_declaration(pLine)
         line = pLine.dup
         result, hash_of_strings = pre_process(line)
         return {} unless result

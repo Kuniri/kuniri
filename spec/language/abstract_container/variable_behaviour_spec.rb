@@ -12,7 +12,7 @@ RSpec.describe Languages::VariableBehaviour do
 
   context 'Call common declaration' do
     it 'Expect to raise error' do
-      expect{variable_object.common_declaration(one_var, regex_one_var)}
+      expect{variable_object.common_declaration(one_var)}
             .to raise_error(NotImplementedError)
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe Languages::VariableBehaviour do
     end
 
     it 'Should raise error because handle_line_declaration' do
-      expect{@variable.common_declaration(one_var, regex_one_var)}
+      expect{@variable.common_declaration(one_var)}
             .to raise_error(NotImplementedError)
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe Languages::VariableBehaviour do
     end
 
     it 'Raise error because handle_multiple_declaration_with_equal' do
-      expect{@variable.common_declaration(var_with_equal, regex_with_equal)}
+      expect{@variable.common_declaration(var_with_equal)}
             .to raise_error(NotImplementedError)
     end
   end
@@ -51,7 +51,7 @@ RSpec.describe Languages::VariableBehaviour do
     end
 
     it 'Raise error because handle_multiple_declaration_with_equal' do
-      expect{@variable.common_declaration(var_with_comma, regex_with_comma)}
+      expect{@variable.common_declaration(var_with_comma)}
             .to raise_error(NotImplementedError)
     end
   end
