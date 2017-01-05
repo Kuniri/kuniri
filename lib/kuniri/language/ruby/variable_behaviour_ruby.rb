@@ -25,21 +25,7 @@ module Languages
 
       protected
 
-        TMP_TOKEN_COMMA = "<comma>"
-        TMP_TOKEN_EQUAL = "<equal>"
-        TMP_HASH_SIMBOL = "<hash>"
-
-        # TODO: Make it as a template pattern
-        def pre_process(pLine)
-          pLine, hash_of_strings = replace_strings_and_params(pLine)
-          pLine = replace_commas_inside_brackets_and_braces(pLine)
-          pLine = replace_equals(pLine)
-          return nil, nil unless pLine # Case of ==, stop immediately
-          pLine = break_string_line(pLine)
-
-          return pLine, hash_of_strings
-        end
-
+        # Override
         def replace_strings_and_params(pLine)
           hash_of_string = {}
           # FIXME: it has to handle the case of: method p1, p2
@@ -51,6 +37,7 @@ module Languages
           return pLine, hash_of_string
         end
 
+        # Override
         def replace_commas_inside_brackets_and_braces(pLine)
           inside_brackets = /\[([^\]]+)\]/
           pLine = replace_based_on_regex(pLine, inside_brackets)
@@ -62,14 +49,7 @@ module Languages
           return pLine
         end
 
-        def replace_based_on_regex(pLine, regex, find_to_replace = ',',
-                                   replace_by=TMP_TOKEN_COMMA)
-          if pLine =~ regex
-            pLine.gsub!(regex) {|match| match.gsub(find_to_replace, replace_by)}
-          end
-          return pLine
-        end
-
+        # Override
         def replace_equals(pLine)
           find_equal = /[=]/
           # Verify the case of == or ===. Stop immediately
@@ -80,10 +60,12 @@ module Languages
           return pLine
         end
 
+        # Override
         def break_string_line(pLine)
           return pLine.split(',')
         end
 
+        # Override
         def build_hash_of_variables_and_values(pVariablesList, pStringsValues)
           variables = {}
           pVariablesList.each do |var_candidate|
@@ -99,30 +81,14 @@ module Languages
           return variables
         end
 
-        def handle_equals(pStringWithVariables, pStrings)
-          variables = {}
-          partialVariable = pStringWithVariables.split(TMP_TOKEN_EQUAL)
-          value = partialVariable.pop
-          value = process_value(value, pStrings)
-          if partialVariable.size >= 2
-            partialVariable.each do |var|
-              next unless is_variable?(var)
-              variables[var.strip] = value
-            end
-          else
-            if is_variable?(partialVariable.first)
-              variables[partialVariable.first.strip] = value
-            end
-          end
-          return variables
-        end
-
         # TODO: Verify if is a keyword
+        # Override
         def is_variable?(pVariable)
           return false if pVariable.include?('.')
           return true
         end
 
+        # Override
         def process_value(pValue, pStrings)
           simpleValue = pValue.delete('<>').strip
 
@@ -146,93 +112,32 @@ module Languages
           return pVariables
         end
 
-#TODO: Death code! Remove it.
+      private
 
-        # Override
-        def remove_unnecessary_information(pString)
-          return pString.lstrip.rstrip
-        end
-
-        # Override
-        def detect_variable_element(pLine, pRegex)
-          pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
-        end
-
-        # Override
-        def is_number?(pString)
-          true if Float(pString) rescue false
-        end
-
-        # Override
-        def prepare_final_string(pString)
-          regex = /\s+|:|@|=/
-          pString =~ regex ? pString.gsub!(regex,'') : pString
-        end
-
-        # Override
-        def handle_multiple_declaration_with_comma(pString)
-          return handle_multiple_declaration(pString, ',') do |variable|
-            variable = variable.scan(/.*=/).join('') if variable =~ /.*=/
-            variable
+        def replace_based_on_regex(pLine, regex, find_to_replace = ',',
+                                   replace_by=TMP_TOKEN_COMMA)
+          if pLine =~ regex
+            pLine.gsub!(regex) {|match| match.gsub(find_to_replace, replace_by)}
           end
+          return pLine
         end
 
-        # Override
-        def handle_multiple_declaration_with_equal(pString)
-          tmp  = pString.split('=')
-          value = 'nothing'
-          value = handle_value(tmp.last)
-          return handle_multiple_declaration(pString, '=', value){ |variable| variable }
-        end
-
-        # Override
-        def handle_line_declaration(pString)
-          value = 'nothing'
-          value = handle_value(pString) if pString =~ /=/
-          return handle_line(pString, value){ |pString| pString }
-        end
-
-        def handle_multiple_declaration(pString, pSplitChar, value = 'nothing')
-          listOfAttributes = []
-          pString = pString.split(pSplitChar)
-
-          pString.each do |variable|
-            if pSplitChar == '='
-              attribute = handle_line(variable, value) { |pString| yield(pString) }
-            else
-              attribute = handle_line(variable) { |pString| yield(pString) }
+        def handle_equals(pStringWithVariables, pStrings)
+          variables = {}
+          partialVariable = pStringWithVariables.split(TMP_TOKEN_EQUAL)
+          value = partialVariable.pop
+          value = process_value(value, pStrings)
+          if partialVariable.size >= 2
+            partialVariable.each do |var|
+              next unless is_variable?(var)
+              variables[var.strip] = value
             end
-            listOfAttributes.concat(attribute) if attribute
+          else
+            if is_variable?(partialVariable.first)
+              variables[partialVariable.first.strip] = value
+            end
           end
-          return listOfAttributes
-        end
-
-        def handle_line(pString, value = 'nothing')
-          if pString =~ /=/
-            value = handle_value(pString)
-            pString = pString.scan(/.*=/).join('')
-            return nil if pString =~ /\./
-          end
-
-          pString = yield(pString)
-
-          return nil if pString =~ /\./
-
-          pString = prepare_final_string(pString)
-          # We can make it generic
-          attribute = eval("Languages::#{@whoAmIHelping}Data.new(pString)")
-          attribute.value = value
-
-          return [attribute]
-        end
-
-        def handle_value(pString)
-          value = pString
-          value = pString.scan(/=(.*)/).join('') if pString =~ /=/
-          value = value.lstrip
-          value = value.rstrip
-          value = value.gsub(/'|\"/,'')
-          return value
+          return variables
         end
     #Class
     end
