@@ -6,9 +6,10 @@ RSpec.describe Languages::Attribute do
     @attribute = Languages::Attribute.new
   end
 
-  context "Call to get_attribute" do
-    it "Expect to raise error" do
-      expect{@attribute.get_attribute('@attribute')}.to raise_error
+  context 'Call to get_attribute' do
+    it 'Expect to raise error' do
+      expect{@attribute.get_attribute('@attribute')}
+        .to raise_error(NotImplementedError)
     end
   end
 
