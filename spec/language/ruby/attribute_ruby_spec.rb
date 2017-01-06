@@ -416,6 +416,100 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     end
   end
 
+  context 'Mixed of multiple declaration with comma, equal, @ and value' do
+
+    include Helpers
+
+    it 'Declaration with equal and comma' do
+      input = '@attribute1, @attribute2 = 12, @attribute3 = @attribute4 = 41'
+      attrs = ['attribute1', 'attribute2', 'attribute3', 'attribute4']
+      values = ['nothing', '12', '41', '41']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Declaration with equal, comma, and spaces' do
+      input = ' @attribute1,    @attribute2   = 12  ,     @attribute3 =   @attribute4 =     41'
+      attrs = ['attribute1', 'attribute2', 'attribute3', 'attribute4']
+      values = ['nothing', '12', '41', '41']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Very mixed declaration with equal and comma' do
+      input = '@attribute1, @attribute2 = 12, @attribute3 = @attribute4 = 41, @attribute5 = "another"'
+      attrs = ['attribute1', 'attribute2', 'attribute3', 'attribute4', 'attribute5']
+      values = ['nothing', '12', '41', '41', '"another"']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+  end
+
+  context 'Declaration with attr_' do
+
+    include Helpers
+
+    it 'Simple declaration with attr_reader' do
+      input = 'attr_reader :attribute1, :attribute2, :attribute3'
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Simple declaration with attr_reader with spaces' do
+      input = '   attr_reader   :attribute1    ,   :attribute2   , :attribute3   '
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Simple declaration with attr_writter' do
+      input = 'attr_writer :attribute1, :attribute2, :attribute3'
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Simple declaration with attr_writter, with spaces' do
+      input = 'attr_writer    :attribute1  ,   :attribute2 ,    :attribute3 '
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Simple declaration with attr_accessor' do
+      input = 'attr_accessor :attribute1, :attribute2, :attribute3'
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Simple declaration with attr_accessor, with spaces' do
+      input = ' attr_accessor    :attribute1 ,   :attribute2  ,  :attribute3  '
+      attrs = ['attribute1', 'attribute2', 'attribute3']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+  end
+
+  context 'Class variable' do
+
+    include Helpers
+
+    it 'Class variable without assigment' do
+      input = '@@attribute1, @@attribute2'
+      attrs = ['attribute1', 'attribute2']
+      values = ['nothing', 'nothing']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+    it 'Class variable with assigment' do
+      input = '@@attribute1 = "lala", @@attribute2 = 300'
+      attrs = ['attribute1', 'attribute2']
+      values = ['"lala"', '300']
+      verify_variable_and_value(input, attrs, values)
+    end
+
+  end
+
   after :all do
     @rubyAttr = nil
   end
