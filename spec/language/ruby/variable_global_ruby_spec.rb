@@ -6,44 +6,133 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
     @variableRuby = Languages::Ruby::VariableGlobalRuby.new
   end
 
-  context 'Simple variable (one per line)' do
+  context 'Single variable without assigments' do
 
-    it 'Capture simple variable.' do
-      variable = @variableRuby.get_variable('one = 1')
-      expect(variable[0].name).to eq('one')
-      expect(variable[0].value).to eq('1')
+    include Helpers
 
-      variable = @variableRuby.get_variable('  two = 2')
-      expect(variable[0].name).to eq('two')
-      expect(variable[0].value).to eq('2')
-
-      variable = @variableRuby.get_variable('three = "three_value"')
-      expect(variable[0].name).to eq('three')
-      expect(variable[0].value).to eq('"three_value"')
-
-      variable = @variableRuby.get_variable('four = []')
-      expect(variable[0].name).to eq('four')
-      expect(variable[0].value).to eq('[]')
+    it 'Capture simple variable without assigment' do
+      input = 'variable1'
+      variables = ['variable1']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Capture simple variable with one @' do
-      variable = @variableRuby.get_variable('@one')
-      expect(variable[0].name).to eq('one')
+    it 'Capture simple variable without assigment and with spaces' do
+      input = '    variable1        '
+      variables = ['variable1']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-      variable = @variableRuby.get_variable('@four = "four_value"')
-      expect(variable[0].name).to eq('four')
-      expect(variable[0].value).to eq('"four_value"')
+    it 'Capture simple variable with $' do
+      input = '$variable'
+      variables = ['variable']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-      variable = @variableRuby.get_variable('   @five = 5')
-      expect(variable[0].name).to eq('five')
-      expect(variable[0].value).to eq('5')
+    it 'Capture simple variable with $ and spaces' do
+      input = '  $variable    '
+      variables = ['variable']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with @@' do
+      input = '@@variable'
+      variables = ['variable']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with @@ and spaces' do
+      input = '  @@variable    '
+      variables = ['variable']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
+  end
+
+  context 'Single variable with assigments' do
+
+    include Helpers
+
+    it 'Capture simple variable.' do
+      input = 'one = 1'
+      variables = ['one']
+      values = ['1']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with spaces and number assigment' do
+      input = '   two = 2'
+      variables = ['two']
+      values = ['2']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable without spaces and string assigment' do
+      input = 'three = "three_value"'
+      variables = ['three']
+      values = ['"three_value"']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with spaces and string assigment' do
+      input = '       three  =    "three_value"    '
+      variables = ['three']
+      values = ['"three_value"']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable without spaces and array assigment' do
+      input = 'four = []'
+      variables = ['four']
+      values = ['[]']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with spaces and array assigment' do
+      input = ' four   =   []    '
+      variables = ['four']
+      values = ['[]']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with spaces and array assigment' do
+      input = 'four = [1,2,3,4,5,6]'
+      variables = ['four']
+      values = ['[1,2,3,4,5,6]']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with one @ and string assigment' do
+      input = '@four = "four_value"'
+      variables = ['four']
+      values = ['"four_value"']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with @' do
+      input = '@four'
+      variables = ['four']
+      values = ['nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Capture simple variable with @ and number assigment' do
+      input = '@four = 5'
+      variables = ['four']
+      values = ['5']
+      verify_variable_and_value(input, variables, values, false)
     end
 
     it 'Capture simple variable with two @@' do
-      variable = @variableRuby.get_variable('@@three')
-      expect(variable[0].name).to eq('three')
+      input = '@@four = 5'
+      variables = ['four']
+      values = ['5']
+      verify_variable_and_value(input, variables, values, false)
     end
-
   end
 
   context 'Verify value assignment to simple global variable.' do
