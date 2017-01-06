@@ -3,62 +3,63 @@ require_relative '../../spec_helper'
 RSpec.describe Languages::VariableBehaviour do
 
   let(:variable_object) {Languages::VariableBehaviour.new}
-  let(:one_var) {'xpto = 5'}
-  let(:regex_one_var) {/xpto = 5/}
-  let(:var_with_equal) {'xpto = lalala = 5'}
-  let(:regex_with_equal) {/xpto = lalala = 5/}
-  let(:var_with_comma) {'xpto, lalala = 5'}
-  let(:regex_with_comma) {/xpto, lalala = 5/}
 
-  context 'Call common declaration' do
-    it 'Expect to raise error' do
-      expect{variable_object.common_declaration(one_var)}
+  context 'Simple case of Not implemented method' do
+
+    before(:all) do
+      Languages::VariableBehaviour.send(:public, *Languages::VariableBehaviour.protected_instance_methods)
+    end
+
+    it 'Expect to raise error to call common_declaration' do
+      expect{variable_object.common_declaration('xpto')}
             .to raise_error(NotImplementedError)
     end
-  end
 
-  context 'Raise error after remove_unnecessary_information' do
-    before :each do
-      @variable = Languages::VariableBehaviour.new
-      allow(@variable).to receive(:remove_unnecessary_information)
-                                  .and_return(one_var)
-    end
-
-    it 'Should raise error because handle_line_declaration' do
-      expect{@variable.common_declaration(one_var)}
+    it 'Expect to raise error to call pre_process' do
+      expect{variable_object.pre_process('xpto')}
             .to raise_error(NotImplementedError)
     end
-  end
 
-  context 'Raise error after remove_unnecessary_information in "=" branch' do
-    before :each do
-      @variable = Languages::VariableBehaviour.new
-      allow(@variable).to receive(:remove_unnecessary_information)
-                                  .and_return(var_with_equal)
-    end
-
-    it 'Raise error because handle_multiple_declaration_with_equal' do
-      expect{@variable.common_declaration(var_with_equal)}
+    it 'Expect to raise error to call replace_strings_and_params' do
+      expect{variable_object.replace_strings_and_params('xpto')}
             .to raise_error(NotImplementedError)
     end
-  end
 
-  context 'Raise error after remove_unnecessary_information in "," branch' do
-    before :each do
-      @variable = Languages::VariableBehaviour.new
-      allow(@variable).to receive(:remove_unnecessary_information)
-                                  .and_return(var_with_comma)
-    end
-
-    it 'Raise error because handle_multiple_declaration_with_equal' do
-      expect{@variable.common_declaration(var_with_comma)}
+    it 'Expect to raise error to call replace_strings_and_params' do
+      expect{variable_object.replace_commas_inside_brackets_and_braces('xpto')}
             .to raise_error(NotImplementedError)
     end
+
+    it 'Expect to raise error to call replace_equals' do
+      expect{variable_object.replace_equals('xpto')}
+            .to raise_error(NotImplementedError)
+    end
+
+    it 'Expect to raise error to break_string_line' do
+      expect{variable_object.break_string_line('xpto')}
+            .to raise_error(NotImplementedError)
+    end
+
+    it 'Expect to raise error to build_hash_of_variables_and_values' do
+      expect{variable_object.build_hash_of_variables_and_values([],{})}
+            .to raise_error(NotImplementedError)
+    end
+
+    it 'Expect to raise error to is_variable?' do
+      expect{variable_object.is_variable?('xpto')}
+            .to raise_error(NotImplementedError)
+    end
+
+    it 'Expect to raise error to process_value' do
+      expect{variable_object.process_value([],{})}
+            .to raise_error(NotImplementedError)
+    end
+
+    it 'Expect to raise error to process_value' do
+      expect{variable_object.normalize_elements('xpto')}
+            .to raise_error(NotImplementedError)
+    end
+
   end
 
-  context 'Apply normalization' do
-    before :each do
-      @variable = Languages::VariableBehaviour.new
-    end
-  end
 end
