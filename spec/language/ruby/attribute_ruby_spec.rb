@@ -68,30 +68,6 @@ RSpec.describe Languages::Ruby::AttributeRuby do
 
   end
 
-  module Helpers
-    def multiple_declarations_verify(input)
-      listResult = []
-      capturedList = @rubyAttr.get_attribute(input)
-      capturedList.each do |element|
-        listResult.push(element.name)
-      end
-      expect(listResult).to match_array(@multiResult)
-    end
-
-    def verify_variable_and_value(input, expectedAttributes, expectedValues)
-      listOfValues = []
-      listOfAttributes = []
-
-      capturedList = @rubyAttr.get_attribute(input)
-      capturedList.each do |element|
-        listOfAttributes.push(element.name)
-        listOfValues.push(element.value)
-      end
-      expect(listOfValues).to match_array(expectedValues)
-      expect(listOfAttributes).to match_array(expectedAttributes)
-    end
-  end
-
   context 'When multiple declarations with comma' do
 
     include Helpers

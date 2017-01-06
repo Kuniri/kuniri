@@ -17,4 +17,8 @@ Dir[File.join(File.dirname(__FILE__), "../lib/kuniri/**" , "**.rb")].each do |f|
   require_relative f
 end
 
+Dir[File.join(File.dirname(__FILE__), "./helpers/**" , "**.rb")].each do |f|
+  require_relative f
+end
+
 Coveralls.wear!
