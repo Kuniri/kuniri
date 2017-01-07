@@ -135,183 +135,64 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
     end
   end
 
-  context 'Verify value assignment to simple global variable.' do
-    it 'Simple case: without @, @@ or $' do
-      variable = @variableRuby.get_variable('yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('     yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   yesImVerySimpe = 12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('yesImVerySimpe   = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('yesImVerySimpe   =   12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   yesImVerySimpe   =   12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   yesImVerySimpe   =   "yes"   ')
-      expect(variable[0].value).to eq('"yes"')
-    end
-
-    it 'Value after variable with @' do
-      variable = @variableRuby.get_variable('@yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('     @yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   @yesImVerySimpe = 12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('@yesImVerySimpe   = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('@yesImVerySimpe   =   12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   @yesImVerySimpe   =   12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable(' @yesImVerySimpe  =   "yes"   ')
-      expect(variable[0].value).to eq('"yes"')
-    end
-
-    it 'Value after variable with @@' do
-      variable = @variableRuby.get_variable('@@yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('     @@yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   @@yesImVerySimpe = 12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('@@yesImVerySimpe   = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('@@yesImVerySimpe   =   12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   @@yesImVerySimpe   =   12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('  @@yesImVerySimpe   =  "yes" ')
-      expect(variable[0].value).to eq('"yes"')
-    end
-
-    it 'Value after variable with $' do
-      variable = @variableRuby.get_variable('$yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('     $yesImVerySimpe = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   $yesImVerySimpe = 12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('$yesImVerySimpe   = 12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('$yesImVerySimpe   =   12')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable('   $yesImVerySimpe   =   12   ')
-      expect(variable[0].value).to eq('12')
-
-      variable = @variableRuby.get_variable(' $yesImVerySimpe   =  "yes" ')
-      expect(variable[0].value).to eq('"yes"')
-    end
-  end
-
   context 'Global variable with many different types of assignment' do
-    it 'Variable global with array assignment' do
-      variable = @variableRuby.get_variable('$y = [1,2,3,4,5,6,7]')
-      expect(variable[0].name).to eq('y')
-      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
 
-      variable = @variableRuby.get_variable('$you = ["abc", "zxy", "you"]')
-      expect(variable[0].name).to eq('you')
-      expect(variable[0].value).to match(/\s*[\s*"abc"\s*,\s*"zxy",\s*"you"\s*]\s*/)
+    include Helpers
+
+    it 'Variable global with $, array assignment of integers' do
+      input = '$y = [1,2,3,4,5,6,7]'
+      variables = ['y']
+      values = ['[1,2,3,4,5,6,7]']
+      verify_variable_and_value(input, variables, values, false)
+    end
+
+    it 'Variable global with $, array assignment of strings' do
+      input = '$you = ["abc", "zxy", "you"]'
+      variables = ['you']
+      values = ['["abc","zxy","you"]']
+      verify_variable_and_value(input, variables, values, false)
     end
 
     it 'Variable global with array assignment, with spaces' do
-      variable = @variableRuby.get_variable(' $y   =   [1,2,  3,4,5,6, 7 ] ')
-      expect(variable[0].name).to eq('y')
-      expect(variable[0].value).to match(/\s*[\s*1\s*,\s*2\s*,\s*3\s*,\s*4\s*,\s*5\s*,\s*6\s*,\s*7\s*]\s*/)
-
-      variable = @variableRuby.get_variable('$you=   [ "abc", "zxy", "you"]')
-      expect(variable[0].name).to eq('you')
-      expect(variable[0].value).to match(/\s*[\s*"abc"\s*,\s*"zxy",\s*"you"\s*]\s*/)
+      input = ' $y   =   [1,2,  3,4,5,6, 7 ] '
+      variables = ['y']
+      values = ['[1,2,3,4,5,6,7 ]']
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Variable global with array assignment, without spaces' do
-      variable = @variableRuby.get_variable('$y=[1,2,3,4,5,6,7]')
-      expect(variable[0].name).to eq('y')
-      expect(variable[0].value).to eq('[1,2,3,4,5,6,7]')
-
-      variable = @variableRuby.get_variable('$you=["abc","zxy","you"]')
-      expect(variable[0].name).to eq('you')
-      expect(variable[0].value).to eq('["abc","zxy","you"]')
+    it 'Variable global with @@ and empty hash assignment' do
+      input = '@@one = {}'
+      variables = ['one']
+      values = ['{}']
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Variable global with hash assignment' do
-      variable = @variableRuby.get_variable('@@one = {}')
-      expect(variable[0].name).to eq('one')
-      expect(variable[0].value).to eq('{}')
-
-      variable = @variableRuby.get_variable('$twoo = {"x" => 3, "yk" => 7}')
-      expect(variable[0].name).to eq('twoo')
-      expect(variable[0].value).to match(/\s*\{\s*"x"\s*=>\s*3\s*,\s*"yk"\s*=>\s*7\s*\}\s*/)
-
-      variable = @variableRuby.get_variable('@@one={}')
-      expect(variable[0].name).to eq('one')
-      expect(variable[0].value).to eq('{}')
+    it 'Variable global with $ and hash values' do
+      input = '$twoo = {"x" => 3, "yk" => 7}'
+      variables = ['twoo']
+      values = '{"x"=>3,"yk"=>7}'
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Variable global with hash assignment and spaces' do
-      variable = @variableRuby.get_variable('     @@one   =   {}  ')
-      expect(variable[0].name).to eq('one')
-      expect(variable[0].value).to eq('{}')
-
-      variable = @variableRuby.get_variable(' $twoo  = {"x" => 3,    "yk" => 7 } ')
-      expect(variable[0].name).to eq('twoo')
-      expect(variable[0].value).to match(/\s*\{\s*"x"\s*=>\s*3\s*,\s*"yk"\s*=>\s*7\s*\}\s*/)
+    it 'Variable global with $ and object method called' do
+      input = '$joe = Xpto.new'
+      variables = ['joe']
+      values = 'Xpto.new'
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Variable global with object' do
-      variable = @variableRuby.get_variable('$joe = Xpto.new')
-      expect(variable[0].name).to eq('joe')
-      expect(variable[0].value).to eq('Xpto.new')
+    it 'Variable global with $, object method called, and spaces' do
+      input = '$joe    =  Xpto.new  '
+      variables = ['joe']
+      values = 'Xpto.new'
+      verify_variable_and_value(input, variables, values, false)
     end
 
-    it 'Variable global with object and spaces' do
-      variable = @variableRuby.get_variable('$joe    =  Xpto.new  ')
-      expect(variable[0].name).to eq('joe')
-      expect(variable[0].value).to eq('Xpto.new')
-    end
-
-    it 'Variable global with method call' do
-      variable = @variableRuby.get_variable('$mee = abc.mymethod')
-      expect(variable[0].name).to eq('mee')
-      expect(variable[0].value).to eq('abc.mymethod')
-    end
-
-    it 'Variable global with method call and parameters' do
-      variable = @variableRuby.get_variable('$mee = abc.mymethod (1, "tres")')
-      expect(variable[0].name).to eq('mee')
-      expect(variable[0].value).to match(/\s*abc.mymethod\s*\(\s*1\s*,\s*"tres"\s*\)\s*/)
-    end
-
-    it 'Variable global with method call, with parameters and no spaces' do
-      variable = @variableRuby.get_variable('$mee=abc.mymethod(1,"tres")')
-      expect(variable[0].name).to eq('mee')
-      expect(variable[0].value).to eq('abc.mymethod(1,"tres")')
+    it 'Variable global with $, object method with params as a value, and spaces' do
+      input = '$mee = abc.mymethod(x, y, 3, "two")'
+      variables = ['mee']
+      values = 'abc.mymethod(x, y, 3, "two")'
+      verify_variable_and_value(input, variables, values, false)
     end
   end
 
@@ -334,75 +215,58 @@ RSpec.describe Languages::Ruby::VariableGlobalRuby do
 
   end
 
-  RSpec.shared_examples 'Compare array' do |lineInput, arrayComp, description|
-
-    it ": #{description}" do
-      listResult = []
-      capturedList = @variableRuby.get_variable(lineInput)
-      capturedList.each do |element|
-        listResult.push(element.name)
-      end
-      expect(listResult).to match_array(arrayComp)
-    end
-  end
-
   context 'Complex variable declaration (more then one per line).' do
-    lineParse = 'one = 1, two = 2, three = "three"'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line WITH = and WITHOUT @.'
-    include_examples 'Compare array', lineParse, arrayCompare, message
 
-    lineParse = '     one   =  1,   two=2, three    =     "three"   '
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line WITH = and WITHOUT @. (Not nice)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    include Helpers
 
-    lineParse = '@one, @two, @three'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line ONLY WITH , and @.'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable in line WITH = and WITHOUT @' do
+      input = 'one = 1, two = 2, three = "three"'
+      variables = ['one', 'two', 'three']
+      values = ['1', '2', '"three"']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    lineParse = '       @one    , @two     ,       @three  '
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line ONLY WITH , and @. (Not nice)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable in line WITH =, WITHOUT @, and with spaces' do
+      input = '   one = 1, two     = 2   ,    three    =    "three"    '
+      variables = ['one', 'two', 'three']
+      values = ['1', '2', '"three"']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    lineParse = '@one = 1, @two = 2, @three = "three"'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line WITH = and @.'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable separated by comma and with @' do
+      input = '@one, @two, @three'
+      variables = ['one', 'two', 'three']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    lineParse = '     @one = 1, @two =2     ,@three   =   "three"'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line WITH = and @. (Not nice)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable separated by comma, with @, and with spaces' do
+      input = '   @one            ,      @two,        @three       '
+      variables = ['one', 'two', 'three']
+      values = ['nothing', 'nothing', 'nothing']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    lineParse = ' @one, @two = 3,@three '
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable in line WITH = and @. (Mixed)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable declaration with =' do
+      input = 'one = two = three = 47'
+      variables = ['one', 'two', 'three']
+      values = ['47', '47', '47']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    #it 'Multiple declaration with assignment, simple case.' do
-    lineParse = 'one = two = three = 47'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable ONLY WITH ='
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable declaration with =, and spaces' do
+      input = '   one = two      = three      =      47     '
+      variables = ['one', 'two', 'three']
+      values = ['47', '47', '47']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
-    lineParse = 'one                  =two     =    three =   47'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable ONLY WITH =. (Not nice)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
-    #end
-
-    lineParse = '@one = @two = @three = 59'
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable WITH = and @'
-    include_examples 'Compare array', lineParse, arrayCompare, message
-
-    lineParse = '     @one                =   @two =  @three =   89 '
-    arrayCompare = ['one', 'two', 'three']
-    message = ' -> Multiple variable WITH = and @. (Not nice)'
-    include_examples 'Compare array', lineParse, arrayCompare, message
+    it 'Multiple variable declaration with =, and spaces (strings)' do
+      input = '   one = two      = three      =      "lala"     '
+      variables = ['one', 'two', 'three']
+      values = ['"lala"', '"lala"', '"lala"']
+      verify_variable_and_value(input, variables, values, false)
+    end
 
   end
 

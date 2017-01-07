@@ -39,10 +39,10 @@ module Languages
 
         # Override
         def replace_commas_inside_brackets_and_braces(pLine)
-          inside_brackets = /\[([^\]]+)\]/
+          inside_brackets = /\[\s*([^\]]+)\s*\]/
           pLine = replace_based_on_regex(pLine, inside_brackets)
 
-          inside_braces = /\{([^\}]+)\}/
+          inside_braces = /\{\s*([^\}]+)\s*\}/
           pLine = replace_based_on_regex(pLine, inside_braces)
           pLine = replace_based_on_regex(pLine, inside_braces, '=>',
                                          TMP_HASH_SIMBOL)
