@@ -212,6 +212,30 @@ RSpec.describe Languages::Ruby::VariableBehaviourRuby do
       end
     end
 
+    describe 'Replace commas inside brackets and braces' do
+
+      it 'Replace commas inside array by <comma>' do
+         value = @inside.replace_commas_inside_brackets_and_braces('[1,3,4,34234]')
+         expect(value).to eq('[1<comma>3<comma>4<comma>34234]')
+      end
+
+      it 'Replace commas inside array by <comma> (strings and numbers)' do
+         value = @inside.replace_commas_inside_brackets_and_braces('[1,3,"test"]')
+         expect(value).to eq('[1<comma>3<comma>"test"]')
+      end
+
+      it 'Replace commas inside hash by <comma> and => by <hash>' do
+         value = @inside.replace_commas_inside_brackets_and_braces('{"one"=>1, "2"=>"two"}')
+         expect(value).to eq('{"one"<hash>1<comma> "2"<hash>"two"}')
+      end
+
+      it 'Should not replace any comma' do
+         value = @inside.replace_commas_inside_brackets_and_braces('@abc, $defg, @@hi, la')
+         expect(value).to eq('@abc, $defg, @@hi, la')
+      end
+
+    end
+
   end
 
   context 'Do not detect' do
