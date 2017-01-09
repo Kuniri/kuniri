@@ -53,7 +53,7 @@ module Languages
         def replace_equals(pLine)
           find_equal = /[=]/
           # Verify the case of == or ===. Stop immediately
-          return nil if pLine =~ /(=)\1/
+          return nil if pLine =~ /(=)\1/ || pLine =~ /=>|<=/
           # Case of '=' in the beginning
           return nil if pLine =~ /\s*^=/
           pLine.gsub!(find_equal, TMP_TOKEN_EQUAL) if pLine =~ find_equal
