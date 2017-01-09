@@ -236,6 +236,116 @@ RSpec.describe Languages::Ruby::VariableBehaviourRuby do
 
     end
 
+    describe 'Replace equals for assigments' do
+
+      it 'Single assigments' do
+        value = @inside.replace_equals('xpto = 300')
+        expect(value).to eq('xpto <equal> 300')
+      end
+
+      it 'Multiple assigments' do
+        value = @inside.replace_equals('xpto = lala=abc=300')
+        expect(value).to eq('xpto <equal> lala<equal>abc<equal>300')
+      end
+
+      it 'Should not replace double equals' do
+        value = @inside.replace_equals('xpto == 300')
+        expect(value).to eq(nil)
+      end
+
+      it 'Should not replace =>' do
+        value = @inside.replace_equals('xpto => 300')
+        expect(value).to eq(nil)
+      end
+
+      it 'Should not replace <=' do
+        value = @inside.replace_equals('xpto <= 300')
+        expect(value).to eq(nil)
+      end
+
+      it 'Should not replace ===' do
+        value = @inside.replace_equals('xpto === 300')
+        expect(value).to eq(nil)
+      end
+
+    end
+
+    describe 'Build hash of variables and values' do
+
+      it 'Simple case with equal' do
+        variableList = ['one <equal> <str0>', 'two <equal> <str1>']
+        stringValue = {'str0'=>'"one"', 'str1'=>'"two"'}
+        value = @inside.build_hash_of_variables_and_values(variableList, stringValue)
+        expect(value['one']).to eq('"one"')
+        expect(value['two']).to eq('"two"')
+      end
+
+      it 'Case with multiple equals assigments' do
+        variableList = ['one <equal> two <equal> three <equal> <str0>']
+        stringValue = {'str0'=>'"lala"'}
+        value = @inside.build_hash_of_variables_and_values(variableList, stringValue)
+        expect(value['one']).to eq('"lala"')
+        expect(value['two']).to eq('"lala"')
+        expect(value['three']).to eq('"lala"')
+      end
+
+      it 'Case without assigment of value' do
+        variableList = ['one']
+        value = @inside.build_hash_of_variables_and_values(variableList, {})
+        expect(value['one']).to eq('nothing')
+      end
+
+      it 'Should not parse variable started with .' do
+        variable = ['xpto.one']
+        stringValue = {'str0'=>'"one"'}
+        value = @inside.build_hash_of_variables_and_values(variable, stringValue)
+        expect(value).to eq({})
+      end
+
+    end
+
+    describe 'Verify if is variable' do
+      it 'Variables with . in the rvalue cannot be new' do
+        variable = '@xpto.lala = 41'
+        value = @inside.is_variable?(variable)
+        expect(value).to eq(false)
+      end
+
+      it 'Valid variable should be accepted' do
+        variable = 'lala = 32'
+        expect(@inside.is_variable?(variable)).to eq(true)
+      end
+    end
+
+    describe 'Process values' do
+      it 'Replace string inside values' do
+        value = 'one <equal> <str0>'
+        stringValue = {'str0' => '"lululu"'}
+        value = @inside.process_value(value, stringValue)
+        expect(value).to eq('one <equal>"lululu"')
+      end
+
+      it 'Nothing to be replaced' do
+        value = 'one'
+        value = @inside.process_value(value, {})
+        expect(value).to eq('one')
+      end
+    end
+
+    describe 'Normalize elements' do
+      it 'Replace <comma>' do
+        value = {'arrayV' => '[1<comma>2<comma>3]'}
+        value = @inside.normalize_elements(value)
+        expect(value['arrayV']).to eq('[1,2,3]')
+      end
+
+      it 'Replace <hash> and <comma>' do
+        value = {'hashV' => '{"one"<hash>1<comma>"two"<hash>"two"}'}
+        value = @inside.normalize_elements(value)
+        expect(value['hashV']).to eq('{"one"=>1,"two"=>"two"}')
+      end
+    end
+
   end
 
   context 'Do not detect' do
