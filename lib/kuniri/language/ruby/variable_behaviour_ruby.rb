@@ -72,9 +72,8 @@ module Languages
             if var_candidate.include?(TMP_TOKEN_EQUAL)
               variables.merge!(handle_equals(var_candidate, pStringsValues))
             else
-              # TODO: Remove 'nothing' and put it in a token class
               if is_variable?(var_candidate)
-                variables[var_candidate.strip] = 'nothing'
+                variables[var_candidate.strip] = Languages::UNKNOWN
               end
             end
           end

@@ -14,7 +14,7 @@ module Languages
         pName = 'fakeName' if pName.nil? or !pName.is_a? String
 
         @name = pName
-        @value = 'nothing'
+        @value = Languages::UNKNOWN
         @type = ''
       end
   # Class

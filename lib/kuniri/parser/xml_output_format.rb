@@ -70,7 +70,7 @@ module Parser
       # @see OutputFormat
       def global_variable_generate(pGlobalVariable)
         pGlobalVariable.each do |globalVar|
-          if globalVar.value != 'nothing'
+          if globalVar.value != Languages::UNKNOWN
             @outputEngine.globalVariableData :name => globalVar.name,
                                               :value => globalVar.value
           else
@@ -82,7 +82,7 @@ module Parser
       # @see OutputFormat
       def attribute_generate(pAttribute)
         pAttribute.each do |singleAttribute|
-          if singleAttribute.value != 'nothing'
+          if singleAttribute.value != Languages::UNKNOWN
             @outputEngine.attributeData :name => singleAttribute.name,
                                     :value => singleAttribute.value,
                                     :visibility => singleAttribute.visibility
