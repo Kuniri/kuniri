@@ -38,6 +38,11 @@ module StateMachine
       end
 
       # @see OOStructuredState
+      def idle_capture
+        @language.rewind_state
+      end
+
+      # @see OOStructuredState
       def method_capture
         @language.rewind_state
       end

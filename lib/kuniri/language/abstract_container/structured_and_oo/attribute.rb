@@ -18,12 +18,11 @@ module Languages
       # @return Return on filled object of AttributeData if it find an
       #         attribute, otherwise it returns nil.
       def get_attribute(pLine)
-        @variableBehaviour.common_declaration(pLine, @detectRegex)
+        raise NotImplementedError
       end
 
     protected
 
-      @detectRegex
       @variableBehaviour
 
   # Class

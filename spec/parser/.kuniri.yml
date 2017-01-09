@@ -1,0 +1,3 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/fullCode/fullCodeWithExternalConditionalAndRepetition.rb
+:output: ./spec/parser/fullCode.xml

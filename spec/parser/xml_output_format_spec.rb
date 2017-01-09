@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require 'rexml/document'
 
 RSpec.describe Parser::XMLOutputFormat do
 
@@ -255,20 +256,70 @@ RSpec.describe Parser::XMLOutputFormat do
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
     end
 
-    it "Generate conditional" do
+  end
+
+  context 'Output conditional' do
+    it 'Generate conditional' do
       expectedString = @stringHeader
       expectedString += "<if expression=\"y &lt; 3\" level=\"0\"/>\n"
       conditionalTmp = Languages::ConditionalData.new
       conditionalTmp.type = Languages::IF_LABEL
-      conditionalTmp.expression = "y < 3"
+      conditionalTmp.expression = 'y < 3'
       @outputFormat.basic_structure_generate([conditionalTmp])
       expect(@outputFormat.outputEngine.to_xml).to eq(expectedString)
+    end
+  end
+
+  context 'Full test of the output' do
+
+    before :each do
+      kuniri = Kuniri::Kuniri.new
+      kuniri.read_configuration_file('./spec/parser/.kuniri.yml')
+      kuniri.run_analysis
+      parser = Parser::XMLOutputFormat.new(kuniri.configurationInfo[:output])
+
+      allow(parser).to receive(:write_file)
+      allow(parser.outputEngine).to receive(:reset_engine)
+
+      parser.create_all_data(kuniri.get_parser())
+      @output = parser.outputEngine.to_xml.freeze
+      temp = REXML::Document.new(@output)
+      @handler = temp.root
+    end
+
+    it 'Verify the correct creation of the REXML object' do
+      expect(@handler).to be_a(REXML::Element)
+    end
+
+    it 'Found abc as a global variable' do
+      expect(@handler.elements[1].attributes['name']).to eq('abc')
+      expect(@handler.elements[1].attributes['value']).to eq('ARGV[0].to_i')
+    end
+
+    it 'Found lala as a global variable' do
+      expect(@handler.elements[2].attributes['name']).to eq('lala')
+      expect(@handler.elements[2].attributes['value']).to eq('ARGV[1].to_i')
+    end
+
+    it 'Found y as a global variable' do
+      expect(@handler.elements[3].attributes['name']).to eq('y')
+      expect(@handler.elements[3].attributes['value']).to eq('[1,2,3,4,5]')
+    end
+
+    it 'Found globalVariable as a global variable' do
+      expect(@handler.elements[4].attributes['name']).to eq('globalVariable')
+    end
+
+    #TODO: FINISH THIS TEST, AFTER FIX THE GLOBAL VARIABLE BUG
+
+    after :each do
+      @output = nil
+      @handler = nil
     end
 
   end
 
-  after :each do
+  after :all do
     @outputFormat = nil
   end
-
 end

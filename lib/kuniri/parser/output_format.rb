@@ -24,7 +24,7 @@ module Parser
       def create_all_data(pParser)
         return nil unless pParser
 
-        saveElementTo = "./"
+        saveElementTo = './'
         wrapper = self
 
         # Go through each file
@@ -43,9 +43,15 @@ module Parser
                 wrapper.global_variable_generate(
                         singleElement.global_variables)
               end
+              if (singleElement.conditionals.length() > 0)
+                wrapper.basic_structure_generate(singleElement.conditionals)
+              end
+              if (singleElement.repetitions.length() > 0)
+                wrapper.basic_structure_generate(singleElement.repetitions)
+              end
               if (singleElement.global_functions.length() > 0)
                 singleElement.global_functions.each do |globalFunction|
-                  wrapper.function_behaviour_generate("functionData",
+                  wrapper.function_behaviour_generate('functionData',
                                                       globalFunction)
                 end
               end
@@ -106,6 +112,14 @@ module Parser
         raise NotImplementedError
       end
 
+      def conditional_generate(pConditional)
+        raise NotImplementedError
+      end
+
+      def repetition_generate(pRepetition)
+        raise NotImplementedError
+      end
+
     private
 
       def write_file(pSaveTo, pFileName)
@@ -117,18 +131,16 @@ module Parser
                                         File.dirname(pSaveTo)))
           end
           # TODO: Extension should be flexible
-          destination = File.join(outputDir, pFileName + ".xml")
+          destination = File.join(outputDir, pFileName + '.xml')
         else
           destination = @parserPath
         end
 
-        File.open(destination, "w") do |file|
+        File.open(destination, 'w') do |file|
           file.write(@outputEngine.to_xml)
         end
       end
-
   # class
   end
-
 # module
 end

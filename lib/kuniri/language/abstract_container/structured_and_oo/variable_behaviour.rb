@@ -5,89 +5,98 @@ module Languages
   # variables and attributes that have some similarities.
   class VariableBehaviour
 
-    def common_declaration(pLine, pRegex)
-      result = detect_variable_element(pLine, pRegex)
-      return nil unless result
-
-      result = remove_unnecessary_information(result)
-      elements = []
-
-      # Separated by comma, equal or the common case
-      if result.scan(/,/).size >= 1
-        elements = handle_multiple_declaration_with_comma(result)
-      elsif result.scan(/=/).size > 1
-        elements = handle_multiple_declaration_with_equal(result)
-      else
-        elements = handle_line_declaration(result)
-      end
-
-      elements.nil? ? nil : normalize_elements(elements)
+    # Usually variable and attributes have a similar behaviour inside any
+    # languages. With this idea in mind, this method is focused to keep the
+    # similarities between all of them and avoid code duplication.
+    # @param pLine Line with a potential global variable or attribute
+    def common_declaration(pLine)
+      raise NotImplementedError
     end
 
     protected
 
-      def detect_variable_element(pLine, pRegex)
-        pLine =~ pRegex ? pLine.scan(pRegex).join('') : nil
+      TMP_TOKEN_COMMA = "<comma>"
+      TMP_TOKEN_EQUAL = "<equal>"
+      TMP_HASH_SIMBOL = "<hash>"
+
+      # Before detect string it is required to pre-process it to avoid any
+      # mistake during the parse operations. Follows the required steps:
+      #
+      # * Replaces strings and methods parameters by a token to be used later
+      # * Replace commas inside brackets and braces to avoid wrong replacement
+      # * Replace equal by token
+      # * Verify if line still valid after the steps above
+      # * Create an Array of variables
+      def pre_process(pLine)
+        pLine, hash_of_strings = replace_strings_and_params(pLine)
+        pLine = replace_commas_inside_brackets_and_braces(pLine)
+        pLine = replace_equals(pLine)
+        return nil, nil unless pLine # Case of ==, stop immediately
+        pLine = break_string_line(pLine)
+
+        return pLine, hash_of_strings
       end
 
-      # Sometimes, Kuniri has handling expressions like 'xpto = lalala = 7' and
-      # treat 7 like a variable name. Hence, a normalize function is required
-      # because it removes this kind of problem.
-      # @param pElements Reference to an array to change.
-      def normalize_elements(pElements)
-        pElements.each_with_index do |element, index|
-          pElements.delete_at(index) if is_number?(element.name)
-        end
-      end
-
-      def is_number?(pString)
-        true if Float(pString) rescue false
-      end
-
-      # Remove unnecessary information from line. For example, remove
-      # everything into parenthesis or line comment.
-      # @param pString String for remove unnecessary information.
-      # @return If match any unnecessary character defined by the programmer
-      #         returns the new string, otherwise return the same string.
-      def remove_unnecessary_information(pString)
+      # Take all strings inside quotes and methods parameters and replace by
+      # enumerated tokens. For example: x = "test one" ---after--> x = <str0>
+      # For more information take a look at ruby/variable_behaviour_ruby.rb
+      # @param pLine Return Line to be process
+      # @return Return a new string with quotes and parameters replaced
+      # @return Return an hash with token and value
+      def replace_strings_and_params(pLine)
         raise NotImplementedError
       end
 
-      # Prepare final string, before save it in a container data.
-      # @param pLine Line to be inspected.
-      # @return Return a string.
-      def prepare_final_string(pLine)
+      # Replace commas inside hashes and arrays to avoid problems in other steps
+      # @param pLine Line to be processed
+      # @return String with tokens for comma
+      def replace_commas_inside_brackets_and_braces(pLine)
         raise NotImplementedError
       end
 
-      # One common behaviour related with variables, is the multiple
-      # declaration separated by comma. This method is responsible for
-      # handling multiple line declaration separated by comma.
-      # @param pString String to be handled.
-      # @return Return an array with multiple variables.
-      def handle_multiple_declaration_with_comma(pString)
+      # Replace assignments with equal by token
+      # @param pLine Line to be processed
+      # @return String with tokens on equals
+      def replace_equals(pLine)
         raise NotImplementedError
       end
 
-      # Handling multiple declaration with equal.
-      # @param pString String with multiple declaration.
-      # @return Return an string.
-      def handle_multiple_declaration_with_equal(pString)
+      # Final step of pre_process method, at this point break the final string
+      # into their different elements. Normally it is a 'comma'.
+      # @param String to be processed
+      # @return Array of variables
+      def break_string_line(pLine)
         raise NotImplementedError
       end
 
-      # Handling line declaration.
-      # @param pString Line with simple declaration.
-      # @return Return a string.
-      def handle_line_declaration(pString)
+      # Build a hash with variables and their values. It is required the hash
+      # of values generated by pre_process
+      # @param pVariablesList List of all variables generated by pre_process
+      # @param pStringsValues Hash with token mapped to a string of value
+      # @return Hash of variables with values
+      def build_hash_of_variables_and_values(pVariablesList, pStringsValues)
         raise NotImplementedError
       end
 
-      def handle_multiple_declaration
+      # Method with specific implementations to verify if some string can be a
+      # variable or not.
+      # @param pVariable String to be verified
+      # @return true if is a valid variable or false otherwise.
+      # TODO: Verify if is a keyword
+      def is_variable?(pVariable)
         raise NotImplementedError
       end
 
-      def handle_value(pString)
+      # Replace tokens related to strings and parameters inserted by pre_process
+      # @param pValue String to be processed
+      # @param pStrings Hash with values
+      # @return String with correct values inside quotes and parameters
+      def process_value(pValue, pStrings)
+        raise NotImplementedError
+      end
+
+      # Replace final tokens from string
+      def normalize_elements(pVariables)
         raise NotImplementedError
       end
   # Class

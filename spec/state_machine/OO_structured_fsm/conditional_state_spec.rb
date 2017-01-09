@@ -6,15 +6,15 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     @conditionalTest = Languages::RubySyntax.new
   end
 
-  context "Correct flow, function." do
-    it "Idle to global function, to conditional." do
+  context 'Correct flow, function.' do
+    it 'Idle to global function, to conditional.' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       expect(@conditionalTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
 
-    it "Conditional to idle." do
+    it 'Conditional to idle.' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.function_capture
@@ -23,8 +23,8 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     end
   end
 
-  context "Correct flow, method." do
-    it "Idle to class, method, and conditional." do
+  context 'Correct flow, method.' do
+    it 'Idle to class, method, and conditional.' do
       @conditionalTest.state.class_capture
       @conditionalTest.state.method_capture
       @conditionalTest.state.conditional_capture
@@ -32,7 +32,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
 
-    it "Conditional to idle (method)." do
+    it 'Conditional to idle (method).' do
       @conditionalTest.state.class_capture
       @conditionalTest.state.method_capture
       @conditionalTest.state.conditional_capture
@@ -42,8 +42,8 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     end
   end
 
-  context "Correct flow, constructor." do
-    it "Idle to constructor, and conditional." do
+  context 'Correct flow, constructor.' do
+    it 'Idle to constructor, and conditional.' do
       @conditionalTest.state.class_capture
       @conditionalTest.state.constructor_capture
       @conditionalTest.state.conditional_capture
@@ -51,7 +51,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
 
-    it "Conditional to idle (constructor)." do
+    it 'Conditional to idle (constructor).' do
       @conditionalTest.state.class_capture
       @conditionalTest.state.constructor_capture
       @conditionalTest.state.conditional_capture
@@ -61,8 +61,8 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     end
   end
 
-  context "Conditional to conditional" do
-    it "Self reference to conditional" do
+  context 'Conditional to conditional' do
+    it 'Self reference to conditional' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.conditional_capture
@@ -71,7 +71,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
 
-    it "Go out of self reference" do
+    it 'Go out of self reference' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.conditional_capture
@@ -84,8 +84,8 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     end
   end
 
-  context "Conditional to repetition and vice versa" do
-    it "Conditional to loops" do
+  context 'Conditional to repetition and vice versa' do
+    it 'Conditional to loops' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.repetition_capture
@@ -93,7 +93,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::RepetitionState)
     end
 
-    it "Loops to conditional" do
+    it 'Loops to conditional' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.repetition_capture
@@ -102,7 +102,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
 
-    it "Nested conditional ending with repetition" do
+    it 'Nested conditional ending with repetition' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.conditional_capture
@@ -111,7 +111,7 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
         .to be_instance_of(StateMachine::OOStructuredFSM::RepetitionState)
     end
 
-    it "Nested conditional ending with repetition, and going back" do
+    it 'Nested conditional ending with repetition, and going back' do
       @conditionalTest.state.function_capture
       @conditionalTest.state.conditional_capture
       @conditionalTest.state.conditional_capture
@@ -120,18 +120,20 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
       @conditionalTest.rewind_state
       @conditionalTest.rewind_state
       expect(@conditionalTest.state)
-        .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
+             .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
-
   end
 
-  context "Incorrect flow." do
-    it "Try to access IdleState, to ConditionalState." do
-      expect{@conditionalTest.state.conditional_capture}
-        .to raise_error(NotImplementedError)
+  context 'Idle to conditional' do
+    it 'Try to access IdleState, to ConditionalState.' do
+      @conditionalTest.state.conditional_capture
+      expect(@conditionalTest.state)
+             .to be_instance_of(StateMachine::OOStructuredFSM::ConditionalState)
     end
+  end
 
-    it "Try to jump from Conditional state to idle." do
+  context 'Incorrect flow.' do
+    it 'Try to jump from Conditional state to idle.' do
       @conditionalTest.state.class_capture
       @conditionalTest.state.method_capture
       @conditionalTest.state.conditional_capture
@@ -143,5 +145,4 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
   after :each do
     @constructorTest = nil
   end
-
 end

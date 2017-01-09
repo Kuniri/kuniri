@@ -12,13 +12,11 @@ module Languages
       attr_accessor :level
 
       def initialize
-        @type = "none"
-        @expression = "empty"
+        @type = 'none'
+        @expression = 'empty'
         @level = 0
       end
-
   # class
   end
-
 # module
 end

@@ -16,13 +16,12 @@ module Languages
       #       VariableGlobalData. Otherwise returns nil.
       # @see variable_global_data.rb
       def get_variable(pLine)
-        @variableBehaviour.common_declaration(pLine, @detectRegex)
+        raise NotImplementedError
       end
 
     protected
 
       @variableBehaviour
-      @detectRegex
 
   # class
   end

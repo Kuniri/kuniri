@@ -14,12 +14,9 @@ module StateMachine
         @language = pLanguage
         @whoAmI = 'conditional'
       end
-
     # End class
     end
-
   # End OOStructuredFSM
   end
-
 # End StateMachine
 end
