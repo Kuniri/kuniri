@@ -311,6 +311,12 @@ RSpec.describe Languages::Ruby::VariableBehaviourRuby do
         expect(value).to eq(false)
       end
 
+      it 'Should not accept reserverd words' do
+        variable = 'def'
+        value = @inside.is_variable?(variable)
+        expect(value).to eq(false)
+      end
+
       it 'Valid variable should be accepted' do
         variable = 'lala = 32'
         expect(@inside.is_variable?(variable)).to eq(true)

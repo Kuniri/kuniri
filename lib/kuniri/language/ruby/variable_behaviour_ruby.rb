@@ -80,10 +80,10 @@ module Languages
           return variables
         end
 
-        # TODO: Verify if is a keyword
         # Override
-        def is_variable?(pVariable)
-          return false if pVariable.include?('.')
+        def is_variable?(pVar)
+          return false if pVar.include?('.')
+          return false if Languages::Ruby::ALL_TOKENS.has_key?(pVar.to_sym)
           return true
         end
 
