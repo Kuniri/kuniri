@@ -5,11 +5,7 @@ gemspec
 group :development do
   gem 'coveralls', require: false
   gem 'rspec', '~> 3.1.0'
-end
-
-group :test do
-  gem 'coveralls', require: false
+  gem 'faker', '~> 1.7.0'
   gem 'codeclimate-test-reporter', group: :test, require: nil
-  gem 'rspec', '~> 3.1.0'
   gem 'libxml-ruby'
 end
