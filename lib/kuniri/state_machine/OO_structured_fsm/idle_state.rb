@@ -35,7 +35,7 @@ module StateMachine
           conditional_capture
         elsif @language.line_inspect(REPETITION_ID, pLine)
           repetition_capture
-        elsif ((@language.commentHandler.is_single_line_comment?(pLine)) || 
+        elsif ((@language.commentHandler.is_single_line_comment?(pLine)) ||
                 (@language.commentHandler.is_multiple_line_comment?(pLine)))
           comment_capture
         else

@@ -37,7 +37,6 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-
         requirement = @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
 
         if requirement

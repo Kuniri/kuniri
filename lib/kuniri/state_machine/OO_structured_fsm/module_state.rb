@@ -55,8 +55,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-
-        moduleElement = @language.line_inspect(MODULE_ID, pLine)
+        moduleElement = @language.processed_line
 
         if moduleElement
           pElementFile.add_modules(moduleElement)

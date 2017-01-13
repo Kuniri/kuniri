@@ -30,7 +30,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        attributeElement = @language.line_inspect(ATTRIBUTE_ID, pLine)
+        attributeElement = @language.processed_line
 
         if attributeElement
           # Add attribute to the last class

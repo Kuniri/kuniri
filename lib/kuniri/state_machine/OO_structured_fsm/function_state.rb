@@ -64,7 +64,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        function = @language.line_inspect(FUNCTION_ID, pLine)
+        function = @language.processed_line
 
         if function
           function.comments = @language.string_comment_to_transfer

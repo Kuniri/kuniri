@@ -31,7 +31,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        variableList = @language.line_inspect(VARIABLE_ID, pLine)
+        variableList = @language.processed_line
         if variableList
           variableList.each do |variable|
             variable.comments = @language.string_comment_to_transfer

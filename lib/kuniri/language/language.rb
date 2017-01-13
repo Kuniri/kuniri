@@ -76,6 +76,8 @@ module Languages
 
       attr_accessor :string_comment_to_transfer
 
+      attr_reader :processed_line
+
       # This method initialize all the needed states of state machine.
       # @note: Never forget to call this method before start parser.
       def initialize
@@ -218,32 +220,33 @@ module Languages
       def line_inspect(pTarget, pLine)
         case pTarget
           when StateMachine::METHOD_ID
-            return @methodHandler.get_method(pLine)
+            @processed_line = @methodHandler.get_method(pLine)
           when StateMachine::CONSTRUCTOR_ID
-            return @constructorHandler.get_constructor(pLine)
+            @processed_line = @constructorHandler.get_constructor(pLine)
           when StateMachine::FUNCTION_ID
-            return @functionHandler.get_function(pLine)
+            @processed_line = @functionHandler.get_function(pLine)
           when StateMachine::COMMENT_ID
-            return @commentHandler.get_comment(pLine)
+            @processed_line = @commentHandler.get_comment(pLine)
           when StateMachine::VARIABLE_ID
-            return @variableHandler.get_variable(pLine)
+            @processed_line = @variableHandler.get_variable(pLine)
           when StateMachine::MODULE_ID
-            return @moduleHandler.get_module(pLine)
+            @processed_line = @moduleHandler.get_module(pLine)
           when StateMachine::CLASS_ID
-            return @classHandler.get_class(pLine)
+            @processed_line = @classHandler.get_class(pLine)
           when StateMachine::REPETITION_ID
-            return @repetitionHandler.get_repetition(pLine)
+            @processed_line = @repetitionHandler.get_repetition(pLine)
           when StateMachine::CONDITIONAL_ID
-            return @conditionalHandler.get_conditional(pLine)
+            @processed_line = @conditionalHandler.get_conditional(pLine)
           when StateMachine::ATTRIBUTE_ID
-            return @attributeHandler.get_attribute(pLine)
+            @processed_line = @attributeHandler.get_attribute(pLine)
           when StateMachine::BLOCK_ID
-            return @blockHandler.get_block(pLine)
+            @processed_line = @blockHandler.get_block(pLine)
           when StateMachine::AGGREGATION_ID
-            return @aggregationHandler.get_aggregation(pLine)
+            @processed_line = @aggregationHandler.get_aggregation(pLine)
           when StateMachine::EXTERN_REQUIREMENT_ID
-            return @externRequirementHandler.get_requirement(pLine)
+            @processed_line = @externRequirementHandler.get_requirement(pLine)
         end
+        return @processed_line
       end
 
     protected

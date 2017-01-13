@@ -18,7 +18,7 @@ module Parser
         attr_reader :fileLanguage
         attr_reader :filesPath
 
-        def initialize(pFilesPath, pLanguage = "ruby")
+        def initialize(pFilesPath, pLanguage = 'ruby')
           @filesPath = pFilesPath
           @fileLanguage = []
           @factory = Languages::LanguageFactory.new
