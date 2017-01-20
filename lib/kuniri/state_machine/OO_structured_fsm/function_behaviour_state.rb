@@ -72,13 +72,13 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        functionElement = @language.send("#{@functionIdentifier}Handler")
-                                   .send("get_#{@functionIdentifier}", pLine)
+
+        functionElement = @language.processed_line
 
         if (functionElement)
           lastIndex = pElementFile.get_last_class_index
           functionElement.comments = @language.string_comment_to_transfer
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
           pElementFile.classes[lastIndex].send("add_#{@functionIdentifier}",
                                                functionElement)
         end
