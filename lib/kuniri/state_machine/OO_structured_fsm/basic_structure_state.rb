@@ -24,21 +24,13 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        conditional = @language.line_inspect(CONDITIONAL_ID, pLine)
-        repetition = @language.line_inspect(REPETITION_ID, pLine)
-        block = @language.line_inspect(BLOCK_ID, pLine)
-        if conditional
-          if isNestedStructure?(conditional.type)
-            conditional_capture
-          end
-        elsif repetition
-          if isNestedStructure?(repetition.type)
-            repetition_capture
-          end
-        elsif block
-          if isNestedStructure?(block.type)
-            block_capture
-          end
+
+        if ! (conditional = @language.line_inspect(CONDITIONAL_ID, pLine)).nil?
+          conditional_capture if isNestedStructure?(conditional.type)
+        elsif ! (repetition = @language.line_inspect(REPETITION_ID, pLine)).nil?
+          repetition_capture if isNestedStructure?(repetition.type)
+        elsif ! (block = @language.line_inspect(BLOCK_ID, pLine)).nil?
+          block_capture if isNestedStructure?(block.type)
         # aggregation
         end
       end
