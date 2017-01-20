@@ -27,7 +27,7 @@ module StateMachine
           attribute_capture
         elsif @language.line_inspect(CONSTRUCTOR_ID, pLine)
           constructor_capture
-        elsif @language.methodHandler.get_function(pLine)
+        elsif @language.line_inspect(METHOD_ID, pLine)
           method_capture
         elsif @language.line_inspect(MODULE_ID, pLine)
           module_capture
