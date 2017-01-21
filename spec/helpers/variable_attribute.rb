@@ -3,7 +3,7 @@ require 'spec_helper'
 module Helpers
 
   def multiResult
-    @multiResult = Faker::Lorem.words(4)
+    @multiResult = Faker::Lorem.words(4, true)
   end
 
   def multiple_declarations_verify(input, attribute = true)

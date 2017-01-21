@@ -37,11 +37,9 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        requirement = @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
+        requirement = @language.processed_line
 
-        if requirement
-          pElementFile.add_extern_requirement(requirement)
-        end
+        pElementFile.add_extern_requirement(requirement) if requirement
 
         idle_capture
 

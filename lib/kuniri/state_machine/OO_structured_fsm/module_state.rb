@@ -57,9 +57,7 @@ module StateMachine
       def execute(pElementFile, pLine)
         moduleElement = @language.processed_line
 
-        if moduleElement
-          pElementFile.add_modules(moduleElement)
-        end
+        pElementFile.add_modules(moduleElement) if moduleElement
 
         if @language.endBlockHandler.has_end_of_block?(pLine)
           previous = @language.previousState.last

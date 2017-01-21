@@ -102,7 +102,7 @@ module StateMachine
         # @param pClassIndex Element index to add
         # @param pElementFile Element with all data
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          element = eval("@language.#{@whoAmI}Handler.get_#{@whoAmI}(pLine)")
+          element = @language.processed_line
           if (element)
             addToCorrectElement(element, pElementFile, pFlag, pClassIndex)
           end
@@ -135,14 +135,14 @@ module StateMachine
           stringToEval = "classes[#{pClassIndex}]."
           case pFlag
             when StateMachine::GLOBAL_FUNCTION_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                    elementType, 'global_functions')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             'global_functions')
             when StateMachine::METHOD_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                    elementType, stringToEval + 'methods')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             stringToEval + 'methods')
             when StateMachine::CONSTRUCTOR_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                elementType, stringToEval + 'constructors')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             stringToEval + 'constructors')
           end
         end
 
@@ -175,7 +175,7 @@ module StateMachine
           index = eval("pElementFile.#{pElement}.length - 1")
           if (@language.isNested? && isNestedStructure?(pType))
             eval("pElementFile.#{pElement}[index]." +
-                  "managerCondAndLoop.down_level")
+                  'managerCondAndLoop.down_level')
           end
           eval("pElementFile.#{pElement}[index].add_#{@whoAmI}(pToAdd)")
         end

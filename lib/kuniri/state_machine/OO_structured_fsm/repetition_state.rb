@@ -20,6 +20,7 @@ module StateMachine
         @language = pLanguage
         @whoAmI = 'repetition'
       end
+
     # End class
     end
   # End OOStructuredFSM
