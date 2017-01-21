@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 require_relative '../../language/abstract_container/structured_and_oo/global_tokens.rb'
 
@@ -18,21 +24,13 @@ module StateMachine
       end
 
       def handle_line(pLine)
-        conditional = @language.line_inspect(CONDITIONAL_ID, pLine)
-        repetition = @language.line_inspect(REPETITION_ID, pLine)
-        block = @language.line_inspect(BLOCK_ID, pLine)
-        if conditional
-          if isNestedStructure?(conditional.type)
-            conditional_capture
-          end
-        elsif repetition
-          if isNestedStructure?(repetition.type)
-            repetition_capture
-          end
-        elsif block
-          if isNestedStructure?(block.type)
-            block_capture
-          end
+
+        if ! (conditional = @language.line_inspect(CONDITIONAL_ID, pLine)).nil?
+          conditional_capture if isNestedStructure?(conditional.type)
+        elsif ! (repetition = @language.line_inspect(REPETITION_ID, pLine)).nil?
+          repetition_capture if isNestedStructure?(repetition.type)
+        elsif ! (block = @language.line_inspect(BLOCK_ID, pLine)).nil?
+          block_capture if isNestedStructure?(block.type)
         # aggregation
         end
       end
@@ -104,7 +102,7 @@ module StateMachine
         # @param pClassIndex Element index to add
         # @param pElementFile Element with all data
         def addBasicStructure(pLine, pFlag, pClassIndex, pElementFile)
-          element = eval("@language.#{@whoAmI}Handler.get_#{@whoAmI}(pLine)")
+          element = @language.processed_line
           if (element)
             addToCorrectElement(element, pElementFile, pFlag, pClassIndex)
           end
@@ -137,14 +135,14 @@ module StateMachine
           stringToEval = "classes[#{pClassIndex}]."
           case pFlag
             when StateMachine::GLOBAL_FUNCTION_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                    elementType, 'global_functions')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             'global_functions')
             when StateMachine::METHOD_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                    elementType, stringToEval + 'methods')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             stringToEval + 'methods')
             when StateMachine::CONSTRUCTOR_STATE
-              dynamicallyAdd(pElementFile, pElement,
-                                elementType, stringToEval + 'constructors')
+              dynamicallyAdd(pElementFile, pElement, elementType,
+                             stringToEval + 'constructors')
           end
         end
 
@@ -177,7 +175,7 @@ module StateMachine
           index = eval("pElementFile.#{pElement}.length - 1")
           if (@language.isNested? && isNestedStructure?(pType))
             eval("pElementFile.#{pElement}[index]." +
-                  "managerCondAndLoop.down_level")
+                  'managerCondAndLoop.down_level')
           end
           eval("pElementFile.#{pElement}[index].add_#{@whoAmI}(pToAdd)")
         end

@@ -48,7 +48,6 @@ RSpec.describe StateMachine::OOStructuredFSM::IncludeState do
       fileElement = Languages::FileElementData.new("test_spec")
       fileElement = @rubyTest.state.execute(fileElement,
                                             "require_relative 'test.rb'")
-      expect(fileElement.extern_requirements[0].library).to eq ("test")
       expect(@rubyTest.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end

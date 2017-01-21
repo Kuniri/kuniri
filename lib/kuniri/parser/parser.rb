@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative '../language/language_factory'
 
 # Module responsible for keeping the parser handler
@@ -12,7 +18,7 @@ module Parser
         attr_reader :fileLanguage
         attr_reader :filesPath
 
-        def initialize(pFilesPath, pLanguage = "ruby")
+        def initialize(pFilesPath, pLanguage = 'ruby')
           @filesPath = pFilesPath
           @fileLanguage = []
           @factory = Languages::LanguageFactory.new

@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 require_relative 'token_state_machine'
 
@@ -66,13 +72,13 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        functionElement = @language.send("#{@functionIdentifier}Handler")
-                                   .send("get_#{@functionIdentifier}", pLine)
+
+        functionElement = @language.processed_line
 
         if (functionElement)
           lastIndex = pElementFile.get_last_class_index
           functionElement.comments = @language.string_comment_to_transfer
-          @language.string_comment_to_transfer = ""
+          @language.string_comment_to_transfer = ''
           pElementFile.classes[lastIndex].send("add_#{@functionIdentifier}",
                                                functionElement)
         end

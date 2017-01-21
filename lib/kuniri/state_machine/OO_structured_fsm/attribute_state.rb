@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 
 module StateMachine
@@ -24,7 +30,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        attributeElement = @language.line_inspect(ATTRIBUTE_ID, pLine)
+        attributeElement = @language.processed_line
 
         if attributeElement
           # Add attribute to the last class

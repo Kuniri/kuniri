@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 require_relative 'module_state'
 require_relative 'token_state_machine'
@@ -58,7 +64,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        function = @language.line_inspect(FUNCTION_ID, pLine)
+        function = @language.processed_line
 
         if function
           function.comments = @language.string_comment_to_transfer

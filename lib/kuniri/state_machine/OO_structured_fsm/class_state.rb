@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 
 module StateMachine
@@ -21,7 +27,7 @@ module StateMachine
           attribute_capture
         elsif @language.line_inspect(CONSTRUCTOR_ID, pLine)
           constructor_capture
-        elsif @language.methodHandler.get_function(pLine)
+        elsif @language.line_inspect(METHOD_ID, pLine)
           method_capture
         elsif @language.line_inspect(MODULE_ID, pLine)
           module_capture
@@ -67,7 +73,7 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-        classElement = @language.line_inspect(CLASS_ID, pLine)
+        classElement = @language.processed_line
 
         if classElement
           classElement.comments = @language.string_comment_to_transfer

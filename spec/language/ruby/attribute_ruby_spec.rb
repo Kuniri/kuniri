@@ -5,7 +5,6 @@ RSpec.describe Languages::Ruby::AttributeRuby do
   before :all do
     @rubyAttr = Languages::Ruby::AttributeRuby.new
     @singleResult = 'value'
-    @multiResult = ['value1', 'value2', 'value3', 'value4']
   end
 
   context 'When is a single attribute with @' do
@@ -73,7 +72,7 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     include Helpers
 
     before :all do
-      @input = '@value1, @value2, @value3, @value4'
+      @input = multiResult.map { |variable| '@' + variable.to_s }.join(', ')
     end
 
     it 'Use only one space' do
@@ -103,24 +102,43 @@ RSpec.describe Languages::Ruby::AttributeRuby do
     it 'Many whitespace before and after comma' do
       multiple_declarations_verify(@input.gsub(/,/, '   ,   '))
     end
+  end
 
-    it 'Multiple declaration with assignment' do
-      input = '@value1 = 3, @value2 = 1, @value3 = 324, @value4=28'
+  context 'Multiple declaration with assignments' do
+
+    include Helpers
+
+    it 'All elements with values and separted by comma' do
+      input = multiResult.map do |variable|
+        space1 = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
+        space2 = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
+        number = Faker::Number.between(1, 5)
+        value = Faker::Number.number(number)
+        '@' + variable.to_s + space1 + '=' + space2 + value
+      end.join(', ')
       multiple_declarations_verify(input)
     end
 
-    it 'Partial Assignment' do
-      input = '@value1 = 3, @value2 = 1, @value3, @value4=28'
+    it 'Partial assigments' do
+      input = multiResult.map do |variable|
+        space1 = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
+        space2 = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
+        number = Faker::Number.between(1, 5)
+        value = Faker::Number.number(number)
+        assigment = space1 + '=' + space2 + value
+        '@' + variable.to_s + (Faker::Boolean.boolean ? assigment : '')
+      end.join(', ')
       multiple_declarations_verify(input)
     end
- end
+  end
 
   context ' Multiple declaration with equal' do
 
     include Helpers
 
     before :all do
-      @input = '@value1 = @value2 = @value3 = @value4 = 3'
+      @input = multiResult.map { |variable| '@' + variable.to_s }.join(' = ')
+      @input = @input + ' = ' + Faker::Number.between(1, 200).to_s
     end
 
     it 'Separated by equal' do

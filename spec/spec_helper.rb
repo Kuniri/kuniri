@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'rspec'
 require 'coveralls'
+require 'faker'
 
 RSpec.configure do |config|
   config.order = 'random'

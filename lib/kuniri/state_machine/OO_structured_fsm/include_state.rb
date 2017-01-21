@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2015-2017 Rodrigo Siqueira  <siqueira@kuniri.org>
+#
+# This source code is licensed under the GNU lesser general public license,
+# Version 3.  See the file COPYING for more details
+
 require_relative 'oo_structured_state'
 
 module StateMachine
@@ -31,12 +37,9 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
+        requirement = @language.processed_line
 
-        requirement = @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
-
-        if requirement
-          pElementFile.add_extern_requirement(requirement)
-        end
+        pElementFile.add_extern_requirement(requirement) if requirement
 
         idle_capture
 

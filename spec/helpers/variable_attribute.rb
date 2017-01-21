@@ -2,8 +2,9 @@ require 'spec_helper'
 
 module Helpers
 
-  @singleResult = 'value'
-  @multiResult = ['value1', 'value2', 'value3', 'value4']
+  def multiResult
+    @multiResult = Faker::Lorem.words(4, true)
+  end
 
   def multiple_declarations_verify(input, attribute = true)
     listResult = []
