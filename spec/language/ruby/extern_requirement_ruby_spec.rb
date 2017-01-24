@@ -55,34 +55,34 @@ RSpec.describe Languages::Ruby::ExternRequirementRuby do
 
     before :each do
       @space = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
-      @loadLineTest = "'#{Faker::Lorem.word + '.rb'}'"
+      @loadLineTest = Faker::Lorem.word
     end
 
     it 'Basic use of load' do
-      libName = Faker::Lorem.word + '.rb'
-      result = @extern.get_requirement("load '#{libName}'")
+      libName = Faker::Lorem.word
+      result = @extern.get_requirement("load '#{libName}.rb'")
       expect(result.library).to eq(libName)
     end
 
     it 'load with multiple spaces in the begin' do
-      test = @space + ' ' + 'load ' + @loadLineTest
+      test = @space + ' ' + 'load ' + "'#{@loadLineTest}.rb'"
       result = @extern.get_requirement(test)
-      expect(result.library).to eq(@loadLineTest)
+      expect(result.library).to eq(File.basename(@loadLineTest, '*.rb'))
     end
 
     it 'load with multiple spaces in the end' do
-      test = 'load ' + @loadLineTest + @space + ' '
+      test = 'load ' + "'#{@loadLineTest}.rb'" + @space + ' '
       result = @extern.get_requirement(test)
       expect(result.library).to eq(@loadLineTest)
     end
 
     it 'load with multiple spaces' do
-      test = @space + ' ' + 'load ' + @loadLineTest + @space + ' '
+      test = @space + ' ' + 'load ' + "'#{@loadLineTest}.rb'" + @space + ' '
       result = @extern.get_requirement(test)
       expect(result.library).to eq(@loadLineTest)
     end
 
-    before :each do
+    after :each do
       @loadLineTest = ''
       @space = ''
     end
