@@ -9,6 +9,21 @@ require_relative '../language/language_factory'
 # Module responsible for keeping the parser handler
 module Parser
 
+  OPTIMIZE_OUTPUT_MAP = {
+    'kuniri': 'kr',
+    'classData': 'cl',
+    'constructorData': 'cn',
+    'methodData': 'mt',
+    'attributeData': 'at',
+    'inheritanceData': 'ih',
+    'aggregationData': 'ag',
+    'externRequirementData': 'et',
+    'moduleData': 'mo',
+    'commentData': 'cm',
+    'parameterData': 'pr',
+    'globalVariableData': 'gl'
+  }
+
   # Keep the relationship between languages and project
   class Parser
 

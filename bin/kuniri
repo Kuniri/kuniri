@@ -64,10 +64,10 @@ def startParser
 
   kuniri = Kuniri::Kuniri.new
   kuniri.set_configuration(@options[:source], @options[:languageType],
-                          @options[:output], @options[:optimization])
+                           @options[:output], @options[:optimization])
   kuniri.run_analysis
 
-  parser = Parser::XMLOutputFormat.new
+  parser = Parser::XMLOutputFormat.new(@options[:optimization])
   parser.set_path(@options[:output])
   parser.create_all_data(kuniri.get_parser())
 end

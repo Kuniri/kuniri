@@ -12,11 +12,13 @@ module Parser
     attr_reader :betweenTag
     attr_reader :ident
     attr_accessor :identIncrement
+    attr_reader :optimizationLevel
 
     public
 
-      def initialize(pBaseSpaceIdent = 2)
+      def initialize(pBaseSpaceIdent = 2, pLevel = 0)
         set_default(pBaseSpaceIdent)
+        @optimizationLevel = pLevel
       end
 
       def to_xml
@@ -40,7 +42,9 @@ module Parser
 
       def method_missing(pTagName, *pTagParameters, &pBlock)
         @tag += "\n" unless @tag.strip == ''
-        currentTagName = "#{@ident}<#{pTagName.to_s}"
+        name = @optimizationLevel != 1 ? pTagName.to_s
+                                       : OPTIMIZE_OUTPUT_MAP[pTagName.to_sym]
+        currentTagName = "#{@ident}<#{name}"
         @tag << currentTagName
         if pTagParameters.size > 0 and pTagParameters[0].is_a? Hash
           handleArguments(pTagParameters)
