@@ -7,7 +7,7 @@ RSpec.describe "Verify class with while loop" do
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
-    parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
+    parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     target = "./spec/language/ruby/global_test/repetition/untilInClass.xml"
     @output = File.open(target, "r")
