@@ -43,7 +43,7 @@ module Parser
       def method_missing(pTagName, *pTagParameters, &pBlock)
         @tag += "\n" unless @tag.strip == ''
         name = @optimizationLevel != 1 ? pTagName.to_s
-                                       : OPTIMIZE_OUTPUT_MAP[pTagName.to_sym]
+                                       : optimizeSize(pTagName)
         currentTagName = "#{@ident}<#{name}"
         @tag << currentTagName
         if pTagParameters.size > 0 and pTagParameters[0].is_a? Hash
@@ -59,12 +59,16 @@ module Parser
           end
 
           decrementIdent
-          @tag << "#{@ident}</#{pTagName.to_s}>\n"
+          @tag << "#{@ident}</#{name}>\n"
           @tag.squeeze!("\n")
         else
           @tag << "/>\n"
         end
           @content = ''
+      end
+
+      def optimizeSize(pTagName)
+          return OPTIMIZE_OUTPUT_MAP[pTagName.to_sym] || pTagName.to_s
       end
 
       def updateTag(pNewContent)
