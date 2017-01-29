@@ -28,6 +28,18 @@ Style/VariableName:
 Style/RedundantReturn:
   Enabled: false
 
+Style/ParenthesesAroundCondition:
+  Enabled: false
+
+Style/RedundantParentheses:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 80
 
