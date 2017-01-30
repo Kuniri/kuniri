@@ -17,6 +17,7 @@ module Parser
     def initialize(pBaseSpaceIdent = 2, pLevel = 0)
       set_default(pBaseSpaceIdent)
       @optimizationLevel = pLevel
+      set_default(0) if (@optimizationLevel == 1)
     end
 
     def to_xml
@@ -39,7 +40,7 @@ module Parser
     private
 
     def method_missing(pTagName, *pTagParameters, &pBlock)
-      @tag += "\n" unless @tag.strip == ''
+      @tag << "\n" unless @tag.strip == ''
       name = @optimizationLevel != 1 ? pTagName.to_s : optimize_size(pTagName)
       currentTagName = "#{@ident}<#{name}"
       @tag << currentTagName
@@ -83,6 +84,7 @@ module Parser
     def handle_arguments(pTagParameters)
       pTagParameters[0].each do |key, value|
         stringValue = handle_special_characters_xml(value.to_s)
+        key = optimize_size(key) unless (@optimizationLevel != 1)
         @tag << " #{key}=\"#{stringValue}\""
       end
     end
@@ -97,7 +99,7 @@ module Parser
     end
 
     def increment_identation
-      @ident += @identIncrement
+      @ident << @identIncrement
     end
 
     def decrement_ident

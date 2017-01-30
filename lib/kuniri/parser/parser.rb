@@ -21,7 +21,11 @@ module Parser
     'moduleData': 'mo',
     'commentData': 'cm',
     'parameterData': 'pr',
-    'globalVariableData': 'gl'
+    'globalVariableData': 'gl',
+    'visibility': 'v',
+    'name': 'n',
+    'expression': 'e',
+    'level': 'l'
   }
 
   # Keep the relationship between languages and project
