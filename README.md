@@ -90,6 +90,13 @@ kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby
 you can indicate the path that you want to put the final output. Finally
 ***-l***, indicate which kind of language your project is.
 
+```
+kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby -O1
+```
+
+> Additionally, Kuniri provide level 1 of optimization. This optimization flag
+reduces the total size of final xml file.
+
 ## Using configuration file
 
 > If you chose to use a configuration file, first you have to create
