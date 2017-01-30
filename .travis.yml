@@ -2,6 +2,7 @@ language: ruby
 rvm:
   - 2.3.3
 before_install:
+  - gem update --system
   - gem update bundler
 before_script:
   - git clone https://github.com/Kuniri/kuniri.git
