@@ -13,8 +13,9 @@ module Parser
 
     public
 
-      def initialize(pPath = 'outputKuniri/')
-        @outputEngine = XMLBuilderEngine.new
+      def initialize(pOptimizationLevel = 0, pPath = 'outputKuniri/')
+        @optimizationLevel = pOptimizationLevel
+        @outputEngine = XMLBuilderEngine.new(2, @optimizationLevel)
         set_path(pPath)
       end
 

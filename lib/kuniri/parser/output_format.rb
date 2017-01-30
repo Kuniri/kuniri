@@ -17,6 +17,7 @@ module Parser
       attr_accessor :outputEngine
       attr_accessor :parserPath
       attr_accessor :extension
+      attr_reader :optimizationLevel
 
       # Set path to save the output.
       # @param pPath Output path.

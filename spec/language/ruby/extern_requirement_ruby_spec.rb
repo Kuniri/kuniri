@@ -6,47 +6,85 @@ RSpec.describe Languages::Ruby::ExternRequirementRuby do
     @extern = Languages::Ruby::ExternRequirementRuby.new
   end
 
-  context "Simple case of match" do
-    it "'Require', Normal case" do
+  context 'Simple case of match' do
+    it '"Require", Normal case' do
        result = @extern.get_requirement('require "xpto"')
        expect(result.library).to eq('xpto')
     end
 
-    it "'require_relative', Normal case" do
+    it '"require_relative", Normal case' do
        result = @extern.get_requirement('require_relative "xpto"')
        expect(result.library).to eq('xpto')
     end
   end
 
-  context "Find requires with multiple spaces" do
-    it "A lot of space at the end (require)" do
+  context 'Find requires with multiple spaces' do
+    it 'A lot of space at the end (require)' do
        result = @extern.get_requirement('require "xpto"                ')
        expect(result.library).to eq('xpto')
     end
 
-    it "A lot of space at the end (require_relative)" do
+    it 'A lot of space at the end (require_relative)' do
        result = @extern.get_requirement('require_relative "xpto"       ')
        expect(result.library).to eq('xpto')
     end
 
-    it "A lot of space at the beginning (require)" do
+    it 'A lot of space at the beginning (require)' do
        result = @extern.get_requirement('require              "xpto"')
        expect(result.library).to eq('xpto')
     end
 
-    it "A lot of space at the beginning (require_relative)" do
+    it 'A lot of space at the beginning (require_relative)' do
        result = @extern.get_requirement('require_relative            "xpto"')
        expect(result.library).to eq('xpto')
     end
 
-    it "A lot of space at the beginning and the end (require_relative)" do
+    it 'A lot of space at the beginning and the end (require_relative)' do
        result = @extern.get_requirement('require_relative         "xpto"  ')
        expect(result.library).to eq('xpto')
     end
 
-    it "A lot of space at the beginning and the end (require)" do
+    it 'A lot of space at the beginning and the end (require)' do
        result = @extern.get_requirement('require         "xpto"  ')
        expect(result.library).to eq('xpto')
+    end
+
+  end
+
+  context 'Require with load' do
+
+    before :each do
+      @space = Faker::Boolean.boolean ? ' ' * Faker::Number.between(1, 2) : ''
+      @loadLineTest = Faker::Lorem.word
+    end
+
+    it 'Basic use of load' do
+      libName = Faker::Lorem.word
+      result = @extern.get_requirement("load '#{libName}.rb'")
+      expect(result.library).to eq(libName)
+    end
+
+    it 'load with multiple spaces in the begin' do
+      test = @space + ' ' + 'load ' + "'#{@loadLineTest}.rb'"
+      result = @extern.get_requirement(test)
+      expect(result.library).to eq(File.basename(@loadLineTest, '*.rb'))
+    end
+
+    it 'load with multiple spaces in the end' do
+      test = 'load ' + "'#{@loadLineTest}.rb'" + @space + ' '
+      result = @extern.get_requirement(test)
+      expect(result.library).to eq(@loadLineTest)
+    end
+
+    it 'load with multiple spaces' do
+      test = @space + ' ' + 'load ' + "'#{@loadLineTest}.rb'" + @space + ' '
+      result = @extern.get_requirement(test)
+      expect(result.library).to eq(@loadLineTest)
+    end
+
+    after :each do
+      @loadLineTest = ''
+      @space = ''
     end
 
   end

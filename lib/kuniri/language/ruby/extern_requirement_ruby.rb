@@ -23,25 +23,23 @@ module Languages
           return nil unless detectExpression
 
           detectExpression = remove_unnecessary_information(detectExpression)
-          # @requirement = detectExpression
-          name = File.basename(detectExpression, ".*")
-          externReference = ExternRequirementData.new(name)
-          return externReference
+          name = File.basename(detectExpression, '.*')
+          return ExternRequirementData.new(name)
         end
 
       protected
 
         # Override
         def detect_extern_requirement(pLine)
-          regexExpression = /^\s*require(?:_relative)?\s+('|")(.*)\1/
+          regexExpression = /^\s*(:?require(?:_relative)?|load)\s+('|")(.*)\2/
           return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression).join("")
+          return pLine[regexExpression,3]
         end
 
         # Override
         def remove_unnecessary_information(pLine)
           regexClean = /\s+|"|'/
-          return pLine.gsub!(regexClean, "") if pLine =~ regexClean
+          return pLine.gsub!(regexClean, '') if pLine =~ regexClean
           return pLine
         end
 

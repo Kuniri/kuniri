@@ -13,7 +13,7 @@ RSpec.describe 'Xml Schema Validate' do
       kuniri = Kuniri::Kuniri.new
       kuniri.read_configuration_file(@targetFolder + config)
       kuniri.run_analysis
-      parser = Parser::XMLOutputFormat.new(kuniri.configurationInfo[:output])
+      parser = Parser::XMLOutputFormat.new(0, kuniri.configurationInfo[:output])
       parser.create_all_data(kuniri.get_parser())
       xml = XML::Document.file(@targetFolder + xmlOutput)
       schema = XML::Schema.document(XML::Document.file(@targetFolder + xsdFile))

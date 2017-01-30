@@ -1,0 +1,62 @@
+AllCops:
+  Include:
+    - 'lib/**/*'
+    - 'bin/**/*'
+  Exclude:
+    - 'spec/**/*'
+    - 'pkg/**/*'
+    - 'data/**/*'
+    - 'coverage/**/*'
+    - './*'
+  TargetRubyVersion: 2.3
+
+Style/Encoding:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Style/VariableName:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
+Style/ParenthesesAroundCondition:
+  Enabled: false
+
+Style/RedundantParentheses:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 80
+
+# Offense count: 86
+Metrics/AbcSize:
+  Max: 19
+
+# Offense count: 32
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  Max: 178
+
+# Offense count: 28
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+# Offense count: 139
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 14

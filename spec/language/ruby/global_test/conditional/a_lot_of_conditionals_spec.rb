@@ -7,7 +7,7 @@ RSpec.describe Kuniri::Kuniri do
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
-    parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
+    parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     str = "./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml"
     @output = File.open(str, "r")

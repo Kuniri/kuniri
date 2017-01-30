@@ -7,9 +7,11 @@ RSpec.describe "Mix conditional and repetition in the same code" do
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
-    parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
+    parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/conditional_and_repetition/mixConditionalRepetition.xml", "r")
+    target = './spec/language/ruby/global_test/conditional_and_repetition/' +
+             'mixConditionalRepetition.xml'
+    @output = File.open(target, 'r')
   end
 
   RSpec.shared_examples "Multiple verification" do |regex, description|

@@ -21,5 +21,6 @@ Gem::Specification.new 'kuniri', '0.2' do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "faker"
+  spec.add_development_dependency "rubocop"
   spec.add_development_dependency "rake", "~> 10.0"
 end
