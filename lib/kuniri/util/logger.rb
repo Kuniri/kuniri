@@ -3,38 +3,49 @@
 #
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
+require 'logger'
 
 # Util provides classes, functions and constants which can be used for the
 # entire system.
 module Util
 
-  # Abstract class responsible for define the log strategy.
-  class Logger
+  # Abstract class responsible for define the log.
+  class LoggerKuniri
 
-    # Create/open the log file, and save the path.
-    # @param pPath [String] Receives the path for save the log file. By default
-    #   it is saved on /tmp with the name "kuniri".
-    def initialize(pPath = "/tmp/kuniri.log")
-      File.open(pPath, 'a')
-      @log_path = pPath
+    private_class_method :new
+    @@logger = nil
+
+    # It is desirable to have a single instance of log for the entire system
+    # because of this only the class is responsible to control the object
+    # creation
+    # @return logger reference
+    def self.create(pOutput = STDOUT)
+      unless @@logger
+        @@logger = Logger.new(pOutput)
+        @@logger.level = Logger::WARN
+      end
+      return @@logger
     end
 
-    public
+    # With this method, we can handle all kind of log level available by ruby
+    # E.g: Util::LoggerKuniri.info('lalala')
+    def self.method_missing(pLogPrint, *pLogMessage)
+      self.create
+      @@logger.send(pLogPrint, pLogMessage.join(''))
+    end
 
-      # Write log, based on the message and the path. The most important thing
-      # about this method, is related with the implementation in different
-      # formats. Ex.: write_log can be implemented as HTML, txt, XML, etc.
-      # @param pMessage to write in the log file.
-      def write_log(pMessage)
-        raise NotImplementedError
-      end
+    # Change log output
+    def self.update_log_output(pOutput)
+      @@logger = nil
+      @@logger = create(pOutput)
+    end
 
-    protected
-
-      @log_path # Saved path of the log file.
+    # Update log level
+    def self.update_log_level(pLevel)
+      @@logger.level = pLevel
+    end
 
   # Class
   end
-
 # Util
 end
