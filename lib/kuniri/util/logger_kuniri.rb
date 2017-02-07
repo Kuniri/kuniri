@@ -42,6 +42,7 @@ module Util
 
     # Update log level
     def self.update_log_level(pLevel)
+      self.create
       @@logger.level = pLevel
     end
 
