@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'logger'
 require 'kuniri'
 require 'optparse'
 require 'kuniri/core/kuniri'
@@ -9,11 +10,21 @@ require 'kuniri/parser/xml_output_format'
 @options[:source] = ARGV[0]
 
 optionParser = OptionParser.new do |buildOptions|
-  buildOptions.banner = "Usage: optionParser PATH [OPTIONS]"
+  buildOptions.banner = "Usage: kuniri [OPTIONS] [FILE|FOLDER] [OPTIONS]"
+  buildOptions.separator  ""
+  buildOptions.separator  "OPTIONS"
+  buildOptions.separator  "     FILE: Target file"
+  buildOptions.separator  "     FOLDER: Folder file"
+  buildOptions.separator  ""
+  buildOptions.separator  "Options"
   buildOptions.version = Kuniri::VERSION
 
-  buildOptions.on("-v", "--[no-]verbose", "Run verbosely") do |verboseMode|
-    @options[:verbose] = verboseMode
+  buildOptions.on("-v", "--verbose", "Run verbosely") do |verbose|
+    @options[:verbose] = Logger::INFO
+  end
+
+  buildOptions.on("-V", "--very-verbose", "Very verbose") do |veryVerbose|
+    @options[:verbose] = Logger::DEBUG
   end
 
   buildOptions.on("--version", "Show Kuniri version") do |version|
@@ -25,7 +36,12 @@ optionParser = OptionParser.new do |buildOptions|
     @options[:output] = dest
   end
 
-  buildOptions.on("-O1", "--optimization 1,2,3", "Optimize", Numeric) do
+  buildOptions.on("-h", "--help", "Help") do |dest|
+    puts buildOptions
+		exit
+  end
+
+  buildOptions.on("-O", "--optimization 1,2,3", "Optimize", Numeric) do
     |optimization|
       @options[:optimization] = optimization
   end
@@ -56,11 +72,17 @@ optionParser = OptionParser.new do |buildOptions|
 
 end.parse!
 
+def verifyVerboseMode
+	Util::LoggerKuniri.update_log_level(@options[:verbose])
+end
+
 def startParser
   puts "Exporting ..."
   unless (@options[:output])
     @options[:output] = 'outputKuniri/'
   end
+
+  verifyVerboseMode if @options[:verbose]
 
   kuniri = Kuniri::Kuniri.new
   kuniri.set_configuration(@options[:source], @options[:languageType],
