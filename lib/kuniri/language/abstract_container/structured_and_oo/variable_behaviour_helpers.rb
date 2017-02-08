@@ -4,6 +4,8 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 
+require_relative '../../../util/logger_kuniri'
+
 module Languages
 
   # Mixin to automatically add behaviour inside attribute and variables.
@@ -22,7 +24,7 @@ module Languages
         clazz = Object.const_get(expression)
         @variableBehaviour = clazz.new(who_am_i)
       rescue NameError
-        puts 'Error on class name'
+        Util::LoggerKuniri.error('Class name error')
       end
     end
 
