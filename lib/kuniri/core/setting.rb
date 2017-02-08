@@ -7,6 +7,7 @@
 require 'yaml'
 require_relative 'configuration/language_available'
 require_relative '../error/configuration_file_error'
+require_relative '../util/logger_kuniri'
 
 module Kuniri
 
@@ -65,6 +66,7 @@ module Kuniri
 
       def verify_syntax
         unless @configurationInfo.is_a? Hash
+          Util::LoggerKuniri.error('Configuration file has a syntax problem')
           raise Error::ConfigurationFileError
         end
 
@@ -75,11 +77,13 @@ module Kuniri
 
       def check_source
         unless @configurationInfo.has_key?:source
+          Util::LoggerKuniri.error('Problem with source parameter')
           raise Error::ConfigurationFileError
         else
           source = @configurationInfo[:source]
           result = (File.directory?source) || (File.exists?source)
           unless result
+            Util::LoggerKuniri.error('Wrong path on source')
             raise Error::ConfigurationFileError
           end
         end
@@ -87,17 +91,20 @@ module Kuniri
 
       def check_output
         unless @configurationInfo.has_key?:output
+          Util::LoggerKuniri.error('Problem with output field')
           raise Error::ConfigurationFileError
         end
       end
 
       def check_language
         unless @configurationInfo.has_key?:language
+          Util::LoggerKuniri.error('Problem with language field')
           raise Error::ConfigurationFileError
         else
           result = Configuration::LanguageAvailable::LANGUAGES.include?(
                                                 @configurationInfo[:language])
           unless result
+            Util::LoggerKuniri.error('Problem with specified language')
             raise Error::ConfigurationFileError
           end
         end
