@@ -14,45 +14,43 @@ module Kuniri
   # Class Setting that read and handling .kuniri file.
   class Setting
 
-    public
+    private_class_method :new
+    attr_reader :configurationInfo
 
-      private_class_method :new
-      attr_reader :configurationInfo
+    def initialize
+      initializate_settings
+    end
 
-      def initialize
-        initializate_settings
+    def self.create
+      @@settings = new unless @@settings
+      return @@settings
+    end
+
+    # TODO: Remove parameter and initialize_object. Useless.
+    def initializate_settings
+      @configurationInfo = {}
+    end
+
+    # In this method it is checked the configuration file syntax.
+    # @param pPath [String] Path to ".kuniri" file, it means, the
+    #         configurations.
+    # @return [Hash] Return a Hash with the configurations read in ".kuniri",
+    #     otherwise, raise an exception.
+    def read_configuration_file(pPath = '.kuniri.yml')
+
+      if !(File.exist?(pPath))
+        set_default_configuration
+      else
+        @configurationInfo = YAML.load(File.read(pPath))
+        verify_syntax
       end
 
-      def Setting.create
-        @@settings = new unless @@settings
-        return @@settings
-      end
+      return @configurationInfo
+    end
 
-      # TODO: Remove parameter and initialize_object. Useless.
-      def initializate_settings
-          @configurationInfo = {}
-      end
-
-      # In this method it is checked the configuration file syntax.
-      # @param pPath [String] Path to ".kuniri" file, it means, the
-      #         configurations.
-      # @return [Hash] Return a Hash with the configurations read in ".kuniri",
-      #     otherwise, raise an exception.
-      def read_configuration_file(pPath = ".kuniri.yml")
-
-        unless File.exists?(pPath)
-          set_default_configuration
-        else
-          @configurationInfo = YAML.load(File.read(pPath))
-          verify_syntax
-        end
-
-        return @configurationInfo
-      end
-
-      def set_configuration(configurationInfo)
-        @configurationInfo = configurationInfo
-      end
+    def set_configuration(configurationInfo)
+      @configurationInfo = configurationInfo
+    end
 
     private
 
