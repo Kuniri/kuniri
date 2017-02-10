@@ -7,51 +7,50 @@
 require 'yaml'
 require_relative 'configuration/language_available'
 require_relative '../error/configuration_file_error'
+require_relative '../util/logger_kuniri'
 
 module Kuniri
 
   # Class Setting that read and handling .kuniri file.
   class Setting
 
-    public
+    private_class_method :new
+    attr_reader :configurationInfo
 
-      private_class_method :new
-      attr_reader :configurationInfo
+    def initialize
+      initializate_settings
+    end
 
-      def initialize
-        initializate_settings
+    def self.create
+      @@settings = new unless @@settings
+      return @@settings
+    end
+
+    # TODO: Remove parameter and initialize_object. Useless.
+    def initializate_settings
+      @configurationInfo = {}
+    end
+
+    # In this method it is checked the configuration file syntax.
+    # @param pPath [String] Path to ".kuniri" file, it means, the
+    #         configurations.
+    # @return [Hash] Return a Hash with the configurations read in ".kuniri",
+    #     otherwise, raise an exception.
+    def read_configuration_file(pPath = '.kuniri.yml')
+
+      if !(File.exist?(pPath))
+        set_default_configuration
+      else
+        @configurationInfo = YAML.load(File.read(pPath))
+        verify_syntax
       end
 
-      def Setting.create
-        @@settings = new unless @@settings
-        return @@settings
-      end
+      return @configurationInfo
+    end
 
-      # TODO: Remove parameter and initialize_object. Useless.
-      def initializate_settings
-          @configurationInfo = {}
-      end
-
-      # In this method it is checked the configuration file syntax.
-      # @param pPath [String] Path to ".kuniri" file, it means, the
-      #         configurations.
-      # @return [Hash] Return a Hash with the configurations read in ".kuniri",
-      #     otherwise, raise an exception.
-      def read_configuration_file(pPath = ".kuniri.yml")
-
-        unless File.exists?(pPath)
-          set_default_configuration
-        else
-          @configurationInfo = YAML.load(File.read(pPath))
-          verify_syntax
-        end
-
-        return @configurationInfo
-      end
-
-      def set_configuration(configurationInfo)
-        @configurationInfo = configurationInfo
-      end
+    def set_configuration(configurationInfo)
+      @configurationInfo = configurationInfo
+    end
 
     private
 
@@ -65,6 +64,7 @@ module Kuniri
 
       def verify_syntax
         unless @configurationInfo.is_a? Hash
+          Util::LoggerKuniri.error('Configuration file has a syntax problem')
           raise Error::ConfigurationFileError
         end
 
@@ -75,11 +75,13 @@ module Kuniri
 
       def check_source
         unless @configurationInfo.has_key?:source
+          Util::LoggerKuniri.error('Problem with source parameter')
           raise Error::ConfigurationFileError
         else
           source = @configurationInfo[:source]
           result = (File.directory?source) || (File.exists?source)
           unless result
+            Util::LoggerKuniri.error('Wrong path on source')
             raise Error::ConfigurationFileError
           end
         end
@@ -87,17 +89,20 @@ module Kuniri
 
       def check_output
         unless @configurationInfo.has_key?:output
+          Util::LoggerKuniri.error('Problem with output field')
           raise Error::ConfigurationFileError
         end
       end
 
       def check_language
         unless @configurationInfo.has_key?:language
+          Util::LoggerKuniri.error('Problem with language field')
           raise Error::ConfigurationFileError
         else
           result = Configuration::LanguageAvailable::LANGUAGES.include?(
                                                 @configurationInfo[:language])
           unless result
+            Util::LoggerKuniri.error('Problem with specified language')
             raise Error::ConfigurationFileError
           end
         end

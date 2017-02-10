@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'logger'
 require 'kuniri'
 require 'optparse'
 require 'kuniri/core/kuniri'
@@ -9,42 +10,49 @@ require 'kuniri/parser/xml_output_format'
 @options[:source] = ARGV[0]
 
 optionParser = OptionParser.new do |buildOptions|
-  buildOptions.banner = "Usage: optionParser PATH [OPTIONS]"
+  buildOptions.banner = 'Usage: kuniri [OPTIONS] [FILE|FOLDER] [OPTIONS]'
+  buildOptions.separator  ''
+  buildOptions.separator  'OPTIONS'
+  buildOptions.separator  '     FILE: Target file'
+  buildOptions.separator  '     FOLDER: Folder file'
+  buildOptions.separator  ''
+  buildOptions.separator  'Options'
   buildOptions.version = Kuniri::VERSION
 
-  buildOptions.on("-v", "--[no-]verbose", "Run verbosely") do |verboseMode|
-    @options[:verbose] = verboseMode
+  buildOptions.on('-v', '--verbose', 'Run verbosely') do
+    @options[:verbose] = Logger::INFO
   end
 
-  buildOptions.on("--version", "Show Kuniri version") do |version|
+  buildOptions.on('-V', '--very-verbose', 'Very verbose') do
+    @options[:verbose] = Logger::DEBUG
+  end
+
+  buildOptions.on('--version', 'Show Kuniri version') do
     puts buildOptions.version
     exit
   end
 
-  buildOptions.on("-o", "--output [DEST]", "Export") do |dest|
+  buildOptions.on('-o', '--output [DEST]', 'Export') do |dest|
     @options[:output] = dest
   end
 
-  buildOptions.on("-O1", "--optimization 1,2,3", "Optimize", Numeric) do
-    |optimization|
-      @options[:optimization] = optimization
+  buildOptions.on('-h', '--help', 'Help') do
+    puts buildOptions
+    exit
   end
 
-  buildOptions.on("-l", "--language [languageType]", "Define language") do
-    |languageType|
-    @options[:languageType] = languageType
+  buildOptions.on('-O', '--optimization 1,2,3', 'Optimize', Numeric) do |optim|
+    @options[:optimization] = optim
   end
 
-  buildOptions.on("-e", "--export [FILENAME]", "Export XML") do
-    |configurationFile|
+  buildOptions.on('-l', '--language [languageType]', 'Define language') do |lan|
+    @options[:languageType] = lan
+  end
 
-    puts "Exporting..."
+  buildOptions.on('-e', '--export [FILENAME]', 'Export') do |configurationFile|
+    puts 'Exporting...'
 
-    if(configurationFile)
-      path = configurationFile
-    else
-      path = '.kuniri.yml'
-    end
+    path = configurationFile ? configurationFile : '.kuniri.yml'
 
     kuniri = Kuniri::Kuniri.new
     kuniri.read_configuration_file(path)
@@ -56,11 +64,15 @@ optionParser = OptionParser.new do |buildOptions|
 
 end.parse!
 
-def startParser
-  puts "Exporting ..."
-  unless (@options[:output])
-    @options[:output] = 'outputKuniri/'
-  end
+def verify_verbose_mode
+  Util::LoggerKuniri.update_log_level(@options[:verbose])
+end
+
+def start_parser
+  puts 'Exporting ...'
+  @options[:output] = 'outputKuniri/' unless (@options[:output])
+
+  verify_verbose_mode if @options[:verbose]
 
   kuniri = Kuniri::Kuniri.new
   kuniri.set_configuration(@options[:source], @options[:languageType],
@@ -72,6 +84,4 @@ def startParser
   parser.create_all_data(kuniri.get_parser())
 end
 
-if @options[:source] && @options[:output]
-  startParser
-end
+startParser if @options[:source] && @options[:output]
