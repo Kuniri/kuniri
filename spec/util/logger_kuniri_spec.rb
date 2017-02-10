@@ -46,12 +46,9 @@ RSpec.describe Util::LoggerKuniri do
     end
   end
 
-  context 'Update output log' do
-  end
-
   context 'Verify log methods' do
     it 'Should not call undefined method' do
-      pending 'Not implemented yet'
+      expect{Util::LoggerKuniri.lala}.to raise_error(NoMethodError)
     end
   end
 
