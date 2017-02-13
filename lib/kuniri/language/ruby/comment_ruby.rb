@@ -23,9 +23,11 @@ module Languages
 
         # @see Comment
         def get_comment(pLine)
-
           # Single line
-          return pLine.scan(/#(.*)/)[0].join if is_single_line_comment?(pLine)
+          if is_single_line_comment?(pLine)
+            partialString =  pLine.scan(/#(.*)/)[0].join
+            return normalize_comments(partialString)
+          end
 
           # Multiple line
           multipleLine = handle_multiple_line(pLine)
@@ -55,8 +57,12 @@ module Languages
 
         # @see Comment
         def prepare_line_comment(pString)
-          return "" if pString =~ /=begin/
+          return '' if pString =~ /=begin/
           return pString
+        end
+
+        def normalize_comments(pString)
+          return pString.tr("\n", ' ').strip.squeeze(' ')
         end
 
       private
@@ -64,7 +70,7 @@ module Languages
         def handle_multiple_line(pLine)
           if is_multiple_line_comment_end?(pLine)
             @flagMultipleLine = false
-            return ""
+            return ''
           end
 
           if @flagMultipleLine
@@ -74,7 +80,7 @@ module Languages
 
           if is_multiple_line_comment?(pLine)
             @flagMultipleLine = true
-            return ""
+            return ''
           end
 
           return nil
@@ -82,9 +88,7 @@ module Languages
 
     # class
     end
-
   # module
   end
-
 # module
 end

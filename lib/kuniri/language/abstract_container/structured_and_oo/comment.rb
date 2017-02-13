@@ -56,6 +56,11 @@ module Languages
         raise NotImplementedError
       end
 
+      # TODO
+      def normalize_comments(pString)
+        raise NotImplementedError
+      end
+
   # End class
   end
 
