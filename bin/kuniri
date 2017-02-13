@@ -84,4 +84,4 @@ def start_parser
   parser.create_all_data(kuniri.get_parser())
 end
 
-startParser if @options[:source] && @options[:output]
+start_parser if @options[:source] && @options[:output]
