@@ -56,7 +56,9 @@ module Languages
         raise NotImplementedError
       end
 
-      # TODO
+      # This method try to apply basic normalization in comments, just for make
+      # it readable
+      # @param pString String comment to normalize
       def normalize_comments(pString)
         raise NotImplementedError
       end

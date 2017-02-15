@@ -54,8 +54,8 @@ module StateMachine
 
         def handling_single_line(pLine)
           comment_string = @language.line_inspect(COMMENT_ID, pLine)
-          comment_string += "\n"
           @language.string_comment_to_transfer += comment_string
+          apply_final_adjustments!(@language.string_comment_to_transfer)
           @language.rewind_state
         end
 
@@ -69,13 +69,17 @@ module StateMachine
         def capture_multiple_line_comment(pLine)
           comment_string = @language.line_inspect(COMMENT_ID, pLine)
           @multipleLineComment += comment_string
+          apply_final_adjustments!(@multipleLineComment)
+        end
+
+        def apply_final_adjustments!(pComment)
+          pComment.strip!
+          pComment.squeeze!(' ')
         end
 
     # class
     end
-
   # module
   end
-
 # module
 end

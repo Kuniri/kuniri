@@ -62,7 +62,7 @@ module Languages
         end
 
         def normalize_comments(pString)
-          return pString.tr("\n", ' ').strip.squeeze(' ')
+          return pString.tr("\n", ' ')
         end
 
       private
@@ -75,6 +75,7 @@ module Languages
 
           if @flagMultipleLine
             pLine = prepare_line_comment(pLine)
+            pLine = normalize_comments(pLine)
             return pLine
           end
 
