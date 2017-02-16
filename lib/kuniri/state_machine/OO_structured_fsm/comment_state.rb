@@ -61,6 +61,7 @@ module StateMachine
 
         def handling_multiple_line
           @enableMultipleLine = false
+          apply_final_adjustments!(@multipleLineComment)
           @language.string_comment_to_transfer = @multipleLineComment
           @multipleLineComment = ''
           @language.rewind_state
@@ -69,7 +70,6 @@ module StateMachine
         def capture_multiple_line_comment(pLine)
           comment_string = @language.line_inspect(COMMENT_ID, pLine)
           @multipleLineComment += comment_string
-          apply_final_adjustments!(@multipleLineComment)
         end
 
         def apply_final_adjustments!(pComment)

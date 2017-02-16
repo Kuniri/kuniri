@@ -440,13 +440,13 @@ RSpec.describe Languages::RubySyntax do
               "comment/simple_single_line_comment_global.rb"
 
       @syntax.analyse_source(path)
-      expect(@syntax.fileElements[0].comments).to eq(" First comment\n")
+      expect(@syntax.fileElements[0].comments).to eq("First comment")
       expect(@syntax.fileElements[0].global_functions[0].comments)
-              .to eq(" Comment 2\n")
+              .to eq("Comment 2")
       expect(@syntax.fileElements[0].global_functions[1].comments)
-              .to eq(" Combo comment p1\n Combo comment p2\n")
+              .to eq("Combo comment p1 Combo comment p2")
       expect(@syntax.fileElements[0].global_variables[0].comments)
-              .to eq(" Comment 4\n")
+              .to eq("Comment 4")
     end
 
     it "Correct single line comment capture - Class" do
@@ -456,16 +456,16 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].classes[0].comments)
-              .to eq(" Comment 1: class\n")
+              .to eq("Comment 1: class")
       expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
-              .to eq(" Comment 2: constructor\n")
+              .to eq("Comment 2: constructor")
       expect(@syntax.fileElements[0].classes[0].methods[0].comments)
-              .to eq(" Comment 3: method\n")
+              .to eq("Comment 3: method")
       expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-              .to eq(" Comment 4: Combo 1\n Comment 5: "+
-                      "Combo 2\n Comment 6: Combo 3; Combo 4\n")
+              .to eq("Comment 4: Combo 1 Comment 5: "+
+                      "Combo 2 Comment 6: Combo 3; Combo 4")
       expect(@syntax.fileElements[0].classes[0].attributes[0].comments)
-              .to eq (" Comment 7: Attribute\n")
+              .to eq ("Comment 7: Attribute")
     end
 
     it "Correct multiple line comment capture - Global" do
@@ -475,11 +475,11 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].comments)
-        .to eq("Comment 1:\nMultiple line.\n")
+        .to eq("Comment 1: Multiple line.")
       expect(@syntax.fileElements[0].global_functions[0].comments)
-              .to eq("Global Function\nnumber one\nmultiple line\n")
+              .to eq("Global Function number one multiple line")
       expect(@syntax.fileElements[0].global_variables[0].comments)
-              .to eq("global\n")
+              .to eq("global")
     end
 
     it "Correct multiple line comment capture - Class" do
@@ -489,15 +489,15 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       expect(@syntax.fileElements[0].classes[0].comments)
-              .to eq("This is the\nfirst class\nof this file.\n")
+              .to eq("This is the first class of this file.")
       expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
-              .to eq("    Constructor\n    initialize\n")
+              .to eq("Constructor initialize")
       expect(@syntax.fileElements[0].classes[0].methods[0].comments)
-              .to eq("    First method\n")
+              .to eq("First method")
       expect(@syntax.fileElements[0].classes[0].methods[1].comments)
-              .to eq("    methodTwo\n")
+              .to eq("methodTwo")
       expect(@syntax.fileElements[0].classes[0].methods[2].comments)
-              .to eq("    method;Three\n")
+              .to eq("method;Three")
 
     end
 
