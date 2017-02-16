@@ -13,79 +13,77 @@ module Languages
     # CommentRuby is responsible for handling ruby comments.
     class CommentRuby < Languages::Comment
 
-      public
+      @flagMultipleLine
 
-        @flagMultipleLine
+      def initialize
+        @flagMultipleLine = false
+      end
 
-        def initialize
-          @flagMultipleLine = false
+      # @see Comment
+      def get_comment(pLine)
+        # Single line
+        if single_line_comment?(pLine)
+          partialString = pLine.scan(/#(.*)/)[0].join
+          return normalize_comments(partialString)
         end
 
-        # @see Comment
-        def get_comment(pLine)
-          # Single line
-          if is_single_line_comment?(pLine)
-            partialString =  pLine.scan(/#(.*)/)[0].join
-            return normalize_comments(partialString)
-          end
+        # Multiple line
+        multipleLine = handle_multiple_line(pLine)
+        return multipleLine if multipleLine
+        return nil
+      end
 
-          # Multiple line
-          multipleLine = handle_multiple_line(pLine)
-          return multipleLine if multipleLine
-          return nil
-        end
+      # @see Comment
+      def single_line_comment?(pLine)
+        return true if pLine =~ /#(.*)/
+        return false
+      end
 
-        # @see Comment
-        def is_single_line_comment?(pLine)
-          return true if pLine =~ /#(.*)/
-          return false
-        end
+      # @see Comment
+      def multiple_line_comment?(pLine)
+        return true if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
+        return false
+      end
 
-        # @see Comment
-        def is_multiple_line_comment?(pLine)
-          return true if (pLine =~ /^=begin(.*?)/ || @flagMultipleLine)
-          return false
-        end
-
-        # @see Comment
-        def is_multiple_line_comment_end?(pLine)
-          return true if pLine =~ /^=end/
-          return false
-        end
+      # @see Comment
+      def multiple_line_comment_end?(pLine)
+        return true if pLine =~ /^=end/
+        return false
+      end
 
       protected
 
-        # @see Comment
-        def prepare_line_comment(pString)
-          return '' if pString =~ /=begin/
-          return pString
-        end
+      # @see Comment
+      def prepare_line_comment(pString)
+        return '' if pString =~ /=begin/
+        return pString
+      end
 
-        def normalize_comments(pString)
-          return pString.tr("\n", ' ')
-        end
+      def normalize_comments(pString)
+        return pString.tr("\n", ' ')
+      end
 
       private
 
-        def handle_multiple_line(pLine)
-          if is_multiple_line_comment_end?(pLine)
-            @flagMultipleLine = false
-            return ''
-          end
-
-          if @flagMultipleLine
-            pLine = prepare_line_comment(pLine)
-            pLine = normalize_comments(pLine)
-            return pLine
-          end
-
-          if is_multiple_line_comment?(pLine)
-            @flagMultipleLine = true
-            return ''
-          end
-
-          return nil
+      def handle_multiple_line(pLine)
+        if multiple_line_comment_end?(pLine)
+          @flagMultipleLine = false
+          return ''
         end
+
+        if @flagMultipleLine
+          pLine = prepare_line_comment(pLine)
+          pLine = normalize_comments(pLine)
+          return pLine
+        end
+
+        if multiple_line_comment?(pLine)
+          @flagMultipleLine = true
+          return ''
+        end
+
+        return nil
+      end
 
     # class
     end

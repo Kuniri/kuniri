@@ -27,7 +27,7 @@ module Languages
       # @param pLine String for verify if is a single line comment.
       # @return Return true if is a single line comment, otherwise, return
       #         false.
-      def is_single_line_comment?(pLine)
+      def single_line_comment?(pLine)
         raise NotImplementedError
       end
 
@@ -35,7 +35,7 @@ module Languages
       # @param pLine String for verify if is a multiple line comment.
       # @return Return true if is a multiple line comment, otherwise, return
       #         false.
-      def is_multiple_line_comment?(pLine)
+      def multiple_line_comment?(pLine)
         raise NotImplementedError
       end
 
@@ -43,7 +43,7 @@ module Languages
       # @param pLine String to be inspected.
       # @return Return true if is the end of multiple line comment, otherwise,
       #         return true.
-      def is_multiple_line_comment_end?(pLine)
+      def multiple_line_comment_end?(pLine)
         raise NotImplementedError
       end
 
