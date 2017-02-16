@@ -29,53 +29,51 @@ module StateMachine
       # @see OOStructuredState
       def execute(pElementFile, pLine)
         # Single line
-        if @language.commentHandler.is_single_line_comment?(pLine)
+        if @language.commentHandler.single_line_comment?(pLine)
           handling_single_line(pLine)
           return pElementFile
         end
 
         # Multiple line
-        if @language.commentHandler.is_multiple_line_comment?(pLine)
+        if @language.commentHandler.multiple_line_comment?(pLine)
           @enableMultipleLine = true
         end
 
-        if @language.commentHandler.is_multiple_line_comment_end?(pLine)
+        if @language.commentHandler.multiple_line_comment_end?(pLine)
           handling_multiple_line
         end
 
-        if @enableMultipleLine
-          capture_multiple_line_comment(pLine)
-        end
+        capture_multiple_line_comment(pLine) if @enableMultipleLine
 
         return pElementFile
       end
 
       private
 
-        def handling_single_line(pLine)
-          comment_string = @language.line_inspect(COMMENT_ID, pLine)
-          @language.string_comment_to_transfer += comment_string
-          apply_final_adjustments!(@language.string_comment_to_transfer)
-          @language.rewind_state
-        end
+      def handling_single_line(pLine)
+        comment_string = @language.line_inspect(COMMENT_ID, pLine)
+        @language.string_comment_to_transfer += comment_string
+        apply_final_adjustments!(@language.string_comment_to_transfer)
+        @language.rewind_state
+      end
 
-        def handling_multiple_line
-          @enableMultipleLine = false
-          apply_final_adjustments!(@multipleLineComment)
-          @language.string_comment_to_transfer = @multipleLineComment
-          @multipleLineComment = ''
-          @language.rewind_state
-        end
+      def handling_multiple_line
+        @enableMultipleLine = false
+        apply_final_adjustments!(@multipleLineComment)
+        @language.string_comment_to_transfer = @multipleLineComment
+        @multipleLineComment = ''
+        @language.rewind_state
+      end
 
-        def capture_multiple_line_comment(pLine)
-          comment_string = @language.line_inspect(COMMENT_ID, pLine)
-          @multipleLineComment += comment_string
-        end
+      def capture_multiple_line_comment(pLine)
+        comment_string = @language.line_inspect(COMMENT_ID, pLine)
+        @multipleLineComment += comment_string
+      end
 
-        def apply_final_adjustments!(pComment)
-          pComment.strip!
-          pComment.squeeze!(' ')
-        end
+      def apply_final_adjustments!(pComment)
+        pComment.strip!
+        pComment.squeeze!(' ')
+      end
 
     # class
     end
