@@ -13,12 +13,12 @@ RSpec.describe Languages::Comment do
     end
 
     it "Is single line comment?" do
-      expect{@commentAbstract.is_single_line_comment?(" # Single line")}
+      expect{@commentAbstract.single_line_comment?(" # Single line")}
               .to raise_error(NotImplementedError)
     end
 
     it "Is multiple line comment?" do
-      expect{@commentAbstract.is_multiple_line_comment?("=begin")}
+      expect{@commentAbstract.multiple_line_comment?("=begin")}
               .to raise_error(NotImplementedError)
     end
 
