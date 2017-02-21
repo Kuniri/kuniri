@@ -13,7 +13,7 @@ RSpec.describe Kuniri::Kuniri do
     @output = File.open(target, 'r')
   end
 
-  RSpec.shared_examples 'Function with conditional' do |regex, description|
+  RSpec.shared_examples 'Single line' do |regex, description|
     it "Method: #{description}" do
       conditional = nil
       @output.each do |line|
@@ -28,27 +28,27 @@ RSpec.describe Kuniri::Kuniri do
 
     message = 'Should have simple single line if'
     regex = /\s+<if\sexpression="pFunctionName\.nil\?\sor\s!pFunctionName\.is_a\?\sString" level="0"\/?>/
-    include_examples 'Function with conditional' , regex, message
+    include_examples 'Single line' , regex, message
 
     message = 'Should have unless comparing numbers'
     regex = /\s+<unless\sexpression="5\s>\s10" level="0"\/?>/
-    include_examples 'Function with conditional' , regex, message
+    include_examples 'Single line' , regex, message
 
     message = 'Should have simple if and elsif'
     regex = /\s+<if\sexpression="300\s>\svalue"\slevel="0"\/?>/
-    include_examples 'Function with conditional' , regex, message
+    include_examples 'Single line' , regex, message
 
     message = 'Should find ternary operation'
     regex = /\s+<if\sexpression="ternary\s=\s\(value\s<\s300\)"\slevel="0"\/?>/
-    include_examples 'Function with conditional' , regex, message
+    include_examples 'Single line' , regex, message
 
     message = 'if condition with complex expression'
     regex = /\s+<elsif\sexpression="'a'\s>\s'b'\sor\s'c'\s<\svalue"\slevel="0"\/?>/
-    include_examples "Function with conditional" , regex, message
+    include_examples "Single line" , regex, message
 
     message = 'Single line if inside function'
     regex = /\s+<if\sexpression="5\s<\svalue"\slevel="0"\/?>/
-    include_examples 'Function with conditional' , regex, message
+    include_examples 'Single line' , regex, message
 
   end
 
