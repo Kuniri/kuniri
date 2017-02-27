@@ -40,8 +40,11 @@ module Languages
         # TODO: it gonna be better if this method return ConditionData
         def detect_conditional(pLine)
           # TODO: change the use of scan and vector syntax. It's confusing.
-          regexExp = /^if\s+(.*)|.*\s+if\s+(.*)/
-          return pLine[regexExp, 2] if regexExp =~ pLine.lstrip
+          regexExp = /^if\s+(.*)/
+          return pLine[regexExp, 1] if regexExp =~ pLine
+
+          regexExp = /.*\s+if\s+(.*)/
+          return pLine[regexExp, 1] if regexExp =~ pLine
 
           regexExp = /^\s*case\s+(.*)/
           return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
@@ -49,7 +52,8 @@ module Languages
           regexExp = /^\s*when\s+(.*)/
           return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
-          regexExp = /^\s*unless\s+(.*)/
+          #regexExp = /^\s*unless\s+(.*)/
+          regexExp = /^unless\s+(.*)|.*\s+unless\s+(.*)/
           return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
           regexExp = /^\s*elsif\s+(.*)/
@@ -72,8 +76,7 @@ module Languages
           regexExp = /^\s+when|^when/
           return Languages::WHEN_LABEL if regexExp =~ pString
 
-          #regexExp = /^.*unless\s+(.*)/
-          regexExp = /^\s+unless|^unless/
+          regexExp = /^unless\s+(.*)|.*\s+unless\s+(.*)/
           return Languages::UNLESS_LABEL if regexExp =~ pString
 
           regexExp = /^\s+elsif|^elsif/
