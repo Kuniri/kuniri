@@ -22,9 +22,11 @@ module Languages
         def get_conditional(pLine)
           result = detect_conditional(pLine)
           return nil unless result
-
+          # TODO: Refactor this code, it can be much better
           conditionalCaptured = Languages::ConditionalData.new
           conditionalCaptured.type = conditional_type(pLine)
+          conditionalCaptured.singleLine = single_line?(pLine)
+
           unless conditionalCaptured.type == Languages::ELSE_LABEL
             conditionalCaptured.expression = get_expression(result)
           end
@@ -35,31 +37,33 @@ module Languages
       protected
 
         # Override.
+        # TODO: it gonna be better if this method return ConditionData
         def detect_conditional(pLine)
-          regexExp = /^\s*if\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          # TODO: change the use of scan and vector syntax. It's confusing.
+          regexExp = /^if\s+(.*)|.*\s+if\s+(.*)/
+          return pLine[regexExp, 2] if regexExp =~ pLine.lstrip
 
           regexExp = /^\s*case\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
           regexExp = /^\s*when\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
           regexExp = /^\s*unless\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
           regexExp = /^\s*elsif\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
+          return pLine.scan(regexExp)[0].join('') if regexExp =~ pLine
 
           regexExp = /^\s*else\s*/
-          return pLine.scan(regexExp)[0].gsub(" ", "") if regexExp =~ pLine
+          return pLine.scan(regexExp)[0].gsub(' ', '') if regexExp =~ pLine
 
           return nil
         end
 
         # Override
         def conditional_type(pString)
-          regexExp = /^\s+if|^if/
+          regexExp = /^if\s+(.*)|.*\s+if\s+(.*)/
           return Languages::IF_LABEL if regexExp =~ pString
 
           regexExp = /^\s+case|^case/
@@ -68,6 +72,7 @@ module Languages
           regexExp = /^\s+when|^when/
           return Languages::WHEN_LABEL if regexExp =~ pString
 
+          #regexExp = /^.*unless\s+(.*)/
           regexExp = /^\s+unless|^unless/
           return Languages::UNLESS_LABEL if regexExp =~ pString
 
@@ -82,9 +87,16 @@ module Languages
 
         # Override
         def get_expression(pString)
-          leftStrip = pString.lstrip
-          rightStrip = leftStrip.rstrip
-          return rightStrip
+          pString = pString.strip
+          return pString
+        end
+
+        # TODO: This can be improved!
+        def single_line?(pString)
+          return false if /elsif/ =~ pString.lstrip
+          return true if /^.+if\s+(.*)/ =~ pString.lstrip
+          return true if /^.+unless\s+(.*)/ =~ pString.lstrip
+          return false
         end
 
     # Class

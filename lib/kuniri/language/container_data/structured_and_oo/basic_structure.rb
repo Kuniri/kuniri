@@ -16,11 +16,13 @@ module Languages
       attr_accessor :type
       attr_accessor :expression
       attr_accessor :level
+      attr_accessor :singleLine
 
       def initialize
         @type = 'none'
         @expression = 'empty'
         @level = 0
+        @singleLine = false
       end
   # class
   end
