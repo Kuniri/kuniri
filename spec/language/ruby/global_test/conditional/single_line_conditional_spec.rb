@@ -39,7 +39,7 @@ RSpec.describe Kuniri::Kuniri do
     include_examples 'Single line' , regex, message
 
     message = 'Should find ternary operation'
-    regex = /\s+<if\sexpression="ternary\s=\s\(value\s&lt;\s300\)"\slevel="0"\/?>/
+    regex = /\s+<ternary\sexpression="ternary\s=\s\(value\s&lt;\s300\)"\slevel="0"\/?>/
     include_examples 'Single line' , regex, message
 
     message = 'if condition with complex expression'

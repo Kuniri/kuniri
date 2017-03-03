@@ -11,6 +11,7 @@ module Languages
   ELSE_LABEL ||= 'ELSE'
   ELSIF_LABEL ||= 'ELSIF'
   UNLESS_LABEL ||= 'UNLESS'
+  TERNARY_LABEL ||= 'TERNARY'
   CASE_LABEL ||= 'CASE'
   WHEN_LABEL ||= 'WHEN'
   WHILE_LABEL ||= 'WHILE'

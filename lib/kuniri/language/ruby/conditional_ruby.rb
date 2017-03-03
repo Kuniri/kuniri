@@ -39,7 +39,8 @@ module Languages
         # Override.
         # TODO: it gonna be better if this method return ConditionData
         def detect_conditional(pLine)
-          # TODO: change the use of scan and vector syntax. It's confusing.
+          conditionalCaptured = Languages::ConditionalData.new
+
           regexExp = /^if\s+(.*)/
           return pLine[regexExp, 1] if regexExp =~ pLine
 
@@ -61,6 +62,9 @@ module Languages
 
           regexExp = /^\s*else\s*/
           return pLine.scan(regexExp)[0].gsub(' ', '') if regexExp =~ pLine
+
+          regexExp = /(.*)\?.*\:.*/
+          return pLine[regexExp, 1] if regexExp =~ pLine
 
           return nil
         end
@@ -85,21 +89,27 @@ module Languages
           regexExp = /^\s+else|^else/
           return Languages::ELSE_LABEL if regexExp =~ pString
 
+          regexExp = /(.*)\?.*\:.*/
+          return Languages::TERNARY_LABEL if regexExp =~ pString
+
           return nil
         end
 
         # Override
         def get_expression(pString)
-          pString = pString.strip
-          return pString
+          return pString.strip
         end
 
-        # TODO: This can be improved!
         def single_line?(pString)
           return false if /elsif/ =~ pString.lstrip
-          return true if /^.+if\s+(.*)/ =~ pString.lstrip
-          return true if /^.+unless\s+(.*)/ =~ pString.lstrip
-          return false
+
+          if /^.+if\s+(.*)/ =~ pString.lstrip ||
+             /^.+unless\s+(.*)/ =~ pString.lstrip ||
+             /(.*)\?.*\:.*/ =~ pString
+             return true
+          else
+            return false
+          end
         end
 
     # Class
