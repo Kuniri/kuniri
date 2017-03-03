@@ -31,23 +31,23 @@ RSpec.describe Kuniri::Kuniri do
     include_examples 'Single line' , regex, message
 
     message = 'Should have unless comparing numbers'
-    regex = /\s+<unless\sexpression="5\s>\s10" level="0"\/?>/
+    regex = /\s+<unless\sexpression="5\s&gt;\s10" level="0"\/?>/
     include_examples 'Single line' , regex, message
 
     message = 'Should have simple if and elsif'
-    regex = /\s+<if\sexpression="300\s>\svalue"\slevel="0"\/?>/
+    regex = /\s+<if\sexpression="300\s&gt;\svalue"\slevel="0"\/?>/
     include_examples 'Single line' , regex, message
 
     message = 'Should find ternary operation'
-    regex = /\s+<if\sexpression="ternary\s=\s\(value\s<\s300\)"\slevel="0"\/?>/
+    regex = /\s+<if\sexpression="ternary\s=\s\(value\s&lt;\s300\)"\slevel="0"\/?>/
     include_examples 'Single line' , regex, message
 
     message = 'if condition with complex expression'
-    regex = /\s+<elsif\sexpression="'a'\s>\s'b'\sor\s'c'\s<\svalue"\slevel="0"\/?>/
+    regex = /\s+<if\sexpression="'a'\s&gt;\s'b'\sor\s'c'\s&lt;\svalue"\slevel="0"\/?>/
     include_examples "Single line" , regex, message
 
     message = 'Single line if inside function'
-    regex = /\s+<if\sexpression="5\s<\svalue"\slevel="0"\/?>/
+    regex = /\s+<if\sexpression="5\s&lt;\svalue"\slevel="0"\/?>/
     include_examples 'Single line' , regex, message
 
   end
