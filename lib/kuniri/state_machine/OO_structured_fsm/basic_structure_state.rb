@@ -24,7 +24,6 @@ module StateMachine
       end
 
       def handle_line(pLine)
-
         if ! (conditional = @language.line_inspect(CONDITIONAL_ID, pLine)).nil?
           conditional_capture if isNestedStructure?(conditional.type)
         elsif ! (repetition = @language.line_inspect(REPETITION_ID, pLine)).nil?
@@ -85,8 +84,10 @@ module StateMachine
 
         addBasicStructure(pLine, flag, classIndex, pElementFile)
 
-        #if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLine)
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
+        element = @language.processed_line
+        singleLineFlag = element.nil? ? false : element.singleLine
+
+        if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLineFlag)
           updateLevel(flag, pElementFile, classIndex)
         end
         return pElementFile

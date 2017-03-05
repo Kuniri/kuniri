@@ -15,83 +15,71 @@ module Languages
     # Class responsible for handling ruby conditional statements.
     class ConditionalRuby < Languages::Conditional
 
-      public
-
-        # Get ruby conditional.
-        # @see Languages::Conditional
-        def get_conditional(pLine)
-          result = detect_conditional(pLine)
-          return nil unless result
-
-          conditionalCaptured = Languages::ConditionalData.new
-          conditionalCaptured.type = conditional_type(pLine)
-          unless conditionalCaptured.type == Languages::ELSE_LABEL
-            conditionalCaptured.expression = get_expression(result)
-          end
-
-          return conditionalCaptured
-        end
+      # Get ruby conditional.
+      # @see Languages::Conditional
+      def get_conditional(pLine)
+        @line = pLine
+        result = detect_conditional(pLine)
+        return nil unless result
+        return result
+      end
 
       protected
 
-        # Override.
-        def detect_conditional(pLine)
-          regexExp = /^\s*if\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*case\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*when\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*unless\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*elsif\s+(.*)/
-          return pLine.scan(regexExp)[0].join("") if regexExp =~ pLine
-
-          regexExp = /^\s*else\s*/
-          return pLine.scan(regexExp)[0].gsub(" ", "") if regexExp =~ pLine
-
+      # Override.
+      def detect_conditional(pLine)
+        case pLine
+        when IF_REGEX
+          return build_data(IF_REGEX, Languages::IF_LABEL)
+        when IF_INLINE_REGEX
+          return build_data(IF_INLINE_REGEX, Languages::IF_LABEL, true)
+        when CASE_REGEX
+          return build_data(CASE_REGEX, Languages::CASE_LABEL)
+        when WHEN_REGEX
+          return build_data(WHEN_REGEX, Languages::WHEN_LABEL)
+        when UNLESS_REGEX
+          return build_data(UNLESS_REGEX, Languages::UNLESS_LABEL)
+        when UNLESS_INLINE_REGEX
+          return build_data(UNLESS_INLINE_REGEX, Languages::UNLESS_LABEL, true)
+        when ELSIF_REGEX
+          return build_data(ELSIF_REGEX, Languages::ELSIF_LABEL)
+        when ELSE_REGEX
+          return build_data(ELSE_REGEX, Languages::ELSE_LABEL, false, false)
+        when TERNARY_REGEX
+          return build_data(TERNARY_REGEX, Languages::TERNARY_LABEL, true)
+        else
           return nil
         end
+      end
 
-        # Override
-        def conditional_type(pString)
-          regexExp = /^\s+if|^if/
-          return Languages::IF_LABEL if regexExp =~ pString
+      # Override
+      def get_expression(pString)
+        return pString.strip
+      end
 
-          regexExp = /^\s+case|^case/
-          return Languages::CASE_LABEL if regexExp =~ pString
+      private
 
-          regexExp = /^\s+when|^when/
-          return Languages::WHEN_LABEL if regexExp =~ pString
+      IF_REGEX = /^\s*if\s+(.*)/
+      IF_INLINE_REGEX = /.+\s+if\s+(.*)/
+      CASE_REGEX = /^\s*case\s+(.*)/
+      WHEN_REGEX = /^\s*when\s+(.*)/
+      UNLESS_REGEX = /^\s*unless\s+(.*)/
+      UNLESS_INLINE_REGEX = /.+\s+unless\s+(.*)/
+      ELSIF_REGEX = /^\s*elsif\s+(.*)/
+      ELSE_REGEX = /^\s*else\s*/
+      TERNARY_REGEX = /(.*)\?.*\:.*/
 
-          regexExp = /^\s+unless|^unless/
-          return Languages::UNLESS_LABEL if regexExp =~ pString
+      @line = ''
 
-          regexExp = /^\s+elsif|^elsif/
-          return Languages::ELSIF_LABEL if regexExp =~ pString
-
-          regexExp = /^\s+else|^else/
-          return Languages::ELSE_LABEL if regexExp =~ pString
-
-          return nil
+      def build_data(pRegex, pLabel, pSingleLine = false, pExpression = true)
+        conditionalCaptured = Languages::ConditionalData.new
+        conditionalCaptured.type = pLabel
+        conditionalCaptured.singleLine = pSingleLine
+        if pExpression
+          conditionalCaptured.expression = get_expression(@line[pRegex, 1])
         end
-
-        # Override
-        def get_expression(pString)
-          leftStrip = pString.lstrip
-          rightStrip = leftStrip.rstrip
-          return rightStrip
-        end
-
-    # Class
-    end
-
-  # Module
-  end
-
-# Module
-end
+        return conditionalCaptured
+      end
+    end # End of Class
+  end # End of Ruby Module
+end # End of Languages Module

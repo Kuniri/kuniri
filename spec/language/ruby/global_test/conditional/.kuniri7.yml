@@ -1,0 +1,4 @@
+:language: ruby
+:source: ./spec/samples/rubySyntaxParts/conditionalStatment/singleLineConditional.rb
+:output: ./spec/language/ruby/global_test/conditional/output7.xml
+:extract: uml
