@@ -15,11 +15,10 @@ module Languages
     # Class responsible for handling ruby conditional statements.
     class ConditionalRuby < Languages::Conditional
 
-      public
-
       # Get ruby conditional.
       # @see Languages::Conditional
       def get_conditional(pLine)
+        @line = pLine
         result = detect_conditional(pLine)
         return nil unless result
         return result
@@ -29,34 +28,28 @@ module Languages
 
       # Override.
       def detect_conditional(pLine)
-        regexExp = /^\s*if\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::IF_LABEL) if regexExp =~ pLine
-
-        regexExp = /.+\s+if\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::IF_LABEL, true) if regexExp =~ pLine
-
-        regexExp = /^\s*case\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::CASE_LABEL) if regexExp =~ pLine
-
-        regexExp = /^\s*when\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::WHEN_LABEL) if regexExp =~ pLine
-
-        regexExp = /^\s*unless\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::UNLESS_LABEL) if regexExp =~ pLine
-
-        regexExp = /.+\s+unless\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::UNLESS_LABEL, true) if regexExp =~ pLine
-
-        regexExp = /^\s*elsif\s+(.*)/
-        return build_data(pLine[regexExp, 1], Languages::ELSIF_LABEL) if regexExp =~ pLine
-
-        regexExp = /^\s*else\s*/
-        return build_data(pLine[regexExp, 1], Languages::ELSE_LABEL, false, false) if regexExp =~ pLine
-
-        regexExp = /(.*)\?.*\:.*/
-        return build_data(pLine[regexExp, 1], Languages::TERNARY_LABEL, true) if regexExp =~ pLine
-
-        return nil
+        case pLine
+        when IF_REGEX
+          return build_data(IF_REGEX, Languages::IF_LABEL)
+        when IF_INLINE_REGEX
+          return build_data(IF_INLINE_REGEX, Languages::IF_LABEL, true)
+        when CASE_REGEX
+          return build_data(CASE_REGEX, Languages::CASE_LABEL)
+        when WHEN_REGEX
+          return build_data(WHEN_REGEX, Languages::WHEN_LABEL)
+        when UNLESS_REGEX
+          return build_data(UNLESS_REGEX, Languages::UNLESS_LABEL)
+        when UNLESS_INLINE_REGEX
+          return build_data(UNLESS_INLINE_REGEX, Languages::UNLESS_LABEL, true)
+        when ELSIF_REGEX
+          return build_data(ELSIF_REGEX, Languages::ELSIF_LABEL)
+        when ELSE_REGEX
+          return build_data(ELSE_REGEX, Languages::ELSE_LABEL, false, false)
+        when TERNARY_REGEX
+          return build_data(TERNARY_REGEX, Languages::TERNARY_LABEL, true)
+        else
+          return nil
+        end
       end
 
       # Override
@@ -66,18 +59,27 @@ module Languages
 
       private
 
-      def build_data(pLine, pLabel, pSingleLine = false, pExpr = true)
+      IF_REGEX = /^\s*if\s+(.*)/
+      IF_INLINE_REGEX = /.+\s+if\s+(.*)/
+      CASE_REGEX = /^\s*case\s+(.*)/
+      WHEN_REGEX = /^\s*when\s+(.*)/
+      UNLESS_REGEX = /^\s*unless\s+(.*)/
+      UNLESS_INLINE_REGEX = /.+\s+unless\s+(.*)/
+      ELSIF_REGEX = /^\s*elsif\s+(.*)/
+      ELSE_REGEX = /^\s*else\s*/
+      TERNARY_REGEX = /(.*)\?.*\:.*/
+
+      @line = ''
+
+      def build_data(pRegex, pLabel, pSingleLine = false, pExpression = true)
         conditionalCaptured = Languages::ConditionalData.new
         conditionalCaptured.type = pLabel
         conditionalCaptured.singleLine = pSingleLine
-        conditionalCaptured.expression = get_expression(pLine) if pExpr
+        if pExpression
+          conditionalCaptured.expression = get_expression(@line[pRegex, 1])
+        end
         return conditionalCaptured
       end
-    # Class
-    end
-
-  # Module
-  end
-
-# Module
-end
+    end # End of Class
+  end # End of Ruby Module
+end # End of Languages Module
