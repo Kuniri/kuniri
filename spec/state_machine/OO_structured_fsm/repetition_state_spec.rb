@@ -105,6 +105,15 @@ RSpec.describe StateMachine::OOStructuredFSM::RepetitionState do
     end
   end
 
+  context 'Repetition to block' do
+    it 'Repetition to block' do
+      @repetitionTest.state.repetition_capture
+      @repetitionTest.state.block_capture
+      expect(@repetitionTest.state)
+             .to be_instance_of(StateMachine::OOStructuredFSM::BlockState)
+    end
+  end
+
   after :each do
     @constructorTest = nil
   end

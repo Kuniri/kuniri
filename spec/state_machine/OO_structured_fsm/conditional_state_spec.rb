@@ -142,6 +142,15 @@ RSpec.describe StateMachine::OOStructuredFSM::ConditionalState do
     end
   end
 
+  context 'Conditional and block' do
+    it 'Conditional to block' do
+      @conditionalTest.state.conditional_capture
+      @conditionalTest.state.block_capture
+      expect(@conditionalTest.state)
+        .to be_instance_of(StateMachine::OOStructuredFSM::BlockState)
+    end
+  end
+
   after :each do
     @constructorTest = nil
   end
