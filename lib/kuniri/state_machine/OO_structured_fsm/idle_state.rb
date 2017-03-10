@@ -35,8 +35,10 @@ module StateMachine
           conditional_capture
         elsif @language.line_inspect(REPETITION_ID, pLine)
           repetition_capture
+        elsif @language.line_inspect(BLOCK_ID, pLine)
+          block_capture
         elsif ((@language.commentHandler.single_line_comment?(pLine)) ||
-                (@language.commentHandler.multiple_line_comment?(pLine)))
+               (@language.commentHandler.multiple_line_comment?(pLine)))
           comment_capture
         else
           return
@@ -84,8 +86,13 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def block_capture
+        @language.flagFunctionBehaviour = StateMachine::BLOCK_STATE
+        @language.set_state(@language.blockState)
+      end
 
+      # @see OOStructuredState
+      def execute(pElementFile, pLine)
         # Having nothing to do
         return pElementFile
       end

@@ -81,7 +81,6 @@ module StateMachine
       def execute(pElementFile, pLine)
         flag = @language.flagFunctionBehaviour
         classIndex = pElementFile.get_last_class_index
-
         addBasicStructure(pLine, flag, classIndex, pElementFile)
 
         element = @language.processed_line
@@ -144,6 +143,8 @@ module StateMachine
             when StateMachine::CONSTRUCTOR_STATE
               dynamicallyAdd(pElementFile, pElement, elementType,
                              stringToEval + 'constructors')
+            when StateMachine::BLOCK_STATE
+              pElementFile.add_block(pElement)
           end
         end
 
@@ -190,12 +191,6 @@ module StateMachine
            eval("pElementFile.#{pElement}[index].managerCondAndLoop.up_level")
          end
        end
-
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

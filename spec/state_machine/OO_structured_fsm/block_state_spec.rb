@@ -190,10 +190,6 @@ RSpec.describe StateMachine::OOStructuredFSM::BlockState do
   end
 
   context 'Incorrect flow.' do
-    it 'Try to access IdleState, to BlockState.' do
-      expect{@blockTest.state.block_capture}
-        .to raise_error(NotImplementedError)
-    end
 
     it 'Try to jump from block state to idle.' do
       @blockTest.state.class_capture

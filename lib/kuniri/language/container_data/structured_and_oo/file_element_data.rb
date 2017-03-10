@@ -26,10 +26,10 @@ module Languages
       attr_reader :modules
       attr_reader :conditionals
       attr_reader :repetitions
+      attr_reader :blocks
 
       def initialize(pName)
         return nil if pName.nil? or !pName.is_a? String
-
         @global_functions = []
         @global_variables = []
         @extern_requirements = []
@@ -37,6 +37,7 @@ module Languages
         @modules = []
         @conditionals = []
         @repetitions = []
+        @blocks = []
         @name = pName
         @comments = ''
       end
@@ -45,7 +46,6 @@ module Languages
       # @param pFunction An object of FunctionData to be added at the file.
       def add_global_function(pFunction)
         return nil unless pFunction.is_a?(Languages::FunctionData)
-
         @global_functions.push(pFunction)
       end
 
@@ -62,7 +62,6 @@ module Languages
       # @param pOutside Add an object of ExternRequirementData.
       def add_extern_requirement(pOutside)
         return nil unless pOutside.is_a?(Languages::ExternRequirementData)
-
         @extern_requirements.push(pOutside)
       end
 
@@ -70,7 +69,6 @@ module Languages
       # @param pClass Add an object of ClassData.
       def add_class(pClass)
         return nil unless pClass.is_a?(Languages::ClassData)
-
         @classes.push(pClass)
       end
 
@@ -78,7 +76,6 @@ module Languages
       # @param pModule Add an object of ModuleNamespaceData
       def add_modules(pModule)
         return nil unless pModule.is_a?(Languages::ModuleNamespaceData)
-
         @modules.push(pModule)
       end
 
@@ -86,7 +83,6 @@ module Languages
       # @param pConditional Add an object of ConditionalData
       def add_conditional(pConditional)
         return nil unless pConditional.is_a?(Languages::ConditionalData)
-
         @conditionals.push(pConditional)
       end
 
@@ -94,8 +90,14 @@ module Languages
       # @param pRepetition Add an object of RepetitionData
       def add_repetition(pRepetition)
         return nil unless pRepetition.is_a?(Languages::RepetitionData)
-
         @repetitions.push(pRepetition)
+      end
+
+      # Add a block inside file.
+      # @param pBlock Block to be added inside file structure
+      def add_block(pBlock)
+        return nil unless pBlock.is_a?(Languages::BlockData)
+        @blocks.push(pBlock)
       end
 
       # Add attribute to class
@@ -109,7 +111,5 @@ module Languages
       def get_last_class_index
         return classes.length - 1
       end
-  # Class
-  end
-# Module
-end
+  end # Class
+end # Module

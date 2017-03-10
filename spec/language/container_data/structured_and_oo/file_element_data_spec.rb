@@ -16,6 +16,8 @@ RSpec.describe Languages::FileElementData do
     @conditional2 = Languages::ConditionalData.new
     @repetition1 = Languages::RepetitionData.new
     @repetition2 = Languages::RepetitionData.new
+    @block1 = Languages::BlockData.new
+    @block2 = Languages::BlockData.new
   end
 
   context 'When add global function.' do
@@ -150,6 +152,21 @@ RSpec.describe Languages::FileElementData do
       @fileElement.add_repetition(@conditional1)
       @fileElement.add_repetition(@class1)
       expect(@fileElement.repetitions).to match_array([])
+    end
+  end
+
+  context 'Add block directly to file' do
+    it 'Simple flow of block addition' do
+      @fileElement.add_block(@block1)
+      expect(@fileElement.blocks).to match_array([@block1])
+      @fileElement.add_block(@block2)
+      expect(@fileElement.blocks).to match_array([@block1, @block2])
+    end
+
+    it 'Try to add something different of BlockData' do
+      @fileElement.add_block(@conditional1)
+      @fileElement.add_block(@class1)
+      expect(@fileElement.blocks).to match_array([])
     end
   end
 
