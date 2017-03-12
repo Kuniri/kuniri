@@ -143,6 +143,10 @@ module StateMachine
             when StateMachine::CONSTRUCTOR_STATE
               dynamicallyAdd(pElementFile, pElement, elementType,
                              stringToEval + 'constructors')
+            when StateMachine::CONDITIONAL_STATE
+              pElementFile.add_conditional(pElement)
+            when StateMachine::REPETITION_STATE
+              pElementFile.add_repetition(pElement)
             when StateMachine::BLOCK_STATE
               pElementFile.add_block(pElement)
           end
