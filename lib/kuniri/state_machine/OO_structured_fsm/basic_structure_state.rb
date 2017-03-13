@@ -166,7 +166,13 @@ module StateMachine
             when StateMachine::CONSTRUCTOR_STATE
               stringMethod = "classes[#{pClassIndex}].constructors"
               dynamicLevelUpdate(pElementFile, stringMethod)
-           end
+            when StateMachine::CONDITIONAL_STATE
+              dynamicLevelUpdate(pElementFile, 'conditionals')
+            when StateMachine::REPETITION_STATE
+              dynamicLevelUpdate(pElementFile, 'repetitions')
+            when StateMachine::BLOCK_STATE
+              dynamicLevelUpdate(pElementFile, 'blocks')
+          end
           @language.rewind_state
           @language.lessNested
         end
@@ -190,11 +196,13 @@ module StateMachine
         # @param pElementFile Element with all data.
         # @param pElement String name of the element.
         def dynamicLevelUpdate(pElementFile, pElement)
-         index = eval("pElementFile.#{pElement}.length - 1")
-         if @language.isNested?
-           eval("pElementFile.#{pElement}[index].managerCondAndLoop.up_level")
-         end
+          if @language.isNested?
+            target = "pElementFile.#{pElement}[pElementFile.#{pElement}" +
+                     ".length - 1].managerCondAndLoop.up_level"
+            eval(target)
+          end
        end
+
     end # End class
   end # End OOStructuredFSM
 end # End StateMachine

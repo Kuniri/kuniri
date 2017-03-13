@@ -17,12 +17,14 @@ module Languages
       attr_accessor :expression
       attr_accessor :level
       attr_accessor :singleLine
+      attr_reader :managerCondAndLoop
 
       def initialize
         @type = 'none'
         @expression = 'empty'
         @level = 0
         @singleLine = false
+        @managerCondAndLoop = Languages::ManagerBasicStructureData.new
       end
   # class
   end
