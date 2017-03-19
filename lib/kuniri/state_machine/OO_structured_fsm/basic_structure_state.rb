@@ -143,12 +143,10 @@ module StateMachine
             when StateMachine::CONSTRUCTOR_STATE
               dynamicallyAdd(pElementFile, pElement, elementType,
                              stringToEval + 'constructors')
-            when StateMachine::CONDITIONAL_STATE
-              pElementFile.add_conditional(pElement)
-            when StateMachine::REPETITION_STATE
-              pElementFile.add_repetition(pElement)
-            when StateMachine::BLOCK_STATE
-              pElementFile.add_block(pElement)
+            when StateMachine::SCRIPT_STATE
+              pElementFile.add_repetition(pElement) && return
+              pElementFile.add_block(pElement) && return
+              pElementFile.add_conditional(pElement) && return
           end
         end
 
@@ -166,12 +164,10 @@ module StateMachine
             when StateMachine::CONSTRUCTOR_STATE
               stringMethod = "classes[#{pClassIndex}].constructors"
               dynamicLevelUpdate(pElementFile, stringMethod)
-            when StateMachine::CONDITIONAL_STATE
-              dynamicLevelUpdate(pElementFile, 'conditionals')
-            when StateMachine::REPETITION_STATE
-              dynamicLevelUpdate(pElementFile, 'repetitions')
-            when StateMachine::BLOCK_STATE
-              dynamicLevelUpdate(pElementFile, 'blocks')
+            when StateMachine::SCRIPT_STATE
+              if @language.isNested?
+                pElementFile.managerCondAndLoop.up_level
+              end
           end
           @language.rewind_state
           @language.lessNested

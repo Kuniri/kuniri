@@ -77,19 +77,19 @@ module StateMachine
 
       # @see OOStructuredState
       def conditional_capture
-        @language.flagFunctionBehaviour = StateMachine::CONDITIONAL_STATE
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
         @language.set_state(@language.conditionalState)
       end
 
       # @see OOStructuredState
       def repetition_capture
-        @language.flagFunctionBehaviour = StateMachine::REPETITION_STATE
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
         @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
       def block_capture
-        @language.flagFunctionBehaviour = StateMachine::BLOCK_STATE
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
         @language.set_state(@language.blockState)
       end
 
@@ -99,11 +99,6 @@ module StateMachine
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

@@ -15,7 +15,7 @@ module Languages
 
   # FileElementData is the upper element related with container data, this
   # class refers to file.
-  class FileElementData < Languages::BasicData
+  class FileElementData < Languages::FunctionAbstract
 
     public
 
@@ -30,6 +30,7 @@ module Languages
 
       def initialize(pName)
         return nil if pName.nil? or !pName.is_a? String
+        super(pName)
         @global_functions = []
         @global_variables = []
         @extern_requirements = []
@@ -77,27 +78,6 @@ module Languages
       def add_modules(pModule)
         return nil unless pModule.is_a?(Languages::ModuleNamespaceData)
         @modules.push(pModule)
-      end
-
-      # Add a conditional inside file.
-      # @param pConditional Add an object of ConditionalData
-      def add_conditional(pConditional)
-        return nil unless pConditional.is_a?(Languages::ConditionalData)
-        @conditionals.push(pConditional)
-      end
-
-      # Add a repetition inside file.
-      # @param pRepetition Add an object of RepetitionData
-      def add_repetition(pRepetition)
-        return nil unless pRepetition.is_a?(Languages::RepetitionData)
-        @repetitions.push(pRepetition)
-      end
-
-      # Add a block inside file.
-      # @param pBlock Block to be added inside file structure
-      def add_block(pBlock)
-        return nil unless pBlock.is_a?(Languages::BlockData)
-        @blocks.push(pBlock)
       end
 
       # Add attribute to class

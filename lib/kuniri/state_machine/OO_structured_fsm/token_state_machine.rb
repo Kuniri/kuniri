@@ -13,6 +13,7 @@ module StateMachine
   CONDITIONAL_STATE     ||= 4       # Conditional state track.
   REPETITION_STATE      ||= 5       # Repetition state track.
   BLOCK_STATE           ||= 6       # Block state track.
+  SCRIPT_STATE          ||= 7       # Script state track.
 
   METHOD_ID             ||= 1
   CONSTRUCTOR_ID        ||= 2
