@@ -134,9 +134,11 @@ RSpec.describe Languages::FileElementData do
 
     it 'Try to add something different of Conditional' do
       @fileElement.add_conditional(@class1)
-      expect(@fileElement.conditionals).to match_array([])
+      all = @fileElement.managerCondAndLoop.basicStructure
+      expect(all).to match_array([])
       @fileElement.add_conditional(@repetition2)
-      expect(@fileElement.conditionals).to match_array([])
+      all = @fileElement.managerCondAndLoop.basicStructure
+      expect(all).to match_array([])
     end
   end
 
@@ -153,7 +155,8 @@ RSpec.describe Languages::FileElementData do
     it 'Try to add something different of RepetitionData' do
       @fileElement.add_repetition(@conditional1)
       @fileElement.add_repetition(@class1)
-      expect(@fileElement.repetitions).to match_array([])
+      all = @fileElement.managerCondAndLoop.basicStructure
+      expect(all).to match_array([])
     end
   end
 
@@ -170,7 +173,8 @@ RSpec.describe Languages::FileElementData do
     it 'Try to add something different of BlockData' do
       @fileElement.add_block(@conditional1)
       @fileElement.add_block(@class1)
-      expect(@fileElement.blocks).to match_array([])
+      all = @fileElement.managerCondAndLoop.basicStructure
+      expect(all).to match_array([])
     end
   end
 

@@ -24,9 +24,6 @@ module Languages
       attr_reader :extern_requirements
       attr_reader :classes
       attr_reader :modules
-      attr_reader :conditionals
-      attr_reader :repetitions
-      attr_reader :blocks
 
       def initialize(pName)
         return nil if pName.nil? or !pName.is_a? String
@@ -36,9 +33,6 @@ module Languages
         @extern_requirements = []
         @classes = []
         @modules = []
-        @conditionals = []
-        @repetitions = []
-        @blocks = []
         @name = pName
         @comments = ''
       end

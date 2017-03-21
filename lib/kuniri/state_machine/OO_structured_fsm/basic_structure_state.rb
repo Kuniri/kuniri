@@ -85,7 +85,6 @@ module StateMachine
 
         element = @language.processed_line
         singleLineFlag = element.nil? ? false : element.singleLine
-
         if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLineFlag)
           updateLevel(flag, pElementFile, classIndex)
         end
@@ -144,9 +143,13 @@ module StateMachine
               dynamicallyAdd(pElementFile, pElement, elementType,
                              stringToEval + 'constructors')
             when StateMachine::SCRIPT_STATE
-              pElementFile.add_repetition(pElement) && return
-              pElementFile.add_block(pElement) && return
-              pElementFile.add_conditional(pElement) && return
+              pElementFile.add_repetition(pElement) ||
+              pElementFile.add_block(pElement) ||
+              pElementFile.add_conditional(pElement)
+
+              if (@language.isNested? && isNestedStructure?(elementType))
+                pElementFile.managerCondAndLoop.down_level
+              end
           end
         end
 
