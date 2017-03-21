@@ -79,21 +79,18 @@ module StateMachine
       # @see OOStructuredState
       def conditional_capture
         @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
-        @language.moreNested
         @language.set_state(@language.conditionalState)
       end
 
       # @see OOStructuredState
       def repetition_capture
         @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
-        @language.moreNested
         @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
       def block_capture
         @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
-        @language.moreNested
         @language.set_state(@language.blockState)
       end
 

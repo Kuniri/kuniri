@@ -28,7 +28,7 @@ module StateMachine
           repetition_capture if nested_structure?(repetition.type)
         elsif !(block = @language.line_inspect(BLOCK_ID, pLine)).nil?
           block_capture if nested_structure?(block.type)
-        # aggregation
+          # aggregation
         end
       end
 
@@ -91,22 +91,21 @@ module StateMachine
 
       protected
 
-      @whoAmI # !@param whoAmI Used for differentiated child class.
-
       # If is a structure which can be nested. It is delegate.
       # @param pType Constant with type description.
       def nested_structure?(pType)
-        if pType == Languages::WHILE_LABEL ||
-           pType == Languages::FOR_LABEL ||
-           pType == Languages::DO_WHILE_LABEL ||
-           pType == Languages::UNTIL_LABEL ||
-           pType == Languages::IF_LABEL ||
-           pType == Languages::CASE_LABEL ||
-           pType == Languages::UNLESS_LABEL ||
-           pType == Languages::BLOCK_LABEL
-          return true
+        case pType
+        when Languages::WHILE_LABEL then return true
+        when Languages::FOR_LABEL then return true
+        when Languages::DO_WHILE_LABEL then return true
+        when Languages::UNTIL_LABEL then return true
+        when Languages::IF_LABEL then return true
+        when Languages::CASE_LABEL then return true
+        when Languages::UNLESS_LABEL then return true
+        when Languages::BLOCK_LABEL then return true
+        else
+          return false
         end
-        return false
       end
 
       # Add element to correct place, based on the state machine position.
@@ -115,43 +114,31 @@ module StateMachine
       # @pFlag Flag with current position in the state machine.
       # @pClassIndex Index of class.
       def add_to_correct_element(pElementFile, pFlag, pClassIndex)
-        pElement = @language.processed_line || return
+        element = @language.processed_line || return
 
-        elementType = pElement.type
-        stringToEval = "classes[#{pClassIndex}]."
         case pFlag
         when StateMachine::GLOBAL_FUNCTION_STATE
-          dynamically_add(pElementFile, pElement, elementType,
-                          'global_functions')
+          target = pElementFile.global_functions.last
+          attach_element(target, element)
         when StateMachine::METHOD_STATE
-          dynamically_add(pElementFile, pElement, elementType,
-                          stringToEval + 'methods')
+          target = pElementFile.classes[pClassIndex].methods.last
+          attach_element(target, element)
         when StateMachine::CONSTRUCTOR_STATE
-          dynamically_add(pElementFile, pElement, elementType,
-                          stringToEval + 'constructors')
+          target = pElementFile.classes[pClassIndex].constructors.last
+          attach_element(target, element)
         when StateMachine::SCRIPT_STATE
-          pElementFile.add_repetition(pElement) ||
-            pElementFile.add_block(pElement) ||
-            pElementFile.add_conditional(pElement)
-          if (@language.isNested? && nested_structure?(elementType))
-            pElementFile.managerCondAndLoop.down_level
-          end
+          attach_element(pElementFile, element)
         end
       end
 
       # Dynamically add based on child class.
-      # @param pElementFile All data inside element.
+      # @param pTarget All data inside element.
       # @param pToAdd Element to add.
-      # @param pType Type of the element.
-      # @param pElement Element description.
-      def dynamically_add(pElementFile, pToAdd, pType, pElement)
-        classIndex = pElementFile.get_last_class_index
-        index = eval("pElementFile.#{pElement}.length - 1")
-        if (@language.isNested? && nested_structure?(pType))
-          eval("pElementFile.#{pElement}[index]." \
-                'managerCondAndLoop.down_level')
+      def attach_element(pTarget, pToAdd)
+        if (@language.isNested? && nested_structure?(pToAdd.type))
+          pTarget.managerCondAndLoop.down_level
         end
-        eval("pElementFile.#{pElement}[index].add_#{@whoAmI}(pToAdd)")
+        pTarget.send("add_#{@whoAmI}", pToAdd)
       end
 
       # Update nested level in conditional or repetition.
@@ -161,29 +148,17 @@ module StateMachine
       def update_level(pFlag, pElementFile, pClassIndex)
         case pFlag
         when StateMachine::GLOBAL_FUNCTION_STATE
-          dynamic_level_update(pElementFile, 'global_functions')
+          target = pElementFile.global_functions.last
         when StateMachine::METHOD_STATE
-          stringMethod = "classes[#{pClassIndex}].methods"
-          dynamic_level_update(pElementFile, stringMethod)
+          target = pElementFile.classes[pClassIndex].methods.last
         when StateMachine::CONSTRUCTOR_STATE
-          stringMethod = "classes[#{pClassIndex}].constructors"
-          dynamic_level_update(pElementFile, stringMethod)
+          target = pElementFile.classes[pClassIndex].constructors.last
         when StateMachine::SCRIPT_STATE
-          @language.isNested? && pElementFile.managerCondAndLoop.up_level
+          target = pElementFile
         end
+        target.managerCondAndLoop.up_level
         @language.rewind_state
         @language.lessNested
-      end
-
-
-      # Update level of conditional or repetition
-      # @param pElementFile Element with all data.
-      # @param pElement String name of the element.
-      def dynamic_level_update(pElementFile, pElement)
-        @language.isNested? || return
-        target = "pElementFile.#{pElement}[pElementFile.#{pElement}" \
-                 '.length - 1].managerCondAndLoop.up_level'
-        eval(target)
       end
 
     end # End class
