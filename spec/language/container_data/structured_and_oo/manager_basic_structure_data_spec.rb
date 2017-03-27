@@ -69,7 +69,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
       conditional3.type = Languages::IF_LABEL
 
       @manager.add_conditional(conditional1)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_conditional(conditional2)
       @manager.add_conditional(conditional3)
 
@@ -92,12 +92,12 @@ RSpec.describe Languages::ManagerBasicStructureData do
       conditional5.type = Languages::IF_LABEL
 
       @manager.add_conditional(conditional1)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_conditional(conditional3)
       @manager.add_conditional(conditional4)
-      @manager.up_level
+      @manager.decrease_deep_level
       @manager.add_conditional(conditional2)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_conditional(conditional5)
 
       expect(@manager.basicStructure[0].level).to eq(0)
@@ -118,7 +118,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
       repetition2.type = Languages::WHILE_LABEL
 
       @manager.add_repetition(repetition1)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_repetition(repetition2)
 
       expect(@manager.basicStructure[0].level).to eq(0)
@@ -135,7 +135,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
       conditional1.type = Languages::IF_LABEL
 
       @manager.add_conditional(conditional1)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_repetition(repetition1)
 
       expect(@manager.basicStructure[0].level).to eq(0)
@@ -161,7 +161,7 @@ RSpec.describe Languages::ManagerBasicStructureData do
       block2.type = Languages::BLOCK_LABEL
 
       @manager.add_block(block1)
-      @manager.down_level
+      @manager.increase_deep_level
       @manager.add_block(block2)
 
       expect(@manager.basicStructure[0].level).to eq(0)

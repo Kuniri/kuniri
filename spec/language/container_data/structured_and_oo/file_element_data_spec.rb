@@ -125,19 +125,19 @@ RSpec.describe Languages::FileElementData do
   context 'Add conditional directly to file' do
     it 'Simple flow of conditional addition' do
       @fileElement.add_conditional(@conditional1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@conditional1])
       @fileElement.add_conditional(@conditional2)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@conditional1, @conditional2])
     end
 
     it 'Try to add something different of Conditional' do
       @fileElement.add_conditional(@class1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([])
       @fileElement.add_conditional(@repetition2)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([])
     end
   end
@@ -145,17 +145,17 @@ RSpec.describe Languages::FileElementData do
   context 'Add repetition directly to file' do
     it 'Simple flow of repetition addition' do
       @fileElement.add_repetition(@repetition1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@repetition1])
       @fileElement.add_repetition(@repetition2)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@repetition1, @repetition2])
     end
 
     it 'Try to add something different of RepetitionData' do
       @fileElement.add_repetition(@conditional1)
       @fileElement.add_repetition(@class1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([])
     end
   end
@@ -163,17 +163,17 @@ RSpec.describe Languages::FileElementData do
   context 'Add block directly to file' do
     it 'Simple flow of block addition' do
       @fileElement.add_block(@block1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@block1])
       @fileElement.add_block(@block2)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([@block1, @block2])
     end
 
     it 'Try to add something different of BlockData' do
       @fileElement.add_block(@conditional1)
       @fileElement.add_block(@class1)
-      all = @fileElement.managerCondAndLoop.basicStructure
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
       expect(all).to match_array([])
     end
   end

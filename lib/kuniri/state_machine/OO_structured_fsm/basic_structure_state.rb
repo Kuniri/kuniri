@@ -15,6 +15,8 @@ module StateMachine
     # basic structure by conditional and repetitions.
     class BasicStructureState < OOStructuredState
 
+      # Initialize basic structure
+      # Child class should OVERRIDE @whoAmI correctly
       def initialize(pLanguage)
         @language = pLanguage
         @language.resetNested
@@ -22,6 +24,8 @@ module StateMachine
       end
 
       def handle_line(pLine)
+        # TODO: This line is complex, maybe it can be simple. However, notice
+        # that line_inspect method is expensive, and should be called once.
         if !(conditional = @language.line_inspect(CONDITIONAL_ID, pLine)).nil?
           conditional_capture if nested_structure?(conditional.type)
         elsif !(repetition = @language.line_inspect(REPETITION_ID, pLine)).nil?
@@ -109,10 +113,9 @@ module StateMachine
       end
 
       # Add element to correct place, based on the state machine position.
-      # @pElement Specific element, e.g, conditional or repetition object.
-      # @pElementFile All data.
-      # @pFlag Flag with current position in the state machine.
-      # @pClassIndex Index of class.
+      # @pElementFile All data structure
+      # @pFlag Flag with current position in the state machine
+      # @pClassIndex Index of class
       def add_to_correct_element(pElementFile, pFlag, pClassIndex)
         element = @language.processed_line || return
 
@@ -136,7 +139,7 @@ module StateMachine
       # @param pToAdd Element to add.
       def attach_element(pTarget, pToAdd)
         if (@language.isNested? && nested_structure?(pToAdd.type))
-          pTarget.managerCondAndLoop.down_level
+          pTarget.managerCondLoopAndBlock.increase_deep_level
         end
         pTarget.send("add_#{@whoAmI}", pToAdd)
       end
@@ -156,7 +159,7 @@ module StateMachine
         when StateMachine::SCRIPT_STATE
           target = pElementFile
         end
-        target.managerCondAndLoop.up_level
+        target.managerCondLoopAndBlock.decrease_deep_level
         @language.rewind_state
         @language.lessNested
       end

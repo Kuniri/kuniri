@@ -48,7 +48,7 @@ RSpec.describe Languages::MethodData do
       condiditonal.type = "IF"
       condiditonal.expression = "x > 3"
       @methodData.add_conditional(condiditonal)
-      all = @methodData.managerCondAndLoop.basicStructure
+      all = @methodData.managerCondLoopAndBlock.basicStructure
       expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe Languages::MethodData do
       expect(@methodData.name).to eq("lalala")
       expect(@methodData.comments).to eq("abc")
       expect(@methodData.comments).to eq("abc")
-      all = @methodData.managerCondAndLoop.basicStructure
+      all = @methodData.managerCondLoopAndBlock.basicStructure
       expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
       expect(@methodData.type).to eq("METHOD")
     end

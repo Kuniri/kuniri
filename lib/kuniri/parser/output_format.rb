@@ -50,9 +50,9 @@ module Parser
                 wrapper.global_variable_generate(
                         singleElement.global_variables)
               end
-              unless singleElement.managerCondAndLoop.basicStructure.empty?
+              unless singleElement.managerCondLoopAndBlock.basicStructure.empty?
                 wrapper.basic_structure_generate(
-                      singleElement.managerCondAndLoop.basicStructure)
+                      singleElement.managerCondLoopAndBlock.basicStructure)
               end
               if (singleElement.global_functions.length() > 0)
                 singleElement.global_functions.each do |globalFunction|
