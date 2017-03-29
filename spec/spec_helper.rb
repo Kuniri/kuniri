@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'config'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'rspec'
-require 'coveralls'
 require 'faker'
 
 RSpec.configure do |config|
@@ -21,5 +20,3 @@ end
 Dir[File.join(File.dirname(__FILE__), "./helpers/**" , "**.rb")].each do |f|
   require_relative f
 end
-
-Coveralls.wear!
