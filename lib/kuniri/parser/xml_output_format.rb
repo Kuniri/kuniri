@@ -56,9 +56,9 @@ module Parser
           pFunction.parameters.each do |parameter|
             wrapper.parameters_generate(parameter)
           end
-          unless pFunction.managerCondAndLoop.basicStructure.empty?
+          unless pFunction.managerCondLoopAndBlock.basicStructure.empty?
             wrapper.basic_structure_generate(
-                                  pFunction.managerCondAndLoop.basicStructure)
+                              pFunction.managerCondLoopAndBlock.basicStructure)
           end
         end
       end

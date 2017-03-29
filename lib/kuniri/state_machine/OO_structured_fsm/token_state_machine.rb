@@ -6,10 +6,14 @@
 
 module StateMachine
 
-  NONE_HANDLING_STATE       ||= -1      # NONE state, just for controlling. 
-  GLOBAL_FUNCTION_STATE     ||= 1       # Global state track.
-  CONSTRUCTOR_STATE         ||= 2       # Constructor state track.
-  METHOD_STATE              ||= 3       # Method state track.
+  NONE_HANDLING_STATE   ||= -1      # NONE state, just for controlling.
+  GLOBAL_FUNCTION_STATE ||= 1       # Global state track.
+  CONSTRUCTOR_STATE     ||= 2       # Constructor state track.
+  METHOD_STATE          ||= 3       # Method state track.
+  CONDITIONAL_STATE     ||= 4       # Conditional state track.
+  REPETITION_STATE      ||= 5       # Repetition state track.
+  BLOCK_STATE           ||= 6       # Block state track.
+  SCRIPT_STATE          ||= 7       # Script state track.
 
   METHOD_ID             ||= 1
   CONSTRUCTOR_ID        ||= 2

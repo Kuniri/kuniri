@@ -16,6 +16,8 @@ RSpec.describe Languages::FileElementData do
     @conditional2 = Languages::ConditionalData.new
     @repetition1 = Languages::RepetitionData.new
     @repetition2 = Languages::RepetitionData.new
+    @block1 = Languages::BlockData.new
+    @block2 = Languages::BlockData.new
   end
 
   context 'When add global function.' do
@@ -123,33 +125,56 @@ RSpec.describe Languages::FileElementData do
   context 'Add conditional directly to file' do
     it 'Simple flow of conditional addition' do
       @fileElement.add_conditional(@conditional1)
-      expect(@fileElement.conditionals).to match_array([@conditional1])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@conditional1])
       @fileElement.add_conditional(@conditional2)
-      expect(@fileElement.conditionals).to match_array([@conditional1,
-                                                        @conditional2])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@conditional1, @conditional2])
     end
 
     it 'Try to add something different of Conditional' do
       @fileElement.add_conditional(@class1)
-      expect(@fileElement.conditionals).to match_array([])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([])
       @fileElement.add_conditional(@repetition2)
-      expect(@fileElement.conditionals).to match_array([])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([])
     end
   end
 
   context 'Add repetition directly to file' do
     it 'Simple flow of repetition addition' do
       @fileElement.add_repetition(@repetition1)
-      expect(@fileElement.repetitions).to match_array([@repetition1])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@repetition1])
       @fileElement.add_repetition(@repetition2)
-      expect(@fileElement.repetitions).to match_array([@repetition1,
-                                                       @repetition2])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@repetition1, @repetition2])
     end
 
     it 'Try to add something different of RepetitionData' do
       @fileElement.add_repetition(@conditional1)
       @fileElement.add_repetition(@class1)
-      expect(@fileElement.repetitions).to match_array([])
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([])
+    end
+  end
+
+  context 'Add block directly to file' do
+    it 'Simple flow of block addition' do
+      @fileElement.add_block(@block1)
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@block1])
+      @fileElement.add_block(@block2)
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([@block1, @block2])
+    end
+
+    it 'Try to add something different of BlockData' do
+      @fileElement.add_block(@conditional1)
+      @fileElement.add_block(@class1)
+      all = @fileElement.managerCondLoopAndBlock.basicStructure
+      expect(all).to match_array([])
     end
   end
 

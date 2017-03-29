@@ -51,13 +51,13 @@ RSpec.describe Languages::FunctionAbstract do
   context "When adding a conditional" do
     it "Adds a conditional" do
       @functionAbstract.add_conditional(@conditional)
-      functionConditional = @functionAbstract.managerCondAndLoop.basicStructure
+      functionConditional = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(functionConditional).to eq([@conditional])
     end
 
     it "Adds a string as a conditional should fail" do
       @functionAbstract.add_conditional("xpto")
-      functionConditional = @functionAbstract.managerCondAndLoop.basicStructure
+      functionConditional = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(functionConditional).to_not eq(["xpto"])
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Languages::FunctionAbstract do
         conditionals[index].type = Languages::IF_LABEL
         @functionAbstract.add_conditional(conditionals[index])
       end
-      allConditionals = @functionAbstract.managerCondAndLoop.basicStructure
+      allConditionals = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(allConditionals).to match_array(conditionals)
     end
 
@@ -85,7 +85,7 @@ RSpec.describe Languages::FunctionAbstract do
       @functionAbstract.add_conditional(conditionals[2], Languages::DOWN_LEVEL)
       @functionAbstract.add_conditional(conditionals[3], Languages::UP_LEVEL)
 
-      allConditional = @functionAbstract.managerCondAndLoop.basicStructure
+      allConditional = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(allConditional[0].level).to eq(0)
       expect(allConditional[1].level).to eq(1)
       expect(allConditional[2].level).to eq(2)
@@ -97,13 +97,13 @@ RSpec.describe Languages::FunctionAbstract do
   context "When adding a repetition" do
     it "Adds a repetition" do
       @functionAbstract.add_repetition(@repetition)
-      functionLoop = @functionAbstract.managerCondAndLoop.basicStructure
+      functionLoop = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(functionLoop).to eq([@repetition])
     end
 
     it "Adds a string as a repetition should fail" do
       @functionAbstract.add_repetition("xpto")
-      functionLoop = @functionAbstract.managerCondAndLoop.basicStructure
+      functionLoop = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(functionLoop).to_not eq(["xpto"])
     end
 
@@ -115,7 +115,7 @@ RSpec.describe Languages::FunctionAbstract do
         loops[index].expression = "true"
         @functionAbstract.add_repetition(loops[index])
       end
-      allLoops = @functionAbstract.managerCondAndLoop.basicStructure
+      allLoops = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(allLoops).to match_array(loops)
     end
 
@@ -131,7 +131,7 @@ RSpec.describe Languages::FunctionAbstract do
       @functionAbstract.add_repetition(loops[2])
       @functionAbstract.add_repetition(loops[3], Languages::UP_LEVEL)
 
-      allLoops = @functionAbstract.managerCondAndLoop.basicStructure
+      allLoops = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(allLoops[0].level).to eq(0)
       expect(allLoops[1].level).to eq(1)
       expect(allLoops[2].level).to eq(1)
@@ -156,7 +156,7 @@ RSpec.describe Languages::FunctionAbstract do
       @functionAbstract.add_conditional(conditionalTwo, Languages::UP_LEVEL)
       @functionAbstract.add_repetition(repetitionTwo, Languages::DOWN_LEVEL)
 
-      all = @functionAbstract.managerCondAndLoop.basicStructure
+      all = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(all[0].level).to eq(0)
       expect(all[1].level).to eq(1)
       expect(all[1].type).to eq(Languages::FOR_LABEL)
@@ -181,7 +181,7 @@ RSpec.describe Languages::FunctionAbstract do
       @functionAbstract.add_conditional(conditionalOne, Languages::DOWN_LEVEL)
       @functionAbstract.add_conditional(conditionalTwo)
 
-      all = @functionAbstract.managerCondAndLoop.basicStructure
+      all = @functionAbstract.managerCondLoopAndBlock.basicStructure
       expect(all[0].level).to eq(0)
       expect(all[0].type).to eq(Languages::FOR_LABEL)
       expect(all[1].level).to eq(1)

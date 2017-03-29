@@ -21,6 +21,7 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
+
         if @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
           include_capture
         elsif @language.line_inspect(VARIABLE_ID, pLine)
@@ -35,8 +36,10 @@ module StateMachine
           conditional_capture
         elsif @language.line_inspect(REPETITION_ID, pLine)
           repetition_capture
+        elsif @language.line_inspect(BLOCK_ID, pLine)
+          block_capture
         elsif ((@language.commentHandler.single_line_comment?(pLine)) ||
-                (@language.commentHandler.multiple_line_comment?(pLine)))
+               (@language.commentHandler.multiple_line_comment?(pLine)))
           comment_capture
         else
           return
@@ -75,26 +78,28 @@ module StateMachine
 
       # @see OOStructuredState
       def conditional_capture
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
         @language.set_state(@language.conditionalState)
       end
 
       # @see OOStructuredState
       def repetition_capture
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
         @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def block_capture
+        @language.flagFunctionBehaviour = StateMachine::SCRIPT_STATE
+        @language.set_state(@language.blockState)
+      end
 
+      # @see OOStructuredState
+      def execute(pElementFile, pLine)
         # Having nothing to do
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

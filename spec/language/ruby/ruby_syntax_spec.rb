@@ -288,9 +288,9 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       allFuntion0 = @syntax.fileElements[0].global_functions[0]
-                                            .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
       allFuntion1 = @syntax.fileElements[0].global_functions[1]
-                                            .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
 
       expect(@syntax.fileElements[0].global_functions[0].name).to eq('simple1')
       expect(allFuntion0[0].expression).to eq('3 > 2')
@@ -320,13 +320,13 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       allMethod0 = @syntax.fileElements[0].classes[0].methods[0]
-                                          .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
       allMethod1 = @syntax.fileElements[0].classes[0].methods[1]
-                                          .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
       allMethod2 = @syntax.fileElements[0].classes[0].methods[2]
-                                          .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
       allMethod3 = @syntax.fileElements[0].classes[0].methods[3]
-                                          .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
 
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
         .to eq('method1')
@@ -368,7 +368,7 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       allConstructor = @syntax.fileElements[0].classes[0].constructors[0]
-                                            .managerCondAndLoop.basicStructure
+                                        .managerCondLoopAndBlock.basicStructure
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
           .to eq('initialize')
 
@@ -398,7 +398,7 @@ RSpec.describe Languages::RubySyntax do
 
       @syntax.analyse_source(path)
       allLoop = @syntax.fileElements[0].classes[0]
-                      .methods[0].managerCondAndLoop.basicStructure
+                        .methods[0].managerCondLoopAndBlock.basicStructure
 
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
               .to eq('simple1')
@@ -413,7 +413,7 @@ RSpec.describe Languages::RubySyntax do
           .to eq('simple2')
 
       all = @syntax.fileElements[0].classes[0].methods[1]
-                    .managerCondAndLoop.basicStructure
+                    .managerCondLoopAndBlock.basicStructure
       expect(all[0].expression).to eq('i > num')
 
     end
@@ -426,7 +426,7 @@ RSpec.describe Languages::RubySyntax do
           .to eq('simple2')
 
       all = @syntax.fileElements[0].classes[0].methods[1]
-                    .managerCondAndLoop.basicStructure
+                    .managerCondLoopAndBlock.basicStructure
       expect(all[1].expression).to eq('i in 0..5')
     end
 

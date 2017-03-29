@@ -38,7 +38,7 @@ RSpec.describe Languages::FunctionData do
       expect(@functionData.name).to eq("lalala")
       expect(@functionData.comments).to eq("abc")
       expect(@functionData.comments).to eq("abc")
-      all = @functionData.managerCondAndLoop.basicStructure
+      all = @functionData.managerCondLoopAndBlock.basicStructure
       expect(all[0].instance_of?(Languages::ConditionalData)).to eq(true)
       expect(@functionData.type).to eq("GLOBALFUNCTION")
     end
