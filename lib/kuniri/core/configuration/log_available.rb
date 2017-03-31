@@ -6,8 +6,7 @@
 
 module Configuration
   # Configuration for the monitor available.
-  class Log_Available
-    public
-      LOG = ["html", "txt"] #List with log types.
+  class LogAvailable
+    LOG = %w(html txt).freeze # List with log types.
   end
 end
