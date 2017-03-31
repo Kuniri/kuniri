@@ -26,41 +26,32 @@ module Parser
     'name': 'n',
     'expression': 'e',
     'level': 'l'
-  }
+  }.freeze
 
   # Keep the relationship between languages and project
   class Parser
+    attr_accessor :language
+    attr_reader :fileLanguage
+    attr_reader :filesPath
 
-      public
+    def initialize(pFilesPath, pLanguage = 'ruby')
+      @filesPath = pFilesPath
+      @fileLanguage = []
+      @factory = Languages::LanguageFactory.new
+      @language = pLanguage
+    end
 
-        attr_accessor :language
-        attr_reader :fileLanguage
-        attr_reader :filesPath
-
-        def initialize(pFilesPath, pLanguage = 'ruby')
-          @filesPath = pFilesPath
-          @fileLanguage = []
-          @factory = Languages::LanguageFactory.new
-          @language = pLanguage
-        end
-
-        # Start parse in the project.
-        def start_parser
-          raise Error::ConfigurationFileError,
-            "Source path not have #{@language} files." if(@filesPath.empty?)
-          @filesPath.each do |file|
-            language = @factory.get_language(@language)
-            language.analyse_source(file)
-            @fileLanguage.push(language)
-          end
-        end
-
-      private
-
-        @factory
-
-  # class
-  end
-
-# module
-end
+    # Start parse in the project.
+    def start_parser
+      if (@filesPath.empty?)
+        raise Error::ConfigurationFileError,
+              "Source path not have #{@language} files."
+      end
+      @filesPath.each do |file|
+        language = @factory.get_language(@language)
+        language.analyse_source(file)
+        @fileLanguage.push(language)
+      end
+    end
+  end # class
+end # module
