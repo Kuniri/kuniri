@@ -24,8 +24,9 @@ module Kuniri
     def initialize
       @configurationInfo = {}
       @filesPathProject = []
-      @parserFiles = []
-      @parser = nil
+      @parserFiles = []   # !@attribute Final output from parser.
+      @filesProject = []  # !@attribute Array with object reference of all files
+      @parser = nil       # !@attribute Execute the parser based on settings.
     end
 
     def read_configuration_file(pPath = '.kuniri.yml')
@@ -38,10 +39,10 @@ module Kuniri
     def set_configuration(pSource, pLanguage, pOutput, pLevel)
       @settings = Setting.create
       @settings.initializate_settings
-      @configurationInfo = {language: pLanguage,
-                            source: pSource,
-                            output: pOutput,
-                            pLevel: pLevel}
+      @configurationInfo = { language: pLanguage,
+                             source: pSource,
+                             output: pOutput,
+                             pLevel: pLevel }
 
       @settings.set_configuration(@configurationInfo)
     end
@@ -67,29 +68,15 @@ module Kuniri
 
     private
 
-    @filesProject      # !@attribute Array with object reference of all files
-    @parser            # !@attribute Execute the parser based on settings.
-    @parserFiles       # !@attribute Final output from parser.
-
     # !@param pPath Relative path of the project.
     # !@param pLanguage Language extension for make the parser.
     def get_project_file(pPath = './', pLanguage = '**.rb')
       # Verify if path is a valid directory or file
-      return nil unless File.file?(pPath) or File.directory?(pPath)
+      return nil unless File.file?(pPath) || File.directory?(pPath)
 
-      # Handle single file
-      if (File.file?(pPath))
-        @filesProject = [pPath]
-      # Handle multiple files
-      else
-        @filesProject = Dir[File.join(pPath, '**', pLanguage)]
-      end
-
-      return @filesProject
+      # Handle single file and multiple files
+      @filesProject =
+        File.file?(pPath) ? [pPath] : Dir[File.join(pPath, '**', pLanguage)]
     end
-
-  # Class
-  end
-
-# Kuniri
-end
+  end # Class
+end # Kuniri
