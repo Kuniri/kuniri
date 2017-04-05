@@ -15,9 +15,6 @@ module StateMachine
 
     # Class responsible for handling Module state.
     class ModuleState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
@@ -61,22 +58,14 @@ module StateMachine
 
         if @language.endBlockHandler.has_end_of_block?(pLine)
           previous = @language.previousState.last
-
-          if (previous.is_a?(StateMachine::OOStructuredFSM::IdleState))
-            idle_capture
-          else
-            return pElementFile
-          end
+          idle_state = StateMachine::OOStructuredFSM::IdleState
+          return pElementFile unless previous.is_a? idle_state
+          idle_capture
         end
 
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine
