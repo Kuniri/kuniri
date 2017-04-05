@@ -19,7 +19,7 @@ module StateMachine
       # Child class should OVERRIDE @whoAmI correctly
       def initialize(pLanguage)
         @language = pLanguage
-        @language.resetNested
+        @language.reset_nested
         @whoAmI = 'the fu@!+ nobody'
       end
 
@@ -53,19 +53,19 @@ module StateMachine
 
       # @see OOStructuredState
       def conditional_capture
-        @language.moreNested
+        @language.more_nested
         @language.set_state(@language.conditionalState)
       end
 
       # @see OOStructuredState
       def repetition_capture
-        @language.moreNested
+        @language.more_nested
         @language.set_state(@language.repetitionState)
       end
 
       # @see OOStructuredState
       def block_capture
-        @language.moreNested
+        @language.more_nested
         @language.set_state(@language.blockState)
       end
 
@@ -138,7 +138,7 @@ module StateMachine
       # @param pTarget All data inside element.
       # @param pToAdd Element to add.
       def attach_element(pTarget, pToAdd)
-        if (@language.isNested? && nested_structure?(pToAdd.type))
+        if (@language.nested? && nested_structure?(pToAdd.type))
           pTarget.managerCondLoopAndBlock.increase_deep_level
         end
         pTarget.send("add_#{@whoAmI}", pToAdd)
@@ -161,7 +161,7 @@ module StateMachine
         end
         target.managerCondLoopAndBlock.decrease_deep_level
         @language.rewind_state
-        @language.lessNested
+        @language.less_nested
       end
 
     end # End class
