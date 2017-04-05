@@ -4,7 +4,7 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 require 'logger'
-#require 'byebug'
+require 'byebug'
 
 # Util provides classes, functions and constants which can be used for the
 # entire system.
@@ -32,6 +32,10 @@ module Util
 
     def self.path=(path)
       @@path = path
+    end
+    
+    def self.path
+      return @@path
     end
 
 
