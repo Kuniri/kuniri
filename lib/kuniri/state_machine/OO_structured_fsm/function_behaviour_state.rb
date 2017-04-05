@@ -77,7 +77,7 @@ module StateMachine
                                                functionElement)
         end
 
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
+        if (@language.endBlockHandler.end_of_block?(pLine))
           @language.rewind_state
         end
 

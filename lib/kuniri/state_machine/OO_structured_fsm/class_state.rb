@@ -79,7 +79,7 @@ module StateMachine
           @language.metadata.allClasses.push(classElement)
         end
 
-        if @language.endBlockHandler.has_end_of_block?(pLine)
+        if @language.endBlockHandler.end_of_block?(pLine)
           previous = @language.previousState.last
 
           if (previous.is_a? StateMachine::OOStructuredFSM::IdleState)

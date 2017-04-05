@@ -56,7 +56,7 @@ module StateMachine
 
         pElementFile.add_modules(moduleElement) if moduleElement
 
-        if @language.endBlockHandler.has_end_of_block?(pLine)
+        if @language.endBlockHandler.end_of_block?(pLine)
           previous = @language.previousState.last
           idle_state = StateMachine::OOStructuredFSM::IdleState
           return pElementFile unless previous.is_a? idle_state

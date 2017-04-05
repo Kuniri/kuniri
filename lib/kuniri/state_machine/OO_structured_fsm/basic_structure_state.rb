@@ -87,7 +87,7 @@ module StateMachine
 
         element = @language.processed_line
         singleLine = element.nil? ? false : element.singleLine
-        if (@language.endBlockHandler.has_end_of_block?(pLine) || singleLine)
+        if (@language.endBlockHandler.end_of_block?(pLine) || singleLine)
           update_level(flag, pElementFile, classIndex)
         end
         return pElementFile
