@@ -17,7 +17,7 @@ module Languages
 
         # Verify Ruby end of block.
         # @see EndBlock
-        def has_end_of_block?(pLine)
+        def end_of_block?(pLine)
           return detect_end(pLine)
         end
 

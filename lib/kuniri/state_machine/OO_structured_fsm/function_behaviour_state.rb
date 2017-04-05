@@ -13,11 +13,6 @@ module StateMachine
 
     # Class responsible for handling Method and constructor state.
     class FunctionBehaviourState < OOStructuredState
-
-      @language
-      @flagState
-      @functionIdentifier
-
       # Constructor responsible for setup the basic configuration.
       # @param pLanguage Reference to language object.
       # @param pParams Dictionary with all element data.
@@ -72,7 +67,6 @@ module StateMachine
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
-
         functionElement = @language.processed_line
 
         if (functionElement)
@@ -83,7 +77,7 @@ module StateMachine
                                                functionElement)
         end
 
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
+        if (@language.endBlockHandler.end_of_block?(pLine))
           @language.rewind_state
         end
 

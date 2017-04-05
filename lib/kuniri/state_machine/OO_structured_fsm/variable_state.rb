@@ -12,15 +12,12 @@ module StateMachine
 
     # Handling variable state.
     class VariableState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
 
       # @see OOStructuredState
-      def handle_line(pLine)
+      def handle_line(_pLine)
         idle_capture
       end
 
@@ -30,7 +27,7 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def execute(pElementFile, _pLine)
         variableList = @language.processed_line
         if variableList
           variableList.each do |variable|
@@ -44,11 +41,6 @@ module StateMachine
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End clas
+  end # End OOStructuredFSM
+end # End StateMachine

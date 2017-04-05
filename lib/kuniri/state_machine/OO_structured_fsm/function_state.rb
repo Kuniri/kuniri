@@ -14,9 +14,6 @@ module StateMachine
 
     # Class responsible for handling function state.
     class FunctionState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
@@ -72,12 +69,12 @@ module StateMachine
           pElementFile.add_global_function(function)
         end
 
-        if (@language.endBlockHandler.has_end_of_block?(pLine))
+        if (@language.endBlockHandler.end_of_block?(pLine))
           previous = @language.previousState.last
 
-          if (previous.is_a? (StateMachine::OOStructuredFSM::ModuleState))
+          if (previous.is_a? StateMachine::OOStructuredFSM::ModuleState)
             module_capture
-          elsif (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
+          elsif (previous.is_a? StateMachine::OOStructuredFSM::IdleState)
             idle_capture
           end
 
@@ -86,11 +83,6 @@ module StateMachine
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

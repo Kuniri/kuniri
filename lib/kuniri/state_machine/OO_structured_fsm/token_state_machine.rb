@@ -29,14 +29,14 @@ module StateMachine
   AGGREGATION_ID        ||= 12
   EXTERN_REQUIREMENT_ID ||= 13
 
-  METHOD_LABEL          ||= 'method'
-  CONSTRUCTOR_LABEL     ||= 'constructor'
-  FUNCTION_LABEL        ||= 'function'
-  COMMENT_LABEL         ||= 'comment'
-  VARIABLE_LABEL        ||= 'variable'
-  MODULE_LABEL          ||= 'module'
-  CLASS_LABEL           ||= 'class'
-  REPETITION_LABEL      ||= 'repetition'
-  CONDITIONAL_LABEL     ||= 'conditional'
+  METHOD_LABEL          ||= 'method'.freeze
+  CONSTRUCTOR_LABEL     ||= 'constructor'.freeze
+  FUNCTION_LABEL        ||= 'function'.freeze
+  COMMENT_LABEL         ||= 'comment'.freeze
+  VARIABLE_LABEL        ||= 'variable'.freeze
+  MODULE_LABEL          ||= 'module'.freeze
+  CLASS_LABEL           ||= 'class'.freeze
+  REPETITION_LABEL      ||= 'repetition'.freeze
+  CONDITIONAL_LABEL     ||= 'conditional'.freeze
 
 end

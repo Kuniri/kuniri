@@ -11,7 +11,7 @@ module Languages
 
         # Verify {LANG} end of block.
         # @see EndBlock
-        def has_end_of_block?(pLine)
+        def end_of_block?(pLine)
           # YOUR CODE HERE
         end
 

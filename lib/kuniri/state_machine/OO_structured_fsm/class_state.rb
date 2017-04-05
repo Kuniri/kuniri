@@ -12,10 +12,7 @@ module StateMachine
 
     # Class responsible for handling class state.
     class ClassState < OOStructuredState
-
-      @language
-
-      def initialize (pLanguage)
+      def initialize(pLanguage)
         @language = pLanguage
       end
 
@@ -82,12 +79,12 @@ module StateMachine
           @language.metadata.allClasses.push(classElement)
         end
 
-        if @language.endBlockHandler.has_end_of_block?(pLine)
+        if @language.endBlockHandler.end_of_block?(pLine)
           previous = @language.previousState.last
 
-          if (previous.is_a? (StateMachine::OOStructuredFSM::IdleState))
+          if (previous.is_a? StateMachine::OOStructuredFSM::IdleState)
             idle_capture
-          elsif (previous.is_a? (StateMachine::OOStructuredFSM::ModuleState))
+          elsif (previous.is_a? StateMachine::OOStructuredFSM::ModuleState)
             module_capture
           else
             return pElementFile
@@ -96,12 +93,6 @@ module StateMachine
 
         return pElementFile
       end
-
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End module
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End module
