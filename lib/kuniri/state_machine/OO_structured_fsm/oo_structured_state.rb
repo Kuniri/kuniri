@@ -15,7 +15,7 @@ module StateMachine
 
       # Method responsible each line, and decide which way to go inside state
       # machine.
-      def handle_line(pLine)
+      def handle_line(_pLine)
         raise NotImplementedError
       end
 
@@ -94,15 +94,10 @@ module StateMachine
       # @param pElementFile File to be improved.
       # @param pLine Line for verify element.
       # @return Return pElementFile with new elements, or with the same values.
-      def execute(pElementFile, pLine)
+      def execute(_pElementFile, _pLine)
         raise NotImplementedError
       end
 
-    # End class
-    end
-
-  # End OOStructuredState
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredState
+end # End StateMachine
