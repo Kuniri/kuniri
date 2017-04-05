@@ -13,9 +13,6 @@ module StateMachine
 
     # Class responsible for handling block state.
     class BlockState < BasicStructureState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
         @whoAmI = 'block'

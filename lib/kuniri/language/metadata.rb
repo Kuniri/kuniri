@@ -8,28 +8,19 @@ module Languages
 
   # Keep important information for second parser.
   class Metadata
+    @metadata = nil
+    private_class_method :new
+    attr_accessor :allClasses # !@attribute All classes to be analysed.
+    attr_accessor :allAggregations # !@attribute All aggregation in classes.
 
-    public
+    def initialize
+      @allClasses = []
+      @allAggregations = []
+    end
 
-      private_class_method :new
-      attr_accessor :allClasses # !@attribute All classes to be analysed.
-      attr_accessor :allAggregations # !@attribute All aggregation in classes.
-
-      def initialize
-        @allClasses = []
-        @allAggregations = []
-      end
-
-      def Metadata.create
-        @@metadata = new unless @@metadata
-        return @@metadata
-      end
-
-    private
-
-      @@metadata = nil
-
-  # Class
-  end
-# Module
-end
+    def self.create
+      @metadata = new unless @metadata
+      return @metadata
+    end
+  end # Class
+end # Module

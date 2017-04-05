@@ -12,16 +12,12 @@ module StateMachine
 
     # Class responsible for handling Idle state.
     class IdleState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
 
       # @see OOStructuredState
       def handle_line(pLine)
-
         if @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
           include_capture
         elsif @language.line_inspect(VARIABLE_ID, pLine)
@@ -95,7 +91,7 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def execute(pElementFile, _pLine)
         # Having nothing to do
         return pElementFile
       end
