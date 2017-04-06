@@ -78,7 +78,7 @@ module Languages
             if var_candidate.include?(TMP_TOKEN_EQUAL)
               variables.merge!(handle_equals(var_candidate, pStringsValues))
             else
-              if is_variable?(var_candidate)
+              if variable?(var_candidate)
                 variables[var_candidate.strip] = Languages::UNKNOWN
               end
             end
@@ -87,7 +87,7 @@ module Languages
         end
 
         # Override
-        def is_variable?(pVar)
+        def variable?(pVar)
           return false if pVar.include?('.')
           return false if Languages::Ruby::ALL_TOKENS.has_key?(pVar.to_sym)
           return true
@@ -134,11 +134,11 @@ module Languages
           value = process_value(value, pStrings)
           if partialVariable.size >= 2
             partialVariable.each do |var|
-              next unless is_variable?(var)
+              next unless variable?(var)
               variables[var.strip] = value
             end
           else
-            if is_variable?(partialVariable.first)
+            if variable?(partialVariable.first)
               variables[partialVariable.first.strip] = value
             end
           end

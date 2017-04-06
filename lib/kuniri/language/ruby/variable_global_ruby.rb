@@ -28,7 +28,7 @@ module Languages
           globalVariables = []
 
           varCandidates.each do |variable, value|
-            next unless is_variable?(variable)
+            next unless variable?(variable)
             variable = variable.delete('@')
             variable = variable.delete('$')
             var = create_variable_data(variable, value)
@@ -42,7 +42,7 @@ module Languages
 
       private
 
-        def is_variable?(pVariable)
+        def variable?(pVariable)
           return false if pVariable.strip.split(' ').size > 1
           return true
         end
