@@ -13,77 +13,66 @@ module Languages
 
     # Ruby Handling Ruby attributes
     class AttributeRuby < Languages::Attribute
+      def initialize
+        super
+        setup_variable_behaviour
+      end
 
-      public
+      def get_attribute(pLine)
+        attrCandidates = @variableBehaviour.common_declaration(pLine)
+        return nil if attrCandidates.empty?
 
-        def initialize
-          super
-          setup_variable_behaviour
-        end
+        attributes = []
 
-        def get_attribute(pLine)
-          attrCandidates = @variableBehaviour.common_declaration(pLine)
-          return nil if attrCandidates.empty?
+        _newCandidate, tmpAttrAt = handle_attributes_with_at(attrCandidates)
+        attributes.concat(tmpAttrAt)
 
-          attributes = []
+        _newCandidate, tmpAttr = handle_attribute_with_attr(attrCandidates)
+        attributes.concat(tmpAttr)
 
-          newCandidate, tmpAttrAt = handle_attributes_with_at(attrCandidates)
-          attributes.concat(tmpAttrAt)
-
-          newCandidate, tmpAttr = handle_attribute_with_attr(attrCandidates)
-          attributes.concat(tmpAttr)
-
-          return nil if attributes.empty?
-          return attributes
-        end
+        return nil if attributes.empty?
+        return attributes
+      end
 
       private
 
-        def create_attribute_data(variable, value = '')
-          attribute = AttributeData.new(variable)
-          attribute.value = value.strip unless value.empty?
-          return attribute
-        end
+      def create_attribute_data(variable, value = '')
+        attribute = AttributeData.new(variable)
+        attribute.value = value.strip unless value.empty?
+        return attribute
+      end
 
-        def handle_attributes_with_at(pAttributeCandidates)
-          attributes = []
-          pAttributeCandidates.each do |variable, value|
-            if variable =~ /^\s*(?:@|@@)\w+/
-              variable = variable.delete('@')
-              attribute = create_attribute_data(variable, value)
-              attributes.push(attribute)
-              pAttributeCandidates.delete(variable)
-            else
-              next
-            end
+      def handle_attributes_with_at(pAttributeCandidates)
+        attributes = []
+        pAttributeCandidates.each do |variable, value|
+          next unless variable =~ /^\s*(?:@|@@)\w+/
+          variable = variable.delete('@')
+          attribute = create_attribute_data(variable, value)
+          attributes.push(attribute)
+          pAttributeCandidates.delete(variable)
+        end
+        return pAttributeCandidates, attributes
+      end
+
+      def handle_attribute_with_attr(pAttributeCandidates)
+        attributes = []
+        pAttributeCandidates.each do |variable, _value|
+          if variable =~ /^\s*(?:(?:attr_(?:accessor|reader|writer))\s+:\w+)/
+            var = variable.split(' ').last
+            var = var.delete(':')
+            attribute = create_attribute_data(var)
+            attributes.push(attribute)
+            pAttributeCandidates.delete(variable)
+            next
           end
-          return pAttributeCandidates, attributes
+          next unless variable =~ /^\s*(?::\w+)/
+          variable = variable.delete(':')
+          attribute = create_attribute_data(variable)
+          attributes.push(attribute)
+          pAttributeCandidates.delete(variable)
         end
-
-        def handle_attribute_with_attr(pAttributeCandidates)
-          attributes = []
-          pAttributeCandidates.each do |variable, value|
-            if variable =~ /^\s*(?:(?:attr_(?:accessor|reader|writer))\s+:\w+)/
-              var = variable.split(' ').last
-              var = var.delete(':')
-              attribute = create_attribute_data(var)
-              attributes.push(attribute)
-              pAttributeCandidates.delete(variable)
-              next
-            end
-            if variable =~ /^\s*(?::\w+)/
-              variable = variable.delete(':')
-              attribute = create_attribute_data(variable)
-              attributes.push(attribute)
-              pAttributeCandidates.delete(variable)
-            end
-          end
-          return pAttributeCandidates, attributes
-        end
-
-    #Class
-    end
-  # Ruby
-  end
-#Language
-end
+        return pAttributeCandidates, attributes
+      end
+    end # Class
+  end # Ruby
+end # Language
