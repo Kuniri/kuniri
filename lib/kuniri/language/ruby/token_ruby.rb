@@ -4,7 +4,7 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 
-#reference:,
+# reference:,
 # http://www.java2s.com/Code/Ruby/Language-Basics/Rubysreservedwords.htm
 
 module Languages
@@ -51,8 +51,7 @@ module Languages
       'yield': '<YIELD>',
       '__FILE__': '<FILE>',
       '__LINE__': '<LINE>'
-      }
-    # Module
-  end
-# Language
-end
+    }.freeze
+
+  end # Module
+end # Language
