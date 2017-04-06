@@ -12,9 +12,6 @@ module Languages
 
     # CommentRuby is responsible for handling ruby comments.
     class CommentRuby < Languages::Comment
-
-      @flagMultipleLine
-
       def initialize
         @flagMultipleLine = false
       end
@@ -84,10 +81,6 @@ module Languages
 
         return nil
       end
-
-    # class
-    end
-  # module
-  end
-# module
-end
+    end # class
+  end # module
+end # module
