@@ -20,9 +20,9 @@ module Languages
     attr_accessor :type
     attr_reader :managerCondLoopAndBlock
 
-    METHOD_DATA ||= 'METHOD'
-    CONSTRUCTOR_DATA ||= 'CONSTRUCTOR'
-    GLOBAL_FUNCTION_DATA ||= 'GLOBALFUNCTION'
+    METHOD_DATA ||= 'METHOD'.freeze
+    CONSTRUCTOR_DATA ||= 'CONSTRUCTOR'.freeze
+    GLOBAL_FUNCTION_DATA ||= 'GLOBALFUNCTION'.freeze
 
     def initialize(pFunctionName)
       return nil if pFunctionName.nil? || !pFunctionName.respond_to?(:to_str)
