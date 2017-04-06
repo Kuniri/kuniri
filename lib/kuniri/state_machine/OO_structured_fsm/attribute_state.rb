@@ -12,16 +12,12 @@ module StateMachine
 
     # Class responsible for handling attribute state.
     class AttributeState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
 
       # @see OOStructuredState
-      def handle_line(pLine)
-      end
+      def handle_line(pLine); end
 
       # @see OOStructuredState
       def class_capture
@@ -29,7 +25,7 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def execute(pElementFile, _pLine)
         attributeElement = @language.processed_line
 
         if attributeElement
@@ -44,12 +40,6 @@ module StateMachine
         class_capture
         return pElementFile
       end
-
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

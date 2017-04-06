@@ -13,17 +13,11 @@ module StateMachine
 
     # Class responsible for handling Conditional state.
     class ConditionalState < BasicStructureState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
         @whoAmI = 'conditional'
       end
 
-    # End class
-    end
-  # End OOStructuredFSM
-  end
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

@@ -13,17 +13,11 @@ module StateMachine
 
     # Class responsible for handling Repetition state.
     class RepetitionState < BasicStructureState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
         @whoAmI = 'repetition'
       end
 
-    # End class
-    end
-  # End OOStructuredFSM
-  end
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFS
+end # End StateMachine
