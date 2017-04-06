@@ -7,19 +7,19 @@
 module Languages
 
   # Token types used for standardize assignments.
-  IF_LABEL ||= 'IF'
-  ELSE_LABEL ||= 'ELSE'
-  ELSIF_LABEL ||= 'ELSIF'
-  UNLESS_LABEL ||= 'UNLESS'
-  TERNARY_LABEL ||= 'TERNARY'
-  CASE_LABEL ||= 'CASE'
-  WHEN_LABEL ||= 'WHEN'
-  WHILE_LABEL ||= 'WHILE'
-  FOR_LABEL ||= 'FOR'
-  DO_WHILE_LABEL ||= 'DOWHILE'
-  UNTIL_LABEL ||= 'UNTIL'
-  LAMBDA_LABEL ||= 'LAMBDA'
-  BLOCK_LABEL ||= 'BLOCK'
+  IF_LABEL ||= 'IF'.freeze
+  ELSE_LABEL ||= 'ELSE'.freeze
+  ELSIF_LABEL ||= 'ELSIF'.freeze
+  UNLESS_LABEL ||= 'UNLESS'.freeze
+  TERNARY_LABEL ||= 'TERNARY'.freeze
+  CASE_LABEL ||= 'CASE'.freeze
+  WHEN_LABEL ||= 'WHEN'.freeze
+  WHILE_LABEL ||= 'WHILE'.freeze
+  FOR_LABEL ||= 'FOR'.freeze
+  DO_WHILE_LABEL ||= 'DOWHILE'.freeze
+  UNTIL_LABEL ||= 'UNTIL'.freeze
+  LAMBDA_LABEL ||= 'LAMBDA'.freeze
+  BLOCK_LABEL ||= 'BLOCK'.freeze
   # Handle nested conditional and loops
   UP_LEVEL ||= -1
   DOWN_LEVEL ||= 1

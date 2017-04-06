@@ -56,10 +56,5 @@ module Languages
     def increase_deep_level
       @currentLevel += 1
     end
-
-    private
-
-    @currentLevel
-
   end # End class
 end # End module

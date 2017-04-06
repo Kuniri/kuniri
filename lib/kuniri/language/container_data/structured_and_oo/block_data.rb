@@ -11,8 +11,5 @@ module Languages
   # BlockData handling extern requirements
   class BlockData < Languages::BasicStructure
 
-  # Class
-  end
-
-# Module
-end
+  end # Class
+end # Module

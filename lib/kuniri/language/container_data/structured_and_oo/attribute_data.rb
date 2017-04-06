@@ -10,16 +10,9 @@ module Languages
 
   # Handling attributes data.
   class AttributeData < Languages::VariableAbstract
-
-    public
-
-      def initialize(pAttributeName)
-        super
-        @visibility = 'public'
-      end
-
-  # Class
-  end
-
-# Module
-end
+    def initialize(_pAttributeName)
+      super
+      @visibility = 'public'
+    end
+  end # Class
+end # Module

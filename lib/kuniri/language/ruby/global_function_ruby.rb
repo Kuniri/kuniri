@@ -13,26 +13,17 @@ module Languages
 
     # Handling ruby global function
     class GlobalFunctionRuby < Languages::Ruby::FunctionBehaviorRuby
+      # Get Ruby global function.
+      # @see FunctionBehaviorRuby
+      def get_method(pLine, _type = 'public')
+        result = get_function(pLine)
+        return nil unless result
 
-      public
+        functionData = FunctionData.new(result.name)
+        functionData << result
 
-        # Get Ruby global function.
-        # @see FunctionBehaviorRuby
-        def get_method(pLine, type = 'public')
-          result = get_function(pLine)
-          return nil unless result
-
-          functionData = FunctionData.new(result.name)
-          functionData << result
-
-          return functionData
-        end
-
-    # Class
-    end
-
-  # Ruby
-  end
-
-# Language
-end
+        return functionData
+      end
+    end # Class
+  end # Ruby
+end # Language
