@@ -11,25 +11,14 @@ module Parser
 
   # Simple factory to create output objects.
   class OutputFactory
+    # Handling the output tyoe.
+    # @param pType [String] Type of object
+    # @return Return an object of output.
+    def get_output(pType)
+      pType.downcase!
 
-    public
-
-      # Handling the output tyoe.
-      # @param pType [String] Type of object
-      # @return Return an object of output.
-      def get_output(pType)
-        pType.downcase!
-
-        if pType == "xml"
-          return XMLOutputFormat.new
-        end
-        if pType == "yml"
-          raise Error::ParserError
-        end
-      end
-
-  # Class
-  end
-
-# Module
-end
+      return XMLOutputFormat.new if pType == 'xml'
+      raise Error::ParserError if pType == 'yml'
+    end
+  end # Class
+end # Module

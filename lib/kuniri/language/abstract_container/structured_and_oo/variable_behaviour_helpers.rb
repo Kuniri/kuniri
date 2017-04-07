@@ -11,8 +11,8 @@ module Languages
   # Mixin to automatically add behaviour inside attribute and variables.
   module VariableBehaviourHelpers
 
-    MODULEBASE = 'Languages::'
-    VARIABLECLASS = '::VariableBehaviour'
+    MODULEBASE = 'Languages::'.freeze
+    VARIABLECLASS = '::VariableBehaviour'.freeze
 
     # Setup basic configurations for make attribute work correctly. It is
     # mandatory to call it with the correct parameters in the child class.
@@ -39,7 +39,5 @@ module Languages
     def type_of_language
       self.class.name.split('::')[1]
     end
-  # Module
-  end
-# Module
-end
+  end # Module
+end # Module

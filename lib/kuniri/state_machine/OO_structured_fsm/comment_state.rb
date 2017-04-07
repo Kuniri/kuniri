@@ -12,19 +12,13 @@ module StateMachine
 
     # CommentState is responsible for handling comments.
     class CommentState < OOStructuredState
-
-      @language
-      @multipleLineComment
-      @enableMultipleLine
-
       def initialize(pLanguage)
         @language = pLanguage
         @multipleLineComment = ''
         @enableMultipleLine = false
       end
 
-      def handle_line(pLine)
-      end
+      def handle_line(pLine); end
 
       # @see OOStructuredState
       def execute(pElementFile, pLine)
@@ -75,9 +69,6 @@ module StateMachine
         pComment.squeeze!(' ')
       end
 
-    # class
-    end
-  # module
-  end
-# module
-end
+    end # class
+  end # module
+end # module

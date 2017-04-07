@@ -12,22 +12,19 @@ module StateMachine
 
     # Class responsible for handling Include state.
     class IncludeState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
 
       # @see OOStructuredState
-      def handle_line(pLine)
+      def handle_line(_pLine)
         idle_capture
         # TODO: HANDLING MULTIPLE LINE.
-        #if @language.idleHandler.get_idle(pLine)
-        #  idle_capture
-        #else
-        # TODO: SAME STATE.
-        #end
+        # if @language.idleHandler.get_idle(pLine)
+        #   idle_capture
+        # else
+        #  TODO: SAME STATE.
+        # end
       end
 
       # @see OOStructuredState
@@ -36,7 +33,7 @@ module StateMachine
       end
 
       # @see OOStructuredState
-      def execute(pElementFile, pLine)
+      def execute(pElementFile, _pLine)
         requirement = @language.processed_line
 
         pElementFile.add_extern_requirement(requirement) if requirement
@@ -51,11 +48,6 @@ module StateMachine
         return pElementFile
       end
 
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

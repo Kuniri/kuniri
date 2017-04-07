@@ -14,18 +14,15 @@ module Languages
 
     # Ruby Handling Ruby aggregation
     class AggregationRuby < Languages::Aggregation
+      # @param pLine Verify if line has a ruby aggregation.
+      # @return Return string or nil.
+      def get_aggregation(pLine)
+        result = detect_aggregation(pLine)
+        return nil unless result
+        return Languages::AggregationData.new(result)
+      end
 
-      public
-
-        # @param pLine Verify if line has a ruby aggregation.
-        # @return Return string or nil.
-        def get_aggregation(pLine)
-          result = detect_aggregation(pLine)
-          return nil unless result
-          return Languages::AggregationData.new(result)
-        end
-
-    protected
+      protected
 
       # Override
       def detect_aggregation(pLine)
@@ -33,11 +30,6 @@ module Languages
         return nil unless pLine =~ regexExp
         return pLine[regexExp, 1]
       end
-
-    #Class
-    end
-
-  # Ruby
-  end
-#Language
-end
+    end # Class
+  end # Ruby
+end # Language

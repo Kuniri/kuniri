@@ -10,17 +10,10 @@ module Languages
 
   # Handling module data
   class ModuleNamespaceData < Languages::BasicData
+    def initialize(pName)
+      return nil if (pName.nil?) || (!pName.is_a? String)
 
-    public
-
-      def initialize(pName)
-      	return nil if pName.nil? or !pName.is_a? String
-
-        @name = pName
-      end
-
-  # Class
-  end
-
-# Module
-end
+      @name = pName
+    end
+  end # Class
+end # Module
