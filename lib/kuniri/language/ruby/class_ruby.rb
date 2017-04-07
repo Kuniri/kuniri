@@ -43,7 +43,6 @@ module Languages
       def get_inheritance(pString)
         if pString =~ /</
           partial = pString.split('<').last.strip
-          partial = partial.split('::').last.strip
           return partial
         end
 
