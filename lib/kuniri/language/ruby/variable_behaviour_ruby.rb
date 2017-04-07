@@ -99,7 +99,7 @@ module Languages
 
         # TODO: $1 can be dangerous if add parallelization
         # TODO: Think about add space after each replace
-        pValue.gsub!(/\s*<(str\d+)>/) { |_| _match = pStrings[$1] }
+        pValue.gsub!(/\s*<(str\d+)>/) { |_| pStrings[Regexp.last_match(1)] }
 
         return pValue
       end
