@@ -10,15 +10,8 @@ module Languages
   # information: name. This class aim to be a generic class for all elements
   # of container data.
   class BasicData
-
-    public
-
-      attr_accessor :name
-      attr_accessor :visibility
-      attr_accessor :comments
-
-  # class
-  end
-
-# module
-end
+    attr_accessor :name
+    attr_accessor :visibility
+    attr_accessor :comments
+  end # class
+end # module

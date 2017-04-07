@@ -13,24 +13,18 @@ module Languages
 
     # Handling ruby constructor
     class ConstructorRuby < Languages::Ruby::FunctionBehaviorRuby
+      # Get Ruby constructor.
+      # @see FunctionBehaviorRuby
+      def get_constructor(pLine, _type = 'public')
+        result = get_function(pLine)
+        return nil unless result
+        return nil unless result.name =~ /^initialize$/
 
-      public
+        constructorData = ConstructorData.new(result.name)
+        constructorData << result
 
-        # Get Ruby constructor.
-        # @see FunctionBehaviorRuby
-        def get_constructor(pLine, type = 'public')
-          result = get_function(pLine)
-          return nil unless result
-          return nil unless result.name =~ /^initialize$/
-
-          constructorData = ConstructorData.new(result.name)
-          constructorData << result
-
-          return constructorData
-        end
-    # Class
-    end
-  # Ruby
-  end
-# Language
-end
+        return constructorData
+      end
+    end # Class
+  end # Ruby
+end # Language

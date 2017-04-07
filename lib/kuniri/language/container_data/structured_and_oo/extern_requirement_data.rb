@@ -10,28 +10,21 @@ module Languages
 
   # ExternRequirementData Handling extern requirements
   class ExternRequirementData < Languages::BasicData
+    attr_reader :library
 
-    public
+    def initialize(pRequirement)
+      return nil if (pRequirement.nil?) || (!pRequirement.is_a? String)
+      @library = pRequirement
+    end
 
-      attr_reader :library
+    # Set library of extern requirement.
+    # @param pLibrary Library inside the extern requirement.
+    def set_library(pLibrary)
+      return nil if (pLibrary.nil?) ||
+                    (!pLibrary.is_a? String) ||
+                    (pLibrary.empty?)
 
-      def initialize(pRequirement)
-        return nil if pRequirement.nil? or !pRequirement.is_a? String
-        @library = pRequirement
-      end
-
-      # Set library of extern requirement.
-      # @param pLibrary Library inside the extern requirement.
-      def set_library(pLibrary)
-        if pLibrary.nil? or !pLibrary.is_a? String or pLibrary.empty?
-          return nil
-        end
-
-        @library = pLibrary
-      end
-
-  # Class
-  end
-
-# Module
-end
+      @library = pLibrary
+    end
+  end # Class
+end # Module

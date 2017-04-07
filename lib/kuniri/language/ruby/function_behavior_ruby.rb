@@ -14,97 +14,90 @@ module Languages
 
     # Handling Ruby method
     class FunctionBehaviorRuby < Languages::FunctionBehavior
+      # Get Ruby function.
+      def get_function(pLine, _type = 'globalFunction')
+        result = detect_function(pLine)
+        return nil unless result
 
-      public
+        functionRuby = Languages::FunctionData.new(result)
 
-        # Get Ruby function.
-        def get_function(pLine, type = 'globalFunction')
-          result = detect_function(pLine)
-          return nil unless result
-
-          functionRuby = Languages::FunctionData.new(result)
-
-          parameters = handling_parameter(pLine)
-          if parameters
-            parameters.each do |parameter|
-              functionRuby.add_parameters(parameter)
-            end
-          end
-          return functionRuby
+        parameters = handling_parameter(pLine)
+        parameters&.each do |parameter|
+          functionRuby.add_parameters(parameter)
         end
+        return functionRuby
+      end
 
       protected
 
-        # Override
-        def detect_function(pLine)
-          regexExpression = /^\s*def\b\s*(\w*)\b/
-          return nil unless pLine =~ regexExpression
-          return pLine.scan(regexExpression)[0].join('')
-        end
+      # Override
+      def detect_function(pLine)
+        regexExpression = /^\s*def\b\s*(\w*)\b/
+        return nil unless pLine =~ regexExpression
+        return pLine.scan(regexExpression)[0].join('')
+      end
 
-        # Override
-        def handling_default_parameter(pLine)
-          return pLine unless pLine =~ /=/
+      # Override
+      def handling_default_parameter(pLine)
+        return pLine unless pLine =~ /=/
 
-          if pLine =~ /,/
-            partialParameters = pLine.split(',')
-          else
-            partialParameters = [pLine]
+        partialParameters = if pLine =~ /,/
+                              pLine.split(',')
+                            else
+                              [pLine]
+                            end
+
+        newList = []
+        partialParameters.each do |element|
+          if element =~ /=/
+            parameter = element.scan(/(\w*)=/).join('')
+            value = element.scan(/=(\w*)/).join('')
+            defaultParameter = { parameter => value }
+            newList.push(defaultParameter)
+            next
           end
-
-          newList = []
-          partialParameters.each do |element|
-            if element =~ /=/
-              parameter = element.scan(/(\w*)=/).join('')
-              value = element.scan(/=(\w*)/).join('')
-              defaultParameter = {parameter => value}
-              newList.push(defaultParameter)
-              next
-            end
-            newList.push(element)
-          end
-
-          return newList
+          newList.push(element)
         end
 
-        # Override
-        def remove_unnecessary_information(pLine)
-          return pLine.gsub(/\s+|\(|\)/, '') if pLine =~ /\s+|\(|\)/
-          return pLine
+        return newList
+      end
+
+      # Override
+      def remove_unnecessary_information(pLine)
+        return pLine.gsub(/\s+|\(|\)/, '') if pLine =~ /\s+|\(|\)/
+        return pLine
+      end
+
+      # Override
+      def handling_parameter(pLine)
+        # Handling with parenthesis and without it.
+        if pLine =~ /\(.+\)/
+          partial = get_parameters(pLine, /\(.+\)/)
+        elsif pLine =~ /def\s+\w+[\s]+(.+)/
+          partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
+        else
+          return nil
         end
 
-        # Override
-        def handling_parameter(pLine)
-          # Handling with parenthesis and without it.
-          if pLine =~ /\(.+\)/
-            partial = get_parameters(pLine, /\(.+\)/)
-          elsif pLine =~ /def\s+\w+[\s]+(.+)/
-            partial = get_parameters(pLine, /def\s+\w+[\s]+(.+)/)
-          else
-            return nil
-          end
-
-          return handling_default_parameter(partial) if partial =~ /=/
-          return split_string_by_comma(partial)
-        end
+        return handling_default_parameter(partial) if partial =~ /=/
+        return split_string_by_comma(partial)
+      end
 
       private
 
-        # Override
-        def get_parameters(pLine, pRegex)
-          partialParameters = pLine.scan(pRegex).join('')
-          partialParameters = remove_unnecessary_information(partialParameters)
-          return partialParameters
-        end
+      # Override
+      def get_parameters(pLine, pRegex)
+        partialParameters = pLine.scan(pRegex).join('')
+        partialParameters = remove_unnecessary_information(partialParameters)
+        return partialParameters
+      end
 
-        # Override
-        def split_string_by_comma(pString)
-          return pString.split(',') if pString =~ /,/
-          return [pString]
-        end
-    # Class
-    end
-  # Ruby
-  end
-# Language
-end
+      # Override
+      def split_string_by_comma(pString)
+        return pString.split(',') if pString =~ /,/
+        return [pString]
+      end
+
+    end # Class
+  end # Ruby
+end # Language

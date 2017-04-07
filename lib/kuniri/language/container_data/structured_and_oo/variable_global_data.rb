@@ -10,16 +10,10 @@ module Languages
 
   # Class responsible for handling global variables.
   class VariableGlobalData < Languages::VariableAbstract
+    def initialize(_pName)
+      super
+      @visibility = 'global'
+    end
 
-    public
-
-      def initialize(pName)
-        super
-        @visibility = 'global'
-      end
-
-  # Class
-  end
-
-# Languages
-end
+  end # Class
+end # Languages

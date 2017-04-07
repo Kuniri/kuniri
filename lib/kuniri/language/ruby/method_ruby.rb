@@ -13,24 +13,17 @@ module Languages
 
     # Handling ruby method
     class MethodRuby < Languages::Ruby::FunctionBehaviorRuby
+      # Get Ruby method.
+      # @see FunctionBehaviorRuby
+      def get_method(pLine, _type = 'public')
+        result = get_function(pLine)
+        return nil unless result
 
-      public
+        methodData = MethodData.new(result.name)
+        methodData << result
 
-        # Get Ruby method.
-        # @see FunctionBehaviorRuby
-        def get_method(pLine, type = 'public')
-          result = get_function(pLine)
-          return nil unless result
-
-          methodData = MethodData.new(result.name)
-          methodData << result
-
-          return methodData
-        end
-
-    # Class
-    end
-  # Ruby
-  end
-# Language
-end
+        return methodData
+      end
+    end # Class
+  end # Ruby
+end # Language

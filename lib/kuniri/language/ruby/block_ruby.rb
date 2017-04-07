@@ -14,56 +14,47 @@ module Languages
 
     # Ruby Handling Ruby block
     class BlockRuby < Languages::Block
-
-      public
-
-        # Get ruby block.
-        # @param pLine Verify if line has a ruby block.
-        # @return Return BlockData or nil.
-        def get_block(pLine)
-          result = detect_block(pLine)
-          return nil unless result
-          blockData = Languages::BlockData.new
-          blockData.type = Languages::BLOCK_LABEL
-          blockData.expression = capture_block_name(result)
-          return blockData
-        end
+      # Get ruby block.
+      # @param pLine Verify if line has a ruby block.
+      # @return Return BlockData or nil.
+      def get_block(pLine)
+        result = detect_block(pLine)
+        return nil unless result
+        blockData = Languages::BlockData.new
+        blockData.type = Languages::BLOCK_LABEL
+        blockData.expression = capture_block_name(result)
+        return blockData
+      end
 
       protected
 
-        # Override
-        def detect_block(pLine)
-          regexExp = /([a-zA-Z_0-9]\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
-          if regexExp =~ pLine
-            return pLine[regexExp, 0] unless among_quotes?pLine
-          end
-          return nil
+      # Override
+      def detect_block(pLine)
+        regexExp = /([a-zA-Z_0-9]\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
+        if regexExp =~ pLine
+          return pLine[regexExp, 0] unless among_quotes?pLine
         end
+        return nil
+      end
 
-        def among_quotes?(pLine)
-          quotes_regex = /["'].*["']/
-          return true if quotes_regex =~ pLine
-          return false
-        end
+      def among_quotes?(pLine)
+        quotes_regex = /["'].*["']/
+        return true if quotes_regex =~ pLine
+        return false
+      end
 
-        #Override
-        def capture_block_name(pString)
-          regexExp = /\.(\s*\w+)\s+do/
-          partialString = pString[regexExp, 1]
-          partialString.strip!
-          partialString.upcase!
-          return partialString
-        end
+      # Override
+      def capture_block_name(pString)
+        regexExp = /\.(\s*\w+)\s+do/
+        partialString = pString[regexExp, 1]
+        partialString.strip!
+        partialString.upcase!
+        return partialString
+      end
 
-        def capture_expression(pString)
-          return "NO EXPRESSION INSIDE BLOCK"
-        end
-
-    #Class
-    end
-
-  # Ruby
-  end
-
-#Language
-end
+      def capture_expression(_pString)
+        return 'NO EXPRESSION INSIDE BLOCK'
+      end
+    end # Class
+  end # Ruby
+end # Language

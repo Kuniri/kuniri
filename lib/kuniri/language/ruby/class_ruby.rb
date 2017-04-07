@@ -14,61 +14,55 @@ module Languages
 
     # Class responsible for handling ruby classes.
     class ClassRuby < Languages::Class
+      # Get ruby class.
+      # @see Languages::Class
+      def get_class(pLine)
+        result = detect_class(pLine)
+        return nil unless result
 
-      public
+        classCaptured = Languages::ClassData.new
 
-        # Get ruby class.
-        # @see Languages::Class
-        def get_class(pLine)
-          result = detect_class(pLine)
-          return nil unless result
+        inheritance = get_inheritance(result)
+        classCaptured.add_inheritance(inheritance) if inheritance
 
-          classCaptured = Languages::ClassData.new
+        result = prepare_final_string(result)
+        classCaptured.name = result
 
-          inheritance = get_inheritance(result)
-          classCaptured.add_inheritance(inheritance) if inheritance
-
-          result = prepare_final_string(result)
-          classCaptured.name = result
-
-          return classCaptured
-        end
+        return classCaptured
+      end
 
       protected
 
-        # Override
-        def detect_class(pLine)
-          regex = /^\s*class\s+(.*)/
-          pLine =~ regex ? pLine[regex, 1] : nil
+      # Override
+      def detect_class(pLine)
+        regex = /^\s*class\s+(.*)/
+        pLine =~ regex ? pLine[regex, 1] : nil
+      end
+
+      # Override
+      def get_inheritance(pString)
+        if pString =~ /</
+          partial = pString.split('<').last.strip
+          partial = partial.split('::').last.strip
+          return partial
         end
 
-        # Override
-        def get_inheritance(pString)
-          if pString =~ /</
-            partial = pString.split('<').last.strip
-            partial = partial.split('::').last.strip
-            return partial
-          end
+        return nil
+      end
 
-          return nil
-        end
+      # Override
+      def remove_unnecessary_information(pString)
+        regex = /\s|</
+        pString =~ regex ? pString.gsub(regex, '') : pString
+      end
 
-        # Override
-        def remove_unnecessary_information(pString)
-          regex = /\s|</
-          pString =~ regex ? pString.gsub(regex, '') : pString
+      def prepare_final_string(pString)
+        if pString =~ /\s|</
+          partial = pString.gsub(/<.*/, '')
+          return remove_unnecessary_information(partial)
         end
-
-        def prepare_final_string(pString)
-          if pString =~ /\s|</
-            partial = pString.gsub(/<.*/,'')
-            return remove_unnecessary_information(partial)
-          end
-          return pString
-        end
-    # class
-    end
-  # Ruby
-  end
-# Languages
-end
+        return pString
+      end
+    end # class
+  end # Ruby
+end # Language
