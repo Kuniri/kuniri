@@ -59,7 +59,11 @@ module Kuniri
       @parser = Parser::Parser.new(@filesPathProject,
                                    @configurationInfo[:language])
       Util::LoggerKuniri.info('Start parse...')
-      @parser.start_parser
+      begin
+        @parser.start_parser
+      rescue Error::ConfigurationFileError => e
+        puts e.message
+      end
     end
 
     def get_parser
