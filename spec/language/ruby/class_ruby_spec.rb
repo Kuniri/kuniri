@@ -132,25 +132,25 @@ RSpec.describe Languages::Ruby::ClassRuby do
     it 'Class inheritance with module namespace' do
       classNameCaptured = @classRuby.get_class('class Xpto < lalala::Abc')
                                     .inheritances
-      expect(classNameCaptured).to match_array(['Abc'])
+      expect(classNameCaptured).to match_array(['lalala::Abc'])
     end
 
     it 'Class inheritance with multiple module namespace' do
       classNameCaptured = @classRuby.get_class('class Xpto < lu::la::lo::Abc')
                                     .inheritances
-      expect(classNameCaptured).to match_array(['Abc'])
+      expect(classNameCaptured).to match_array(['lu::la::lo::Abc'])
     end
 
     it 'Class inheritance with module namespace and spaces' do
       classNameCaptured = @classRuby.get_class(' class Xpto < lalala::Abc  ')
                                     .inheritances
-      expect(classNameCaptured).to match_array(['Abc'])
+      expect(classNameCaptured).to match_array(['lalala::Abc'])
     end
 
     it 'Class inheritance with module namespace and spaces before module' do
       classNameCaptured = @classRuby.get_class(' class Xpto  <   lalala::Abc ')
                                     .inheritances
-      expect(classNameCaptured).to match_array(['Abc'])
+      expect(classNameCaptured).to match_array(['lalala::Abc'])
     end
   end
 
