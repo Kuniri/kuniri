@@ -16,48 +16,48 @@ RSpec.describe Languages::Language do
   context "Handling nested conditional and repetitions" do
     it "Make it more nested" do
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
-      @abstractLanguage.moreNested
+      @abstractLanguage.more_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(1)
-      @abstractLanguage.moreNested
+      @abstractLanguage.more_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(2)
     end
 
     it "Make it less nested" do
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
-      @abstractLanguage.moreNested
-      @abstractLanguage.moreNested
-      @abstractLanguage.moreNested
+      @abstractLanguage.more_nested
+      @abstractLanguage.more_nested
+      @abstractLanguage.more_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(3)
-      @abstractLanguage.lessNested
+      @abstractLanguage.less_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(2)
-      @abstractLanguage.lessNested
+      @abstractLanguage.less_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(1)
     end
 
     it "Can't have negative nested" do
-      @abstractLanguage.lessNested
-      @abstractLanguage.lessNested
-      @abstractLanguage.lessNested
-      @abstractLanguage.lessNested
+      @abstractLanguage.less_nested
+      @abstractLanguage.less_nested
+      @abstractLanguage.less_nested
+      @abstractLanguage.less_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
     end
 
     it "Have to be nested" do
-      @abstractLanguage.moreNested
-      expect(@abstractLanguage.isNested?).to eq(true)
+      @abstractLanguage.more_nested
+      expect(@abstractLanguage.nested?).to eq(true)
     end
 
     it "Not nested" do
-      @abstractLanguage.moreNested
-      expect(@abstractLanguage.isNested?).to eq(true)
-      @abstractLanguage.lessNested
-      expect(@abstractLanguage.isNested?).to eq(false)
+      @abstractLanguage.more_nested
+      expect(@abstractLanguage.nested?).to eq(true)
+      @abstractLanguage.less_nested
+      expect(@abstractLanguage.nested?).to eq(false)
     end
 
     it "Reset nested" do
-      @abstractLanguage.moreNested
+      @abstractLanguage.more_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(1)
-      @abstractLanguage.resetNested
+      @abstractLanguage.reset_nested
       expect(@abstractLanguage.countNestedCondLoop).to eq(0)
     end
   end

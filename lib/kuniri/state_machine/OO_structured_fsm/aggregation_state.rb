@@ -12,16 +12,12 @@ module StateMachine
 
     # Class responsible for handling aggregation state.
     class AggregationState < OOStructuredState
-
-      @language
-
       def initialize(pLanguage)
         @language = pLanguage
       end
 
       # @see OOStructuredState
-      def handle_line(pLine)
-      end
+      def handle_line(pLine); end
 
       # @see OOStructuredState
       def class_capture
@@ -33,19 +29,13 @@ module StateMachine
         aggregationElement = @language.aggregationHandler.get_aggregation(pLine)
 
         if aggregationElement
-            pElementFile.classes.last.aggregations.push aggregationElement
-            @language.metadata.allAggregations.push aggregationElement
+          pElementFile.classes.last.aggregations.push aggregationElement
+          @language.metadata.allAggregations.push aggregationElement
         end
 
         class_capture
         return pElementFile
       end
-
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine

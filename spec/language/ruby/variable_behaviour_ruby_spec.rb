@@ -307,19 +307,19 @@ RSpec.describe Languages::Ruby::VariableBehaviourRuby do
     describe 'Verify if is variable' do
       it 'Variables with . in the rvalue cannot be new' do
         variable = '@xpto.lala = 41'
-        value = @inside.is_variable?(variable)
+        value = @inside.variable?(variable)
         expect(value).to eq(false)
       end
 
       it 'Should not accept reserverd words' do
         variable = 'def'
-        value = @inside.is_variable?(variable)
+        value = @inside.variable?(variable)
         expect(value).to eq(false)
       end
 
       it 'Valid variable should be accepted' do
         variable = 'lala = 32'
-        expect(@inside.is_variable?(variable)).to eq(true)
+        expect(@inside.variable?(variable)).to eq(true)
       end
     end
 

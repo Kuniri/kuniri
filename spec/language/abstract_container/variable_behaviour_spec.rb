@@ -45,8 +45,8 @@ RSpec.describe Languages::VariableBehaviour do
             .to raise_error(NotImplementedError)
     end
 
-    it 'Expect to raise error to is_variable?' do
-      expect{variable_object.is_variable?('xpto')}
+    it 'Expect to raise error to variable?' do
+      expect{variable_object.variable?('xpto')}
             .to raise_error(NotImplementedError)
     end
 

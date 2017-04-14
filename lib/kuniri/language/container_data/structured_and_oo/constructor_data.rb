@@ -10,17 +10,10 @@ module Languages
 
   # Handling constructor information.
   class ConstructorData < Languages::FunctionAbstract
-
-    public
-
-      # Constructor based on name.
-      def initialize(pConstructorName)
-        super(pConstructorName)
-        @type = CONSTRUCTOR_DATA
-      end
-
-  # Class
-  end
-
-# Module
-end
+    # Constructor based on name.
+    def initialize(pConstructorName)
+      super(pConstructorName)
+      @type = CONSTRUCTOR_DATA
+    end
+  end # Class
+end # Module

@@ -10,20 +10,14 @@ module Languages
 
   # Handling aggregations data.
   class AggregationData < Languages::BasicData
+    # Basic initialization of aggregation.
+    # @param pAggregationName Aggregation name for basic initialization.
+    def initialize(pAggregationName)
+      return nil if (pAggregationName.nil?) || (!pAggregationName.is_a? String)
 
-    public
+      @name = pAggregationName
+      @isInProject = false
+    end
 
-      # Basic initialization of aggregation.
-      # @param pAggregationName Aggregation name for basic initialization.
-      def initialize (pAggregationName)
-        return nil if pAggregationName.nil? or !pAggregationName.is_a? String
-
-        @name = pAggregationName
-        @isInProject = false
-      end
-
-  # Class
-  end
-
-# Module
-end
+  end # Class
+end # Module

@@ -22,12 +22,6 @@ module StateMachine
           functionId: StateMachine::CONSTRUCTOR_LABEL
         )
       end
-
-    # End class
-    end
-
-  # End OOStructuredFSM
-  end
-
-# End StateMachine
-end
+    end # End class
+  end # End OOStructuredFSM
+end # End StateMachine
