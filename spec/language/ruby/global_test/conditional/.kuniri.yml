@@ -1,4 +1,4 @@
-:language: ruby
-:source: ./spec/samples/rubySyntaxParts/conditionalStatment/commonCasesOfConditionals.rb
-:output: ./spec/language/ruby/global_test/conditional/output.xml
-:extract: uml
+language: ruby
+source: ./spec/samples/rubySyntaxParts/conditionalStatment/commonCasesOfConditionals.rb
+output: ./spec/language/ruby/global_test/conditional/output.xml
+extract: uml
