@@ -1,4 +1,4 @@
-:language: ruby
-:source: ./spec/samples/rubySyntaxParts/blocks/simpleBlockScript.rb
-:output: ./spec/language/ruby/global_test/blocks/simple_block_script.xml
-:extract: uml
+language: ruby
+source: ./spec/samples/rubySyntaxParts/blocks/simpleBlockScript.rb
+output: ./spec/language/ruby/global_test/blocks/simple_block_script.xml
+extract: uml

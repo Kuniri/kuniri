@@ -48,6 +48,7 @@ traceability, code quality and others.
  * RSpec 3.1.7
  * Rake 10.4
  * Guard-rspec 4.2
+ * Safe-yaml
 * Ruby version: 2.1
 
 ----
@@ -103,9 +104,9 @@ reduces the total size of final xml file.
 ".kuniri.yml" file. The example below shows the basic syntax:
 
 ```
-:language: ruby
-:source: lib/
-:output: bin/
+language: ruby
+source: lib/
+output: bin/
 ```
 
 > First parameter, ***"language"***, indicates what kind of language kuniri
