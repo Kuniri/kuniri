@@ -64,8 +64,10 @@ module Languages
 
       # Override
       def remove_unnecessary_information(pLine)
-        return pLine.gsub(/\s+|\(|\)/, '') if pLine =~ /\s+|\(|\)/
-        return pLine
+        return pLine if pLine !~ /\s+|\(|\)/
+
+        nLine = pLine.gsub(/\s+|\(|\)/, '')
+        nLine != '' ? nLine : nil
       end
 
       # Override
