@@ -72,6 +72,37 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
       expect(@functionBehaviorRuby.get_function(input).name)
               .to eq("xpto_method")
     end
+
+    it "get righ parameters without parenthesis" do
+      input = "     def method\n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
+    it "get righ parameters without parenthesis and with spaces in the end" do
+      input = "     def method    \n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
+    it "get righ parameters with parenthesis" do
+      input = "     def method()\n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
+    it "get righ parameters with parenthesis and spaces in the end" do
+      input = "     def method()    \n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
+    it "get righ parameters with parenthesis and space after method name" do
+      input = "     def method ()\n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
+    it "get righ parameters with parenthesis and spaces in the end and space after method name" do
+      input = "     def method ()    \n"
+      expect(@functionBehaviorRuby.get_function(input).parameters)
+              .to match_array([])
+    end
   end
 
   context "With parameters" do
@@ -122,6 +153,8 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
       expect(@functionBehaviorRuby.get_function(input).name)
               .to eq("xpto_method")
     end
+
+
   end
 
   context "When has parameters and parenthesis." do
@@ -289,6 +322,62 @@ RSpec.describe Languages::Ruby::FunctionBehaviorRuby do
                                                    {"nda"=>"8"},
                                                    {"t"=>"4"}])
     end
+  end
+
+  context "Helper methods" do
+    it "Split strings by comma" do
+      stringList = @functionBehaviorRuby.send(:split_string_by_comma, "a,b")
+      expect(stringList).to match_array(["a", "b"])
+    end
+
+    it "Split strings without comma" do
+      stringList = @functionBehaviorRuby.send(:split_string_by_comma, "ab")
+      expect(stringList).to match_array(["ab"])
+    end
+
+    it "Gets arguments from function line" do
+      input = "    def method a, b, c"
+      reg = /def\s+\w+[\s]+(.+)/
+      args = @functionBehaviorRuby.send(:get_parameters, input, reg)
+      expect(args).to match("a,b,c")
+    end
+
+    it "Return array with arguments of line" do
+      input = "    def method a, b, c"
+      stringList = @functionBehaviorRuby.send(:handling_parameter, input)
+      expect(stringList).to match_array(["a", "b", "c"])
+    end
+
+    it "Return array with arguments within parenthesis of line" do
+      input = "    def method(a, b, c)"
+      stringList = @functionBehaviorRuby.send(:handling_parameter, input)
+      expect(stringList).to match_array(["a", "b", "c"])
+    end
+
+    it "Remove spaces and parenthesis" do
+      input = "  (a, b, c)  "
+      expect(@functionBehaviorRuby.send(:remove_unnecessary_information, input))
+        .to match("a,b,c")
+    end
+
+    it "Handles default arguments" do
+      input = "a=1,b=2"
+      parameterList = @functionBehaviorRuby.send(:handling_default_parameter, input)
+      expect(parameterList).to match_array([{"a" => "1"}, {"b" => "2"}])
+    end
+
+    it "Handles single default argument" do
+      input = "a=1"
+      parameterList = @functionBehaviorRuby.send(:handling_default_parameter, input)
+      expect(parameterList).to match_array([{"a" => "1"}])
+    end
+
+    it "Gets name of function" do
+      input = "def method a, b, c"
+      fName = @functionBehaviorRuby.send(:detect_function, input)
+      expect(fName).to match("method")
+    end
+
   end
 
   after :all do
