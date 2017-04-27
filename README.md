@@ -49,6 +49,7 @@ traceability, code quality and others.
  * Rake 10.4
  * Guard-rspec 4.2
  * Safe-yaml
+ * Shunit2
 * Ruby version: 2.1
 
 ----
