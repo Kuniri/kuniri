@@ -44,7 +44,7 @@ test_output_analysis() {
   output=`bin/kuniri $file`
   diff expected_result.xml outputKuniri.xml
   assertEquals 0 "$?"
-}	
+}
 
 test_output_analysis_specifying_output() {
   create_test_file
@@ -69,6 +69,6 @@ test_invalid_arguments() {
   output=`bin/kuniri $file -fake`
   contains "$output" "invalid option"
   assertEquals 0 "$?"
-}	
+}
 
 load_shunit2
