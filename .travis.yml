@@ -9,7 +9,7 @@ before_script:
   - cd kuniri
   - bundle install
   - gem install yard
-  - sudo apt-get install shunit2
+  - sudo apt-get install shunit2 moreutils
 script:
   - rake test:all
 notifications:

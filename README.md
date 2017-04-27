@@ -50,6 +50,7 @@ traceability, code quality and others.
  * Guard-rspec 4.2
  * Safe-yaml
  * Shunit2
+ * Moreutils
 * Ruby version: 2.1
 
 ----
