@@ -6,82 +6,111 @@ require 'optparse'
 require 'kuniri/core/kuniri'
 require 'kuniri/parser/xml_output_format'
 
-@options = {}
-@options[:source] = ARGV[0]
 
-optionParser = OptionParser.new do |buildOptions|
-  buildOptions.banner = 'Usage: kuniri [OPTIONS] [FILE|FOLDER] [OPTIONS]'
-  buildOptions.separator  ''
-  buildOptions.separator  'OPTIONS'
-  buildOptions.separator  '     FILE: Target file'
-  buildOptions.separator  '     FOLDER: Folder file'
-  buildOptions.separator  ''
-  buildOptions.separator  'Options'
-  buildOptions.version = Kuniri::VERSION
+def read_arguments
+  options = {}
+  options[:source] = ARGV[0]
+  optionParser = OptionParser.new do |buildOptions|
+    buildOptions.banner = 'Usage: kuniri [OPTIONS] [FILE|FOLDER] [OPTIONS]'
+    buildOptions.separator  ''
+    buildOptions.separator  'OPTIONS'
+    buildOptions.separator  '     FILE: Target file'
+    buildOptions.separator  '     FOLDER: Folder file'
+    buildOptions.separator  ''
+    buildOptions.separator  'Options'
+    buildOptions.version = Kuniri::VERSION
 
-  buildOptions.on('-v', '--verbose', 'Run verbosely') do
-    @options[:verbose] = Logger::INFO
-  end
+    buildOptions.on('-v', '--verbose', 'Run verbosely') do
+      options[:verbose] = Logger::INFO
+    end
 
-  buildOptions.on('-V', '--very-verbose', 'Very verbose') do
-    @options[:verbose] = Logger::DEBUG
-  end
+    buildOptions.on('-V', '--very-verbose', 'Very verbose') do
+      options[:verbose] = Logger::DEBUG
+    end
 
-  buildOptions.on('--version', 'Show Kuniri version') do
-    puts buildOptions.version
-    exit
-  end
+    buildOptions.on('--version', 'Show Kuniri version') do
+      puts buildOptions.version
+      exit
+    end
 
-  buildOptions.on('-o', '--output [DEST]', 'Export') do |dest|
-    @options[:output] = dest
-  end
+    buildOptions.on('-o', '--output [DEST]', 'Export') do |dest|
+      options[:output] = dest
+    end
 
-  buildOptions.on('-h', '--help', 'Help') do
-    puts buildOptions
-    exit
-  end
+    buildOptions.on('-h', '--help', 'Help') do
+      puts buildOptions
+      exit
+    end
 
-  buildOptions.on('-O', '--optimization 1,2,3', 'Optimize', Numeric) do |optim|
-    @options[:optimization] = optim
-  end
+    buildOptions.on('-O', '--optimization 1,2,3', 'Optimize', Numeric) do |optim|
+      options[:optimization] = optim
+    end
 
-  buildOptions.on('-l', '--language [languageType]', 'Define language') do |lan|
-    @options[:languageType] = lan
-  end
+    buildOptions.on('-l', '--language [languageType]', 'Define language') do |lan|
+      options[:languageType] = lan
+    end
 
-  buildOptions.on('-e', '--export [FILENAME]', 'Export') do |configurationFile|
-    puts 'Exporting...'
+    buildOptions.on('-L', '--log [FILENAME]', 'Define log path') do |log|
+      options[:log] = log
+    end
 
-    path = configurationFile ? configurationFile : '.kuniri.yml'
+    buildOptions.on('-e', '--export [FILENAME]', 'Export') do |configurationFile|
+      puts 'Exporting...'
 
-    kuniri = Kuniri::Kuniri.new
-    kuniri.read_configuration_file(path)
-    kuniri.run_analysis
+      path = configurationFile ? configurationFile : '.kuniri.yml'
 
-    parser = Parser::XMLOutputFormat.new
-    parser.create_all_data(kuniri.get_parser())
-  end
+      kuniri = Kuniri::Kuniri.new
+      kuniri.read_configuration_file(path)
+      kuniri.run_analysis
 
-end.parse!
-
-def verify_verbose_mode
-  Util::LoggerKuniri.update_log_level(@options[:verbose])
+      parser = Parser::XMLOutputFormat.new
+      parser.create_all_data(kuniri.get_parser())
+    end
+  end.parse!
+  return options
 end
 
-def start_parser
-  puts 'Exporting ...'
-  @options[:output] = 'outputKuniri/' unless (@options[:output])
+def verify_verbose_mode options
+  Util::LoggerKuniri.update_log_level(options[:verbose])
+end
 
-  verify_verbose_mode if @options[:verbose]
+def start_parser(options)
+  options[:output] = 'outputKuniri/' unless (options[:output])
+  Util::LoggerKuniri.path= options[:log]
+  verify_verbose_mode(options) if options[:verbose]
 
   kuniri = Kuniri::Kuniri.new
-  kuniri.set_configuration(@options[:source], @options[:languageType],
-                           @options[:output], @options[:optimization])
+  kuniri.set_configuration(options[:source], options[:languageType],
+                           options[:output], options[:optimization])
   kuniri.run_analysis
-
-  parser = Parser::XMLOutputFormat.new(@options[:optimization])
-  parser.set_path(@options[:output])
+  parser = Parser::XMLOutputFormat.new(options[:optimization])
+  parser.set_path(options[:output])
   parser.create_all_data(kuniri.get_parser())
 end
 
-start_parser if @options[:source] && @options[:output]
+def set_defaults_if_unspecified(options)
+  if options[:log].nil? then
+    options[:log] = STDOUT
+  end
+
+  if options[:output].nil? then
+    match = /(?<fname>.*)\.[^\.]*/.match(options[:source])
+    if match.nil? then
+      options[:output] = options[:source] + ".xml"
+    else
+      options[:output] = match[:fname] + ".xml" 
+    end
+  end
+
+  if options[:languageType].nil? then
+    options[:languageType] = "ruby"
+  end
+
+end
+
+options = read_arguments
+
+if not options[:source].nil? then
+  set_defaults_if_unspecified options
+  start_parser options
+end

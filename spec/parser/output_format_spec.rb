@@ -10,7 +10,7 @@ RSpec.describe Parser::OutputFormat do
     it 'Try to add nil as parameter' do
       allData = @outputFormat.create_all_data(nil)
       expect(allData).to eq(nil)
-    end
+      end
 
     #it 'Run, but raise exception' do
     #  source =
