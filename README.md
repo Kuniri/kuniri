@@ -48,6 +48,9 @@ traceability, code quality and others.
  * RSpec 3.1.7
  * Rake 10.4
  * Guard-rspec 4.2
+ * Safe-yaml
+ * Shunit2
+ * Moreutils
 * Ruby version: 2.1
 
 ----
@@ -83,19 +86,10 @@ configuration file.
 use a similar command as the one described below:
 
 ```
-kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby
+kuniri path/to/your/source/code
 ```
 
-> First parameter is the source code path. ***"-o"***, means ***"output"*** and
-you can indicate the path that you want to put the final output. Finally
-***-l***, indicate which kind of language your project is.
-
-```
-kuniri path/to/your/source/code -o path/to/kuniri/output -l ruby -O1
-```
-
-> Additionally, Kuniri provide level 1 of optimization. This optimization flag
-reduces the total size of final xml file.
+> For more information: [Commands](https://github.com/Kuniri/kuniri/wiki/Commands)
 
 ## Using configuration file
 
@@ -103,9 +97,9 @@ reduces the total size of final xml file.
 ".kuniri.yml" file. The example below shows the basic syntax:
 
 ```
-:language: ruby
-:source: lib/
-:output: bin/
+language: ruby
+source: lib/
+output: bin/
 ```
 
 > First parameter, ***"language"***, indicates what kind of language kuniri

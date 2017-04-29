@@ -4,7 +4,7 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 
-require 'yaml'
+require 'safe_yaml/load'
 require_relative 'configuration/language_available'
 require_relative '../error/configuration_file_error'
 require_relative '../util/logger_kuniri'
@@ -40,7 +40,11 @@ module Kuniri
       if !(File.exist?(pPath))
         set_default_configuration
       else
-        @configurationInfo = YAML.load(File.read(pPath))
+        safeInfo = SafeYAML.load(File.read(pPath))
+        # SafeYAML add collon (':') in the begin of each key. We handle it here
+        @configurationInfo = safeInfo.map do |key, value|
+          [key.tr(':', '').to_sym, value]
+        end.to_h
         verify_syntax
       end
 

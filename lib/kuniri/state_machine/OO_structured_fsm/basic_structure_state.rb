@@ -5,7 +5,8 @@
 # Version 3.  See the file COPYING for more details
 
 require_relative 'oo_structured_state'
-require_relative '../../language/abstract_container/structured_and_oo/global_tokens.rb'
+require_relative '../../language/abstract_container/'\
+                 'structured_and_oo/global_tokens.rb'
 
 module StateMachine
 
@@ -26,13 +27,18 @@ module StateMachine
       def handle_line(pLine)
         # TODO: This line is complex, maybe it can be simple. However, notice
         # that line_inspect method is expensive, and should be called once.
-        if !(conditional = @language.line_inspect(CONDITIONAL_ID, pLine)).nil?
-          conditional_capture if nested_structure?(conditional.type)
-        elsif !(repetition = @language.line_inspect(REPETITION_ID, pLine)).nil?
-          repetition_capture if nested_structure?(repetition.type)
-        elsif !(block = @language.line_inspect(BLOCK_ID, pLine)).nil?
-          block_capture if nested_structure?(block.type)
-          # aggregation
+        structures = {
+          CONDITIONAL_ID => method(:conditional_capture),
+          REPETITION_ID => method(:repetition_capture),
+          BLOCK_ID => method(:block_capture)
+        }
+
+        structures.each do |id, function|
+          structure_data = @language.line_inspect(id, pLine)
+          unless structure_data.nil?
+            function.call if nested_structure?(structure_data.type)
+            break
+          end
         end
       end
 

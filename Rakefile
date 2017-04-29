@@ -7,6 +7,20 @@ RSpec::Core::RakeTask.new('spec')
 # If you want to make this the default task
 task :default => :spec
 
+namespace :test do |args|
+
+  desc 'Run acceptance tests'
+  task :acceptance do
+    sh "tests/run_all"
+  end
+
+  desc 'Run unit tests'
+  task :unit => :spec
+
+  desc 'Run all tests'
+  task :all => [:acceptance, :unit]
+end
+
 namespace :parser do |args|
 
   desc 'Creates a new parser for kuniri with parser:create'

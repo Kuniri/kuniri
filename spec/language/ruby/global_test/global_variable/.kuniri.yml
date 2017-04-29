@@ -1,4 +1,4 @@
-:language: ruby
-:source: ./spec/samples/rubySyntaxParts/variable/simpleVariable.rb
-:output: ./spec/language/ruby/global_test/global_variable/simpleVariable.xml
-:extract: uml
+language: ruby
+source: ./spec/samples/rubySyntaxParts/variable/simpleVariable.rb
+output: ./spec/language/ruby/global_test/global_variable/simpleVariable.xml
+extract: uml
