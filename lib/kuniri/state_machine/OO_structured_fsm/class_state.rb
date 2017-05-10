@@ -18,20 +18,24 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.line_inspect(AGGREGATION_ID, pLine)
-          aggregation_capture
-        elsif @language.line_inspect(ATTRIBUTE_ID, pLine)
-          attribute_capture
-        elsif @language.line_inspect(CONSTRUCTOR_ID, pLine)
-          constructor_capture
-        elsif @language.line_inspect(METHOD_ID, pLine)
-          method_capture
-        elsif @language.line_inspect(MODULE_ID, pLine)
-          module_capture
-        elsif @language.commentHandler.single_line_comment?(pLine) ||
-              @language.commentHandler.multiple_line_comment?(pLine)
+        elements = {
+          AGGREGATION_ID => method(:aggregation_capture),
+          ATTRIBUTE_ID => method(:attribute_capture),
+          CONSTRUCTOR_ID => method(:constructor_capture),
+          METHOD_ID => method(:method_capture),
+          MODULE_ID => method(:module_capture)
+        }
+
+        elements.each do |id, function|
+          return function.call if @language.line_inspect(id, pLine)
+        end
+
+        if @language.commentHandler.single_line_comment?(pLine) ||
+           @language.commentHandler.multiple_line_comment?(pLine)
           comment_capture
         end
+
+        return
       end
 
       # @see OOStructuredState

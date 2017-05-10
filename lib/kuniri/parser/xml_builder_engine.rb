@@ -45,9 +45,7 @@ module Parser
       currentTagName = "#{@ident}<#{name}"
       @tag << currentTagName
 
-      if ((!pTagParameters.empty?) && (pTagParameters[0].is_a? Hash))
-        handle_arguments(pTagParameters)
-      end
+      handle_arguments(pTagParameters) if (pTagParameters[0].is_a? Hash)
 
       if (block_given?)
         open_block_tag(&pBlock)
@@ -56,7 +54,12 @@ module Parser
         @tag << "/>\n"
       end
 
+      super if pTagName == ''
       @content = ''
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      super
     end
 
     def optimize_size(pTagName)

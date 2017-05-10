@@ -13,40 +13,41 @@ module Util
   class LoggerKuniri
 
     private_class_method :new
-    @@logger = nil
+    @logger = nil
 
     # It is desirable to have a single instance of log for the entire system
     # because of this only the class is responsible to control the object
     # creation
     # @return logger reference
     def self.create(pOutput = STDOUT)
-      unless @@logger
-        @@logger = Logger.new(pOutput)
-        @@logger.level = Logger::WARN
+      unless @logger
+        @logger = Logger.new(pOutput)
+        @logger.level = Logger::WARN
       end
-      return @@logger
+      return @logger
     end
 
     # With this method, we can handle all kind of log level available by ruby
     # E.g: Util::LoggerKuniri.info('lalala')
     def self.method_missing(pLogPrint, *pLogMessage)
-      self.create
-      @@logger.send(pLogPrint, pLogMessage.join(''))
+      create
+      super unless @logger.send(pLogPrint, pLogMessage.join(''))
+    end
+
+    def self.respond_to_missing?(method_name, include_private = false)
+      super
     end
 
     # Change log output
     def self.update_log_output(pOutput)
-      @@logger = nil
-      @@logger = create(pOutput)
+      @logger = nil
+      @logger = create(pOutput)
     end
 
     # Update log level
     def self.update_log_level(pLevel)
-      self.create
-      @@logger.level = pLevel
+      create
+      @logger.level = pLevel
     end
-
-  # Class
-  end
-# Util
-end
+  end # Class
+end # Util

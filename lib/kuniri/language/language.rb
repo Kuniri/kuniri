@@ -214,36 +214,41 @@ module Languages
       @countNestedCondLoop = 0
     end
 
+    def build_structures
+      { StateMachine::METHOD_ID =>
+          @methodHandler.method(:get_method),
+        StateMachine::CONSTRUCTOR_ID =>
+          @constructorHandler.method(:get_constructor),
+        StateMachine::FUNCTION_ID =>
+          @functionHandler.method(:get_function),
+        StateMachine::COMMENT_ID =>
+          @commentHandler.method(:get_comment),
+        StateMachine::VARIABLE_ID =>
+          @variableHandler.method(:get_variable),
+        StateMachine::MODULE_ID => @moduleHandler.method(:get_module),
+        StateMachine::CLASS_ID => @classHandler.method(:get_class),
+        StateMachine::REPETITION_ID =>
+          @repetitionHandler.method(:get_repetition),
+        StateMachine::CONDITIONAL_ID =>
+          @conditionalHandler.method(:get_conditional),
+        StateMachine::ATTRIBUTE_ID =>
+          @attributeHandler.method(:get_attribute),
+        StateMachine::BLOCK_ID =>
+          @blockHandler.method(:get_block),
+        StateMachine::AGGREGATION_ID =>
+          @aggregationHandler.method(:get_aggregation),
+        StateMachine::EXTERN_REQUIREMENT_ID =>
+          @externRequirementHandler.method(:get_requirement) }
+    end
+
     def line_inspect(pTarget, pLine)
-      case pTarget
-      when StateMachine::METHOD_ID
-        @processed_line = @methodHandler.get_method(pLine)
-      when StateMachine::CONSTRUCTOR_ID
-        @processed_line = @constructorHandler.get_constructor(pLine)
-      when StateMachine::FUNCTION_ID
-        @processed_line = @functionHandler.get_function(pLine)
-      when StateMachine::COMMENT_ID
-        @processed_line = @commentHandler.get_comment(pLine)
-      when StateMachine::VARIABLE_ID
-        @processed_line = @variableHandler.get_variable(pLine)
-      when StateMachine::MODULE_ID
-        @processed_line = @moduleHandler.get_module(pLine)
-      when StateMachine::CLASS_ID
-        @processed_line = @classHandler.get_class(pLine)
-      when StateMachine::REPETITION_ID
-        @processed_line = @repetitionHandler.get_repetition(pLine)
-      when StateMachine::CONDITIONAL_ID
-        @processed_line = @conditionalHandler.get_conditional(pLine)
-      when StateMachine::ATTRIBUTE_ID
-        @processed_line = @attributeHandler.get_attribute(pLine)
-      when StateMachine::BLOCK_ID
-        @processed_line = @blockHandler.get_block(pLine)
-      when StateMachine::AGGREGATION_ID
-        @processed_line = @aggregationHandler.get_aggregation(pLine)
-      when StateMachine::EXTERN_REQUIREMENT_ID
-        @processed_line = @externRequirementHandler.get_requirement(pLine)
+      build_structures.each do |id, method|
+        if pTarget == id
+          @processed_line = method.call pLine
+          break
+        end
       end
-      return @processed_line
+      @processed_line
     end
 
     private

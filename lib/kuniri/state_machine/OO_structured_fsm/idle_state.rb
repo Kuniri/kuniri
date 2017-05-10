@@ -18,28 +18,27 @@ module StateMachine
 
       # @see OOStructuredState
       def handle_line(pLine)
-        if @language.line_inspect(EXTERN_REQUIREMENT_ID, pLine)
-          include_capture
-        elsif @language.line_inspect(VARIABLE_ID, pLine)
-          variable_capture
-        elsif @language.line_inspect(FUNCTION_ID, pLine)
-          function_capture
-        elsif @language.line_inspect(MODULE_ID, pLine)
-          module_capture
-        elsif @language.line_inspect(CLASS_ID, pLine)
-          class_capture
-        elsif @language.line_inspect(CONDITIONAL_ID, pLine)
-          conditional_capture
-        elsif @language.line_inspect(REPETITION_ID, pLine)
-          repetition_capture
-        elsif @language.line_inspect(BLOCK_ID, pLine)
-          block_capture
-        elsif ((@language.commentHandler.single_line_comment?(pLine)) ||
+        structures = {
+          EXTERN_REQUIREMENT_ID => method(:include_capture),
+          VARIABLE_ID => method(:variable_capture),
+          FUNCTION_ID => method(:function_capture),
+          MODULE_ID => method(:module_capture),
+          CLASS_ID => method(:class_capture),
+          CONDITIONAL_ID => method(:conditional_capture),
+          REPETITION_ID => method(:repetition_capture),
+          BLOCK_ID => method(:block_capture)
+        }
+
+        structures.each do |id, function|
+          return function.call if @language.line_inspect(id, pLine)
+        end
+
+        if ((@language.commentHandler.single_line_comment?(pLine)) ||
                (@language.commentHandler.multiple_line_comment?(pLine)))
           comment_capture
-        else
-          return
         end
+
+        return
       end
 
       # @see OOStructuredState

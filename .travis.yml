@@ -5,12 +5,11 @@ before_install:
   - gem update --system
   - gem update bundler
 before_script:
-  - git clone https://github.com/Kuniri/kuniri.git
-  - cd kuniri
   - bundle install
   - gem install yard
   - sudo apt-get install shunit2 moreutils
 script:
+  - rubocop lib/
   - rake test:all
 notifications:
   email:
@@ -20,3 +19,4 @@ notifications:
 branches:
   only:
     - master
+    - dev
