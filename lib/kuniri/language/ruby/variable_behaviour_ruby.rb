@@ -78,7 +78,7 @@ module Languages
           if var_candidate.include?(TMP_TOKEN_EQUAL)
             variables.merge!(handle_equals(var_candidate, pStringsValues))
           elsif variable?(var_candidate)
-            variables[var_candidate.strip] = Languages::UNKNOWN
+            variables[var_candidate.strip] = Languages::UNKNOWN.dup
           end
         end
         return variables

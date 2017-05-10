@@ -8,8 +8,5 @@ module Error
 
   class ParserError < RuntimeError
 
-  # Class
-  end
-
-# Error
-end
+  end # Class
+end # Error

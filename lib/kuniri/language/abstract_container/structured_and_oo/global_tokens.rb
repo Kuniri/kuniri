@@ -25,6 +25,6 @@ module Languages
   DOWN_LEVEL ||= 1
   KEEP_LEVEL ||= 0
 
-  UNKNOWN ||= 'nothing'
+  UNKNOWN ||= 'nothing'.freeze
 
 end

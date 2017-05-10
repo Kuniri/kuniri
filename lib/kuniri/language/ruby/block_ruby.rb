@@ -30,7 +30,7 @@ module Languages
 
       # Override
       def detect_block(pLine)
-        regexExp = /([a-zA-Z_0-9]\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
+        regexExp = /(\w\w*\s*\.\s*)+([a-zA-Z_]\w*)\s+do\s+\|([^\|]+)\|/
         if regexExp =~ pLine
           return pLine[regexExp, 0] unless among_quotes?pLine
         end
