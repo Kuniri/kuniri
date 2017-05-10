@@ -65,7 +65,7 @@ RSpec.describe Languages::Language do
   context 'Verify line_inpect' do
     it 'check method object' do
       expect{@abstractLanguage.line_inspect(StateMachine::METHOD_ID, 'something')}.to raise_error(
-              NoMethodError)
+              NameError)
     end
   end
 
