@@ -30,39 +30,12 @@ module Parser
 
       saveElementTo = './'
       wrapper = self
-
       # Go through each file
       pParser.fileLanguage.each do |listOfFile|
         # Inspect each element
         listOfFile.fileElements.each do |singleElement|
           @outputEngine.kuniri do
-            if (singleElement.extern_requirements.length.positive?)
-              wrapper.extern_requirement_generate(
-                singleElement.extern_requirements
-              )
-            end
-            if (singleElement.modules.length.positive?)
-              wrapper.module_generate(singleElement.modules)
-            end
-            if (singleElement.global_variables.length.positive?)
-              wrapper.global_variable_generate(
-                singleElement.global_variables
-              )
-            end
-            unless singleElement.managerCondLoopAndBlock.basicStructure.empty?
-              wrapper.basic_structure_generate(
-                singleElement.managerCondLoopAndBlock.basicStructure
-              )
-            end
-            if (singleElement.global_functions.length.positive?)
-              singleElement.global_functions.each do |globalFunction|
-                wrapper.function_behaviour_generate('functionData',
-                                                    globalFunction)
-              end
-            end
-            if (singleElement.classes.length.positive?)
-              wrapper.class_generate(singleElement.classes)
-            end
+            wrapper.handle_element(singleElement)
           end
           saveElementTo = singleElement.name
         end
@@ -70,6 +43,58 @@ module Parser
         write_file(saveElementTo, listOfFile.name)
         @outputEngine.reset_engine
       end
+    end
+
+    def handle_element(singleElement)
+      handle_extern_requirements(singleElement)
+      handle_modules(singleElement)
+      handle_global_variables(singleElement)
+      handle_cond_loop_and_block(singleElement)
+      handle_global_functions(singleElement)
+      handle_classes(singleElement)
+    end
+
+    def handle_extern_requirements(singleElement)
+      reqs = singleElement.extern_requirements
+      len = reqs.length
+      extern_requirements_generate(reqs) if len.positive?
+    end
+
+    def handle_modules(singleElement)
+      modules = singleElement.modules
+      len = modules.length
+      module_generate(modules) if len.positive?
+    end
+
+    def handle_global_variables(singleElement)
+      vars = singleElement.global_variables
+      len = vars.length
+      global_variable_generate(vars) if len.positive?
+    end
+
+    def handle_cond_loop_and_block(singleElement)
+      basic_struct = singleElement.managerCondLoopAndBlock.basicStructure
+      len = basic_struct.length
+      basic_structure_generate(basic_struct) if len.positive?
+    end
+
+    def handle_global_functions(singleElement)
+      funcs = singleElement.global_functions
+      len = funcs.length
+      generate_global_functions(funcs) if len.positive?
+    end
+
+    def generate_global_functions(global_functions)
+      global_functions.each do |globalFunction|
+        function_behaviour_generate('functionData',
+                                    globalFunction)
+      end
+    end
+
+    def handle_classes(singleElement)
+      classes = singleElement.classes
+      length = classes.length
+      class_generate(classes) if length.positive?
     end
 
     def class_generate(_pClass)
