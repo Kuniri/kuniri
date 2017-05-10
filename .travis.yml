@@ -11,6 +11,7 @@ before_script:
   - gem install yard
   - sudo apt-get install shunit2 moreutils
 script:
+  - rubocop lib/
   - rake test:all
 notifications:
   email:
@@ -20,3 +21,4 @@ notifications:
 branches:
   only:
     - master
+    - dev
