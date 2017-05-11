@@ -224,26 +224,20 @@ module Languages
     end
 
     def build_structures
-      { StateMachine::METHOD_ID =>
-          @methodHandler.method(:get_method),
+      { StateMachine::METHOD_ID => @methodHandler.method(:get_method),
         StateMachine::CONSTRUCTOR_ID =>
           @constructorHandler.method(:get_constructor),
-        StateMachine::FUNCTION_ID =>
-          @functionHandler.method(:get_function),
-        StateMachine::COMMENT_ID =>
-          @commentHandler.method(:get_comment),
-        StateMachine::VARIABLE_ID =>
-          @variableHandler.method(:get_variable),
+        StateMachine::FUNCTION_ID => @functionHandler.method(:get_function),
+        StateMachine::COMMENT_ID => @commentHandler.method(:get_comment),
+        StateMachine::VARIABLE_ID => @variableHandler.method(:get_variable),
         StateMachine::MODULE_ID => @moduleHandler.method(:get_module),
         StateMachine::CLASS_ID => @classHandler.method(:get_class),
         StateMachine::REPETITION_ID =>
           @repetitionHandler.method(:get_repetition),
         StateMachine::CONDITIONAL_ID =>
           @conditionalHandler.method(:get_conditional),
-        StateMachine::ATTRIBUTE_ID =>
-          @attributeHandler.method(:get_attribute),
-        StateMachine::BLOCK_ID =>
-          @blockHandler.method(:get_block),
+        StateMachine::ATTRIBUTE_ID => @attributeHandler.method(:get_attribute),
+        StateMachine::BLOCK_ID => @blockHandler.method(:get_block),
         StateMachine::AGGREGATION_ID =>
           @aggregationHandler.method(:get_aggregation),
         StateMachine::EXTERN_REQUIREMENT_ID =>
