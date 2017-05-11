@@ -6,9 +6,14 @@ RSpec.describe Languages::Language do
     @abstractLanguage = Languages::Language.new
   end
 
-  context 'When try to call analyse_source' do
-    it "Try to call unimplemented method." do
-      expect{@abstractLanguage.analyse_source}.to raise_error(
+  context 'When try to call first and second steps' do
+    it "Try to call unimplemented first step method." do
+      expect{@abstractLanguage.analyse_first_step(nil, nil)}.to raise_error(
+        NotImplementedError)
+    end
+
+    it "Try to call unimplemented second step method." do
+      expect{@abstractLanguage.analyse_second_step}.to raise_error(
         NotImplementedError)
     end
   end
