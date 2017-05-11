@@ -112,7 +112,16 @@ module Languages
     # in this is step the algorithm try to find classes, and methods. This
     # method, work like a hook for give more flexibility to implements any
     # needed steps.
-    def analyse_source
+    def analyse_source(fileElement, source)
+      analyse_first_step(fileElement, source)
+      analyse_second_step
+    end
+
+    def analyse_first_step(_fileElement, _source)
+      raise NotImplementedError
+    end
+
+    def analyse_second_step
       raise NotImplementedError
     end
 

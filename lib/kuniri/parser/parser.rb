@@ -49,7 +49,11 @@ module Parser
       end
       @filesPath.each do |file|
         language = @factory.get_language(@language)
-        language.analyse_source(file)
+
+        fileElement = Languages::FileElementData.new(file)
+        source = File.open(file, 'rb')
+
+        language.analyse_source(fileElement, source)
         @fileLanguage.push(language)
       end
     end
