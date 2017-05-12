@@ -23,6 +23,7 @@ require_relative 'comment_ruby'
 require_relative 'method_ruby'
 require_relative 'aggregation_ruby'
 require_relative '../metadata'
+require_relative '../../../kuniri/preparser/ruby.rb'
 
 module Languages
 
@@ -30,6 +31,7 @@ module Languages
   class RubySyntax < Languages::Language
     def initialize
       super
+      @preParser = RubyPreParser.new
       @externRequirementHandler = Languages::Ruby::ExternRequirementRuby.new
       @variableHandler = Languages::Ruby::VariableGlobalRuby.new
       @functionHandler = Languages::Ruby::FunctionBehaviorRuby.new

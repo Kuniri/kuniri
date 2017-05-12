@@ -4,6 +4,8 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 
+require 'fileutils'
+
 require_relative '../state_machine/OO_structured_fsm/attribute_state'
 require_relative '../state_machine/OO_structured_fsm/class_state'
 require_relative '../state_machine/OO_structured_fsm/constructor_state'
@@ -113,8 +115,15 @@ module Languages
     # method, work like a hook for give more flexibility to implements any
     # needed steps.
     def analyse_source(fileElement, source)
-      analyse_first_step(fileElement, source)
+      temp_path = temp_file_path(source)
+      @preParser.pre_parse(source, temp_path) # should be instantiated on child classes
+      analyse_first_step(fileElement, File.open(temp_path))
       analyse_second_step
+      FileUtils.rm(temp_path)
+    end
+
+    def temp_file_path(source)
+      return  source.path + ".tmp"
     end
 
     def analyse_first_step(_fileElement, _source)
