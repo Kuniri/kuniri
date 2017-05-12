@@ -16,6 +16,7 @@
 # What is Kuniri?
 
 <img src="https://github.com/kuniri/kuniri/wiki/logo/256px/with_round_border.png" alt="Kuniri" align="left" />
+
 > Briefly, the main goal of Kuniri is: parse any kind of language, and generate
 a common model file with code information. We believe that Kuniri can be a base
 tool for other tools, like a diagram generator, traceability, code quality,
