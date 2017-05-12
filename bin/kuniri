@@ -9,7 +9,6 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 
-
 class OptparseKuniri
   Version = Kuniri::VERSION
 
@@ -22,13 +21,13 @@ class OptparseKuniri
       self.optimization = 0
       self.language = 'ruby'
       self.source = ARGV[0]
-      self.output = (Dir.exist?(self.source)) ? "#{name}/" : "#{name}.xml"
+      self.output = Dir.exist?(source) ? "#{name}/" : "#{name}.xml"
     end
 
     def define_options(parser)
-      parser.banner = "Usage: kuniri INPUT_FILE|INPUT_DIRECTORY [OPTIONS]"
-      parser.separator ""
-      parser.separator "Specific options:"
+      parser.banner = 'Usage: kuniri INPUT_FILE|INPUT_DIRECTORY [OPTIONS]'
+      parser.separator ''
+      parser.separator 'Specific options:'
 
       # add additional options
       verbose_option(parser)
@@ -37,51 +36,51 @@ class OptparseKuniri
       optimization_option(parser)
       language_option(parser)
 
-      parser.separator ""
-      parser.separator "Common options:"
+      parser.separator ''
+      parser.separator 'Common options:'
       # No argument, shows at tail.  This will print an options summary.
       # Try it and see!
-      parser.on_tail("-h", "--help", "Show this message") do
+      parser.on_tail('-h', '--help', 'Show this message') do
         puts parser
         exit
       end
       # Another typical switch to print the version.
-      parser.on_tail("--version", "Show version") do
+      parser.on_tail('--version', 'Show version') do
         puts Version
         exit
       end
     end
 
     def verbose_option(parser)
-      parser.on("-v", "--verbose", "Run verbosely") do |n|
+      parser.on('-v', '--verbose', 'Run verbosely') do
         self.verbose_level = Logger::INFO
       end
     end
 
     def very_verbose_option(parser)
-      parser.on("-V", "--very-verbose", "Very verbose") do |n|
+      parser.on('-V', '--very-verbose', 'Very verbose') do
         self.verbose_level = Logger::DEBUG
       end
     end
 
     def output_option(parser)
-      parser.on("-o", "--output PATH", "Export") do |path|
+      parser.on('-o', '--output PATH', 'Export') do |path|
         self.output = path
       end
     end
 
     def optimization_option(parser)
-      parser.on("-O", "--optimization 1,2,3", "Optimize", Integer) do |o|
+      parser.on('-O', '--optimization 1,2,3', 'Optimize', Integer) do |o|
         self.optimization = o
       end
     end
 
     def language_option(parser)
-      parser.on("-l", "--language LANG", "Define language") do |o|
+      parser.on('-l', '--language LANG', 'Define language') do |o|
         self.optimization = o
       end
     end
-  end  # class ScriptOptions
+  end # class ScriptOptions
 
   #
   # Return a structure describing the options.
@@ -100,14 +99,13 @@ class OptparseKuniri
         puts "Try 'kuniri --help' for more information."
         exit
       end
-
     end
     @options
   end
 
   attr_reader :parser, :options
 
-end  # class OptparseKuniri
+end # class OptparseKuniri
 
 def main
   options = OptparseKuniri.parse(ARGV)
@@ -121,8 +119,7 @@ def main
 
   parser = Parser::XMLOutputFormat.new(options.optimization)
   parser.set_path(options.output)
-  parser.create_all_data(kuniri.get_parser())
+  parser.create_all_data(kuniri.get_parser)
 end
 
-main()
-
+main
