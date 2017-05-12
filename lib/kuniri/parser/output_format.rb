@@ -44,12 +44,18 @@ module Parser
     end
 
     def handle_element(singleElement)
+      handle_loc(singleElement)
       handle_extern_requirements(singleElement)
       handle_modules(singleElement)
       handle_global_variables(singleElement)
       handle_cond_loop_and_block(singleElement)
       handle_global_functions(singleElement)
       handle_classes(singleElement)
+    end
+
+    def handle_loc(singleElement)
+      loc = singleElement.lines_of_code
+      loc_generate(loc)
     end
 
     def handle_extern_requirements(singleElement)
@@ -93,6 +99,10 @@ module Parser
       classes = singleElement.classes
       length = classes.length
       class_generate(classes) if length.positive?
+    end
+
+    def loc_generate(_pLoc)
+      raise NotImplementedError
     end
 
     def class_generate(_pClass)

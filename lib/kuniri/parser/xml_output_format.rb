@@ -43,6 +43,10 @@ module Parser
       end
     end
 
+    def loc_generate(pLoc)
+      @outputEngine.send('linesOfCode', counter: pLoc)
+    end
+
     # @see OutputFormat
     def function_behaviour_generate(pElementName, pFunction)
       wrapper = self

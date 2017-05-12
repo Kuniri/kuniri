@@ -81,7 +81,7 @@ module Languages
         processedLines.each do |proc_line|
           @state.handle_line(proc_line)
           fileElement = @state.execute(fileElement, proc_line)
-          fileElement.lines_of_code = fileElement.lines_of_code + 1
+          fileElement.increase_loc
         end
       end
 

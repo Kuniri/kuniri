@@ -291,23 +291,27 @@ RSpec.describe Parser::XMLOutputFormat do
       expect(@handler).to be_a(REXML::Element)
     end
 
+    it 'Found linesOfCode variable' do
+      expect(@handler.elements[1].attributes['counter']).to eq('94')
+    end
+
     it 'Found abc as a global variable' do
-      expect(@handler.elements[1].attributes['name']).to eq('abc')
-      expect(@handler.elements[1].attributes['value']).to eq('ARGV[0].to_i')
+      expect(@handler.elements[2].attributes['name']).to eq('abc')
+      expect(@handler.elements[2].attributes['value']).to eq('ARGV[0].to_i')
     end
 
     it 'Found lala as a global variable' do
-      expect(@handler.elements[2].attributes['name']).to eq('lala')
-      expect(@handler.elements[2].attributes['value']).to eq('ARGV[1].to_i')
+      expect(@handler.elements[3].attributes['name']).to eq('lala')
+      expect(@handler.elements[3].attributes['value']).to eq('ARGV[1].to_i')
     end
 
     it 'Found y as a global variable' do
-      expect(@handler.elements[3].attributes['name']).to eq('y')
-      expect(@handler.elements[3].attributes['value']).to eq('[1,2,3,4,5]')
+      expect(@handler.elements[4].attributes['name']).to eq('y')
+      expect(@handler.elements[4].attributes['value']).to eq('[1,2,3,4,5]')
     end
 
     it 'Found globalVariable as a global variable' do
-      expect(@handler.elements[4].attributes['name']).to eq('globalVariable')
+      expect(@handler.elements[5].attributes['name']).to eq('globalVariable')
     end
 
     #TODO: FINISH THIS TEST, AFTER FIX THE GLOBAL VARIABLE BUG

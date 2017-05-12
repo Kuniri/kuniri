@@ -248,6 +248,20 @@ RSpec.describe Parser::XMLBuilderEngine do
     end
   end
 
+  context "Metrics" do
+    it "Lines of code" do
+      @builder.kuniri do
+        linesOfCode counter: "42"
+      end
+
+      output = [@basicHeader,
+                '<kuniri>',
+                '  <linesOfCode counter="42"/>',
+                '</kuniri>'].join("\n") + "\n"
+      expect(@builder.to_xml).to eq(output)
+    end
+  end
+
 #  context "Extern requirements" do
 #  end
 
