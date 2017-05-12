@@ -8,6 +8,12 @@ RSpec.describe Languages::RubySyntax do
     @syntax.metadata.allAggregations.clear
   end
 
+  def openFile(file)
+    fileElement = Languages::FileElementData.new(file)
+    source = File.open(file, 'rb')
+    return [fileElement, source]
+  end
+
   context 'Extern requirement detections.' do
 
     it 'Correct state transition (require_relative).' do
@@ -16,7 +22,8 @@ RSpec.describe Languages::RubySyntax do
       expect(@syntax.state)
           .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
 
       expect(@syntax.state)
           .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
@@ -25,7 +32,8 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (require_relative).' do
       path = 'spec/samples/rubySyntaxParts/extern/requireRelative.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
       expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ('one')
       expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ('two')
       expect(@syntax.fileElements[0].extern_requirements[2].library)
@@ -43,7 +51,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
           .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
           .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -51,7 +61,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (require).' do
       path = 'spec/samples/rubySyntaxParts/extern/simpleExternRequirement.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].extern_requirements[0].library).to eq ('one')
       expect(@syntax.fileElements[0].extern_requirements[1].library).to eq ('two')
       expect(@syntax.fileElements[0].extern_requirements[2].library)
@@ -77,7 +89,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/variable/simpleVariable.rb'
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -85,7 +99,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (global variable).' do
       path = 'spec/samples/rubySyntaxParts/variable/simpleVariable.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].global_variables[0].name).to eq('one')
       expect(@syntax.fileElements[0].global_variables[1].name).to eq('two')
       expect(@syntax.fileElements[0].global_variables[2].name).to eq('three')
@@ -102,7 +118,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/function/simpleFunction.rb'
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -110,7 +128,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (global function)' do
       path = 'spec/samples/rubySyntaxParts/function/simpleFunction.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].global_functions[0].name)
         .to eq('simpleFunction1')
       expect(@syntax.fileElements[0].global_functions[1].name)
@@ -133,7 +153,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/module/simpleModule.rb'
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -141,7 +163,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (module)' do
       path = 'spec/samples/rubySyntaxParts/module/simpleModule.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].modules[0].name)
         .to eq('Xpto')
       expect(@syntax.fileElements[0].modules[1].name)
@@ -157,7 +181,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -165,7 +191,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (class).' do
       path = 'spec/samples/rubySyntaxParts/class/simpleClass.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].name).to eq('Simple1')
       expect(@syntax.fileElements[0].classes[1].name).to eq('Simple2')
       expect(@syntax.fileElements[0].classes[2].name).to eq('Simple3')
@@ -176,7 +204,9 @@ RSpec.describe Languages::RubySyntax do
     it 'All classes in Metadata array' do
       path = 'spec/samples/rubySyntaxParts/class/simpleClass.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.metadata.allClasses.size).to eq(5)
       expect(@syntax.metadata.allClasses[0].name).to eq('Simple1')
@@ -195,7 +225,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -203,7 +235,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (attribute)' do
       path = 'spec/samples/rubySyntaxParts/attribute/simpleAttribute.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].attributes[0].name)
         .to eq('attribute1')
       expect(@syntax.fileElements[0].classes[0].attributes[1].name)
@@ -226,7 +260,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -234,7 +270,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (method)' do
       path = 'spec/samples/rubySyntaxParts/method/simpleMethod.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].methods[0].name)
         .to eq('method1')
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
@@ -254,7 +292,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -262,7 +302,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (constructor)' do
       path = 'spec/samples/rubySyntaxParts/constructor/simpleConstructor.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
         .to eq('initialize')
       expect(@syntax.fileElements[0].classes[1].constructors[0].name)
@@ -277,7 +319,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -286,7 +330,9 @@ RSpec.describe Languages::RubySyntax do
        path =
         'spec/samples/rubySyntaxParts/conditionalStatment/simpleConditional.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       allFuntion0 = @syntax.fileElements[0].global_functions[0]
                                         .managerCondLoopAndBlock.basicStructure
       allFuntion1 = @syntax.fileElements[0].global_functions[1]
@@ -309,7 +355,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -318,7 +366,9 @@ RSpec.describe Languages::RubySyntax do
        path =
         'spec/samples/rubySyntaxParts/conditionalStatment/methodConditional.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       allMethod0 = @syntax.fileElements[0].classes[0].methods[0]
                                         .managerCondLoopAndBlock.basicStructure
       allMethod1 = @syntax.fileElements[0].classes[0].methods[1]
@@ -357,7 +407,9 @@ RSpec.describe Languages::RubySyntax do
 
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.state)
         .to be_instance_of(StateMachine::OOStructuredFSM::IdleState)
     end
@@ -366,7 +418,9 @@ RSpec.describe Languages::RubySyntax do
        path = 'spec/samples/rubySyntaxParts/' +
                 'conditionalStatment/constructorConditional.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       allConstructor = @syntax.fileElements[0].classes[0].constructors[0]
                                         .managerCondLoopAndBlock.basicStructure
       expect(@syntax.fileElements[0].classes[0].constructors[0].name)
@@ -396,7 +450,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (repetition[while] -  Method)' do
        path = 'spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       allLoop = @syntax.fileElements[0].classes[0]
                         .methods[0].managerCondLoopAndBlock.basicStructure
 
@@ -408,7 +464,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (repetiton[util] - Method)' do
       path = 'spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq('simple2')
 
@@ -421,7 +479,9 @@ RSpec.describe Languages::RubySyntax do
     it 'Correct data capture (repetition[for] -  Method)' do
       path = 'spec/samples/rubySyntaxParts/repetition/simpleRepetition.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].methods[1].name)
           .to eq('simple2')
 
@@ -439,7 +499,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_single_line_comment_global.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].comments).to eq('First comment')
       expect(@syntax.fileElements[0].global_functions[0].comments)
               .to eq('Comment 2')
@@ -454,7 +516,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_single_line_comment_class.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].comments)
               .to eq('Comment 1: class')
       expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
@@ -473,7 +537,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_multiple_line_comment_global.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].comments)
         .to eq('Comment 1: Multiple line.')
       expect(@syntax.fileElements[0].global_functions[0].comments)
@@ -487,7 +553,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_multiple_line_comment_class.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
       expect(@syntax.fileElements[0].classes[0].comments)
               .to eq('This is the first class of this file.')
       expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
@@ -509,7 +577,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/constructorAggregation.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
         .to eq('Foo')
@@ -521,7 +591,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/methodAggregation.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
         .to eq('Test1')
@@ -533,7 +605,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/classAggregation.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.fileElements[0].classes[2].aggregations[0].name)
         .to eq('Class1')
@@ -546,7 +620,9 @@ RSpec.describe Languages::RubySyntax do
               'aggregation/classAggregation.rb'
 
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.metadata.allAggregations.size).to eq(2)
       expect(@syntax.metadata.allAggregations[0].name).to eq('Class1')
@@ -562,7 +638,9 @@ RSpec.describe Languages::RubySyntax do
        path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/multipleAggregation.rb'
 
-       @syntax.analyse_source(path)
+       instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
        expect(@syntax.metadata.allClasses.size).to eq(5)
        expect(@syntax.metadata.allClasses[0].name).to eq('Class1')
@@ -577,7 +655,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/multipleAggregation.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.metadata.allAggregations.size).to eq(5)
       expect(@syntax.metadata.allAggregations[0].name).to eq('Array')
@@ -591,7 +671,9 @@ RSpec.describe Languages::RubySyntax do
       path = 'spec/samples/rubySyntaxParts/' +
               'aggregation/multipleAggregation.rb'
 
-      @syntax.analyse_source(path)
+      instances = openFile(path)
+      @syntax.analyse_source(instances[0], instances[1])
+
 
       expect(@syntax.fileElements[0].classes[4].aggregations.size).to eq(3)
       expect(@syntax.fileElements[0].classes[4].aggregations[0].name)

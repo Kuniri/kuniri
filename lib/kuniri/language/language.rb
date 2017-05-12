@@ -112,7 +112,16 @@ module Languages
     # in this is step the algorithm try to find classes, and methods. This
     # method, work like a hook for give more flexibility to implements any
     # needed steps.
-    def analyse_source
+    def analyse_source(fileElement, source)
+      analyse_first_step(fileElement, source)
+      analyse_second_step
+    end
+
+    def analyse_first_step(_fileElement, _source)
+      raise NotImplementedError
+    end
+
+    def analyse_second_step
       raise NotImplementedError
     end
 
@@ -215,26 +224,20 @@ module Languages
     end
 
     def build_structures
-      { StateMachine::METHOD_ID =>
-          @methodHandler.method(:get_method),
+      { StateMachine::METHOD_ID => @methodHandler.method(:get_method),
         StateMachine::CONSTRUCTOR_ID =>
           @constructorHandler.method(:get_constructor),
-        StateMachine::FUNCTION_ID =>
-          @functionHandler.method(:get_function),
-        StateMachine::COMMENT_ID =>
-          @commentHandler.method(:get_comment),
-        StateMachine::VARIABLE_ID =>
-          @variableHandler.method(:get_variable),
+        StateMachine::FUNCTION_ID => @functionHandler.method(:get_function),
+        StateMachine::COMMENT_ID => @commentHandler.method(:get_comment),
+        StateMachine::VARIABLE_ID => @variableHandler.method(:get_variable),
         StateMachine::MODULE_ID => @moduleHandler.method(:get_module),
         StateMachine::CLASS_ID => @classHandler.method(:get_class),
         StateMachine::REPETITION_ID =>
           @repetitionHandler.method(:get_repetition),
         StateMachine::CONDITIONAL_ID =>
           @conditionalHandler.method(:get_conditional),
-        StateMachine::ATTRIBUTE_ID =>
-          @attributeHandler.method(:get_attribute),
-        StateMachine::BLOCK_ID =>
-          @blockHandler.method(:get_block),
+        StateMachine::ATTRIBUTE_ID => @attributeHandler.method(:get_attribute),
+        StateMachine::BLOCK_ID => @blockHandler.method(:get_block),
         StateMachine::AGGREGATION_ID =>
           @aggregationHandler.method(:get_aggregation),
         StateMachine::EXTERN_REQUIREMENT_ID =>
