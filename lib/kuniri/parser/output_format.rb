@@ -57,7 +57,7 @@ module Parser
     def handle_extern_requirements(singleElement)
       reqs = singleElement.extern_requirements
       len = reqs.length
-      extern_requirements_generate(reqs) if len.positive?
+      extern_requirement_generate(reqs) if len.positive?
     end
 
     def handle_modules(singleElement)

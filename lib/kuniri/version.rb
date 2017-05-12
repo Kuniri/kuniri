@@ -5,5 +5,5 @@
 # Version 3.  See the file COPYING for more details
 
 module Kuniri
-  VERSION = File.foreach('VERSION').first.strip
+  VERSION = '0.2'.freeze
 end
