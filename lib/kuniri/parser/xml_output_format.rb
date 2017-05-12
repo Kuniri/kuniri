@@ -61,6 +61,11 @@ module Parser
       end
     end
 
+    def function_counter_generate(pNumberOfFunctions)
+      @outputEngine.send('globalFunctions',
+                         counter: pNumberOfFunctions)
+    end
+
     # @see OutputFormat
     def parameters_generate(pParameters)
       if pParameters.is_a?Hash

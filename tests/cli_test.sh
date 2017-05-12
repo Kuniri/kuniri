@@ -24,6 +24,7 @@ create_test_file() {
   cat <<EOF >expected_result.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <kuniri>
+  <globalFunctions counter="0"/>
   <classData name="Simple1" visibility="public">
   </classData>
   <classData name="Simple2" visibility="public">

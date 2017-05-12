@@ -6,7 +6,16 @@
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-              <xs:attribute type="xs:string" name="name"/>
+                <xs:attribute type="xs:string" name="name"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="globalFunctions">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:byte" name="counter"/>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>
