@@ -20,6 +20,7 @@ module Languages
   UNTIL_LABEL ||= 'UNTIL'.freeze
   LAMBDA_LABEL ||= 'LAMBDA'.freeze
   BLOCK_LABEL ||= 'BLOCK'.freeze
+  LAMBDA_LABEL ||= 'LAMBDA'.freeze
   # Handle nested conditional and loops
   UP_LEVEL ||= -1
   DOWN_LEVEL ||= 1
