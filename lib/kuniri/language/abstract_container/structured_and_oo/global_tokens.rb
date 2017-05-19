@@ -18,9 +18,8 @@ module Languages
   FOR_LABEL ||= 'FOR'.freeze
   DO_WHILE_LABEL ||= 'DOWHILE'.freeze
   UNTIL_LABEL ||= 'UNTIL'.freeze
-  LAMBDA_LABEL ||= 'LAMBDA'.freeze
   BLOCK_LABEL ||= 'BLOCK'.freeze
-  LAMBDA_LABEL ||= 'LAMBDA'.freeze
+  LAMBDA_LABEL ||= 'LAMBDABLOCK'.freeze
   # Handle nested conditional and loops
   UP_LEVEL ||= -1
   DOWN_LEVEL ||= 1

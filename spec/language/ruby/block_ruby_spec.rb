@@ -92,17 +92,17 @@ RSpec.describe Languages::Ruby::BlockRuby do
   context 'Try to detect lambda' do
     it 'Simple lambda' do
       captured = @blockRuby.get_block('lambda do')
-      expect(captured.type).to eq('LAMBDA')
+      expect(captured.type).to eq('LAMBDABLOCK')
     end
 
     it 'Simple lambda with space' do
       captured = @blockRuby.get_block('   lambda    do  ')
-      expect(captured.type).to eq('LAMBDA')
+      expect(captured.type).to eq('LAMBDABLOCK')
     end
 
     it 'Simple lambda with assignment' do
       captured = @blockRuby.get_block('xpto = lambda do')
-      expect(captured.type).to eq('LAMBDA')
+      expect(captured.type).to eq('LAMBDABLOCK')
     end
   end
 
