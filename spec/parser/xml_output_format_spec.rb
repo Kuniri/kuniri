@@ -13,6 +13,7 @@ RSpec.describe Parser::XMLOutputFormat do
    it "::Simple case class" do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -23,6 +24,7 @@ RSpec.describe Parser::XMLOutputFormat do
    it "::Set visibility" do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"private\">\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -35,6 +37,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
       expectedString += "  <commentData text=\"This is a simple comment\"/>\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"

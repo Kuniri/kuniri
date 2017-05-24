@@ -25,14 +25,19 @@ create_test_file() {
 <?xml version="1.0" encoding="UTF-8"?>
 <kuniri>
   <classData name="Simple1" visibility="public">
+    <totalMethods counter="0"/>
   </classData>
   <classData name="Simple2" visibility="public">
+    <totalMethods counter="0"/>
   </classData>
   <classData name="Simple3" visibility="public">
+    <totalMethods counter="0"/>
   </classData>
   <classData name="Simple4" visibility="public">
+    <totalMethods counter="0"/>
   </classData>
   <classData name="Simple5" visibility="public">
+    <totalMethods counter="0"/>
   </classData>
 </kuniri>
 EOF

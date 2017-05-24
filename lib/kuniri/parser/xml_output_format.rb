@@ -23,24 +23,37 @@ module Parser
       pClass.each do |singleClass|
         @outputEngine.classData name: singleClass.name,
                                 visibility: singleClass.visibility do
+          methods_counter = 0
           wrapper.comment_generate(singleClass)
 
-          unless singleClass.aggregations.empty?
-            wrapper.aggregation_generate(singleClass.aggregations)
-          end
+          wrapper.handle_aggregations(singleClass.aggregations)
           wrapper.inheritance_generate(singleClass.inheritances)
-          unless singleClass.attributes.empty?
-            wrapper.attribute_generate(singleClass.attributes)
-          end
+          wrapper.handle_attributes(singleClass.attributes)
+
           singleClass.constructors.each do |singleConstructor|
             wrapper.function_behaviour_generate('constructorData',
                                                 singleConstructor)
+            methods_counter += 1
           end
           singleClass.methods.each do |singleMethod|
             wrapper.function_behaviour_generate('methodData', singleMethod)
+            methods_counter += 1
           end
+          wrapper.methods_counter_generate(methods_counter)
         end
       end
+    end
+
+    def methods_counter_generate(counter)
+      @outputEngine.send('totalMethods', counter: counter)
+    end
+
+    def handle_aggregations(aggregations)
+      aggregation_generate(aggregations) unless aggregations.empty?
+    end
+
+    def handle_attributes(attributes)
+      attribute_generate(attributes) unless attributes.empty?
     end
 
     # @see OutputFormat
