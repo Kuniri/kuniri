@@ -116,14 +116,14 @@ module Languages
     # needed steps.
     def analyse_source(fileElement, source)
       temp_path = temp_file_path(source)
-      @preParser.pre_parse(source, temp_path) # should be instantiated on child classes
+      @preParser.pre_parse(source, temp_path) # instantiated on child classes
       analyse_first_step(fileElement, File.open(temp_path))
       analyse_second_step
       FileUtils.rm(temp_path)
     end
 
     def temp_file_path(source)
-      return  source.path + ".tmp"
+      return  source.path + '.tmp'
     end
 
     def analyse_first_step(_fileElement, _source)
