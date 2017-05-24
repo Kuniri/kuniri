@@ -25,7 +25,8 @@ module Parser
     'visibility': 'v',
     'name': 'n',
     'expression': 'e',
-    'level': 'l'
+    'level': 'l',
+    'totalGlobalFunctions': 'tgf'
   }.freeze
 
   # Keep the relationship between languages and project

@@ -62,7 +62,7 @@ module Parser
     end
 
     def function_counter_generate(pNumberOfFunctions)
-      @outputEngine.send('globalFunctions',
+      @outputEngine.send('totalGlobalFunctions',
                          counter: pNumberOfFunctions)
     end
 
