@@ -11,7 +11,7 @@
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
-        <xs:element name="globalFunctions">
+        <xs:element name="totalGlobalFunctions">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
