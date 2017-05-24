@@ -43,6 +43,10 @@ module Parser
       end
     end
 
+    def class_counter_generate(pLength)
+      @outputEngine.send('totalClasses', counter: pLength)
+    end
+
     # @see OutputFormat
     def function_behaviour_generate(pElementName, pFunction)
       wrapper = self

@@ -92,10 +92,15 @@ module Parser
     def handle_classes(singleElement)
       classes = singleElement.classes
       length = classes.length
+      class_counter_generate(length)
       class_generate(classes) if length.positive?
     end
 
     def class_generate(_pClass)
+      raise NotImplementedError
+    end
+
+    def class_counter_generate(_pLength)
       raise NotImplementedError
     end
 
