@@ -115,11 +115,10 @@ module Languages
     # method, work like a hook for give more flexibility to implements any
     # needed steps.
     def analyse_source(fileElement, source)
-      temp_path = temp_file_path(source)
-      @preParser.pre_parse(source, temp_path) # instantiated on child classes
-      analyse_first_step(fileElement, File.open(temp_path))
+      @preParser.pre_parse(source, temp_file_path(source))
+      analyse_first_step(fileElement, File.open(temp_file_path(source)))
       analyse_second_step
-      FileUtils.rm(temp_path)
+      FileUtils.rm(temp_file_path(source))
     end
 
     def temp_file_path(source)
@@ -223,8 +222,7 @@ module Languages
 
     # Verify if is nested or not
     def nested?
-      return true if @countNestedCondLoop.positive?
-      return false
+      return countNestedCondLoop.positive?
     end
 
     # Reset nested structure
