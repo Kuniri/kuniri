@@ -1,6 +1,6 @@
 =begin
 Comment 1:
-Multiple line.
+Multiple line
 =end
 
 require_relative 'simple_multiple_line_comment_class.rb'
