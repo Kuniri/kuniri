@@ -44,5 +44,7 @@ class RubyPreParser < PreParser
     return zipped_lines
   end
 
-  def split_multiple_command_line(line) end
+  def split_multiple_command_line(line)
+    return line
+  end
 end
