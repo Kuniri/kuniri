@@ -71,13 +71,16 @@ module Languages
         return nil
       end
 
-      # TODO
       def check_for_lambda(pLine)
-        regexExp = /(\w+\s+|\s*)lambda(:?\s+do\s*|\s*\{\s*)/
-        if regexExp =~ pLine
-          @isItALambda = true
-          return pLine[regexExp, 0] unless among_quotes?pLine
+        regexLambda = [ /(\w+\s+|\s*)lambda(:?\s+do|\s*\{)/,
+                        /(\s*\w+\s+|\s*)->\s*\(:?.*\)/ ]
+        regexLambda.each do |lambdaSyntaxRegex|
+          if lambdaSyntaxRegex =~ pLine
+            @isItALambda = true
+            return pLine[lambdaSyntaxRegex, 0] unless among_quotes?pLine
+          end
         end
+
         return nil
       end
 
