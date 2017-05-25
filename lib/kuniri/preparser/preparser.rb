@@ -5,7 +5,7 @@ class PreParser
       pre_parsed_line = pre_parse_line(line)
       pre_parsed_lines.push(pre_parsed_line) unless (pre_parsed_line.empty?)
     end
-    pre_parse_multiple_lines(pre_parsed_lines)
+    pre_parsed_lines = pre_parse_multiple_lines(pre_parsed_lines)
     out_file = File.open(out_path, 'w')
     out_file.write(pre_parsed_lines.join("\n"))
     out_file.close
