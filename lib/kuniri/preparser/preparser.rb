@@ -19,7 +19,7 @@ class PreParser
 
   def pre_parse_multiple_lines(lines)
     lines = zip_multiple_lines_command(lines)
-    lines = split_multiple_command_line(lines)
+    lines = split_multiple_command_lines(lines)
     return lines
   end
 
