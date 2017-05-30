@@ -130,6 +130,16 @@ RSpec.describe Languages::Ruby::BlockRuby do
       expect(captured.type).to eq('LAMBDABLOCK')
     end
 
+    it 'Check lambda parameters field' do
+      captured = @blockRuby.get_block(' lambda  do  |  x,    la, kx_2 |  ')
+      expect(captured.parameters).to match(['x', 'la', 'kx_2'])
+    end
+
+    it 'Check lambda parameters field and no spaces' do
+      captured = @blockRuby.get_block(' lambda  do  |x,la,kx_2|  ')
+      expect(captured.parameters).to match(['x', 'la', 'kx_2'])
+    end
+
     it 'Simple lambda with {}' do
       captured = @blockRuby.get_block('lambda { puts 3 }')
       expect(captured.type).to eq('LAMBDABLOCK')
@@ -160,6 +170,11 @@ RSpec.describe Languages::Ruby::BlockRuby do
       expect(captured.type).to eq('LAMBDABLOCK')
     end
 
+    it 'Check special lambda with parameters' do
+      captured = @blockRuby.get_block(' -> (x, y ,  lk,  jk_32  ) { puts 5 }')
+      expect(captured.parameters).to match(['x', 'y', 'lk', 'jk_32'])
+    end
+
   end
 
   context 'Should not detect lambda:' do
@@ -176,6 +191,11 @@ RSpec.describe Languages::Ruby::BlockRuby do
     it 'Should not detect lambda and do without space' do
       captured = @blockRuby.get_block('lambdado')
       expect(captured).to eq(nil)
+    end
+
+    it 'No parameters' do
+      captured = @blockRuby.get_block(' lambda  do  ||  ')
+      expect(captured.parameters).to match([])
     end
 
     # TODO: After implement pre-parse, revive this test

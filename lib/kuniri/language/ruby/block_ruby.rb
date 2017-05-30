@@ -29,6 +29,7 @@ module Languages
           blockData.type = Languages::BLOCK_LABEL
           blockData.expression = capture_block_name(result)
         end
+        blockData.parameters = capture_parameters(pLine)
         return blockData
       end
 
@@ -52,6 +53,19 @@ module Languages
         partialString.strip!
         partialString.upcase!
         return partialString
+      end
+
+      def capture_parameters(pString)
+        regexParameter = {"|" => /\|\s*([^\|]*)\s*\|/,
+                          "()" => /\(\s*([^\(]*)\s*\)/}
+        regexParameter.each do |character, regex|
+          if (pString =~ regex)
+            parameters = pString[regex, 0]
+            arrayOfParameters = extract_parameters(parameters, character)
+            return arrayOfParameters
+          end
+        end
+        return []
       end
 
       def capture_expression(_pString)
@@ -83,6 +97,15 @@ module Languages
         end
 
         return nil
+      end
+
+      def extract_parameters(pParams, pCharacter)
+        parameters = pParams.tr(pCharacter, '').strip
+        arrayOfParameters = parameters.split(',')
+        arrayOfParameters.map! do |param|
+          param.strip
+        end
+        return arrayOfParameters
       end
 
     end # Class
