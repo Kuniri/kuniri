@@ -72,7 +72,8 @@ module Languages
       end
 
       def check_for_lambda(pLine)
-        regexLambda = [ /(\w+\s+|\s*)lambda(:?\s+do|\s*\{)/,
+        # (\w+\s+|\s*)lambda(:?\s+do\s*|\s*\{)(\s*$|\s*\|.*)
+        regexLambda = [ /(\w+\s+|\s*)lambda(:?\s+do|\s*\{)\s*/,
                         /(\s*\w+\s+|\s*)->\s*\(:?.*\)/ ]
         regexLambda.each do |lambdaSyntaxRegex|
           if lambdaSyntaxRegex =~ pLine
