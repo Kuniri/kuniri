@@ -33,7 +33,6 @@ module Parser
           singleClass.constructors.each do |singleConstructor|
             wrapper.function_behaviour_generate('constructorData',
                                                 singleConstructor)
-            methods_counter += 1
           end
           singleClass.methods.each do |singleMethod|
             wrapper.function_behaviour_generate('methodData', singleMethod)
