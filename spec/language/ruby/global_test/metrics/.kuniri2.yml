@@ -1,0 +1,4 @@
+language: ruby
+source: ./spec/samples/rubySyntaxParts/fullCode/noClassDef.rb
+output: ./spec/language/ruby/global_test/metrics/noClassDef.xml
+extract: uml
