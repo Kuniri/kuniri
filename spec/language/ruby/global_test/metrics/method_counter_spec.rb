@@ -1,6 +1,6 @@
 require_relative '../../../../spec_helper.rb'
 
-RSpec.describe Parser::XMLOutputFormat do
+RSpec.describe "Method counters" do
 
   before :each do
     @outputFormat = Parser::XMLOutputFormat.new
