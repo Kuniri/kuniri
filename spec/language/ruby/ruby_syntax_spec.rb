@@ -541,7 +541,7 @@ RSpec.describe Languages::RubySyntax do
       @syntax.analyse_source(instances[0], instances[1])
 
       expect(@syntax.fileElements[0].comments)
-        .to eq('Comment 1: Multiple line.')
+        .to eq('Comment 1: Multiple line')
       expect(@syntax.fileElements[0].global_functions[0].comments)
               .to eq('Global Function number one multiple line')
       expect(@syntax.fileElements[0].global_variables[0].comments)
@@ -557,7 +557,7 @@ RSpec.describe Languages::RubySyntax do
       @syntax.analyse_source(instances[0], instances[1])
 
       expect(@syntax.fileElements[0].classes[0].comments)
-              .to eq('This is the first class of this file.')
+              .to eq('This is the first class of this file')
       expect(@syntax.fileElements[0].classes[0].constructors[0].comments)
               .to eq('Constructor initialize')
       expect(@syntax.fileElements[0].classes[0].methods[0].comments)

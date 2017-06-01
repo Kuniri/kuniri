@@ -4,6 +4,8 @@
 # This source code is licensed under the GNU lesser general public license,
 # Version 3.  See the file COPYING for more details
 
+require 'fileutils'
+
 require_relative '../state_machine/OO_structured_fsm/attribute_state'
 require_relative '../state_machine/OO_structured_fsm/class_state'
 require_relative '../state_machine/OO_structured_fsm/constructor_state'
@@ -113,8 +115,14 @@ module Languages
     # method, work like a hook for give more flexibility to implements any
     # needed steps.
     def analyse_source(fileElement, source)
-      analyse_first_step(fileElement, source)
+      @preParser.pre_parse(source, temp_file_path(source))
+      analyse_first_step(fileElement, File.open(temp_file_path(source)))
       analyse_second_step
+      FileUtils.rm(temp_file_path(source))
+    end
+
+    def temp_file_path(source)
+      return  source.path + '.tmp'
     end
 
     def analyse_first_step(_fileElement, _source)
@@ -214,8 +222,7 @@ module Languages
 
     # Verify if is nested or not
     def nested?
-      return true if @countNestedCondLoop.positive?
-      return false
+      return countNestedCondLoop.positive?
     end
 
     # Reset nested structure
