@@ -37,6 +37,12 @@ class RubyPreParser < PreParser
     return zipped_lines
   end
 
+  def get_oneline_comment(line)
+    comment_regex = /^#(?<comment>.*)$/
+    match = line.match(comment_regex)
+    match.nil? ? nil : match["comment"]
+  end
+
   def split_multiple_command_lines(lines)
     return lines
   end
