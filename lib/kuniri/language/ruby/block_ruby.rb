@@ -14,6 +14,7 @@ module Languages
 
     # Ruby Handling Ruby block
     class BlockRuby < Languages::Block
+
       # Get ruby block.
       # @param pLine Verify if line has a ruby block.
       # @return Return BlockData or nil.
@@ -22,14 +23,10 @@ module Languages
         return nil unless result
 
         blockData = Languages::BlockData.new
-        if @isItALambda
-          blockData.type = Languages::LAMBDA_LABEL
-          blockData.expression = Languages::LAMBDA_LABEL
-        else
-          blockData.type = Languages::BLOCK_LABEL
-          blockData.expression = capture_block_name(result)
-        end
+        blockData.type = Languages::LAMBDA_BLOCK_LABEL
         blockData.parameters = capture_parameters(pLine)
+        blockData.expression = Languages::LAMBDA_BLOCK_LABEL
+        blockData.expression = capture_block_name(result) unless @isItALambda
         return blockData
       end
 
@@ -56,14 +53,15 @@ module Languages
       end
 
       def capture_parameters(pString)
-        regexParameter = {"|" => /\|\s*([^\|]*)\s*\|/,
-                          "()" => /\(\s*([^\(]*)\s*\)/}
+        regexParameter = { '|' => /\|\s*([^\|]*)\s*\|/,
+                           '()' => /\(\s*([^\(]*)\s*\)/ }
         regexParameter.each do |character, regex|
           if (pString =~ regex)
             parameters = pString[regex, 0]
             arrayOfParameters = extract_parameters(parameters, character)
             return arrayOfParameters
           end
+          next
         end
         return []
       end
@@ -87,8 +85,8 @@ module Languages
 
       def check_for_lambda(pLine)
         # (\w+\s+|\s*)lambda(:?\s+do\s*|\s*\{)(\s*$|\s*\|.*)
-        regexLambda = [ /(\w+\s+|\s*)lambda(:?\s+do|\s*\{)\s*/,
-                        /(\s*\w+\s+|\s*)->\s*\(:?.*\)/ ]
+        regexLambda = [/(\w+\s+|\s*)lambda(:?\s+do|\s*\{)\s*/,
+                       /(\s*\w+\s+|\s*)->\s*\(:?.*\)/]
         regexLambda.each do |lambdaSyntaxRegex|
           if lambdaSyntaxRegex =~ pLine
             @isItALambda = true
@@ -102,9 +100,7 @@ module Languages
       def extract_parameters(pParams, pCharacter)
         parameters = pParams.tr(pCharacter, '').strip
         arrayOfParameters = parameters.split(',')
-        arrayOfParameters.map! do |param|
-          param.strip
-        end
+        arrayOfParameters.map!(&:strip)
         return arrayOfParameters
       end
 

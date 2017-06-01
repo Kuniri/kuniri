@@ -92,42 +92,42 @@ RSpec.describe Languages::Ruby::BlockRuby do
   context 'Try to detect lambda: ' do
     it 'Simple lambda' do
       captured = @blockRuby.get_block('lambda do')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Simple lambda with space between' do
       captured = @blockRuby.get_block('   lambda    do  ')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Simple lambda with assignment' do
       captured = @blockRuby.get_block('xpto = lambda do')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Lambda with spaces in the begining' do
       captured = @blockRuby.get_block('     lambda do')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Lambda with spaces in the end' do
       captured = @blockRuby.get_block('lambda       do    ')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Lambda with a single parameters' do
       captured = @blockRuby.get_block('lambda do |x|')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Lambda with a multiple parameters' do
       captured = @blockRuby.get_block('lambda do |x, y, la, xpto, kx_2|')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Lambda with a multiple parameters and space' do
       captured = @blockRuby.get_block(' lambda  do  |  x,    la, kx_2 |  ')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Check lambda parameters field' do
@@ -142,32 +142,32 @@ RSpec.describe Languages::Ruby::BlockRuby do
 
     it 'Simple lambda with {}' do
       captured = @blockRuby.get_block('lambda { puts 3 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Simple lambda with {} and without space' do
       captured = @blockRuby.get_block('lambda{ puts 3 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Special lambda syntax' do
       captured = @blockRuby.get_block('->() { puts 5 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Special lambda syntax with single parameter' do
       captured = @blockRuby.get_block('->(x) { puts 5 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'special lambda syntax with multiple parameter' do
       captured = @blockRuby.get_block('->(x, y, lkjk, jk_32) { puts 5 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'special lambda syntax with multiple parameter and spaces' do
       captured = @blockRuby.get_block(' -> ( x, y ,  lk,  jk_32  ) { puts 5 }')
-      expect(captured.type).to eq('LAMBDABLOCK')
+      expect(captured.type).to eq('LAMDA_BLOCK')
     end
 
     it 'Check special lambda with parameters' do

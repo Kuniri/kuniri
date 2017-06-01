@@ -112,7 +112,7 @@ module StateMachine
         when Languages::IF_LABEL then return true
         when Languages::CASE_LABEL then return true
         when Languages::UNLESS_LABEL then return true
-        when Languages::BLOCK_LABEL then return true
+        when Languages::LAMBDA_BLOCK_LABEL then return true
         else
           return false
         end

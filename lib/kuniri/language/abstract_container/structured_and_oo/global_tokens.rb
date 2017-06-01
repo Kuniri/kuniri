@@ -18,10 +18,6 @@ module Languages
   FOR_LABEL ||= 'FOR'.freeze
   DO_WHILE_LABEL ||= 'DOWHILE'.freeze
   UNTIL_LABEL ||= 'UNTIL'.freeze
-  # TODO: REMOVE
-  BLOCK_LABEL ||= 'BLOCK'.freeze
-  LAMBDA_LABEL ||= 'LAMBDABLOCK'.freeze
-  #
   LAMBDA_BLOCK_LABEL ||= 'LAMDA_BLOCK'.freeze
   # Handle nested conditional and loops
   UP_LEVEL ||= -1

@@ -126,10 +126,11 @@ module Parser
         if element.type == Languages::ELSE_LABEL
           @outputEngine.send(element.type.downcase,
                              level: element.level)
-       # else if element.type == Languages::LAMBDA_BLOCK_LABEL
-       #   @outputEngine.send(element.type.downcase,
-       #                      level: element.level,
-       #                      parameters: element.parameters)
+        elsif element.type == Languages::LAMBDA_BLOCK_LABEL
+          @outputEngine.send(element.type.downcase,
+                             expression: element.expression,
+                             level: element.level,
+                             parameters: element.parameters.join(','))
         else
           @outputEngine.send(element.type.downcase,
                              expression: element.expression,

@@ -29,11 +29,11 @@ RSpec.describe 'Simple blocks as a script' do
   context 'Test simple block' do
 
     message = 'Find times as an expression'
-    regex = /\s*<block\sexpression="TIMES"\slevel="0"\/?>/
+    regex = /\s*<lamda_block\sexpression="TIMES"\slevel="0"\sparameters="x"\/?>/
     include_examples 'Block verification' , regex, message
 
     message = 'Find each as an expression'
-    regex = /\s*<block\sexpression="EACH"\slevel="0"\/?>/
+    regex = /\s*<lamda_block\sexpression="EACH"\slevel="0"\sparameters="theValue"\/?>/
     include_examples 'Block verification' , regex, message
 
     message = 'Find conditional inside block'
@@ -41,7 +41,7 @@ RSpec.describe 'Simple blocks as a script' do
     include_examples 'Block verification' , regex, message
 
     message = 'Find map as an expression'
-    regex = /\s*<block\sexpression="MAP"\slevel="0"\/?>/
+    regex = /\s*<lamda_block\sexpression="MAP"\slevel="0"\sparameters="ahhhh"\/?>/
     include_examples 'Block verification' , regex, message
 
   end
