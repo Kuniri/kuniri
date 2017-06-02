@@ -26,7 +26,8 @@ module Parser
     'name': 'n',
     'expression': 'e',
     'level': 'l',
-    'totalMethods': 'tm'
+    'totalMethods': 'tm',
+    'totalClasses': 'tc'
   }.freeze
 
   # Keep the relationship between languages and project

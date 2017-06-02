@@ -1,0 +1,5 @@
+language: ruby
+source: ./spec/samples/rubySyntaxParts/fullCode/oneClassDef.rb
+output: ./spec/language/ruby/global_test/metrics/oneClassDef.xml
+optimization: 0
+extract: uml
