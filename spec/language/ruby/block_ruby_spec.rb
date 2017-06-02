@@ -203,6 +203,60 @@ RSpec.describe Languages::Ruby::BlockRuby do
     #  captured = @blockRuby.get_block('lambda do { puts 3 }')
     #  expect(captured).to eq(nil)
     #end
+  end
+
+  context 'Detect parameter inside block:' do
+    it 'Simple parameter' do
+      captured = @blockRuby.get_block('xpto.collect do |y|')
+      expect(captured.parameters).to match(['y'])
+    end
+
+    it 'Multiple parameter' do
+      captured = @blockRuby.get_block('xpto.collect do |y, z, k, u|')
+      expect(captured.parameters).to match(['y','z','k','u'])
+    end
+
+    it 'Simple parameter with spaces' do
+      captured = @blockRuby.get_block('xpto.collect do  |  y   | ')
+      expect(captured.parameters).to match(['y'])
+    end
+
+    it 'Simple parameter with complex name' do
+      captured = @blockRuby.get_block('xpto.collect do  |the_Test_13_3_a|')
+      expect(captured.parameters).to match(['the_Test_13_3_a'])
+    end
+
+    it 'Multiple parameter with spaces' do
+      captured = @blockRuby.get_block('xpto.collect do |  y3Its  , zra , kul |')
+      expect(captured.parameters).to match(['y3Its','zra','kul'])
+    end
+  end
+
+  context 'Detect parameter inside lambda:' do
+    it 'Simple parameter' do
+      captured = @blockRuby.get_block('x = lambda do |y|')
+      expect(captured.parameters).to match(['y'])
+    end
+
+    it 'Multiple parameter' do
+      captured = @blockRuby.get_block('k = lambda do |y, z, k, u|')
+      expect(captured.parameters).to match(['y','z','k','u'])
+    end
+
+    it 'Multiple parameter with {}' do
+      captured = @blockRuby.get_block('k = lambda { |y, z, k, u| }')
+      expect(captured.parameters).to match(['y','z','k','u'])
+    end
+
+    it 'Multiple parameter with ->()' do
+      captured = @blockRuby.get_block('k = ->(y, z, k, u) {')
+      expect(captured.parameters).to match(['y','z','k','u'])
+    end
+
+    it 'Multiple parameter with ->() and complex parameters' do
+      captured = @blockRuby.get_block('k = ->(y23e, z, krai) {')
+      expect(captured.parameters).to match(['y23e','z','krai'])
+    end
 
   end
 
