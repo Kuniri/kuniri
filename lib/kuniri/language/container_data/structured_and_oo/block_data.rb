@@ -11,5 +11,12 @@ module Languages
   # BlockData handling extern requirements
   class BlockData < Languages::BasicStructure
 
+    attr_accessor :parameters
+
+    def initialize
+      super
+      @parameters = []
+    end
+
   end # Class
 end # Module

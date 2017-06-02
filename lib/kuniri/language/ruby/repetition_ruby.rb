@@ -43,9 +43,6 @@ module Languages
         regexExp = /^\s*end\s+while\s+(.+)/
         return pLine[regexExp, 0] if regexExp =~ pLine
 
-        regexExp = /(lambda)\s+do(.*)\s*/
-        return pLine[regexExp, 0] if regexExp =~ pLine
-
         return nil
       end
 
@@ -62,9 +59,6 @@ module Languages
 
         regexExp = /^\s*end\s+while\s+/
         return Languages::DO_WHILE_LABEL if regexExp =~ pString
-
-        regexExp = /^lambda\s+/
-        return Languages::LAMBDA_LABEL if regexExp =~ pString
 
         return nil
       end

@@ -1,7 +1,7 @@
 . $(dirname $0)/helper/test_helper.sh
 
 test_verify_version() {
-  version=`cat ./VERSION`
+  version=`cat lib/kuniri/version.rb | grep VERSION | cut -d \' -f2`
   output=`bin/kuniri --version`
   assertEquals $version $output
 }

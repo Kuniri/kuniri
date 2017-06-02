@@ -48,15 +48,6 @@ module Languages
       @visibility = 'public'
     end
 
-    # Analyse source code.
-    # @param pPath Path of file to be analysed.
-    def analyse_source(pPath)
-      @name = File.basename(pPath, '.*')
-      @path = File.dirname(pPath)
-      analyse_first_step(pPath)
-      analyse_second_step
-    end
-
     private
 
     attr_accessor :visibility
@@ -82,10 +73,8 @@ module Languages
     # First step for analyse code, it is responsible for get only basic
     # informations.
     # @param pPath Path of file to be analysed.
-    def analyse_first_step(pPath)
-      fileElement = Languages::FileElementData.new(pPath)
-      @source = File.open(pPath, 'rb')
-      @source.each do |line|
+    def analyse_first_step(fileElement, source)
+      source.each do |line|
         next if line.gsub(/\s+/, '').size.zero?
         processedLines = handle_semicolon(line)
         next if processedLines.nil?
@@ -95,7 +84,7 @@ module Languages
         end
       end
 
-      @source.close
+      source.close
       @fileElements.push(fileElement)
     end
 

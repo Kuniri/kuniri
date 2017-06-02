@@ -28,7 +28,6 @@ module Parser
     def create_all_data(pParser)
       return nil unless pParser
 
-      saveElementTo = './'
       wrapper = self
       # Go through each file
       pParser.fileLanguage.each do |listOfFile|
@@ -37,11 +36,10 @@ module Parser
           @outputEngine.kuniri do
             wrapper.handle_element(singleElement)
           end
-          saveElementTo = singleElement.name
+          currentFilePathAndName = singleElement.name
+          write_file(currentFilePathAndName)
+          @outputEngine.reset_engine
         end
-
-        write_file(saveElementTo, listOfFile.name)
-        @outputEngine.reset_engine
       end
     end
 
@@ -57,7 +55,7 @@ module Parser
     def handle_extern_requirements(singleElement)
       reqs = singleElement.extern_requirements
       len = reqs.length
-      extern_requirements_generate(reqs) if len.positive?
+      extern_requirement_generate(reqs) if len.positive?
     end
 
     def handle_modules(singleElement)
@@ -151,16 +149,17 @@ module Parser
 
     private
 
-    def write_file(pSaveTo, pFileName)
+    def write_file(pFileNameAndPath)
       info = Kuniri::Setting.create
+      fileName = File.basename(pFileNameAndPath, '.*')
       if !File.file?(info.configurationInfo[:source])
-        outputDir = File.join(@parserPath, File.dirname(pSaveTo))
+        outputDir = File.join(@parserPath, File.dirname(pFileNameAndPath))
         unless Dir.exist? outputDir
           FileUtils.mkdir_p(File.join(@parserPath,
-                                      File.dirname(pSaveTo)))
+                                      File.dirname(pFileNameAndPath)))
         end
         # TODO: Extension should be flexible
-        destination = File.join(outputDir, pFileName + '.xml')
+        destination = File.join(outputDir, fileName + '.xml')
       else
         destination = @parserPath
       end

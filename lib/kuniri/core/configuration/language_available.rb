@@ -7,6 +7,6 @@
 module Configuration
   # Handling the languages available in the system.
   class LanguageAvailable
-    LANGUAGES = %w(ruby python cplusplus c).freeze # Put here new language.
+    LANGUAGES = %w[ruby python cplusplus c].freeze # Put here new language.
   end
 end

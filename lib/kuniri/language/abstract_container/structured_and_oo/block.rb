@@ -41,5 +41,12 @@ module Languages
     def capture_expression(_pString)
       raise NotImplementedError
     end
+
+    # Extract parameters
+    # @param pString Full string.
+    # @return Array of strings
+    def capture_parameters(_pString)
+      raise NotImplementedError
+    end
   end # End class
 end # module
