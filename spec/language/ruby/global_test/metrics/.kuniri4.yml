@@ -1,0 +1,4 @@
+language: ruby
+source: ./spec/samples/rubySyntaxParts/fullCode/withBlankLines.rb
+output: ./spec/language/ruby/global_test/metrics/withBlankLines.xml
+extract: uml 
