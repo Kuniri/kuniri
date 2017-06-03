@@ -108,6 +108,7 @@ class OptparseKuniri
 end # class OptparseKuniri
 
 def main
+  ARGV[0] = "-h" if ARGV[0] == nil
   options = OptparseKuniri.parse(ARGV)
 
   Util::LoggerKuniri.update_log_level(options.verbose_level)
