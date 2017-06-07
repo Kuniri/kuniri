@@ -1,4 +1,5 @@
 class PreParser
+
   def pre_parse(source, out_path)
     pre_parsed_lines = []
     source.each do |line|
@@ -12,7 +13,8 @@ class PreParser
 
       pre_parsed_lines.push(line_content) unless pre_parsed_line.empty?
     end
-
+    pre_parser_lines = get_multiple_lines_comment(pre_parsed_lines) 
+    puts(pre_parsed_lines)
     pre_parsed_lines = pre_parsed_lines.map{|line| line[:code] unless line[:code].nil?}.compact
     pre_parsed_lines = pre_parse_multiple_lines(pre_parsed_lines)
     out_file = File.open(out_path, 'w')
@@ -49,6 +51,10 @@ class PreParser
   end
 
   def get_oneline_comment(_line)
+    raise NotImplementedError
+  end
+
+  def get_multiple_lines_comment(_lines)
     raise NotImplementedError
   end
 
