@@ -13,9 +13,9 @@ class PreParser
 
       pre_parsed_lines.push(line_content) unless pre_parsed_line.empty?
     end
-    pre_parser_lines = get_multiple_lines_comment(pre_parsed_lines) 
-    puts(pre_parsed_lines)
-    pre_parsed_lines = pre_parsed_lines.map{|line| line[:code] unless line[:code].nil?}.compact
+    pre_parsed_lines = get_multiple_lines_comment(pre_parsed_lines)
+    pre_parsed_lines =
+      pre_parsed_lines.map { |l| l[:code] unless l[:code].nil? }.compact
     pre_parsed_lines = pre_parse_multiple_lines(pre_parsed_lines)
     out_file = File.open(out_path, 'w')
     out_file.write(pre_parsed_lines.join("\n"))

@@ -25,6 +25,23 @@ RSpec.describe Object do
       expect(zipped_function).to eq ["def foo(a,b,c)"]
     end
   end
+
+  context "Multiple-line comments" do
+    it "Extracts simple multiple line comments" do
+      lines = [{code: "def a", comment: nil },
+               {code: "  puts(\"test\")", comment: nil },
+               {code: "end", comment: nil },
+               {code: "=begin", comment: nil },
+               {code: "a", comment: nil },
+               {code: "beautiful", comment: nil },
+               {code: "comment", comment: nil },
+               {code: "yeah", comment: nil },
+               {code: "!!!", comment: nil },
+               {code: "=end", comment: nil }]
+      pre_parsed_lines = @pre_parser.get_multiple_lines_comment(lines)
+      expect(pre_parsed_lines[3][:comment]).to eq "a beautiful comment yeah !!! "
+    end
+  end
   
 end
 

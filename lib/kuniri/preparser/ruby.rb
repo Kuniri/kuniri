@@ -40,42 +40,47 @@ class RubyPreParser < PreParser
 
   def get_oneline_comment(line)
     comment_regex = /^#(?<comment>.*)$/
-    ;match = line.match(comment_regex)
-    match.nil? ? nil : match["comment"]
+    match = line.match(comment_regex)
+    match.nil? ? nil : match['comment']
   end
 
   def zip_multiple_lines_comment(lines, head, tail)
-    begin_length = "=begin ".length
-    comment = lines[head][:code][begin_length .. -1]
-    comment = (comment.nil?)? "": comment
+    begin_comment_token = '=begin '
+    begin_length = begin_comment_token.length
 
-    (head+1).upto(tail-1) do |index|
-      comment += lines[index][:code] + " "
-    end
+    comment = lines[head][:code][begin_length..-1]
+    comment = comment.nil? ? '' : comment + ' '
+
+    (head + 1).upto(tail - 1) { |index| comment += lines[index][:code] + ' ' }
+
     return comment
   end
 
   def get_multiple_lines_comment(lines)
-    head = tail = @INVALID_INDEX
-    lines.each_with_index do |line, index|
-      if not line[:code].nil?
-        first_word = line[:code].split[0]
-        if first_word == "=begin"
-          head = index
-        elsif first_word == "=end"
-          tail = index
-          lines[head][:comment] = zip_multiple_lines_comment(lines, head, tail)
-          lines[head][:code] = nil
-          (head+1).upto(tail) do
-            lines.delete_at(head+1)
-          end
-          head = tail = @INVALID_INDEX
-        end
-      end
+    head = @INVALID_INDEX
+
+    i = -1
+    while (i < lines.length - 1)
+      i += 1
+
+      next if lines[i][:code].nil?
+
+      first_word = lines[i][:code].split[0]
+      head = i if first_word == '=begin'
+      next if first_word != '=end'
+
+      tail = i
+      lines[head][:comment] = zip_multiple_lines_comment(lines, head, tail)
+      i = head + 1
+      lines[head][:code] = nil
+
+      (head + 1).upto(tail) { lines.delete_at(head + 1) }
+
+      head = tail = @INVALID_INDEX
     end
+
+    lines
   end
-
-
 
   def split_multiple_command_lines(lines)
     return lines
