@@ -495,7 +495,9 @@ RSpec.describe Languages::RubySyntax do
   context 'Comments' do
 
     it 'Correct single line comment capture - Globals' do
-
+      pending("The comments extracted by the preparser are not integrated to" \
+               " the analyse_first_step yet")
+      
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_single_line_comment_global.rb'
 
@@ -512,6 +514,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'Correct single line comment capture - Class' do
+      pending("The comments extracted by the preparser are not integrated to" \
+               " the analyse_first_step yet")
 
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_single_line_comment_class.rb'
@@ -533,6 +537,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'Correct multiple line comment capture - Global' do
+      pending("The comments extracted by the preparser are not integrated to" \
+               " the analyse_first_step yet")
 
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_multiple_line_comment_global.rb'
@@ -549,6 +555,8 @@ RSpec.describe Languages::RubySyntax do
     end
 
     it 'Correct multiple line comment capture - Class' do
+      pending("The comments extracted by the preparser are not integrated to" \
+               " the analyse_first_step yet")
 
       path = 'spec/samples/rubySyntaxParts/' +
               'comment/simple_multiple_line_comment_class.rb'
