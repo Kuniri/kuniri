@@ -13,6 +13,7 @@ RSpec.describe Parser::XMLOutputFormat do
    it "::Simple case class" do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -23,6 +24,7 @@ RSpec.describe Parser::XMLOutputFormat do
    it "::Set visibility" do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"private\">\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -35,6 +37,7 @@ RSpec.describe Parser::XMLOutputFormat do
       expectedString = @stringHeader
       expectedString += "<classData name=\"Xpto\" visibility=\"public\">\n"
       expectedString += "  <commentData text=\"This is a simple comment\"/>\n"
+      expectedString += "  <totalMethods counter=\"0\"/>\n"
       expectedString += "</classData>\n"
       classTmp = Languages::ClassData.new
       classTmp.name = "Xpto"
@@ -291,23 +294,27 @@ RSpec.describe Parser::XMLOutputFormat do
       expect(@handler).to be_a(REXML::Element)
     end
 
+    it 'Found linesOfCode variable' do
+      expect(@handler.elements[1].attributes['counter']).to eq('94')
+    end
+
     it 'Found abc as a global variable' do
-      expect(@handler.elements[1].attributes['name']).to eq('abc')
-      expect(@handler.elements[1].attributes['value']).to eq('ARGV[0].to_i')
+      expect(@handler.elements[2].attributes['name']).to eq('abc')
+      expect(@handler.elements[2].attributes['value']).to eq('ARGV[0].to_i')
     end
 
     it 'Found lala as a global variable' do
-      expect(@handler.elements[2].attributes['name']).to eq('lala')
-      expect(@handler.elements[2].attributes['value']).to eq('ARGV[1].to_i')
+      expect(@handler.elements[3].attributes['name']).to eq('lala')
+      expect(@handler.elements[3].attributes['value']).to eq('ARGV[1].to_i')
     end
 
     it 'Found y as a global variable' do
-      expect(@handler.elements[3].attributes['name']).to eq('y')
-      expect(@handler.elements[3].attributes['value']).to eq('[1,2,3,4,5]')
+      expect(@handler.elements[4].attributes['name']).to eq('y')
+      expect(@handler.elements[4].attributes['value']).to eq('[1,2,3,4,5]')
     end
 
     it 'Found globalVariable as a global variable' do
-      expect(@handler.elements[4].attributes['name']).to eq('globalVariable')
+      expect(@handler.elements[5].attributes['name']).to eq('globalVariable')
     end
 
     it 'Verify if the global function counter is correct' do

@@ -81,6 +81,7 @@ module Languages
         processedLines.each do |proc_line|
           @state.handle_line(proc_line)
           fileElement = @state.execute(fileElement, proc_line)
+          fileElement.increase_loc
         end
       end
 

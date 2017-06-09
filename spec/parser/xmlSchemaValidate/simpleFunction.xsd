@@ -3,6 +3,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="totalGlobalFunctions">
+        <xs:element name="linesOfCode">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
@@ -26,6 +27,15 @@
             </xs:sequence>
             <xs:attribute type="xs:string" name="name" use="optional"/>
             <xs:attribute type="xs:string" name="visibility" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="totalClasses">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:byte" name="counter"/>
+              </xs:extension>
+            </xs:simpleContent>
           </xs:complexType>
         </xs:element>
       </xs:sequence>

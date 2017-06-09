@@ -2,7 +2,9 @@
   <xs:element name="kuniri">
     <xs:complexType>
       <xs:sequence>
+
         <xs:element name="totalGlobalFunctions" maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="totalClasses" maxOccurs="unbounded" minOccurs="0">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">

@@ -27,6 +27,9 @@ module Parser
     'expression': 'e',
     'level': 'l',
     'totalGlobalFunctions': 'tgf'
+    'totalMethods': 'tm',
+    'totalClasses': 'tc',
+    'linesOfCode': 'loc'
   }.freeze
 
   # Keep the relationship between languages and project

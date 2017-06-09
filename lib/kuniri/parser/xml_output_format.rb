@@ -23,24 +23,44 @@ module Parser
       pClass.each do |singleClass|
         @outputEngine.classData name: singleClass.name,
                                 visibility: singleClass.visibility do
+          methods_counter = 0
           wrapper.comment_generate(singleClass)
 
-          unless singleClass.aggregations.empty?
-            wrapper.aggregation_generate(singleClass.aggregations)
-          end
+          wrapper.handle_aggregations(singleClass.aggregations)
           wrapper.inheritance_generate(singleClass.inheritances)
-          unless singleClass.attributes.empty?
-            wrapper.attribute_generate(singleClass.attributes)
-          end
+          wrapper.handle_attributes(singleClass.attributes)
+
           singleClass.constructors.each do |singleConstructor|
             wrapper.function_behaviour_generate('constructorData',
                                                 singleConstructor)
           end
           singleClass.methods.each do |singleMethod|
             wrapper.function_behaviour_generate('methodData', singleMethod)
+            methods_counter += 1
           end
+          wrapper.methods_counter_generate(methods_counter)
         end
       end
+    end
+
+    def methods_counter_generate(counter)
+      @outputEngine.send('totalMethods', counter: counter)
+    end
+
+    def handle_aggregations(aggregations)
+      aggregation_generate(aggregations) unless aggregations.empty?
+    end
+
+    def handle_attributes(attributes)
+      attribute_generate(attributes) unless attributes.empty?
+    end
+
+    def class_counter_generate(pLength)
+      @outputEngine.send('totalClasses', counter: pLength)
+    end
+
+    def loc_generate(pLoc)
+      @outputEngine.send('linesOfCode', counter: pLoc)
     end
 
     # @see OutputFormat
@@ -131,6 +151,11 @@ module Parser
         if element.type == Languages::ELSE_LABEL
           @outputEngine.send(element.type.downcase,
                              level: element.level)
+        elsif element.type == Languages::LAMBDA_BLOCK_LABEL
+          @outputEngine.send(element.type.downcase,
+                             expression: element.expression,
+                             level: element.level,
+                             parameters: element.parameters.join(','))
         else
           @outputEngine.send(element.type.downcase,
                              expression: element.expression,

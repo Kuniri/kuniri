@@ -23,6 +23,7 @@ module Languages
     attr_reader :extern_requirements
     attr_reader :classes
     attr_reader :modules
+    attr_reader :lines_of_code
 
     def initialize(pName)
       return nil if (pName.nil? || !pName.respond_to?(:to_str))
@@ -34,6 +35,11 @@ module Languages
       @modules = []
       @name = pName
       @comments = ''
+      @lines_of_code = 0
+    end
+
+    def increase_loc
+      @lines_of_code += 1
     end
 
     # Add global function to the file.
