@@ -1,7 +1,7 @@
 =begin
 This is the
 first class
-of this file.
+of this file
 =end
 
 class Xpto
