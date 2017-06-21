@@ -318,7 +318,7 @@ RSpec.describe Parser::XMLOutputFormat do
     end
 
     it 'Verify if the global function counter is correct' do
-      expect(@handler.elements[8].attributes['counter']).to eq('0')
+      expect(@handler.elements[9].attributes['counter']).to eq('0')
     end
 
     #TODO: FINISH THIS TEST, AFTER FIX THE GLOBAL VARIABLE BUG

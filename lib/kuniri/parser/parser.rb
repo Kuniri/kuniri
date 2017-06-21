@@ -26,7 +26,7 @@ module Parser
     'name': 'n',
     'expression': 'e',
     'level': 'l',
-    'totalGlobalFunctions': 'tgf'
+    'totalGlobalFunctions': 'tgf',
     'totalMethods': 'tm',
     'totalClasses': 'tc',
     'linesOfCode': 'loc'

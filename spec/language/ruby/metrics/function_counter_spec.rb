@@ -10,6 +10,7 @@ RSpec.describe "Function counters" do
   context "Counts methods using XMLOutputFormat" do
     it "::Counts methods" do
       expectedString = @stringHeader
+      expectedString += "<linesOfCode counter=\"0\"/>\n"  
       expectedString += "<totalGlobalFunctions counter=\"3\"/>\n"
       expectedString += "<functionData name=\"func1\" visibility=\"public\">\n"
       expectedString += "</functionData>\n"
@@ -17,6 +18,7 @@ RSpec.describe "Function counters" do
       expectedString += "</functionData>\n"
       expectedString += "<functionData name=\"func3\" visibility=\"public\">\n"
       expectedString += "</functionData>\n"
+      expectedString += "\n<totalClasses counter=\"0\"/>\n" 
 
       fileTmp = Languages::FileElementData.new("Xpto")
       (1..3).each {|i|

@@ -2,8 +2,16 @@
   <xs:element name="kuniri">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="totalGlobalFunctions">
         <xs:element name="linesOfCode">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:byte" name="counter"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="totalGlobalFunctions">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
