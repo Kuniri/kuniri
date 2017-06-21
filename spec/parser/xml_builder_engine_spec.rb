@@ -214,6 +214,7 @@ RSpec.describe Parser::XMLBuilderEngine do
 
     it "Full global function" do
       @builder.kuniri do
+        globalFunctions :counter => "1"
         functionData :name => "xpto", :visibility => "global" do
           parameterData :name => "two"
           conditionalData :type => "if", :expression => "y == x"
@@ -223,6 +224,7 @@ RSpec.describe Parser::XMLBuilderEngine do
 
       output = [@basicHeader,
                 '<kuniri>',
+                '  <globalFunctions counter="1"/>',
                 '  <functionData name="xpto" visibility="global">',
                 '    <parameterData name="two"/>',
                 '    <conditionalData type="if" expression="y == x"/>',

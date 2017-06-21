@@ -25,6 +25,7 @@ create_test_file() {
 <?xml version="1.0" encoding="UTF-8"?>
 <kuniri>
   <linesOfCode counter="10"/>
+  <totalGlobalFunctions counter="0"/>
   <totalClasses counter="5"/>
   <classData name="Simple1" visibility="public">
     <totalMethods counter="0"/>

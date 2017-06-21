@@ -85,6 +85,7 @@ module Parser
     def handle_global_functions(singleElement)
       funcs = singleElement.global_functions
       len = funcs.length
+      function_counter_generate(len)
       generate_global_functions(funcs) if len.positive?
     end
 
@@ -127,6 +128,10 @@ module Parser
     end
 
     def function_behaviour_generate(_pElementName, _pFunction)
+      raise NotImplementedError
+    end
+
+    def function_counter_generate(_pCounterLabel, _numberOfFunctons)
       raise NotImplementedError
     end
 
