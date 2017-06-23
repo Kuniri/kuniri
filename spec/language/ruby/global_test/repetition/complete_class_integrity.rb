@@ -30,7 +30,7 @@ RSpec.describe "Complete class integrity" do
       end
 
       expect(@stack.size).to eq(0)
-
+    end
   end
 
   after :each do

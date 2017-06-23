@@ -2,7 +2,7 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe Kuniri::Kuniri do
 
-  before :each do
+  before :all do
     @path = "./spec/language/ruby/global_test/global_variable/.kuniri.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
@@ -10,7 +10,7 @@ RSpec.describe Kuniri::Kuniri do
     parser = Parser::XMLOutputFormat.new(@kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     target = "./spec/language/ruby/global_test/global_variable/simpleVariable.xml"
-    @output = File.open(target, "r")
+    @output = File.open(target, "r").read.split("\n")
   end
 
   RSpec.shared_examples "global variable" do |regex, description|
@@ -86,7 +86,7 @@ RSpec.describe Kuniri::Kuniri do
     end
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end

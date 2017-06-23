@@ -2,14 +2,14 @@ require_relative '../../../spec_helper'
 
 RSpec.describe Kuniri::Kuniri do
 
-  before :each do
+  before :all do
     @path = "./spec/language/ruby/global_test/.kuniri.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/simpleFullCode.xml", "r")
+    @output = File.open("./spec/language/ruby/global_test/simpleFullCode.xml", "r").read.split("\n")
   end
 
   it "Should contain the class name" do
@@ -190,7 +190,7 @@ RSpec.describe Kuniri::Kuniri do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end

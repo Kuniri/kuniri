@@ -2,7 +2,7 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe "Verify class with while loop" do
 
-  before :each do
+  before :all do
     @path = "./spec/language/ruby/global_test/repetition/.kuniri2.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
@@ -10,7 +10,7 @@ RSpec.describe "Verify class with while loop" do
     parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     target = "./spec/language/ruby/global_test/repetition/whileLoopInClass.xml"
-    @output = File.open(target, "r")
+    @output = File.open(target, "r").read.split("\n")
   end
 
   RSpec.shared_examples "Class with while" do |regex, description|
@@ -34,7 +34,7 @@ RSpec.describe "Verify class with while loop" do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end

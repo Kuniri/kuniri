@@ -2,7 +2,7 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe Kuniri::Kuniri do
 
-  before :each do
+  before :all do
     @path = "./spec/language/ruby/global_test/conditional/.kuniri2.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
@@ -10,7 +10,7 @@ RSpec.describe Kuniri::Kuniri do
     parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     str = "./spec/language/ruby/global_test/conditional/aLotOfConditionals.xml"
-    @output = File.open(str, "r")
+    @output = File.open(str, "r").read.split("\n")
   end
 
   RSpec.shared_examples "Conditional verification" do |regex, description|
@@ -84,7 +84,7 @@ RSpec.describe Kuniri::Kuniri do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output1 = nil
   end

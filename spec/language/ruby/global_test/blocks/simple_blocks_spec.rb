@@ -2,7 +2,7 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe 'Simple blocks as a script' do
 
-  before :each do
+  before :all do
     @path = './spec/language/ruby/global_test/blocks/.kuniri.yml'
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
@@ -10,7 +10,7 @@ RSpec.describe 'Simple blocks as a script' do
     parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
     target = './spec/language/ruby/global_test/blocks/simple_block_script.xml'
-    @output = File.open(target, 'r')
+    @output = File.open(target, 'r').read.split("\n")
   end
 
   RSpec.shared_examples 'Block verification' do |regex, description|
@@ -46,7 +46,7 @@ RSpec.describe 'Simple blocks as a script' do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end
