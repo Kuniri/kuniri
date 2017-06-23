@@ -2,14 +2,14 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe "Verify repetition output with a nested conditional" do
 
-  before :each do
+  before :all do
     @path = "./spec/language/ruby/global_test/repetition/.kuniri6.yml"
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
     @kuniri.run_analysis
     parser = Parser::XMLOutputFormat.new(0, @kuniri.configurationInfo[:output])
     parser.create_all_data(@kuniri.get_parser())
-    @output = File.open("./spec/language/ruby/global_test/repetition/veryNestedRepetition.xml", "r")
+    @output = File.open("./spec/language/ruby/global_test/repetition/veryNestedRepetition.xml", "r").read.split("\n")
   end
 
   RSpec.shared_examples "Nested multiple verification" do |regex, description|
@@ -57,7 +57,7 @@ RSpec.describe "Verify repetition output with a nested conditional" do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end

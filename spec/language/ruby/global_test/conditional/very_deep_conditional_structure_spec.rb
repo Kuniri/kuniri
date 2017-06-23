@@ -2,7 +2,7 @@ require_relative '../../../../spec_helper'
 
 RSpec.describe 'Very deep conditional structure' do
 
-  before :each do
+  before :all do
     @path = './spec/language/ruby/global_test/conditional/.kuniri3.yml'
     @kuniri = Kuniri::Kuniri.new
     @kuniri.read_configuration_file(@path)
@@ -11,7 +11,7 @@ RSpec.describe 'Very deep conditional structure' do
     parser.create_all_data(@kuniri.get_parser())
     target = './spec/language/ruby/global_test/conditional/' +
              'veryDeepConditionalStructure.xml'
-    @output = File.open(target, 'r')
+    @output = File.open(target, 'r').read.split("\n")
   end
 
   RSpec.shared_examples 'Deep conditional' do |regex, description|
@@ -53,7 +53,7 @@ RSpec.describe 'Very deep conditional structure' do
 
   end
 
-  after :each do
+  after :all do
     @kuniri = nil
     @output = nil
   end
